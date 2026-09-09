@@ -149,3 +149,42 @@
 .sd-jp-mod { color: var(--sd-fraco); font-size: .78rem; }
 
 .sd-notas { display: flex; flex-direction: column; }
+
+/* ── ficha de item ─────────────────────────────────────────────────────── */
+.sd-retrato-item { width: 56px; height: 56px; }
+
+.sd-ajustes { display: grid; grid-template-columns: repeat(6, 1fr); gap: .3rem; }
+.sd-ajuste-campo { display: flex; flex-direction: column; align-items: center; gap: .15rem; }
+.sd-ajuste-campo span { font-size: .68rem; color: var(--sd-fraco); letter-spacing: .05em; }
+.sd-ajuste-campo input { width: 100%; text-align: center; }
+
+.sd-check { display: flex; gap: .4rem; align-items: flex-start; margin-top: .5rem; font-size: .78rem; }
+.sd-check em { color: var(--sd-fraco); font-style: normal; }
+
+.sd-traco { margin-bottom: .5rem; }
+.sd-traco-nome { flex: 1; font-weight: 600; }
+.sd-traco textarea {
+  width: 100%; margin-top: .2rem; resize: vertical;
+  background: #0d1116; border: 1px solid var(--sd-linha);
+  border-radius: 3px; color: var(--sd-texto); padding: .25rem;
+  font-family: inherit; font-size: .8rem;
+}
+.sd-mini {
+  width: 1.5rem; height: 1.5rem; line-height: 1;
+  background: transparent; border: 1px solid var(--sd-linha); border-radius: 3px;
+  color: var(--sd-fraco); cursor: pointer; font-size: .9rem;
+}
+.sd-mini:hover { border-color: var(--sd-ambar); color: var(--sd-ambar); }
+.sd-remover:hover { border-color: var(--sd-alerta); color: var(--sd-alerta); }
+.sd-caixa h3 { display: flex; justify-content: space-between; align-items: center; }
+
+/* ── a espécie na ficha do personagem ──────────────────────────────────── */
+.sd-especie {
+  display: flex; gap: .5rem; align-items: center;
+  font-size: .78rem; color: var(--sd-fraco);
+}
+.sd-especie strong { color: var(--sd-texto); }
+.sd-especie .sd-ajuste-chip {
+  color: var(--sd-ambar); border: 1px solid var(--sd-linha);
+  border-radius: 3px; padding: 0 .3rem; font-size: .72rem;
+}

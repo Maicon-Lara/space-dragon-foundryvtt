@@ -92,7 +92,10 @@ export class FichaPersonagem extends HandlebarsApplicationMixin(ActorSheetV2) {
         nome: ROTULOS[chave].nome,
         sigla: ROTULOS[chave].sigla,
         valor: at.valor,
-        ajuste: at.ajuste,
+        // O que a ficha mostra ao lado do número é TUDO que se soma a ele:
+        // a espécie mais o ajuste avulso. Mostrar só um dos dois faria a conta
+        // do total parecer errada.
+        ajuste: at.daEspecie + at.ajuste,
         total: at.total,
         derivados: DERIVADOS[chave].map((d) => {
           const bruto = at.linha[d.campo];
@@ -103,6 +106,18 @@ export class FichaPersonagem extends HandlebarsApplicationMixin(ActorSheetV2) {
     });
 
     ctx.jps = JPS.map((jp) => ({ ...jp, base: sys.jp[jp.chave].base, mod: sys.jp[jp.chave].mod }));
+
+    // A espécie sai do modelo (que a achou entre os itens), não de uma busca
+    // repetida aqui — uma fonte só, e a ficha nunca discorda do cálculo.
+    const esp = sys.especie;
+    ctx.especie = esp
+      ? {
+          nome: esp.name,
+          ajustes: esp.system.ajustesAtivos.map(({ atributo, valor }) => ({
+            valor, sigla: ROTULOS[atributo].sigla, nome: ROTULOS[atributo].nome,
+          })),
+        }
+      : null;
 
     return ctx;
   }

@@ -1,0 +1,73 @@
+<form class="sd-ficha sd-item">
+
+  <header class="sd-cabecalho">
+    <img class="sd-retrato sd-retrato-item" src="{{item.img}}" data-edit="img" alt="{{item.name}}">
+    <div class="sd-identidade">
+      <input type="text" name="name" value="{{item.name}}" placeholder="Espécie" class="sd-nome">
+      <div class="sd-linha">
+        <label>Maturidade
+          <input type="text" name="system.maturidade" value="{{system.maturidade}}" placeholder="16 anos">
+        </label>
+        <label>Expectativa
+          <input type="text" name="system.expectativa" value="{{system.expectativa}}" placeholder="80 anos">
+        </label>
+      </div>
+    </div>
+  </header>
+
+  {{!-- AJUSTE DE ATRIBUTO ---------------------------------------------------}}
+  <section class="sd-caixa">
+    <h3>Ajuste de atributo</h3>
+    <div class="sd-ajustes">
+      {{#each atributos as |at|}}
+        <label class="sd-ajuste-campo" title="{{at.nome}}">
+          <span>{{at.sigla}}</span>
+          <input type="number" name="system.ajustes.{{at.chave}}" value="{{at.valor}}">
+        </label>
+      {{/each}}
+    </div>
+
+    <label class="sd-check">
+      <input type="checkbox" name="system.escolhaLivre" {{checked system.escolhaLivre}}>
+      <span>O jogador escolhe quais atributos <em>(Humano: +2 num, −2 noutro)</em></span>
+    </label>
+
+    {{#if system.escolhaLivre}}
+      <p class="sd-nota">
+        Preencha acima a escolha deste personagem. O livro dá a liberdade, mas a
+        ficha precisa saber onde somar.
+      </p>
+    {{/if}}
+
+    <label class="sd-linha sd-nota">
+      Aumenta 1 atributo a cada
+      <input type="number" name="system.incrementoCadaNiveis" value="{{system.incrementoCadaNiveis}}" min="0" style="width:3.2rem">
+      níveis <em>(0 = nunca)</em>
+    </label>
+  </section>
+
+  {{!-- TRAÇOS ---------------------------------------------------------------}}
+  <section class="sd-caixa">
+    <h3>
+      Traços
+      <button type="button" class="sd-mini" data-action="adicionarTraco" title="Novo traço">+</button>
+    </h3>
+    {{#each system.tracos as |traco i|}}
+      <div class="sd-traco">
+        <div class="sd-linha">
+          <input type="text" name="system.tracos.{{i}}.nome" value="{{traco.nome}}" placeholder="Nome do traço" class="sd-traco-nome">
+          <button type="button" class="sd-mini sd-remover" data-action="removerTraco" data-indice="{{i}}" title="Remover">×</button>
+        </div>
+        <textarea name="system.tracos.{{i}}.desc" rows="3" placeholder="O que ele faz na mesa">{{traco.desc}}</textarea>
+      </div>
+    {{else}}
+      <p class="sd-nota">Nenhum traço. O botão <strong>+</strong> acrescenta.</p>
+    {{/each}}
+  </section>
+
+  <section class="sd-caixa">
+    <h3>Descrição</h3>
+    {{formInput schemaDescricao value=system.descricao name="system.descricao"}}
+  </section>
+
+</form>

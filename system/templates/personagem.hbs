@@ -16,6 +16,21 @@
           </select>
         </label>
       </div>
+      <div class="sd-especie">
+        {{#if especie}}
+          <strong>{{especie.nome}}</strong>
+          {{#each especie.ajustes as |aj|}}
+            <span class="sd-ajuste-chip" title="{{aj.nome}}">{{sinal aj.valor}} {{aj.sigla}}</span>
+          {{/each}}
+          {{#if system.incrementosGanhos}}
+            <span title="Incremento de atributo por nível">
+              {{system.incrementosGanhos}} ponto(s) de nível a distribuir
+            </span>
+          {{/if}}
+        {{else}}
+          <em>Sem espécie — arraste uma para a ficha</em>
+        {{/if}}
+      </div>
     </div>
   </header>
 

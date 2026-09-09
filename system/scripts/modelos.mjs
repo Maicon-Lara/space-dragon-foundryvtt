@@ -88,10 +88,18 @@ export class PersonagemModel extends foundry.abstract.TypeDataModel {
   prepareDerivedData() {
     const a = this.atributos;
 
-    // ── os seis atributos: total = rolado + ajuste da espécie ──────────────
+    // ── a espécie ───────────────────────────────────────────────
+    // O ajuste vem do ITEM, não de um campo digitado — assim trocar a espécie
+    // troca os números da ficha inteira sozinho, até o CP e o BA.
+    this.especie = this.parent?.items?.find((i) => i.type === "especie") ?? null;
+    const daEspecie = this.especie?.system?.ajustes ?? null;
+
+    // ── os seis atributos ───────────────────────────────────────
+    // total = rolado + ajuste da espécie + ajuste avulso (mutação, aparato)
     for (const chave of ATRIBUTOS) {
       const at = a[chave];
-      at.total = at.valor + at.ajuste;
+      at.daEspecie = daEspecie?.[chave] ?? 0;
+      at.total = at.valor + at.daEspecie + at.ajuste;
       at.linha = tabela(chave, at.total);   // a linha inteira da tabela T1-x
     }
 
@@ -134,6 +142,13 @@ export class PersonagemModel extends foundry.abstract.TypeDataModel {
 
     this.seguidores = a.comunicacao.linha.seguidores;
     this.reacao = a.comunicacao.linha.reacao;
+
+    // ── incremento de atributo por nível (2.1) ───────────────────────
+    // Só o Humano tem: +1 num atributo a cada 4 níveis. A ficha conta quantos
+    // pontos já foram ganhos, mas NÃO os distribui — quem escolhe é o jogador,
+    // e ele lança a escolha no ajuste avulso.
+    const cada = this.especie?.system?.incrementoCadaNiveis ?? 0;
+    this.incrementosGanhos = cada > 0 ? Math.floor(this.nivel / cada) : 0;
   }
 }
 
