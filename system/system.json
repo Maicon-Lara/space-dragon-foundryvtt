@@ -2,7 +2,7 @@
   "id": "spacedragon",
   "title": "Space Dragon",
   "description": "Sistema para o Space Dragon — Livro Básico Aprimorado. Ficção científica pulp com as regras nativas do jogo: seis atributos próprios, Coeficiente de Proteção e as três Jogadas de Proteção.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "compatibility": {
     "minimum": "13",
     "verified": "13"

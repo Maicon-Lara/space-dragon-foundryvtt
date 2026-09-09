@@ -47,11 +47,11 @@ const DERIVADOS = {
 };
 
 const JPS = [
-  { chave: "reflexos", sigla: "JPR", campoBase: "jpr", origem: "modificador de Destreza",
+  { chave: "reflexos", sigla: "JPR", origem: "modificador de Destreza",
     titulo: "Reflexos — esquivar de explosões, desmoronamentos" },
-  { chave: "fisica", sigla: "JPF", campoBase: "jpf", origem: "modificador de Constituição",
+  { chave: "fisica", sigla: "JPF", origem: "modificador de Constituição",
     titulo: "Física — infecções, venenos, o que debilita o corpo" },
-  { chave: "mental", sigla: "JPM", campoBase: "jpm", origem: "proteção mental do Intelecto",
+  { chave: "mental", sigla: "JPM", origem: "proteção mental do Intelecto",
     titulo: "Mental — resistir a poderes mentais" },
 ];
 
@@ -105,7 +105,7 @@ export class FichaPersonagem extends HandlebarsApplicationMixin(ActorSheetV2) {
       };
     });
 
-    ctx.jps = JPS.map((jp) => ({ ...jp, base: sys.jp[jp.chave].base, mod: sys.jp[jp.chave].mod }));
+    ctx.jps = JPS.map((jp) => ({ ...jp, mod: sys.jp[jp.chave].mod, alvo: sys.jp.base + 0 }));
 
     // A espécie sai do modelo (que a achou entre os itens), não de uma busca
     // repetida aqui — uma fonte só, e a ficha nunca discorda do cálculo.
@@ -158,13 +158,14 @@ export class FichaPersonagem extends HandlebarsApplicationMixin(ActorSheetV2) {
   static async #rolarJP(event, alvo) {
     const chave = alvo.dataset.jp;
     const jp = this.actor.system.jp[chave];
+    const valorAlvo = this.actor.system.jp.base;
     const def = JPS.find((j) => j.chave === chave);
     const roll = await new Roll("1d20 + @mod", { mod: jp.mod }).evaluate();
-    const passou = roll.total >= jp.base;
+    const passou = roll.total >= valorAlvo;
 
     await roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flavor: `<strong>${def.sigla}</strong> — precisa ${jp.base} ou mais` +
+      flavor: `<strong>${def.sigla}</strong> — precisa ${valorAlvo} ou mais` +
               ` · <strong>${passou ? "sucesso" : "falha"}</strong>`,
     });
   }

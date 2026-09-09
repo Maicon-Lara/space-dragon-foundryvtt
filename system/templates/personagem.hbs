@@ -94,12 +94,14 @@
 
     <div class="sd-caixa sd-jp">
       <h3>Jogadas de Proteção</h3>
+      <label class="sd-nota sd-jp-base">valor da classe
+        <input type="number" name="system.base.jp" value="{{system.base.jp}}">
+      </label>
       {{#each jps as |jp|}}
         <div class="sd-jp-linha">
           <button type="button" data-action="rolarJP" data-jp="{{jp.chave}}" title="{{jp.titulo}}">
             {{jp.sigla}}
           </button>
-          <input type="number" name="system.base.{{jp.campoBase}}" value="{{jp.base}}" title="Valor da classe">
           <span class="sd-jp-mod" title="{{jp.origem}}">{{sinal jp.mod}}</span>
         </div>
       {{/each}}

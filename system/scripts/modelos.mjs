@@ -57,9 +57,11 @@ export class PersonagemModel extends foundry.abstract.TypeDataModel {
       // no compêndio, ficam editáveis à mão para a ficha já servir na mesa.
       base: new SchemaField({
         ataque: new NumberField({ required: true, integer: true, initial: 0 }),
-        jpr: new NumberField({ required: true, integer: true, initial: 15 }),
-        jpf: new NumberField({ required: true, integer: true, initial: 15 }),
-        jpm: new NumberField({ required: true, integer: true, initial: 15 }),
+        // UM valor de JP, e não três. O livro: "igual ou superior ao indicado
+        // como valor da jogada de proteção NA TABELA DA CLASSE" — singular. O
+        // que muda entre JPR, JPF e JPM é só qual atributo modifica a rolagem,
+        // e a ficha oficial confirma: um campo "JP" e três ajustes.
+        jp: new NumberField({ required: true, integer: true, initial: 15 }),
       }),
 
       vestes: new SchemaField({
@@ -69,6 +71,9 @@ export class PersonagemModel extends foundry.abstract.TypeDataModel {
 
       /** Aparatos, mutações e poderes entram aqui até virarem itens. */
       extras: new SchemaField({
+        // A ficha oficial separa o escudo dos demais ajustes de CP, e vale
+        // manter: escudo se larga e se pega no meio do combate.
+        escudo: new NumberField({ required: true, integer: true, initial: 0 }),
         cp: new NumberField({ required: true, integer: true, initial: 0 }),
         ataqueCorpo: new NumberField({ required: true, integer: true, initial: 0 }),
         ataqueDistancia: new NumberField({ required: true, integer: true, initial: 0 }),
@@ -109,6 +114,7 @@ export class PersonagemModel extends foundry.abstract.TypeDataModel {
     this.cp = this.vestes.protecao
             + a.destreza.linha.ataque
             + this.bonusNivelCP
+            + this.extras.escudo
             + this.extras.cp;
 
     // ── Bônus de Ataque (4.3) ─────────────────────────────────────────────
@@ -122,9 +128,10 @@ export class PersonagemModel extends foundry.abstract.TypeDataModel {
     // ── Jogadas de Proteção (4.4) ─────────────────────────────────────────
     // Cada uma tem o seu atributo, e não são intercambiáveis.
     this.jp = {
-      reflexos: { base: this.base.jpr, mod: a.destreza.linha.ataque },
-      fisica: { base: this.base.jpf, mod: a.constituicao.linha.pv },
-      mental: { base: this.base.jpm, mod: a.intelecto.linha.protecaoMental },
+      base: this.base.jp,
+      reflexos: { base: this.base.jp, mod: a.destreza.linha.ataque },
+      fisica: { base: this.base.jp, mod: a.constituicao.linha.pv },
+      mental: { base: this.base.jp, mod: a.intelecto.linha.protecaoMental },
     };
 
     // ── Constituição: onde a morte acontece (T1-3) ────────────────────────
