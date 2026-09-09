@@ -7,11 +7,23 @@
     "minimum": "13",
     "verified": "13"
   },
-  "authors": [{ "name": "Maicon Lara" }],
-  "esmodules": ["scripts/spacedragon.mjs"],
-  "styles": ["styles/spacedragon.css"],
+  "authors": [
+    {
+      "name": "Maicon Lara"
+    }
+  ],
+  "esmodules": [
+    "scripts/spacedragon.mjs"
+  ],
+  "styles": [
+    "styles/spacedragon.css"
+  ],
   "languages": [
-    { "lang": "pt-BR", "name": "Português (Brasil)", "path": "lang/pt-BR.json" }
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    }
   ],
   "documentTypes": {
     "Actor": {
@@ -29,9 +41,14 @@
       "poder-mental": {}
     }
   },
-  "grid": { "distance": 1.5, "units": "m" },
+  "grid": {
+    "distance": 1.5,
+    "units": "m"
+  },
   "primaryTokenAttribute": "pv",
   "url": "https://github.com/Maicon-Lara/space-dragon-foundryvtt",
   "license": "LICENSE.md",
-  "readme": "README.md"
+  "readme": "README.md",
+  "manifest": "https://raw.githubusercontent.com/Maicon-Lara/space-dragon-foundryvtt/main/system/system.json",
+  "download": "https://raw.githubusercontent.com/Maicon-Lara/space-dragon-foundryvtt/main/spacedragon.zip"
 }
