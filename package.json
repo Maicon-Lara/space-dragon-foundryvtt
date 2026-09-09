@@ -1,0 +1,7 @@
+{
+  "name": "space-dragon-foundryvtt",
+  "version": "0.1.0",
+  "description": "Sistema Foundry VTT para o Space Dragon - Livro Basico Aprimorado",
+  "license": "MIT",
+  "private": true
+}

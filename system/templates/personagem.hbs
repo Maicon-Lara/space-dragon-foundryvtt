@@ -1,0 +1,117 @@
+<form class="sd-ficha">
+
+  <header class="sd-cabecalho">
+    <img class="sd-retrato" src="{{actor.img}}" data-edit="img" alt="{{actor.name}}">
+    <div class="sd-identidade">
+      <input type="text" name="name" value="{{actor.name}}" placeholder="Nome" class="sd-nome">
+      <div class="sd-linha">
+        <label>Nível <input type="number" name="system.nivel" value="{{system.nivel}}" min="1"></label>
+        <label>XP <input type="number" name="system.xp" value="{{system.xp}}" min="0"></label>
+        <label>DV <input type="text" name="system.dvClasse" value="{{system.dvClasse}}" size="3"></label>
+        <label>Afiliação
+          <select name="system.afiliacao">
+            {{#each afiliacoes as |rotulo chave|}}
+              <option value="{{chave}}" {{#if (eq chave ../system.afiliacao)}}selected{{/if}}>{{rotulo}}</option>
+            {{/each}}
+          </select>
+        </label>
+      </div>
+    </div>
+  </header>
+
+  {{!-- ATRIBUTOS: cada um mostra o valor e o que a tabela T1-x devolve --------}}
+  <section class="sd-atributos">
+    {{#each atributos as |at|}}
+      <div class="sd-atributo">
+        <button type="button" class="sd-rolar-atributo" data-action="testarAtributo"
+                data-atributo="{{at.chave}}" title="Testar {{at.nome}}">{{at.sigla}}</button>
+        <input type="number" name="system.atributos.{{at.chave}}.valor" value="{{at.valor}}" min="1" max="29">
+        {{#if at.ajuste}}<span class="sd-ajuste" title="Ajuste de espécie">{{sinal at.ajuste}}</span>{{/if}}
+        <div class="sd-derivados">
+          {{#each at.derivados as |d|}}
+            <span title="{{d.titulo}}"><em>{{d.rotulo}}</em> {{d.valor}}</span>
+          {{/each}}
+        </div>
+      </div>
+    {{/each}}
+  </section>
+
+  {{!-- SUBATRIBUTOS ---------------------------------------------------------}}
+  <section class="sd-subatributos">
+
+    <div class="sd-caixa sd-pv">
+      <h3>Pontos de Vida</h3>
+      <div class="sd-pv-valores">
+        <input type="number" name="system.pv.value" value="{{system.pv.value}}">
+        <span>/</span>
+        <input type="number" name="system.pv.max" value="{{system.pv.max}}" min="0">
+      </div>
+      <p class="sd-nota">Morre com <strong>{{system.pvMortais}} PV</strong></p>
+    </div>
+
+    <div class="sd-caixa sd-cp">
+      <h3>Coeficiente de Proteção</h3>
+      <div class="sd-grande">{{system.cp}}</div>
+      <p class="sd-nota">
+        vestes {{system.vestes.protecao}}
+        {{sinal system.atributos.destreza.linha.ataque}} DES
+        {{#if system.bonusNivelCP}}{{sinal system.bonusNivelCP}} nível{{/if}}
+        {{#if system.extras.cp}}{{sinal system.extras.cp}} extras{{/if}}
+      </p>
+      <label class="sd-vestes">
+        <input type="text" name="system.vestes.nome" value="{{system.vestes.nome}}" placeholder="Vestes">
+        <input type="number" name="system.vestes.protecao" value="{{system.vestes.protecao}}" min="0" title="Proteção">
+      </label>
+    </div>
+
+    <div class="sd-caixa sd-ba">
+      <h3>Bônus de Ataque</h3>
+      <button type="button" data-action="atacar" data-tipo="corpo" class="sd-ba-botao">
+        <em>corpo a corpo</em> <strong>{{sinal system.ba.corpo}}</strong>
+      </button>
+      <button type="button" data-action="atacar" data-tipo="distancia" class="sd-ba-botao">
+        <em>à distância</em> <strong>{{sinal system.ba.distancia}}</strong>
+      </button>
+      <label class="sd-nota">base da classe
+        <input type="number" name="system.base.ataque" value="{{system.base.ataque}}">
+      </label>
+    </div>
+
+    <div class="sd-caixa sd-jp">
+      <h3>Jogadas de Proteção</h3>
+      {{#each jps as |jp|}}
+        <div class="sd-jp-linha">
+          <button type="button" data-action="rolarJP" data-jp="{{jp.chave}}" title="{{jp.titulo}}">
+            {{jp.sigla}}
+          </button>
+          <input type="number" name="system.base.{{jp.campoBase}}" value="{{jp.base}}" title="Valor da classe">
+          <span class="sd-jp-mod" title="{{jp.origem}}">{{sinal jp.mod}}</span>
+        </div>
+      {{/each}}
+    </div>
+
+    <div class="sd-caixa sd-carga">
+      <h3>Carga</h3>
+      <p><em>leve</em> {{system.carga.leve}} kg</p>
+      <p><em>média</em> {{system.carga.media}} kg</p>
+      <p><em>pesada</em> {{system.carga.pesada}} kg</p>
+    </div>
+
+    <div class="sd-caixa sd-social">
+      <h3>Comunicação</h3>
+      <p><em>seguidores</em> {{system.seguidores}}</p>
+      <p><em>reação</em> {{sinal system.reacao}}%</p>
+      <p><em>idiomas extras</em> {{system.idiomasAdicionais}}</p>
+      {{#if system.analfabeto}}
+        <p class="sd-alerta">Analfabeto — fala, mas não lê nem escreve</p>
+      {{/if}}
+    </div>
+
+  </section>
+
+  <section class="sd-notas">
+    <h3>Notas</h3>
+    {{formInput schemaNotas value=system.notas name="system.notas"}}
+  </section>
+
+</form>
