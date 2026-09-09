@@ -2,7 +2,7 @@
   "id": "spacedragon",
   "title": "Space Dragon",
   "description": "Sistema para o Space Dragon — Livro Básico Aprimorado. Ficção científica pulp com as regras nativas do jogo: seis atributos próprios, Coeficiente de Proteção e as três Jogadas de Proteção.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -49,6 +49,6 @@
   "url": "https://github.com/Maicon-Lara/space-dragon-foundryvtt",
   "license": "LICENSE.md",
   "readme": "README.md",
-  "manifest": "https://raw.githubusercontent.com/Maicon-Lara/space-dragon-foundryvtt/main/system/system.json",
-  "download": "https://raw.githubusercontent.com/Maicon-Lara/space-dragon-foundryvtt/main/spacedragon.zip"
+  "manifest": "https://cdn.jsdelivr.net/gh/Maicon-Lara/space-dragon-foundryvtt@main/system/system.json",
+  "download": "https://cdn.jsdelivr.net/gh/Maicon-Lara/space-dragon-foundryvtt@main/spacedragon.zip"
 }
