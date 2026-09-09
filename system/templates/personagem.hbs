@@ -69,9 +69,10 @@
       <div class="sd-grande">{{system.cp}}</div>
       <p class="sd-nota">
         vestes {{system.vestes.protecao}}
-        {{sinal system.atributos.destreza.linha.ataque}} DES
-        {{#if system.bonusNivelCP}}{{sinal system.bonusNivelCP}} nível{{/if}}
-        {{#if system.extras.cp}}{{sinal system.extras.cp}} extras{{/if}}
+        &middot; DES {{sinal system.atributos.destreza.linha.ataque}}
+        {{#if system.bonusNivelCP}}&middot; nível {{sinal system.bonusNivelCP}}{{/if}}
+        {{#if system.extras.escudo}}&middot; escudo {{sinal system.extras.escudo}}{{/if}}
+        {{#if system.extras.cp}}&middot; extras {{sinal system.extras.cp}}{{/if}}
       </p>
       <label class="sd-vestes">
         <input type="text" name="system.vestes.nome" value="{{system.vestes.nome}}" placeholder="Vestes">
