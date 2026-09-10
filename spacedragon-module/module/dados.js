@@ -764,3 +764,30 @@ export const COLUNA_DERIVADA = {
     45
   ]
 };
+
+/**
+ * Colunas de atributo que a ficha mostra fora das caixas derivadas.
+ *
+ * A chave "constituicao.mortais" é com quantos pontos de vida NEGATIVOS o personagem
+ * morre — de −5 com Constituição 1 a −19 com 28–29. Não existe no Old Dragon 2,
+ * onde a morte é sempre em −10 fixo.
+ */
+export const COLUNA = {
+  "constituicao.mortais": [
+    -5,
+    -6,
+    -7,
+    -8,
+    -9,
+    -10,
+    -11,
+    -12,
+    -13,
+    -14,
+    -15,
+    -16,
+    -17,
+    -18,
+    -19
+  ]
+};

@@ -66,6 +66,9 @@ const derivadas = Object.fromEntries(
   Object.entries(DERIVADA).map(([a, c]) => [a, TABELAS[a].map((l) => l[c])])
 );
 
+// Colunas de atributo que a ficha usa fora das caixas derivadas.
+const OUTRAS = { "constituicao.mortais": TABELAS.constituicao.map((l) => l.mortais) };
+
 // O cabeçalho que o Aprimorado dá a cada coluna usada num teste.
 const ROTULO_COLUNA = {
   "forca.subjugar": "Subjugar",
@@ -115,5 +118,14 @@ export const TESTES = ${j(TESTES)};
  * As duas últimas são PORCENTAGEM, não modificador de d20.
  */
 export const COLUNA_DERIVADA = ${j(derivadas)};
+
+/**
+ * Colunas de atributo que a ficha mostra fora das caixas derivadas.
+ *
+ * A chave "constituicao.mortais" é com quantos pontos de vida NEGATIVOS o personagem
+ * morre — de −5 com Constituição 1 a −19 com 28–29. Não existe no Old Dragon 2,
+ * onde a morte é sempre em −10 fixo.
+ */
+export const COLUNA = ${j(OUTRAS)};
 `);
 console.log(`  ✔ module/dados.js: ${TESTES.length} testes, ${Object.keys(prog).length} progressões`);

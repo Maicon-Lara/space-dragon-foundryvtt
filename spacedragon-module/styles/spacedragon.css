@@ -106,3 +106,33 @@
 .spacedragon-testes .sd-alerta {
   cursor: help;
 }
+
+/* ── Danos Mortais no lugar das moedas ────────────────────────────────────
+ *
+ * A caixa .economy do sistema tem três colunas de moeda; ficam duas, e o
+ * layout de grade do sistema já as distribui. Só o essencial é redefinido. */
+
+.spacedragon-mortais .currency {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.spacedragon-mortais .sd-mortais,
+.spacedragon-mortais .sd-creditos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 3.5rem;
+}
+
+.spacedragon-mortais .sd-mortais input {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+.spacedragon-mortais .sd-creditos input {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}

@@ -20,9 +20,16 @@
  * jsdom.
  */
 
-/** Parser de HTML bem restrito: tags simples, atributos com aspas duplas. */
-const TAG = /<(\/?)([a-z0-9]+)((?:\s+[a-z-]+="[^"]*")*)\s*(\/?)>/gi;
-const ATRIBUTO = /([a-z-]+)="([^"]*)"/gi;
+/**
+ * Parser de HTML bem restrito: tags simples, atributos com aspas duplas — e
+ * atributos SEM valor, como `disabled` e `selected`.
+ *
+ * A primeira versão exigia `nome="valor"` sempre, e um `disabled` solto fazia a
+ * tag inteira não casar: o <input> sumia da árvore e o teste acusava um campo
+ * que na verdade existia. HTML de verdade tem atributos nus.
+ */
+const TAG = /<(\/?)([a-z0-9]+)((?:\s+[a-z-]+(?:="[^"]*")?)*)\s*(\/?)>/gi;
+const ATRIBUTO = /([a-z-]+)(?:="([^"]*)")?/gi;
 
 class No {
   constructor(tag = "div", atributos = {}) {
@@ -34,8 +41,42 @@ class No {
     this.ouvintes = [];
   }
 
+  /**
+   * Um classList de verdade, com add/remove/contains.
+   *
+   * A primeira versão devolvia um array puro, e `classList.contains(...)`
+   * estourava — Array tem `includes`, não `contains`. O erro caía no try/catch
+   * do painel e virava um aviso no console, que é exatamente o modo de falhar
+   * que este arquivo existe para impedir.
+   */
   get classList() {
-    return (this.atributos.class ?? "").split(/\s+/).filter(Boolean);
+    const dono = this;
+    const lista = () => (dono.atributos.class ?? "").split(/\s+/).filter(Boolean);
+    return {
+      contains: (c) => lista().includes(c),
+      includes: (c) => lista().includes(c),
+      add: (...cs) => {
+        const l = lista();
+        for (const c of cs) if (!l.includes(c)) l.push(c);
+        dono.atributos.class = l.join(" ");
+      },
+      remove: (...cs) => {
+        dono.atributos.class = lista().filter((c) => !cs.includes(c)).join(" ");
+      },
+      toString: () => lista().join(" "),
+      get length() { return lista().length; },
+    };
+  }
+
+  /** Só o setter: substitui os filhos pelo HTML dado. */
+  set innerHTML(html) {
+    this.filhos = [];
+    this.texto = "";
+    for (const no of analisa(html)) this.anexa(no);
+  }
+
+  get innerHTML() {
+    return this.filhos.map((f) => f.tag).join("");
   }
 
   get dataset() {
@@ -51,6 +92,19 @@ class No {
 
   get textContent() {
     return this.texto + this.filhos.map((f) => f.textContent).join("");
+  }
+
+  /**
+   * O setter existe porque o código de verdade escreve nele.
+   *
+   * Sem ele a atribuição estoura: módulo ESM roda em modo estrito, e atribuir a
+   * uma propriedade que só tem getter lança TypeError. O erro caía no
+   * try/catch da injeção e virava um aviso no console — de novo, o modo de
+   * falhar que este arquivo existe para impedir.
+   */
+  set textContent(v) {
+    this.filhos = [];
+    this.texto = String(v);
   }
 
   anexa(no) {
@@ -127,7 +181,7 @@ export function analisa(html) {
     const atributos = {};
     ATRIBUTO.lastIndex = 0;
     let a;
-    while ((a = ATRIBUTO.exec(attrs ?? ""))) atributos[a[1].toLowerCase()] = a[2];
+    while ((a = ATRIBUTO.exec(attrs ?? ""))) atributos[a[1].toLowerCase()] = a[2] ?? "";
 
     const no = atual.anexa(new No(tag.toLowerCase(), atributos));
     if (!autoFecha && !["br", "hr", "img", "input"].includes(tag.toLowerCase())) atual = no;

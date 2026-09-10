@@ -25,6 +25,7 @@ import { abrirTeste, rolar, preparar, TESTES } from "./testes.js";
 import { ligarPainel, diagnostico } from "./painel.js";
 import { aplicarModificadores, compararEscalas } from "./atributos.js";
 import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
+import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
@@ -71,6 +72,7 @@ Hooks.once("ready", () => {
   estendeNiveis();
   aplicarModificadores(game.settings.get(ID, "modificadores"));
   ligarPainel();
+  ligarCabecalho();
 
   // A API que as macros do compêndio chamam. Fica aqui, e não dentro da macro,
   // para que atualizar o módulo atualize a regra: uma macro já arrastada para
@@ -78,7 +80,7 @@ Hooks.once("ready", () => {
   game.spacedragon = {
     teste: abrirTeste, rolar, preparar, TESTES,
     pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
-    compararEscalas, diagnostico,
+    compararEscalas, diagnostico, danosMortais,
   };
 
   console.log(`${ID} | ${TESTES.length} testes prontos, nível até o ${NIVEL_MAXIMO}º`);

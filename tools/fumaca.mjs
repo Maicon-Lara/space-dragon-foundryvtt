@@ -221,3 +221,55 @@ if (erros.length) {
   process.exit(1);
 }
 console.log("  ✔ modificadores: escala do Space Dragon aplicada, e reversível");
+
+// ── As moedas viraram Danos Mortais? ───────────────────────────────────────
+//
+// A marcação abaixo é a da caixa .economy do character-sheet.hbs do
+// olddragon2e 2.6.0. Se o sistema mudar isso, o teste avisa em vez de a ficha
+// simplesmente continuar com peças de ouro.
+const CABECALHO = `
+<div class="economy border">
+  <label class="font-bold">Economia</label>
+  <div class="currency">
+    <div class="gp"><input name="system.economy.gp" type="text" value="120"></div>
+    <div class="sp"><input name="system.economy.sp" type="text" value="0"></div>
+    <div class="cp"><input name="system.economy.cp" type="text" value="0"></div>
+  </div>
+</div>`;
+
+const cab = monta(CABECALHO);
+// Constituição 9 → faixa 8-9 → morre em -9. O Old Dragon 2 mataria em -10 fixo.
+const atorCab = {
+  type: "character",
+  name: "Cobaia",
+  isOwner: true,
+  system: { class: { name: "Gatuno" }, level: 1, constituicao: 9, economy: { gp: 120 } },
+  update: async () => {},
+};
+
+const trocaCab = ganchos.filter((g) => g.nome === "renderOD2CharacterSheet");
+for (const g of trocaCab) g.fn({ actor: atorCab }, cab);
+
+const falhasCab = [];
+const rotulo = cab.querySelector(".economy label")?.textContent.trim();
+if (rotulo !== "Danos Mortais") falhasCab.push(`rótulo ficou "${rotulo}"`);
+
+const valorMortais = cab.querySelector(".sd-mortais input")?.atributos.value;
+if (valorMortais !== "-9") falhasCab.push(`danos mortais deu ${valorMortais}, esperava -9 para Constituição 9`);
+
+const cr = cab.querySelector(".sd-creditos input");
+if (cr?.atributos.name !== "system.economy.gp") falhasCab.push("os créditos não gravam em system.economy.gp");
+if (cr?.atributos.value !== "120") falhasCab.push(`créditos vieram ${cr?.atributos.value}, esperava 120`);
+
+if (cab.querySelectorAll(".sp").length || cab.querySelectorAll(".cp").length) {
+  falhasCab.push("prata ou cobre sobreviveram à troca");
+}
+// Rodar de novo não pode desfazer nem duplicar.
+for (const g of trocaCab) g.fn({ actor: atorCab }, cab);
+if (cab.querySelectorAll(".sd-mortais").length !== 1) falhasCab.push("renderizar duas vezes duplicou a caixa");
+
+if (falhasCab.length) {
+  for (const f of falhasCab) console.error(`  ✘ ${f}`);
+  process.exit(1);
+}
+console.log("  ✔ cabeçalho: moedas → Danos Mortais −9, créditos preservados em system.economy.gp");
