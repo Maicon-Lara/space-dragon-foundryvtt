@@ -43,12 +43,31 @@ Comunicação é reação e seguidores. Vive em `tools/data/onde-anotar.mjs`.
 
 ## O que já está pronto
 
+**O livro inteiro**, dos onze capítulos. Sem a arte, a diagramação e os logos,
+que os créditos excluem da permissão de reprodução.
+
 | Compêndio | Conteúdo |
 |---|---|
 | **Espécies** | Humano, Androide, Mutante — o Mutante escolhe as duas mutações na própria ficha |
-| **Classes** | as 4 do Cap. 3 e as 12 especializações, uma subpasta por classe |
-| **Tabelas** | T2-1 rolável, uma por coluna |
-| **Regras** | as seis tabelas de atributo, os subatributos do Cap. 4, e as 20 mutações por extenso |
+| **Classes** | as 4 do Cap. 3 e as 13 especializações, cada uma como classe própria que herda a base |
+| **Equipamento** | 32 armas e 8 vestes, do Cap. 5 |
+| **Poderes Mentais** | os 101 do Cap. 9, uma pasta por Grandeza |
+| **Aparatos** | 54 aparatos e 26 feitos científicos, do Cap. 8 |
+| **Bestiário** | 49 criaturas e 8 personagens de exemplo, do Cap. 11 |
+| **Macros** | um botão por teste de porcentagem, mais PV, dano crítico e ordem de ação |
+| **Tabelas** | T2-1 rolável, clichês e interesses de exploração |
+| **Regras** | dez journals: atributos, mutações, subatributos, testes, equipamento, aparatos, combate, naves, seção do mestre e aventuras |
+
+## O que o módulo conserta na ficha
+
+O sistema Old Dragon 2 calcula com a escala dele, que não é a do Space Dragon.
+O módulo troca os seis modificadores de atributo no modelo de dados, e com isso
+BAC, BAD, CP, PV e JP passam a sair certos. É uma opção, ligada por padrão, e
+desligar devolve o sistema ao original sem tocar em nada gravado.
+
+Também: o seletor de nível vai ao 20º, a aba de poderes vai à 10ª Grandeza, as
+moedas do cabeçalho viram Danos Mortais, e os rótulos passam a ser os do Space
+Dragon — Ciência, Intelecto, Comunicação, CP, JPR/JPF/JPM.
 
 ## As porcentagens
 

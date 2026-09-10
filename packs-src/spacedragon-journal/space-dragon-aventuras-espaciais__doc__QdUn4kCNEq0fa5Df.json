@@ -1,0 +1,135 @@
+{
+  "folder": null,
+  "name": "Space Dragon — Aventuras Espaciais",
+  "_id": "QdUn4kCNEq0fa5Df",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "A tripulação",
+      "type": "text",
+      "_id": "zCWLmsZdF2wnKpIQ",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Um de cada classe, mas não obrigatoriamente</h2>\n<p>Uma expedição costuma ter <strong>um membro de cada classe</strong>, o que\ngarante que a maioria das situações caia na especialidade de alguém. Nada impede\nvários da mesma classe, ou nenhum de alguma.</p>\n\n<h2>Contratando gente</h2>\n<p>Quando o grupo não basta, contrata-se. Os preços abaixo são por uma\n<strong>expedição de cerca de um mês</strong>.</p>\n\n<table><thead><tr><th>tripulante</th><th>preço por expedição</th></tr></thead><tbody><tr><td><strong>Guarda-costas</strong></td><td>$20.000</td></tr><tr><td><strong>Piloto</strong></td><td>$30.000</td></tr><tr><td><strong>Mecânico</strong></td><td>$50.000</td></tr><tr><td><strong>Médico</strong></td><td>$150.000</td></tr><tr><td><strong>Especialista</strong></td><td>$300.000</td></tr></tbody></table>\n\n<p><strong>Médico</strong> — pode criar aparatos e realizar feitos da\nespecialidade médica, mas a tripulação paga os materiais. O preço acima é para\nintegrar a tripulação: <strong>um tratamento avulso sai pela T5-5</strong>.\n⚠️ Médicos <strong>recusam-se a entrar em combate</strong>, embora fiquem por\nperto para os primeiros socorros.</p>\n\n<p><strong>Especialista</strong> — autoridade acadêmica ou científica sobre um\nassunto, que acompanha como consultor. Não é raro que o especialista seja o\n<strong>contratante</strong> da expedição; e se ele quiser algo que a viagem\npossa render, o preço da contratação cai.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!QdUn4kCNEq0fa5Df.zCWLmsZdF2wnKpIQ"
+    },
+    {
+      "sort": 200000,
+      "name": "Movimento",
+      "type": "text",
+      "_id": "PtxyTgsVZUheU8dc",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Tudo parte de 10 metros</h2>\n<p>Todo personagem tem movimento base de <strong>10 metros</strong>.\nO que muda esse número, <strong>nesta ordem</strong>:</p>\n\n<ol>\n<li>a <strong>gravidade</strong>, que transforma o base;</li>\n<li>o <strong>terreno</strong>, que desconta do resultado;</li>\n<li>a <strong>carga</strong>;</li>\n<li>a <strong>veste</strong>.</li>\n</ol>\n\n<p class=\"spacedragon-aviso\">⚠️ O livro é explícito: <em>\"a gravidade deve ser considerada antes do\nterreno\"</em>. A ordem muda o número.</p>\n\n<h2>Gravidade</h2>\n<p>A escala vai de <strong>0%</strong> a\n<strong>200%</strong>, com <strong>100%</strong>\nsendo a do planeta de origem da espécie humana. Ela mexe em\n<strong>três coisas ao mesmo tempo</strong>, e não na mesma direção:</p>\n\n<ul>\n<li><strong>Abaixo de 100%</strong> — o movimento vira uma porcentagem igual à\ngravidade, o peso cai e a <strong>capacidade de carga sobe</strong>, na mesma\nproporção.</li>\n<li><strong>Acima de 100%</strong> — o movimento perde tantos metros quanto for\na gravidade extra, o peso sobe e a <strong>carga cai</strong>.</li>\n</ul>\n\n<blockquote><p>Gravidade <strong>80%</strong>: movimento 8 metros, peso 20%\nmenor, carga 20% maior.</p>\n<p>Gravidade <strong>140%</strong>: movimento 6 metros, peso 40% maior, carga\n40% menor.</p></blockquote>\n\n<p class=\"spacedragon-aviso\">⚠️ Em <strong>0%</strong> ou <strong>acima de 200%</strong> não há locomoção\nnormal: falta peso ou sobra sobrecarga. Aparatos podem resolver, mas ficar muito\ntempo nesses extremos deixa sequelas, a critério do Mestre.</p>\n\n<h2>T6-2: Terreno</h2>\n<p class=\"spacedragon-aviso\">⚠️ As duas porcentagens são <strong>do Mestre</strong>. O livro pede que ele\nas role <strong>em segredo</strong>, depois de algum tempo naquele terreno.\nCabe aos jogadores deduzir que se perderam, ou se preparar para o que vem.</p>\n\n<table><thead><tr><th>terreno</th><th>penalidade no movimento</th><th>chance de se perder</th><th>chance de encontro</th></tr></thead><tbody><tr><td><strong>Planície</strong></td><td>—</td><td>15%</td><td>60%</td></tr><tr><td><strong>Colina</strong></td><td>-1 m</td><td>30%</td><td>60%</td></tr><tr><td><strong>Montanha</strong></td><td>-4 m</td><td>30%</td><td>40%</td></tr><tr><td><strong>Vulcão</strong></td><td>-4 m</td><td>30%</td><td>40%</td></tr><tr><td><strong>Pântano</strong></td><td>-3 m</td><td>50%</td><td>50%</td></tr><tr><td><strong>Geleira</strong></td><td>-2 m</td><td>50%</td><td>30%</td></tr><tr><td><strong>Tundra</strong></td><td>-1 m</td><td>30%</td><td>60%</td></tr><tr><td><strong>Deserto</strong></td><td>-2 m</td><td>50%</td><td>15%</td></tr><tr><td><strong>Floresta</strong></td><td>-2 m</td><td>30%</td><td>30%</td></tr><tr><td><strong>Cidade</strong></td><td>—</td><td>5%</td><td>5% ou 100%</td></tr></tbody></table>\n\n<h2>Carga</h2>\n<p>Os três limites — leve, média e pesada — saem do atributo\n<strong>Força</strong>, pela T1-1.</p>\n\n<table><thead><tr><th>carga</th><th>penalidade</th><th>quando acontece</th></tr></thead><tbody><tr><td><strong>Até a carga leve</strong></td><td>nenhuma</td><td>O caso mais comum.</td></tr><tr><td><strong>Acima da leve, até a média</strong></td><td>−1 metro</td><td>Levando equipamento importante ou provisões de viagem.</td></tr><tr><td><strong>Acima da média, até a pesada</strong></td><td>−2 metros</td><td>Equipamento pesado, mesmo dividindo o peso com outros.</td></tr><tr><td><strong>Acima da pesada</strong></td><td>não se move</td><td>O personagem fica sem locomoção.</td></tr></tbody></table>\n\n<h2>T6-3: Distância de deslocamento</h2>\n<p>A partir do movimento <strong>final</strong>, depois de tudo aplicado.</p>\n\n<table><thead><tr><th>tempo</th><th>distância</th></tr></thead><tbody><tr><td>1 segundo</td><td>movimento ÷ 6 metros</td></tr><tr><td>6 segundos</td><td>movimento × 1 metro</td></tr><tr><td>1 minuto</td><td>movimento × 10 metros</td></tr><tr><td>1 hora</td><td>movimento × 600 metros</td></tr><tr><td>1 dia</td><td>movimento × 4 quilômetros</td></tr><tr><td>1 semana</td><td>movimento × 30 quilômetros</td></tr><tr><td>1 mês</td><td>movimento × 120 quilômetros</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!QdUn4kCNEq0fa5Df.PtxyTgsVZUheU8dc"
+    },
+    {
+      "sort": 300000,
+      "name": "Explorando",
+      "type": "text",
+      "_id": "ORlReJC2E4x0x9qP",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Contato com alienígenas</h2>\n<p>Ao encontrar uma criatura inteligente, faz-se uma <strong>jogada de\nreação</strong>. A chance-base vem da <strong>afiliação da criatura</strong>:</p>\n\n<table><thead><tr><th>afiliação da criatura</th><th>chance-base</th></tr></thead><tbody><tr><td><strong>Leal</strong></td><td>70% de chance de ser amigável.</td></tr><tr><td><strong>Neutro</strong></td><td>50% de chance de ser amigável, 50% de ser hostil.</td></tr><tr><td><strong>Rebelde</strong></td><td>70% de chance de ser hostil.</td></tr></tbody></table>\n\n<p>Sobre essa base soma-se o <strong>ajuste de reação da Comunicação</strong> de\nquem tenta o contato. Rola-se percentual: <strong>igual ou abaixo</strong> e a\ncriatura age de modo amigável ou neutro; acima, hostil.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ <strong>O teste é por personagem</strong>, não um para o grupo. A mesma\ncriatura pode gostar de um e detestar outro.</p>\n\n<p>Hostilidade pode ser revertida com presentes ou negociação.</p>\n\n<h2>Luz e visibilidade</h2>\n<p>Nem sempre há sol, lua ou estrela — e quando há, pode não bastar. Cada\nequipamento traz na descrição o quanto ilumina e por quanto tempo.</p>\n\n<p>As mutações de visão mudam isso: <strong>visão ampliada</strong> enxerga a até\n15 metros em ambiente mal iluminado, <strong>mas não na escuridão total</strong>;\n<strong>visão diminuída</strong> tem metade da eficiência de um humano quando\nfalta luz.</p>\n\n<h2>Operar máquinas achadas por aí</h2>\n<p>Máquinas estranhas ou arcaicas, às vezes danificadas. O\n<strong>cientista</strong> usa operar máquinas para consertar e depois de novo\npara operar. O <strong>gatuno</strong> resolve com sabotagem. As outras classes\ntentam com a aptidão tecnológica da Ciência.</p>\n\n<h2>Acidentes e armadilhas</h2>\n<p>Em geral se resolvem com <strong>jogadas de proteção</strong>, para evitar ou\namenizar. Podem ser dano direto ou efeito específico, como veneno ou\nimobilização.</p>\n\n<p>O <strong>gatuno</strong> procura e desarma armadilhas com sabotagem; as\noutras classes tentam com a aptidão tecnológica.</p>\n\n<h2>O que o Capítulo 7 resolve</h2>\n<p>Falta de oxigênio e temperaturas extremas são citadas aqui, mas as regras de\ndano estão no capítulo de Combate.</p>\n\n<p><strong>Infecções e contaminações</strong> não têm regra fechada: o livro\nsugere perda gradual de PV, dano de atributo em Força ou Constituição, e\npenalidades em rolagens.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!QdUn4kCNEq0fa5Df.ORlReJC2E4x0x9qP"
+    }
+  ],
+  "flags": {},
+  "sort": 10000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!QdUn4kCNEq0fa5Df"
+}

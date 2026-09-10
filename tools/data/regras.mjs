@@ -128,8 +128,12 @@ realizar um poder mental. O Old Dragon 2 não trabalha assim, e o módulo
 <strong>não converte</strong> — as porcentagens estão como o livro as escreve, e
 se resolvem rolando percentual na mesa.</p>
 
-<h2>O que ainda não está aqui</h2>
-<p>Capítulos 6 (Aventuras Espaciais) e 11 (Seção do Mestre).</p>
+<h2>O livro inteiro está aqui</h2>
+<p>Os onze capítulos do <strong>Livro Básico Aprimorado</strong>, das tabelas de
+atributo ao bestiário.</p>
+
+<p>O que <strong>não</strong> está: a arte, a diagramação e os logos, que os
+créditos do livro excluem expressamente da permissão de reprodução.</p>
 `,
       },
     ],

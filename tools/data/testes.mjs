@@ -157,6 +157,18 @@ export const TESTES = [
 
   // ── Qualquer um ──
   {
+    chave: "reacao",
+    habilidade: null,
+    nome: "Reação de criatura inteligente",
+    classe: null,
+    // A base NÃO vem de tabela nenhuma: vem da afiliação da criatura, que quem
+    // conduz a cena informa. 70% para leal, 50% para neutro, 30% para rebelde.
+    // Por isso ela entra como situacional no diálogo, e a base fica em zero.
+    base: { atributo: "comunicacao", coluna: "reacao" },
+    ajuste: null,
+    nota: "Some a chance-base da afiliação da criatura no modificador de situação: 70 para leal, 50 para neutro, 30 para rebelde. O teste é POR PERSONAGEM, não um por grupo. Hostilidade pode ser revertida com presentes ou negociação.",
+  },
+  {
     chave: "clonagem",
     habilidade: null,
     nome: "Clonagem",

@@ -471,6 +471,25 @@ export const ATRIBUTO = {
       100
     ]
   },
+  "comunicacao": {
+    "reacao": [
+      -25,
+      -20,
+      -15,
+      -10,
+      -5,
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45
+    ]
+  },
   "constituicao": {
     "clonagem": [
       0,
@@ -498,6 +517,7 @@ export const ROTULO_COLUNA = {
   "forca.subjugar": "Subjugar",
   "ciencia.aptidao": "Aptidão Tecnológica",
   "intelecto.poderMental": "Realizar e Aprender Poder Mental",
+  "comunicacao.reacao": "reacao",
   "constituicao.clonagem": "Probabilidade de Clonagem"
 };
 
@@ -638,6 +658,18 @@ export const TESTES = [
     },
     "ajuste": null,
     "nota": "A chance sai INTEIRA do Intelecto, pela T1-4 — a tabela da classe não entra. O que a classe dá é o alcance mental diário, que é orçamento, não rolagem."
+  },
+  {
+    "chave": "reacao",
+    "habilidade": null,
+    "nome": "Reação de criatura inteligente",
+    "classe": null,
+    "base": {
+      "atributo": "comunicacao",
+      "coluna": "reacao"
+    },
+    "ajuste": null,
+    "nota": "Some a chance-base da afiliação da criatura no modificador de situação: 70 para leal, 50 para neutro, 30 para rebelde. O teste é POR PERSONAGEM, não um por grupo. Hostilidade pode ser revertida com presentes ou negociação."
   },
   {
     "chave": "clonagem",

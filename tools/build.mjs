@@ -37,6 +37,7 @@ import { navesJournal } from "./data/naves-journal.mjs";
 import { CRIATURAS } from "./data/bestiario.mjs";
 import { mestreJournal } from "./data/mestre-journal.mjs";
 import { CLICHES, INTERESSES } from "./data/mestre.mjs";
+import { aventurasJournal } from "./data/aventuras-journal.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -616,7 +617,7 @@ async function main() {
   await compila(P_ESPECIES, esp);
 
   await compila(P_TABELAS, montaTabelas());
-  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal, combateJournal, navesJournal, mestreJournal];
+  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal, combateJournal, navesJournal, mestreJournal, aventurasJournal];
   let best = aninhaPastas(montaBestiario());
   pintaPastas(best, PALETA);
   await compila(P_BESTIARIO, best);

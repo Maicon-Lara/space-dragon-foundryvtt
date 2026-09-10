@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Clonagem",
+  "name": "Reação de criatura inteligente",
   "type": "script",
-  "_id": "GYpGzc7bnmBzUD30",
+  "_id": "FhkRVtkTjouGNdya",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"clonagem\");",
+  "command": "game.spacedragon.teste(\"reacao\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 1200,
-  "_key": "!macros!GYpGzc7bnmBzUD30"
+  "sort": 1100,
+  "_key": "!macros!FhkRVtkTjouGNdya"
 }
