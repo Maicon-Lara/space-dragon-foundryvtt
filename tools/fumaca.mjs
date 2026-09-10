@@ -251,8 +251,13 @@ const trocaCab = ganchos.filter((g) => g.nome === "renderOD2CharacterSheet");
 for (const g of trocaCab) g.fn({ actor: atorCab }, cab);
 
 const falhasCab = [];
-const rotulo = cab.querySelector(".economy label")?.textContent.trim();
-if (rotulo !== "Danos Mortais") falhasCab.push(`rótulo ficou "${rotulo}"`);
+// A moldura e o título saem: sobram dois campos rotulados, como nas outras
+// caixas do cabeçalho.
+const economia = cab.querySelector(".economy");
+if (economia?.classList.contains("border")) falhasCab.push("a moldura da caixa sobreviveu");
+const rotuloMortais = cab.querySelector(".sd-mortais label")?.textContent.trim();
+if (rotuloMortais !== "Danos Mortais") falhasCab.push(`o campo ficou rotulado "${rotuloMortais}"`);
+if (cab.querySelectorAll(".sd-mortais label").length !== 1) falhasCab.push("rótulo duplicado");
 
 const valorMortais = cab.querySelector(".sd-mortais input")?.atributos.value;
 if (valorMortais !== "-9") falhasCab.push(`danos mortais deu ${valorMortais}, esperava -9 para Constituição 9`);
@@ -272,4 +277,4 @@ if (falhasCab.length) {
   for (const f of falhasCab) console.error(`  ✘ ${f}`);
   process.exit(1);
 }
-console.log("  ✔ cabeçalho: moedas → Danos Mortais −9, créditos preservados em system.economy.gp");
+console.log("  ✔ cabeçalho: sem moldura, campo \"Danos Mortais\" −9, créditos em system.economy.gp");

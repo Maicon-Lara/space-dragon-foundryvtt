@@ -118,12 +118,32 @@
   justify-content: center;
 }
 
+/* Sem moldura nem título: a caixa deixa de ser um bloco e vira só dois
+ * campos, como as outras do cabeçalho. */
+.spacedragon-mortais {
+  border: none;
+  padding: 0;
+}
+
 .spacedragon-mortais .sd-mortais,
 .spacedragon-mortais .sd-creditos {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* "Danos Mortais" é rótulo longo; sem largura mínima ele quebra em duas
+ * linhas e desalinha do CR ao lado. */
+.spacedragon-mortais .sd-mortais {
+  min-width: 6rem;
+}
+
+.spacedragon-mortais .sd-creditos {
   min-width: 3.5rem;
+}
+
+.spacedragon-mortais .label label {
+  white-space: nowrap;
 }
 
 .spacedragon-mortais .sd-mortais input {

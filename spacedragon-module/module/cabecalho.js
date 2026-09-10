@@ -61,17 +61,23 @@ function troca(app, elemento) {
     const con = Number(ator.system?.[CAMPO_NA_FICHA.constituicao]) || 0;
     const creditos = Number(ator.system?.economy?.gp) || 0;
 
+    // Fora a moldura e o título. Sobram dois campos rotulados, que é o que as
+    // outras caixas do cabeçalho fazem — a moldura em volta de duas coisas sem
+    // parentesco só empilhava borda com borda.
     caixa.classList.add(MARCA);
-    const rotulo = caixa.querySelector("label");
-    if (rotulo) rotulo.textContent = "Danos Mortais";
+    caixa.classList.remove("border");
+    caixa.querySelector("label")?.remove();
 
     const moedas = caixa.querySelector(".currency");
     if (!moedas) return;
 
+    // O rótulo do campo é "Danos Mortais": o número JÁ é uma quantidade de
+    // pontos de vida, e escrever "PV" embaixo dele dizia o óbvio no lugar do
+    // que importa.
     moedas.innerHTML =
       `<div class="sd-mortais" title="Constituição ${con} — o personagem morre com ${mortais} pontos de vida, pela T1-3">` +
       `<input type="text" value="${mortais}" disabled>` +
-      `<div class="label"><label class="text-xs font-bold">PV</label></div>` +
+      `<div class="label"><label class="text-xs font-bold">Danos Mortais</label></div>` +
       `</div>` +
       `<div class="sd-creditos" title="Créditos. Gravados no campo de peças de ouro do sistema.">` +
       `<input type="text" name="system.economy.gp" value="${creditos}" data-dtype="Number">` +
