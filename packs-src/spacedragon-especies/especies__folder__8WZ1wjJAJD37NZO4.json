@@ -1,0 +1,22 @@
+{
+  "name": "Espécies",
+  "sorting": "m",
+  "folder": null,
+  "type": "Item",
+  "_id": "8WZ1wjJAJD37NZO4",
+  "description": "",
+  "sort": 0,
+  "color": "#2f5d7c",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!8WZ1wjJAJD37NZO4"
+}

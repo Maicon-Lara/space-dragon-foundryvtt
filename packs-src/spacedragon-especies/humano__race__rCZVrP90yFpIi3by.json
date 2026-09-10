@@ -1,0 +1,39 @@
+{
+  "folder": "8WZ1wjJAJD37NZO4",
+  "name": "Humano",
+  "type": "race",
+  "_id": "rCZVrP90yFpIi3by",
+  "img": "systems/olddragon2e/assets/icons/alignment.svg",
+  "system": {
+    "flavor": "<p><em>Homo sapiens</em> — a espécie mais comum da galáxia.</p>",
+    "description": "<p>Primatas de um planeta esquecido e remoto. De longe a espécie inteligente mais comum da galáxia, reivindicam o título de primeiros seres sapientes do universo — e, pela superioridade numérica e influência, raramente encontram quem conteste.</p><p>Criaram o <em>Homo machina</em>, e são eles que regulam quais populações humanas divergiram o bastante para virarem <em>Homo novus</em>.</p><p><strong>Maturidade</strong> aos 16 anos · <strong>expectativa de vida</strong> de cerca de 80 anos galácticos · <strong>altura</strong> de 1,60 m a 2,00 m.</p>",
+    "movement": 9,
+    "movement_fly": 0,
+    "movement_notes": "",
+    "infravision": 0,
+    "infravision_notes": "",
+    "alignment_tendency": "none",
+    "alignment_notes": "Nenhuma: há culturas humanas com as mais diversas crenças e valores.",
+    "race_abilities": [
+      "Compendium.spacedragon.spacedragon-especies.Item.gwSt60CaN6CDuFN9"
+    ]
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 1000,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!rCZVrP90yFpIi3by"
+}

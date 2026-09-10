@@ -1,0 +1,189 @@
+{
+  "folder": null,
+  "name": "T2-1: Mutações — Aprimoramentos",
+  "_id": "shYCqnlZCVtcPoXr",
+  "img": "systems/olddragon2e/assets/icons/d6.svg",
+  "description": "Role 1d10. Role também na tabela de Degenerações; se os dois dados derem o MESMO número, rerrole os dois.",
+  "results": [
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "qWxysNzGqSJU89qO",
+      "name": "",
+      "description": "Recuperação Acelerada",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.qWxysNzGqSJU89qO"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "89bykts9vzbnieLH",
+      "name": "",
+      "description": "Cognição Acelerada",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.89bykts9vzbnieLH"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "mkjyKTzItKhlJZY4",
+      "name": "",
+      "description": "Mente Avançada",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.mkjyKTzItKhlJZY4"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "f1hHymGeG55tRahv",
+      "name": "",
+      "description": "Sistema Imunológico Evoluído",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.f1hHymGeG55tRahv"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "QAnoz97zpJ7577ub",
+      "name": "",
+      "description": "Longevidade",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.QAnoz97zpJ7577ub"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "AMonqPjdCtwq4XeC",
+      "name": "",
+      "description": "Funções Vitais Superiores",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.AMonqPjdCtwq4XeC"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "Og9VmwUMl4ybfde2",
+      "name": "",
+      "description": "Sentido Ampliado",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.Og9VmwUMl4ybfde2"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "I48vFyCuKhEV5LGo",
+      "name": "",
+      "description": "Atributo Ampliado",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.I48vFyCuKhEV5LGo"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "nfqZRa3Dxgi4wIeD",
+      "name": "",
+      "description": "Poderes Mentais",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.nfqZRa3Dxgi4wIeD"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "fC96M26KG3fy2SCb",
+      "name": "",
+      "description": "Superpoderes",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!shYCqnlZCVtcPoXr.fC96M26KG3fy2SCb"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "formula": "1d10",
+  "sort": 10,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!tables!shYCqnlZCVtcPoXr"
+}

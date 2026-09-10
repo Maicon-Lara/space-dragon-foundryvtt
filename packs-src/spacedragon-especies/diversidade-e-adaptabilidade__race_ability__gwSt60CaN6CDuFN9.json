@@ -1,0 +1,44 @@
+{
+  "folder": "8WZ1wjJAJD37NZO4",
+  "name": "Diversidade e Adaptabilidade",
+  "type": "race_ability",
+  "_id": "gwSt60CaN6CDuFN9",
+  "img": "systems/olddragon2e/assets/icons/diamond.svg",
+  "system": {
+    "description": "<p>A diversidade de genes e culturas concede <strong>+2 em um atributo à escolha do jogador</strong> e <strong>−2 em outro</strong>.</p><p>A cada <strong>4 níveis</strong>, escolha um atributo e aumente-o em <strong>1 ponto</strong>.</p>",
+    "xp": null,
+    "jp": {
+      "jpc": false,
+      "jpd": false,
+      "jps": false
+    },
+    "bonus_damage": 0,
+    "bonus_damage_condition": "none",
+    "bonus_damage_condition_2": "none",
+    "rogue_talent": "none",
+    "rogue_talent_2": "none",
+    "daily_uses": 0,
+    "natural_armor": 0,
+    "load_modifier": 0,
+    "max_load_override": 0,
+    "armor_weight_modifier": 0
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!gwSt60CaN6CDuFN9"
+}

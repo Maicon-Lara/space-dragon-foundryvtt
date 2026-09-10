@@ -1,0 +1,44 @@
+{
+  "folder": "n0r4NL3HxgoCL5AY",
+  "name": "Funções Vitais Debilitadas",
+  "type": "race_ability",
+  "_id": "5DPNaOynXN9cfEjE",
+  "img": "systems/olddragon2e/assets/icons/diamond.svg",
+  "system": {
+    "description": "<p><em>Genótipo:</em> As funções vitais do personagem se dão em ritmo mais lento que o normal.</p><p><em>Fenótipo:</em> Aspecto doentio.</p><p><strong>Funcionamento:</strong> O DV da classe do personagem torna-se uma categoria menor. O d4 torna-se d2, o d6 torna-se d4, o d8 torna-se d6 e o d10 torna-se d8.</p>",
+    "xp": null,
+    "jp": {
+      "jpc": false,
+      "jpd": false,
+      "jps": false
+    },
+    "bonus_damage": 0,
+    "bonus_damage_condition": "none",
+    "bonus_damage_condition_2": "none",
+    "rogue_talent": "none",
+    "rogue_talent_2": "none",
+    "daily_uses": 0,
+    "natural_armor": 0,
+    "load_modifier": 0,
+    "max_load_override": 0,
+    "armor_weight_modifier": 0
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 600,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!5DPNaOynXN9cfEjE"
+}

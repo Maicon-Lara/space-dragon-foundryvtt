@@ -1,0 +1,189 @@
+{
+  "folder": null,
+  "name": "T2-1: Mutações — Degenerações",
+  "_id": "BUBh4MGbfnCXL6aA",
+  "img": "systems/olddragon2e/assets/icons/d6.svg",
+  "description": "Role 1d10. Role também na tabela de Aprimoramentos; se os dois dados derem o MESMO número, rerrole os dois.",
+  "results": [
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "isipLWdceFFZIyGc",
+      "name": "",
+      "description": "Recuperação Lenta",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.isipLWdceFFZIyGc"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "M1d4GBzSUzAyzor3",
+      "name": "",
+      "description": "Cognição Retardada",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.M1d4GBzSUzAyzor3"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "6uZmiOfjlJliwSY0",
+      "name": "",
+      "description": "Mente Simplificada",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.6uZmiOfjlJliwSY0"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "sTCVyJGckITpqFwG",
+      "name": "",
+      "description": "Sistema Imunológico Vulnerável",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.sTCVyJGckITpqFwG"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "ZcqGzAey8OsnTudW",
+      "name": "",
+      "description": "Baixa Expectativa de Vida",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.ZcqGzAey8OsnTudW"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "Ekui5qh0yIvA1Z9N",
+      "name": "",
+      "description": "Funções Vitais Debilitadas",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.Ekui5qh0yIvA1Z9N"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "1cNZkLsbefJ5qPMl",
+      "name": "",
+      "description": "Sentido Diminuído",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.1cNZkLsbefJ5qPMl"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "UUZtVfbke7JFxHXC",
+      "name": "",
+      "description": "Atributo Diminuído",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.UUZtVfbke7JFxHXC"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "EHUiwsmKRQxRjRn2",
+      "name": "",
+      "description": "Dissonância Mental",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.EHUiwsmKRQxRjRn2"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "khKpSnSQxvSvNrSi",
+      "name": "",
+      "description": "Involução",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!BUBh4MGbfnCXL6aA.khKpSnSQxvSvNrSi"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "formula": "1d10",
+  "sort": 10,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!tables!BUBh4MGbfnCXL6aA"
+}

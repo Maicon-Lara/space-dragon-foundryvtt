@@ -1,0 +1,44 @@
+{
+  "folder": "8WZ1wjJAJD37NZO4",
+  "name": "Balanço Genético",
+  "type": "race_ability",
+  "_id": "uVoYyqUcytHuC74f",
+  "img": "systems/olddragon2e/assets/icons/diamond.svg",
+  "system": {
+    "description": "<p>Role <strong>2d10</strong> na tabela <strong>T2-1</strong>: um dado na coluna de <strong>aprimoramentos</strong>, o outro na de <strong>degenerações</strong>.</p><p><strong>Resultados iguais são rerrolados</strong> até saírem diferentes — sem isso sairia, por exemplo, <em>Recuperação acelerada</em> com <em>Recuperação lenta</em>, que se anulam.</p><p>Use a tabela rolável <strong>T2-1: Mutações</strong> do compêndio de Tabelas, e arraste as duas mutações sorteadas do compêndio <strong>Mutações</strong> para a ficha.</p>",
+    "xp": null,
+    "jp": {
+      "jpc": false,
+      "jpd": false,
+      "jps": false
+    },
+    "bonus_damage": 0,
+    "bonus_damage_condition": "none",
+    "bonus_damage_condition_2": "none",
+    "rogue_talent": "none",
+    "rogue_talent_2": "none",
+    "daily_uses": 0,
+    "natural_armor": 0,
+    "load_modifier": 0,
+    "max_load_override": 0,
+    "armor_weight_modifier": 0
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!uVoYyqUcytHuC74f"
+}

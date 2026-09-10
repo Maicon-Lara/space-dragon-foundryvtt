@@ -1,0 +1,40 @@
+{
+  "folder": "8WZ1wjJAJD37NZO4",
+  "name": "Mutante",
+  "type": "race",
+  "_id": "g97oSmh2QldqZ5yT",
+  "img": "systems/olddragon2e/assets/icons/alignment.svg",
+  "system": {
+    "flavor": "<p><em>Homo novus</em> — todo aprimoramento vem com uma degeneração.</p>",
+    "description": "<p>A mistura dos genes humanos por quase um milhão de anos gerou variações tão distantes da linha evolutiva padrão que se convencionou classificar quem as carrega como <em>Homo novus</em>. A chance de um bebê humano nascer mutante é de cerca de <strong>0,1%</strong> — mas com a população da galáxia passando dos trilhões, são milhões de indivíduos. Em comunidades isoladas a probabilidade pode chegar a 100%.</p><p>Enfrentam mais resistência que os <em>Homo machina</em>, e em geral consideram o termo \"mutante\" ofensivo.</p><p><strong>O balanço genético:</strong> todo aprimoramento evolutivo vem acompanhado de uma degeneração. Não há um sem o outro.</p>",
+    "movement": 9,
+    "movement_fly": 0,
+    "movement_notes": "",
+    "infravision": 0,
+    "infravision_notes": "",
+    "alignment_tendency": "none",
+    "alignment_notes": "",
+    "race_abilities": [
+      "Compendium.spacedragon.spacedragon-especies.Item.uVoYyqUcytHuC74f",
+      "Compendium.spacedragon.spacedragon-especies.Item.wwsMeZIURd6IKcBA"
+    ]
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 3000,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!g97oSmh2QldqZ5yT"
+}

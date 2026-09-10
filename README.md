@@ -1,65 +1,86 @@
-# Space Dragon — sistema para Foundry VTT
+# Space Dragon — módulo para Foundry VTT
 
-Sistema **nativo** para o *Space Dragon — Livro Básico Aprimorado*. Não é um
-módulo sobre o Old Dragon 2: as regras são outras, e forçá-las no OD2 quebraria
-metade delas.
+O conteúdo do *Space Dragon — Livro Básico Aprimorado* como compêndios para o
+sistema **Old Dragon 2**, seguindo as equivalências de *Jogando Space Dragon com
+Old Dragon 2*, de Francisco Martellini.
 
-> **Estado: 0.1.0.** As seis tabelas de atributo e a ficha de personagem estão
-> prontas e conferidas contra o livro. O resto do livro ainda não.
+> **Estado: 0.2.0.** Capítulos 1 e 2 portados. O resto do livro ainda não.
 
-## Por que sistema e não módulo
+## O que ele é
 
-Não é diferença de nome — é de forma:
+Um **módulo de conteúdo** para o sistema `olddragon2e` — não um sistema próprio.
+O sistema continua sendo o do Old Dragon 2; este módulo só entrega compêndios.
 
-| | Space Dragon | Old Dragon 2 |
-|---|---|---|
-| Escala de atributo | 1 a **29**, faixas de dois | 3 a 18, faixas irregulares |
-| Faixa neutra | **10–11** | 9–12 |
-| Defesa | **CP** (Coeficiente de Proteção) | CA |
-| Colunas por atributo | **próprias de cada um** | um modificador só |
-| Porcentagens | por toda parte | não usa |
+## A armadilha que define o módulo
 
-Constituição 9 dá **−1** no Space Dragon e **0** no Old Dragon 2. Força tem
-carga em kg, Ciência devolve um **dado** de robôs desativados, Comunicação dá
-número de seguidores. Não existe "o modificador" único que a ficha do OD2
-pressupõe.
+Space Dragon e Old Dragon 2 **não têm os mesmos atributos**, e a equivalência não
+é a que o nome sugere:
 
-## O que já funciona
+| Space Dragon | Old Dragon 2 |
+|---|---|
+| Força | Força |
+| Destreza | Destreza |
+| Constituição | Constituição |
+| **Ciência** | **Inteligência** |
+| **Intelecto** | **Sabedoria** |
+| **Comunicação** | Carisma |
 
-**As seis tabelas** (`system/scripts/atributos.mjs`), transcritas de T1-1 a T1-6
-e conferidas em 13 pontos contra o livro, mais a checagem de que as 15 faixas
-cobrem 1–29 sem buraco.
+**Intelecto vira Sabedoria, não Inteligência.** O guia de Francisco Martellini
+justifica: o Intelecto "tem uma semelhança maior com a Sabedoria do que com a
+Inteligência, sendo usado inclusive nas Jogadas de Proteção". Mapear pelo nome
+parecido inverte dois atributos no módulo inteiro.
 
-**A ficha de personagem**, com tudo derivando das tabelas e nada de derivado
-gravado no banco:
+A tabela vive em `tools/data/conversao.mjs` e tem teste automático.
 
-- os seis atributos, cada um mostrando as próprias colunas
-- **CP** = vestes + ajuste de Destreza + bônus de nível (T4-1) + extras
-- **BA** em duas vertentes: corpo a corpo por Força, à distância por Destreza
-- **JPR / JPF / JPM**, cada uma com o seu atributo
-- carga, seguidores, reação, idiomas — e o aviso de **analfabeto** com
-  Comunicação até 6
-- onde o personagem morre, pela Constituição (T1-3)
+## O que já está pronto
 
-**Três rolagens**, e o sentido da comparação muda entre elas:
+| Compêndio | Conteúdo |
+|---|---|
+| **Espécies** | Humano, Androide, Mutante — com os traços mecânicos |
+| **Mutações** | as 20 da T2-1, com as subtabelas T2-2 a T2-5 embutidas |
+| **Tabelas** | T2-1 rolável, uma por coluna |
+| **Regras** | a conversão, as tabelas nativas T1-1 a T1-6, e os limites |
 
-| Rolagem | Alvo | Sucesso |
-|---|---|---|
-| Teste de atributo | o próprio valor | **igual ou menor** |
-| Ataque | CP do alvo | igual ou maior |
-| Jogada de proteção | valor da classe | igual ou maior |
+## Onde a ficha do OD2 mostra o número errado
 
-O teste de atributo é o único invertido. Por isso cada rolagem é uma função
-separada, e não um parâmetro — trocar o sinal sem perceber seria fácil demais.
+A tabela do Space Dragon vai de 1 a 29; a do OD2 para em 20 e não tem a faixa do
+1 isolada. Nos valores **1 e de 21 a 29** os dois discordam, e a ficha calcula
+pela tabela dela. O Mestre corrige à mão — não há como consertar de dentro de um
+módulo, e está avisado no journal.
+
+## As porcentagens
+
+Subjugar, furtividade, clonagem, aptidão tecnológica e a chance de poder mental
+são `%`, e o OD2 não trabalha assim. Estão **transcritas, não convertidas**.
+
+## Estrutura
+
+```
+tools/data/     o conteúdo — é AQUI que se edita
+  conversao.mjs   a equivalência SD → OD2, com teste
+  atributos.mjs   as tabelas nativas T1-1..T1-6
+  mutacoes.mjs    as 20 mutações e as subtabelas
+  especies.mjs    Humano, Androide, Mutante
+  regras.mjs      o journal
+packs-src/      JSON legível — saída do build, entra no git para se diffar
+spacedragon-module/   o que o Foundry carrega
+```
+
+```
+npm install
+npm run publicar    # build + zip
+```
+
+`packs-src/` e os LevelDB **nunca na mão**: são saída do build.
 
 ## O livro, capítulo a capítulo
 
 | Capítulo | Págs. | Estado |
 |---|--:|---|
-| 1 — Atributos | 9 | ✅ as seis tabelas |
-| 2 — Espécies | 15 | ⬜ Humano · Androide · Mutante |
+| 1 — Atributos | 9 | ✅ conversão e tabelas nativas |
+| 2 — Espécies | 15 | ✅ as três, com as 20 mutações |
 | 3 — Classes | 24 | ⬜ Cientista · Cosmonauta · Gatuno · Mentálico |
-| 4 — Subatributos | 6 | 🟡 na ficha; falta idiomas como lista |
+| 4 — Subatributos | 6 | ⬜ |
 | 5 — Créditos e Equipamento | 10 | ⬜ |
 | 6 — Aventuras Espaciais | 10 | ⬜ |
 | 7 — Combate e Danos | 16 | ⬜ |
@@ -67,33 +88,6 @@ separada, e não um parâmetro — trocar o sinal sem perceber seria fácil dema
 | 9 — Poderes Mentais | 41 | ⬜ |
 | 10 — Espaçonaves e Estações | 15 | ⬜ |
 | 11 — Seção do Mestre | 56 | ⬜ |
-
-## Estrutura
-
-```
-system/            o que o Foundry carrega
-  system.json      manifesto
-  scripts/
-    atributos.mjs  as tabelas T1-1..T1-6 — a fundação
-    modelos.mjs    schema e tudo o que é derivado
-    ficha-*.mjs    a ficha e as rolagens
-  templates/       Handlebars
-  styles/
-```
-
-Para instalar em desenvolvimento, aponte um link de `Data/systems/spacedragon`
-para a pasta `system/`.
-
-## Pendências conhecidas
-
-**As porcentagens.** Subjugar, furtividade, clonagem, aptidão tecnológica e a
-chance de poder mental são `%`. Estão **transcritas fielmente**, e a ficha as
-mostra, mas não há rolagem percentual ligada ainda. Há uma proposta de conversão
-no cofre (`_regras/Proposta - Substituir as porcentagens.md`) que ainda não li.
-
-**Base de ataque e de JP são digitadas à mão.** Elas vêm da classe, e as classes
-ainda não existem como item. A ficha já serve na mesa; quando o Capítulo 3
-entrar, esses campos passam a ser calculados.
 
 ## Licença
 

@@ -1,0 +1,44 @@
+{
+  "folder": "lk2gbTkZbDqcrKO0",
+  "name": "Sistema Imunológico Evoluído",
+  "type": "race_ability",
+  "_id": "tWclI6pdPh5H7YyD",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p><em>Genótipo:</em> Os anticorpos do personagem combatem agentes nocivos com muita eficácia.</p><p><em>Fenótipo:</em> Saúde inabalável.</p><p><strong>Funcionamento:</strong> Garante um bônus de +2 em qualquer JPF para resistir a doenças, infecções e outros males que não envolvam ferimentos ou traumas físicos.</p>",
+    "xp": null,
+    "jp": {
+      "jpc": false,
+      "jpd": false,
+      "jps": false
+    },
+    "bonus_damage": 0,
+    "bonus_damage_condition": "none",
+    "bonus_damage_condition_2": "none",
+    "rogue_talent": "none",
+    "rogue_talent_2": "none",
+    "daily_uses": 0,
+    "natural_armor": 0,
+    "load_modifier": 0,
+    "max_load_override": 0,
+    "armor_weight_modifier": 0
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 400,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!tWclI6pdPh5H7YyD"
+}
