@@ -1,0 +1,147 @@
+/**
+ * Um DOM de brinquedo, só com o que o painel usa.
+ *
+ * ── POR QUE NÃO jsdom ───────────────────────────────────────────────────────
+ *
+ * Porque o que precisa ser testado é minúsculo e específico: quatro seletores
+ * de classe e um insertAdjacentHTML. Puxar uma dependência de dezenas de megas
+ * para isso seria desproporcional, e o projeto não tem nenhuma dependência de
+ * teste hoje.
+ *
+ * ── O QUE ELE COBRE ─────────────────────────────────────────────────────────
+ *
+ * Seletores por classe, simples ou descendentes (".class-abilities .item"),
+ * `dataset`, `textContent`, `remove()`, `addEventListener` e
+ * `insertAdjacentHTML("beforeend")`. É o suficiente para provar que o painel
+ * ACHA as habilidades e ENFIA os botões no lugar certo.
+ *
+ * ⚠️ Não é um navegador. Não cobre CSS, layout, nem eventos de verdade. Se um
+ * dia o painel precisar de algo além disto, é sinal de que chegou a hora do
+ * jsdom.
+ */
+
+/** Parser de HTML bem restrito: tags simples, atributos com aspas duplas. */
+const TAG = /<(\/?)([a-z0-9]+)((?:\s+[a-z-]+="[^"]*")*)\s*(\/?)>/gi;
+const ATRIBUTO = /([a-z-]+)="([^"]*)"/gi;
+
+class No {
+  constructor(tag = "div", atributos = {}) {
+    this.tag = tag;
+    this.atributos = atributos;
+    this.filhos = [];
+    this.pai = null;
+    this.texto = "";
+    this.ouvintes = [];
+  }
+
+  get classList() {
+    return (this.atributos.class ?? "").split(/\s+/).filter(Boolean);
+  }
+
+  get dataset() {
+    const d = {};
+    for (const [k, v] of Object.entries(this.atributos)) {
+      if (!k.startsWith("data-")) continue;
+      // data-item-id → itemId, como o DOM de verdade faz.
+      const nome = k.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+      d[nome] = v;
+    }
+    return d;
+  }
+
+  get textContent() {
+    return this.texto + this.filhos.map((f) => f.textContent).join("");
+  }
+
+  anexa(no) {
+    no.pai = this;
+    this.filhos.push(no);
+    return no;
+  }
+
+  remove() {
+    if (!this.pai) return;
+    this.pai.filhos = this.pai.filhos.filter((f) => f !== this);
+    this.pai = null;
+  }
+
+  addEventListener(tipo, fn) {
+    this.ouvintes.push({ tipo, fn });
+  }
+
+  /** Dispara um clique, como o navegador faria. */
+  clique(extra = {}) {
+    const ev = { preventDefault() {}, stopPropagation() {}, currentTarget: this, ...extra };
+    for (const o of this.ouvintes) if (o.tipo === "click") o.fn(ev);
+  }
+
+  *descendentes() {
+    for (const f of this.filhos) {
+      yield f;
+      yield* f.descendentes();
+    }
+  }
+
+  /** Só `.classe`, `tag` e descendência por espaço. É tudo o que o painel usa. */
+  casa(parte) {
+    if (parte.startsWith(".")) return this.classList.includes(parte.slice(1));
+    return this.tag === parte;
+  }
+
+  querySelectorAll(seletor) {
+    const partes = seletor.trim().split(/\s+/);
+    let atuais = [...this.descendentes()].filter((n) => n.casa(partes[0]));
+    for (const p of partes.slice(1)) {
+      atuais = atuais.flatMap((n) => [...n.descendentes()].filter((d) => d.casa(p)));
+    }
+    return [...new Set(atuais)];
+  }
+
+  querySelector(seletor) {
+    return this.querySelectorAll(seletor)[0] ?? null;
+  }
+
+  insertAdjacentHTML(posicao, html) {
+    if (posicao !== "beforeend") throw new Error(`posição não suportada: ${posicao}`);
+    for (const no of analisa(html)) this.anexa(no);
+  }
+}
+
+/** HTML → nós. Ignora o que não for tag, exceto para acumular texto. */
+export function analisa(html) {
+  const raiz = new No("#fragmento");
+  let atual = raiz;
+  let pos = 0;
+  TAG.lastIndex = 0;
+  let m;
+  while ((m = TAG.exec(html))) {
+    const texto = html.slice(pos, m.index);
+    if (texto) atual.texto += texto;
+    pos = TAG.lastIndex;
+
+    const [, fecha, tag, attrs, autoFecha] = m;
+    if (fecha) {
+      if (atual.pai) atual = atual.pai;
+      continue;
+    }
+    const atributos = {};
+    ATRIBUTO.lastIndex = 0;
+    let a;
+    while ((a = ATRIBUTO.exec(attrs ?? ""))) atributos[a[1].toLowerCase()] = a[2];
+
+    const no = atual.anexa(new No(tag.toLowerCase(), atributos));
+    if (!autoFecha && !["br", "hr", "img", "input"].includes(tag.toLowerCase())) atual = no;
+  }
+  const resto = html.slice(pos);
+  if (resto) atual.texto += resto;
+  return raiz.filhos;
+}
+
+/** Monta uma raiz a partir de HTML. */
+export function monta(html) {
+  const raiz = new No("body");
+  for (const no of analisa(html)) raiz.anexa(no);
+  return raiz;
+}
+
+export { No };

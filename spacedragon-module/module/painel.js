@@ -119,7 +119,10 @@ function nomeDaHabilidade(li) {
 /** Desenha os testes dentro de cada habilidade de classe da ficha. */
 function injeta(app, elemento) {
   try {
-    const raiz = elemento instanceof HTMLElement ? elemento : elemento?.[0];
+    // Por capacidade, e não por `instanceof HTMLElement`: o gancho entrega
+    // jQuery no appv1 e elemento cru se o sistema migrar, e depender de um
+    // global que pode não existir já derrubou script deste projeto antes.
+    const raiz = elemento?.querySelectorAll ? elemento : elemento?.[0];
     const ator = app?.actor ?? app?.document;
     if (!raiz?.querySelectorAll || ator?.type !== "character") return;
     if (!ator.system?.class) return;

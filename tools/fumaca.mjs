@@ -74,3 +74,80 @@ console.log(
   `  ✔ fumaça: módulo carrega, ${api.TESTES.length} testes na API, ` +
   `nível até o ${teto}º, ${ganchos.length} gancho(s) registrado(s)`
 );
+
+// ── A injeção acha as habilidades na ficha? ─────────────────────────────────
+//
+// O HTML abaixo é o que o template do olddragon2e produz para a aba de Classe
+// (templates/partials/tabs/character-tab-class.hbs, sistema 2.6.0). Se o
+// sistema mudar essa marcação, este teste quebra — que é exatamente o aviso
+// que faltou quando a injeção parou de achar as habilidades em silêncio.
+import { monta } from "./dom-minimo.mjs";
+
+const FICHA = `
+<div class="character-tab-class">
+  <div class="class-abilities">
+    <ol class="item-list">
+      <li class="item" data-item-id="aaa">
+        <div class="ability">
+          <span class="ability-level">1</span>
+          <span><strong>Talentos de Gatuno</strong>:</span>
+        </div>
+        <p>Seis talentos, cada um com progressao propria.</p>
+      </li>
+      <li class="item" data-item-id="bbb">
+        <div class="ability">
+          <span class="ability-level">1</span>
+          <span><strong>Nao Existe Este Poder</strong>:</span>
+        </div>
+      </li>
+    </ol>
+  </div>
+</div>`;
+
+const raiz = monta(FICHA);
+const ator = {
+  type: "character",
+  name: "Cobaia",
+  system: { class: { name: "Sabotador — Gatuno" }, level: 7, destreza: 16, inteligencia: 14 },
+};
+
+const render = ganchos.find((g) => g.nome === "renderOD2CharacterSheet");
+render.fn({ actor: ator }, raiz);
+
+const botoes = raiz.querySelectorAll(".sd-rolar");
+const chaves = botoes.map((b) => b.dataset.teste);
+const esperadas = api.TESTES.filter((t) => t.habilidade === "Talentos de Gatuno").map((t) => t.chave);
+
+const problemas = [];
+if (!botoes.length) problemas.push("nenhum botão foi injetado na ficha de brinquedo");
+if (chaves.join() !== esperadas.join()) {
+  problemas.push(`botões errados: ${chaves.join(", ") || "(nenhum)"} — esperava ${esperadas.join(", ")}`);
+}
+// O poder sem teste não pode receber nada.
+const intruso = raiz.querySelectorAll(".item").find(
+  (li) => li.querySelector(".ability strong")?.textContent === "Nao Existe Este Poder"
+);
+if (intruso?.querySelector(".spacedragon-testes")) {
+  problemas.push("injetou num poder que não tem teste nenhum");
+}
+// Rodar duas vezes não pode duplicar.
+render.fn({ actor: ator }, raiz);
+if (raiz.querySelectorAll(".sd-rolar").length !== botoes.length) {
+  problemas.push("renderizar duas vezes duplicou os botões");
+}
+// Os alvos têm de vir CALCULADOS, não copiados da tabela.
+//
+// Gatuno de 7º nível, T3-5: sabotagem 45%, escalar 86%, furtividade 50%,
+// furtar 50%, percepção 1-3. Destreza 16 dá +15% e Ciência 14 dá +10% de
+// aptidão tecnológica — lidos à mão nas T1-2 e T1-5 do Aprimorado.
+const alvos = raiz.querySelectorAll(".sd-alvo").map((n) => n.textContent.trim());
+const esperados = ["55%", "86%", "65%", "65%", "1–3"];
+if (alvos.join(" ") !== esperados.join(" ")) {
+  problemas.push(`alvos ${alvos.join(" ")} — esperava ${esperados.join(" ")}`);
+}
+
+if (problemas.length) {
+  for (const p of problemas) console.error(`  ✘ ${p}`);
+  process.exit(1);
+}
+console.log(`  ✔ injeção: ${botoes.length} botões no poder certo (${chaves.join(", ")}), alvos ${alvos.join(" ")}`);
