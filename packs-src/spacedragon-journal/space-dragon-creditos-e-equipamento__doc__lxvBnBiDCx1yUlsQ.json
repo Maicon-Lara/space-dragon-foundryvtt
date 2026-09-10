@@ -1,0 +1,135 @@
+{
+  "folder": null,
+  "name": "Space Dragon — Créditos e Equipamento",
+  "_id": "lxvBnBiDCx1yUlsQ",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Créditos espaciais",
+      "type": "text",
+      "_id": "0hZhPurNCiDmIL6t",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Não há dinheiro físico</h2>\n<p>Créditos são <strong>valores virtuais</strong>. Não existem cédulas nem moedas:\ntudo anda no <strong>Cartão de Identificação Galáctico</strong>, que serve de\ndocumento e é recarregado nas estações monetárias espalhadas pela galáxia, a\npartir da conta pessoal no Banco Galáctico.</p>\n\n<p>Todo personagem começa com o cartão, uma conta e uma quantia que depende da\nclasse.</p>\n\n<h2>Quanto se começa</h2>\n<p>Role os dados da sua classe e <strong>multiplique por 10.000</strong>.</p>\n\n<table>\n<thead><tr><th>classe</th><th>rolagem</th></tr></thead>\n<tbody><tr><td><strong>Cosmonauta</strong></td><td>2d10</td></tr><tr><td><strong>Gatuno</strong></td><td>2d8</td></tr><tr><td><strong>Cientista</strong></td><td>2d6</td></tr><tr><td><strong>Mentálico</strong></td><td>2d4</td></tr></tbody>\n</table>\n\n<blockquote><p>Um cosmonauta rola 2d10. Tirando 12, começa com\n<strong>$120.000</strong>.</p></blockquote>\n\n<p>Os créditos podem ser gastos <strong>antes de começar a jogar</strong>, para\ncomprar armas, vestes e equipamento.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!lxvBnBiDCx1yUlsQ.0hZhPurNCiDmIL6t"
+    },
+    {
+      "sort": 200000,
+      "name": "Armas",
+      "type": "text",
+      "_id": "It93Uc1BBGYoUDB4",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Como ler a tabela</h2>\n\n<p><strong>Tipo</strong> — decide o modificador do ataque, pelo Capítulo 7:</p>\n<ul><li><strong>F</strong> — arma de fogo</li><li><strong>D</strong> — à distância</li><li><strong>M</strong> — marcial (corpo a corpo)</li><li><strong>A</strong> — arremesso</li></ul>\n\n<p><strong>Porte</strong> — muda o ataque conforme as mãos:</p>\n<ul><li><strong>P</strong> — uma mão, ou duas por +2 no ataque</li><li><strong>M</strong> — média — duas mãos, ou uma por −2 no ataque</li><li><strong>G</strong> — obrigatoriamente duas mãos</li></ul>\n\n<p><strong>Alcance</strong> — três distâncias em metros, só para armas de fogo.\nA primeira <strong>não tem penalidade</strong>; a segunda dá <strong>−2</strong>\ne a terceira <strong>−4</strong> na rolagem de ataque. Arma corpo a corpo com\ndistância listada pode ser <strong>arremessada</strong>, e aí segue as mesmas\npenalidades.</p>\n\n<p><strong>Dano em área</strong> — quando o dano vem com uma medida em m², todos\nna área fazem uma <strong>JPR</strong>: dano inteiro para quem falha,\n<strong>metade</strong> para quem passa.</p>\n\n<p><strong>Preço</strong> — em créditos. <strong>Arma sem preço é de cultura\nprimitiva</strong>, e não se compra: só se consegue com gente dessas culturas.</p>\n\n<h2>Corte ou perfuração avaria a veste</h2>\n<p>Quem é atingido por arma de projéteis, ou por qualquer arma que corte ou\nperfure, faz uma <strong>JPR</strong>. Falhar <strong>por 5 ou mais</strong> dá\n<strong>−2 no CP</strong> até a veste ser consertada.</p>\n\n<h2>T5-1: Armas</h2>\n<table>\n<thead><tr><th>arma</th><th>tipo</th><th>porte</th><th>dano</th><th>alcance</th><th>preço</th><th>peso</th></tr></thead>\n<tbody><tr><td>Anel de laser</td><td>F</td><td>—</td><td>1d2</td><td>5 / 10 / 15</td><td>$80.000</td><td>—</td></tr><tr><td>Arco para flechas</td><td>D</td><td>M</td><td>—</td><td>15 / 30 / 45</td><td>—</td><td>0,5 kg</td></tr><tr><td>Arma de raios</td><td>F</td><td>P</td><td>1d6</td><td>10 / 20 / 30</td><td>$25.000</td><td>0,5 kg</td></tr><tr><td>Bastão de choque</td><td>M</td><td>P</td><td>1d6</td><td>Corporal</td><td>$30.000</td><td>1 kg</td></tr><tr><td>Chicote neurônico</td><td>M</td><td>P</td><td>1d8</td><td>Corporal</td><td>$50.000</td><td>1 kg</td></tr><tr><td>Dardo para zarabatana (1)</td><td>D</td><td>—</td><td>1d4</td><td>—</td><td>—</td><td>0,1 kg</td></tr><tr><td>Disparador protônico</td><td>F</td><td>G</td><td>2d6</td><td>15 / 30 / 45</td><td>$150.000</td><td>5 kg</td></tr><tr><td>Espada de energia</td><td>M</td><td>M</td><td>1d8</td><td>Corporal</td><td>$50.000</td><td>2 kg</td></tr><tr><td>Espada de lâmina</td><td>M</td><td>M</td><td>1d8</td><td>Corporal</td><td>—</td><td>3 kg</td></tr><tr><td>Faca de sobrevivência</td><td>M/A</td><td>P</td><td>1d4</td><td>Corporal · 3 / 6 / 9</td><td>$5.000</td><td>0,5 kg</td></tr><tr><td>Flecha (20)</td><td>D</td><td>—</td><td>1d6</td><td>—</td><td>—</td><td>1 kg</td></tr><tr><td>Funda</td><td>A</td><td>P</td><td>1d3</td><td>10 / 20 / 30</td><td>—</td><td>—</td></tr><tr><td>Fuzil de laser</td><td>F</td><td>M</td><td>1d8</td><td>15 / 30 / 45</td><td>$35.000</td><td>3 kg</td></tr><tr><td>Granada elétrica (1)</td><td>A</td><td>P</td><td>1d8 em 5m²</td><td>10 / 20 / 30</td><td>$10.000</td><td>0,5 kg</td></tr><tr><td>Granada explosiva (1)</td><td>A</td><td>P</td><td>1d10 em 10m²</td><td>10 / 20 / 30</td><td>$30.000</td><td>0,5 kg</td></tr><tr><td>Lança de lâmina</td><td>M/A</td><td>M</td><td>1d8</td><td>Corporal · 3 / 6 / 9</td><td>—</td><td>2,5 kg</td></tr><tr><td>Lança elétrica</td><td>M/A</td><td>M</td><td>1d6</td><td>Corporal · 3 / 6 / 9</td><td>$40.000</td><td>2,5 kg</td></tr><tr><td>Lança-granadas</td><td>F</td><td>G</td><td>—</td><td>20 / 40 / 60</td><td>$50.000</td><td>10 kg</td></tr><tr><td>Lança-mísseis</td><td>F</td><td>G</td><td>—</td><td>25 / 50 / 70</td><td>$70.000</td><td>10 kg</td></tr><tr><td>Machado</td><td>M</td><td>M</td><td>1d8</td><td>Corporal</td><td>—</td><td>3 kg</td></tr><tr><td>Míssil (1)</td><td>F</td><td>—</td><td>2d8 em 15m²</td><td>—</td><td>$45.000</td><td>2 kg</td></tr><tr><td>Pistola autodestrutiva</td><td>F/A</td><td>P</td><td>1d6 · 1d8 em 2m²</td><td>10 / 20 / 30</td><td>$60.000</td><td>0,5 kg</td></tr><tr><td>Pistola laser</td><td>F</td><td>P</td><td>1d6</td><td>15 / 30 / 45</td><td>$20.000</td><td>0,5 kg</td></tr><tr><td>Pistola de projéteis</td><td>F</td><td>P</td><td>1d8</td><td>10 / 20 / 30</td><td>$30.000</td><td>0,5 kg</td></tr><tr><td>Porrete</td><td>M</td><td>M</td><td>1d4</td><td>Corporal</td><td>—</td><td>1 kg</td></tr><tr><td>Potencializador</td><td>—</td><td>—</td><td>+1d4</td><td>+10 / +5 / +2</td><td>$100.000</td><td>—</td></tr><tr><td>Projéteis (30)</td><td>F</td><td>—</td><td>—</td><td>—</td><td>$10.000</td><td>0,5 kg</td></tr><tr><td>Projéteis explosivos (10)</td><td>F</td><td>—</td><td>+1d4</td><td>—</td><td>$40.000</td><td>0,5 kg</td></tr><tr><td>Rifle laser</td><td>F</td><td>M</td><td>1d8</td><td>15 / 30 / 45</td><td>$30.000</td><td>2 kg</td></tr><tr><td>Rifle de plasma</td><td>F</td><td>M</td><td>1d12</td><td>15 / 30 / 45</td><td>$70.000</td><td>4 kg</td></tr><tr><td>Rifle de projéteis</td><td>F</td><td>M</td><td>1d10</td><td>15 / 30 / 45</td><td>$5.000</td><td>4 kg</td></tr><tr><td>Zarabatana</td><td>D</td><td>P</td><td>—</td><td>10 / 20 / 30</td><td>—</td><td>0,5 kg</td></tr></tbody>\n</table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!lxvBnBiDCx1yUlsQ.It93Uc1BBGYoUDB4"
+    },
+    {
+      "sort": 300000,
+      "name": "Vestes e proteção",
+      "type": "text",
+      "_id": "BPns1RPRrkCoB3fF",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>A veste É o CP, não um bônus</h2>\n<p>O <strong>valor de proteção</strong> da veste é a <strong>base</strong> do\ncoeficiente de proteção. Vestes médias dão CP 12 antes de qualquer outra coisa —\nnão \"+12 sobre 10\", como a classe de armadura do Old Dragon 2 funcionaria.</p>\n\n<p>Sobre essa base entram o ajuste de Destreza, o bônus por nível da\n<strong>T4-1</strong>, aparatos defensivos, mutações e poderes mentais.</p>\n\n<p>O <strong>escudo de energia</strong> é a exceção: ele <strong>soma</strong>.\nE não é carregado no braço — fica num cinto projetor, sempre ativo, sem ocupar\nmão nenhuma.</p>\n\n<p><strong>Redução de movimento</strong> — quantos metros a veste tira do\nmovimento base, antes dos modificadores de gravidade, terreno e carga.</p>\n\n<h2>T5-2: Vestes e Itens de Proteção</h2>\n<table>\n<thead><tr><th>item</th><th>proteção</th><th>red. movimento</th><th>preço</th><th>peso</th></tr></thead>\n<tbody><tr><td>Roupas comuns</td><td>10</td><td>—</td><td>$5.000</td><td>0,5 kg</td></tr><tr><td>Vestes leves</td><td>11</td><td>—</td><td>$20.000</td><td>2 kg</td></tr><tr><td>Vestes médias</td><td>12</td><td>—</td><td>$40.000</td><td>4 kg</td></tr><tr><td>Trajes de combate</td><td>14</td><td>1</td><td>$60.000</td><td>6 kg</td></tr><tr><td>Armadura defletora</td><td>16</td><td>3</td><td>$100.000</td><td>10 kg</td></tr><tr><td>Trajes aquáticos</td><td>—</td><td>+4</td><td>+$50.000</td><td>+5 kg</td></tr><tr><td>Trajes espaciais</td><td>—</td><td>+5</td><td>+$100.000</td><td>+10 kg</td></tr><tr><td>Escudo de energia</td><td>+2</td><td>—</td><td>$150.000</td><td>0,5 kg</td></tr></tbody>\n</table>\n\n<p>Trajes <strong>aquáticos</strong> e <strong>espaciais</strong> não dão\nproteção própria: somam-se à veste que já se está usando, com o peso, o preço e\na penalidade que trazem.</p>\n\n<h2>T5-3: Vestes sob Encomenda</h2>\n<table>\n<thead><tr><th>serviço</th><th>preço</th><th>benefício</th></tr></thead>\n<tbody><tr><td>Material mais leve</td><td>$40.000</td><td>Reduz o peso das vestes em 2 kg.</td></tr><tr><td>Reforço de vestes</td><td>$60.000</td><td>Aumenta o valor de proteção em +2.</td></tr><tr><td>Vestes sob medida</td><td>$50.000</td><td>Reduz a penalidade de movimento em 2.</td></tr></tbody>\n</table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!lxvBnBiDCx1yUlsQ.BPns1RPRrkCoB3fF"
+    }
+  ],
+  "flags": {},
+  "sort": 5000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!lxvBnBiDCx1yUlsQ"
+}

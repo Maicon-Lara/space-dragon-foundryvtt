@@ -1,0 +1,49 @@
+{
+  "folder": "lPmeCqz2Y3pFhST3",
+  "name": "Granada elétrica (1)",
+  "type": "weapon",
+  "_id": "NknDbAObVlGGq20r",
+  "img": "systems/olddragon2e/assets/icons/ranged.svg",
+  "system": {
+    "odo_id": "granada-eletrica-1",
+    "description": "Tipo: arremesso. Porte pequena — uma mão, ou duas por +2 no ataque. Alcance: 10 / 20 / 30 metros — a segunda faixa dá −2 no ataque e a terceira −4. Dano em área: todos na área fazem JPR. Quem falha sofre o dano inteiro, quem passa sofre metade.",
+    "quantity": 1,
+    "cost": "10.000 créditos",
+    "weight_in_load": 0,
+    "weight_in_grams": 500,
+    "magic_item": false,
+    "is_equipped": false,
+    "type": "throwing",
+    "damage_type": "none",
+    "damage": "1d8 em 5m²",
+    "bonus_damage": 0,
+    "bonus_ba": 0,
+    "bonus_ca": 0,
+    "shoot_range": 0,
+    "throw_range": 10,
+    "arrow": false,
+    "bolt": false,
+    "bolt_small": false,
+    "polearm": false,
+    "two_handed": false,
+    "versatile": true
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 130,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!NknDbAObVlGGq20r"
+}

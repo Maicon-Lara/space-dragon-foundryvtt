@@ -16,6 +16,7 @@ import { compilePack } from "@foundryvtt/foundryvtt-cli";
 
 import {
   folderDoc, raceDoc, raceAbilityDoc, classDoc, classAbilityDoc, journalDoc, rollTableDoc, macroDoc,
+  weaponDoc, armorDoc,
   itemUuid, writeSource, aninhaPastas, pintaPastas, makeId, stats,
 } from "./lib.mjs";
 import { especies } from "./data/especies.mjs";
@@ -26,6 +27,8 @@ import { regras } from "./data/regras.mjs";
 import { mutacoesJournal } from "./data/mutacoes-journal.mjs";
 import { TESTES } from "./data/testes.mjs";
 import { testesJournal } from "./data/testes-journal.mjs";
+import { ARMAS, VESTES, TIPOS, PORTES } from "./data/equipamento.mjs";
+import { equipamentoJournal } from "./data/equipamento-journal.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -37,11 +40,14 @@ const P_ESPECIES = "spacedragon-especies";
 const P_TABELAS = "spacedragon-tabelas";
 const P_JOURNAL = "spacedragon-journal";
 const P_MACROS = "spacedragon-macros";
+const P_EQUIPAMENTO = "spacedragon-equipamento";
 
 /** Cor por pasta: sem isso o compêndio vira uma lista cinza indistinguível. */
 const PALETA = {
   "Espécies": "#2f5d7c",
   "Classes": "#5a3f7c",
+  "Armas": "#7c4a2f",
+  "Vestes e Proteção": "#2f6b6b",
 };
 
 // ── Espécies ────────────────────────────────────────────────────────────────
@@ -237,6 +243,118 @@ function montaTabelas() {
 }
 
 
+// ── Equipamento ─────────────────────────────────────────────────────────────
+//
+// ── O QUE O CAMPO DO OD2 GUARDA E O QUE NÃO GUARDA ──────────────────────────
+//
+// A ficha tem `shoot_range` e `throw_range` como UM número cada, em metros. O
+// Space Dragon dá TRÊS por arma — "15 / 30 / 45" —, onde a segunda distância
+// custa −2 no ataque e a terceira −4. Guardamos a PRIMEIRA, que é a faixa sem
+// penalidade, e a tripla inteira vai na descrição.
+//
+// Guardar a maior faria a ficha dizer que a pistola acerta a 45 metros sem
+// penalidade nenhuma, que é falso; guardar a primeira erra para menos, e errar
+// para menos é o que se pode conferir na descrição.
+/** "15 / 30 / 45" → 15. "Corporal · 3 / 6 / 9" → 3. */
+function primeiraFaixa(alcance) {
+  const m = String(alcance ?? "").match(/(\d+)\s*\/\s*\d+\s*\/\s*\d+/);
+  return m ? Number(m[1]) : 0;
+}
+
+const ehCorpoACorpo = (a) => /M/.test(a.tipo ?? "") || /Corporal/i.test(a.alcance ?? "");
+
+/**
+ * Só de arremesso: tipo A sem F nem D.
+ *
+ * A distinção não é cosmética. `weaponDoc` tipa como `throwing` a arma que tem
+ * alcance de arremesso e NÃO tem alcance de tiro, e como `ranged` se tiver os
+ * dois — e a automação de combate do módulo Qualidade de Vida ABORTA o ataque
+ * de qualquer `ranged` sem munição equipada. Uma granada tipada como `ranged`
+ * simplesmente não rola.
+ */
+const soArremesso = (a) => /A/.test(a.tipo ?? "") && !/[FD]/.test(a.tipo ?? "");
+
+function descricaoArma(a) {
+  const linhas = [];
+  if (a.tipo) linhas.push(`Tipo: ${a.tipo.split("/").map((t) => TIPOS[t] ?? t).join(" e ")}.`);
+  if (a.porte) linhas.push(`Porte ${PORTES[a.porte]}.`);
+  if (a.alcance) {
+    // A penalidade por faixa só existe onde há faixa. "Corporal" não tem
+    // distância nenhuma, e dizer "Corporal metros" era ruído.
+    const temFaixa = /\d+\s*\/\s*\d+\s*\/\s*\d+/.test(a.alcance);
+    linhas.push(
+      temFaixa
+        ? `Alcance: ${a.alcance} metros — a segunda faixa dá −2 no ataque e a terceira −4.`
+        : `Alcance: ${a.alcance}.`
+    );
+  }
+  if (/m²/.test(a.dano ?? "")) {
+    linhas.push("Dano em área: todos na área fazem JPR. Quem falha sofre o dano inteiro, quem passa sofre metade.");
+  }
+  if (a.preco === null) linhas.push("Sem preço de tabela: é de cultura primitiva, e só se consegue com gente dessas culturas.");
+  if (a.nota) linhas.push(a.nota);
+  return linhas.join(" ");
+}
+
+function descricaoVeste(v) {
+  const linhas = [];
+  if (v.acrescimo) {
+    linhas.push("Não dá proteção própria: soma-se à veste em uso, com o peso, o preço e a penalidade de movimento.");
+  } else if (v.bonus) {
+    linhas.push(`Bônus de +${v.protecao} somado ao coeficiente de proteção.`);
+  } else {
+    linhas.push(`Valor de proteção ${v.protecao}: é a BASE do coeficiente de proteção, não um bônus somado a 10.`);
+  }
+  if (v.movimento) linhas.push(`Reduz o movimento em ${v.movimento} metros.`);
+  if (v.nota) linhas.push(v.nota);
+  return linhas.join(" ");
+}
+
+function montaEquipamento() {
+  const docs = [];
+  const armas = folderDoc("Armas", "Item", "sd-armas");
+  const vestes = folderDoc("Vestes e Proteção", "Item", "sd-vestes");
+  docs.push(armas, vestes);
+
+  ARMAS.forEach((a, i) => {
+    const corpo = ehCorpoACorpo(a);
+    const arremesso = soArremesso(a);
+    docs.push(weaponDoc({
+      nome: a.nome,
+      desc: descricaoArma(a),
+      damage: a.dano ?? "",
+      cost: a.preco === null ? "" : `${a.preco.toLocaleString("pt-BR")} créditos`,
+      weight_in_grams: Math.round((a.peso ?? 0) * 1000),
+      melee: corpo,
+      ranged: !corpo,
+      // A arma que só tem alcance de arremesso é `throwing` no OD2, não
+      // `ranged` — ver o comentário em weaponDoc.
+      shoot_range: corpo || arremesso ? 0 : primeiraFaixa(a.alcance),
+      // A arma corpo a corpo com faixa numérica pode ser arremessada: a faca e
+      // as lanças trazem "Corporal · 3 / 6 / 9".
+      throw_range: corpo || arremesso ? primeiraFaixa(a.alcance) : 0,
+      two_handed: a.porte === "G",
+      versatile: a.porte === "P" || a.porte === "M",
+    }, armas._id, "sd-arma", i * 10));
+  });
+
+  VESTES.forEach((v, i) => {
+    docs.push(armorDoc({
+      nome: v.nome,
+      desc: descricaoVeste(v),
+      // O escudo de energia é o único que SOMA. O resto é valor absoluto, e o
+      // OD2 não tem campo para isso — o número vai na descrição, e o campo de
+      // bônus fica zerado para a ficha não somar duas vezes.
+      tipo_armadura: v.bonus ? "escudo" : "",
+      bonus_ca: v.bonus ? v.protecao : 0,
+      cost: `${v.preco.toLocaleString("pt-BR")} créditos`,
+      weight_in_grams: Math.round((v.peso ?? 0) * 1000),
+    }, vestes._id, "sd-veste", i * 10));
+  });
+
+  return docs;
+}
+
 // ── Guarda: todo teste tem de achar a habilidade dele ───────────────────────
 //
 // O painel da ficha enfia o botão de rolagem DENTRO da habilidade de classe,
@@ -333,7 +451,11 @@ async function main() {
   await compila(P_ESPECIES, esp);
 
   await compila(P_TABELAS, montaTabelas());
-  const journais = [...regras, mutacoesJournal, testesJournal];
+  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal];
+  let eq = aninhaPastas(montaEquipamento());
+  pintaPastas(eq, PALETA);
+  await compila(P_EQUIPAMENTO, eq);
+
   await compila(P_MACROS, montaMacros());
   await compila(P_JOURNAL, journais.map((e, i) => journalDoc(e, (i + 1) * 1000)));
 
