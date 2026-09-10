@@ -1,0 +1,64 @@
+{
+  "name": "Medusa Elétrica",
+  "type": "monster",
+  "_id": "hn8wmckDxS6HzAuy",
+  "img": "systems/olddragon2e/assets/concepts/gosma-pequeno.webp",
+  "system": {
+    "odo_id": "medusa-eletrica",
+    "concept": "Gosma",
+    "size": "pequeno",
+    "alignment": "neutro",
+    "habitat": "SUBAQUÁTICO",
+    "description": "<p><em>Medusa eletricus</em></p><p><strong>FOR</strong> 2 · <strong>DES</strong> 12 · <strong>CON</strong> 2 · <strong>INT</strong> 0 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Medusas elétricas são pequenos seres amórficos sem sistema nervoso ou cérebro que flutuam pelos oceanos eletrocutando peixes com seus tentáculos para digeri-los. Embora sejam relativamente inofensivas isoladamente, um grande cardume de medusas elétricas pode ser mortal se atacar ao mesmo tempo.</p>",
+    "described_attacks": "1 TENTÁCULO (1D4)",
+    "encounters": "GRUPO 2D6 CARDUME 5D6",
+    "xp": "10 XP",
+    "dv": "1 PV",
+    "ca": "11",
+    "jp": "19",
+    "mo": "100%",
+    "mv": "6",
+    "hp": {
+      "value": 1,
+      "max": 1
+    }
+  },
+  "prototypeToken": {
+    "name": "Medusa Elétrica",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/gosma-pequeno.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 300,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!hn8wmckDxS6HzAuy"
+}

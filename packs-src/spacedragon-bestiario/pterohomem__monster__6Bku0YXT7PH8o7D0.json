@@ -1,0 +1,65 @@
+{
+  "name": "Pterohomem",
+  "type": "monster",
+  "_id": "6Bku0YXT7PH8o7D0",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "pterohomem",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "FLORESTAS E MONTANHAS",
+    "description": "<p><em>Ptero sapiens</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 16 · <strong>CON</strong> 10 · <strong>INT</strong> 9 · <strong>CIE</strong> 6 · <strong>COM</strong> 9</p><p><strong>Resistência mental</strong> 35%</p><p>Pterohomens são parentes distantes das pteroaves que desenvolveram morfologia humanoide e inteligência. Embora sejam incapazes de ciência avançada, aprenderam a lidar com aparatos como pistolas laser e instrumentos utilitários. Usam vestimentas rudimentares e são capazes de fala limitada a frases simples, embora consigam comunicar-se entre si através de grasnados indecifráveis. Resistência mental os cérebros dos pterohomens são 65% iguais aos dos humanos, o que lhes confere 35% de resistência contra poderes mentais.</p>",
+    "described_attacks": "1 GARRA +4 (1D6+2) 1 PISTOLA LASER +3 (1D6)",
+    "encounters": "ERRANTE 1D4, GRUPO 2D6",
+    "xp": "O 175 XP",
+    "dv": "3 (12/24)",
+    "ca": "14 (COURO GROSSO +1)",
+    "jp": "17",
+    "mo": "80%",
+    "mv": "9",
+    "mvv": "12",
+    "hp": {
+      "value": 12,
+      "max": 24
+    }
+  },
+  "prototypeToken": {
+    "name": "Pterohomem",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 420,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!6Bku0YXT7PH8o7D0"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Zangão Gigante",
+  "type": "monster",
+  "_id": "zpyrLQ3h7WIiAtTf",
+  "img": "systems/olddragon2e/assets/concepts/inseto-pequeno.webp",
+  "system": {
+    "odo_id": "zangao-gigante",
+    "concept": "Inseto",
+    "size": "pequeno",
+    "alignment": "ordeiro",
+    "habitat": "FLORESTAS",
+    "description": "<p><em>Apius gigantus</em></p><p><strong>FOR</strong> 10 · <strong>DES</strong> 16 · <strong>CON</strong> 6 · <strong>INT</strong> 2 · <strong>CIE</strong> 2 · <strong>COM</strong> 4</p><p>Zangões gigantes, apesar do nome, são insetos do tamanho de uma mão humana. Possuem listras amarelas e pretas pelo corpo e um ferrão na extremidade do abdômen. São extremamente organizados e defenderão suas colmeias a qualquer custo. Contudo seus ataques são suicidas, visto que o ferrão fica preso no corpo da vítima, e o zangão morre imediatamente. Veneno a ferroada de um zangão gigante obriga a vítima a fazer uma JPF. Uma falha significa que a quantidade total de PV da vítima é reduzida 1d4 pontos. Essa redução é cumulativa, e a vítima gradualmente recuperará sua quantidade total de PV no mesmo ritmo que recupera pontos de dano sofridos. Um alvo que chegue a 0 PV deste modo morre instantaneamente.</p>",
+    "described_attacks": "1 FERRÃO +2 (1D4 VENENO, VER TEXTO)",
+    "encounters": "ERRANTE 2D6 COLMEIA 5D6",
+    "xp": "37 XP",
+    "dv": "1 (4/8)",
+    "ca": "13",
+    "jp": "16",
+    "mo": "90%",
+    "mv": "6",
+    "hp": {
+      "value": 4,
+      "max": 8
+    }
+  },
+  "prototypeToken": {
+    "name": "Zangão Gigante",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/inseto-pequeno.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 550,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!zpyrLQ3h7WIiAtTf"
+}

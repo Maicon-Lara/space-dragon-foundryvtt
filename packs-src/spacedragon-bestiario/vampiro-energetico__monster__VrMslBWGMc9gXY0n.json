@@ -1,0 +1,64 @@
+{
+  "name": "Vampiro Energético",
+  "type": "monster",
+  "_id": "VrMslBWGMc9gXY0n",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "vampiro-energetico",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "RUÍNAS",
+    "description": "<p><em>Vampiris energis</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 16 · <strong>CON</strong> 18 · <strong>INT</strong> 5 · <strong>CIE</strong> 2 · <strong>COM</strong> 5</p><p>Vampiros energéticos são criaturas humanoides capazes de sugar a energia vital de outros seres vivos através do toque. Têm o tamanho aproximado de um humano, pele cinzenta e olhos negros, além de uma aparência doentia e frágil. Especula-se que os vampiros energéticos originalmente eram mutantes humanos que ao se isolarem da linha evolutiva principal acabaram por tornarem-se uma espécie completamente diferente. Dreno de energia ao toque do vampiro energético o personagem sofre um dreno de 1d4 DV, que são revertidos para a criatura. Ao drenar os DV de um personagem o mestre deve rolar a mesma quantidade de dados para determinar o acréscimo aos DV do vampiro energético.</p>",
+    "described_attacks": "1 TOQUE +4 (DRENO DE ENERGIA)",
+    "encounters": "ERRANTE 1D4 COVIL 2D6",
+    "xp": "280 XP",
+    "dv": "4+4 (20/36)",
+    "ca": "13",
+    "jp": "14",
+    "mo": "70%",
+    "mv": "9",
+    "hp": {
+      "value": 20,
+      "max": 36
+    }
+  },
+  "prototypeToken": {
+    "name": "Vampiro Energético",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 520,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!VrMslBWGMc9gXY0n"
+}

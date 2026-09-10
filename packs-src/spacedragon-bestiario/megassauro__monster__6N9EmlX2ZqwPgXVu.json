@@ -1,0 +1,64 @@
+{
+  "name": "Megassauro",
+  "type": "monster",
+  "_id": "6N9EmlX2ZqwPgXVu",
+  "img": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+  "system": {
+    "odo_id": "megassauro",
+    "concept": "Besta",
+    "size": "imenso",
+    "alignment": "neutro",
+    "habitat": "FLORESTAS E PLANÍCIES",
+    "description": "<p><em>Meganius saurus</em></p><p><strong>FOR</strong> 28 · <strong>DES</strong> 14 · <strong>CON</strong> 22 · <strong>INT</strong> 6 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p>Megassauros são alienossauros de imensa estatura e muito agressivos. Perseguirão quaisquer invasores que ameacem seus ninhos, até que consigam matá- los, ou perdê-los de vista. Seus dentes afiados os permitem dilacerar suas vítimas com uma mordida, e sua cauda terminada em escamas afiadas também é uma arma perigosa. Agarrar em uma mordida bem-sucedida o megassauro pode prender a vítima entre seus dentes, se ela falhar em uma JPR. Uma vítima presa sofre 1d8 pontos de dano a cada rodada e pode tentar um teste resistido Força para se soltar.</p>",
+    "described_attacks": "1 MORDIDA +12 (2D10+5 + AGARRAR) 1 ATAQUE COM CAUDA +6 (1D8+3)",
+    "encounters": "ERRANTE 1D2 NINHO 1D6",
+    "xp": "1.975 XP",
+    "dv": "12+6 (54/102)",
+    "ca": "16 (COURO GROSSO +4)",
+    "jp": "12",
+    "mo": "90%",
+    "mv": "10",
+    "hp": {
+      "value": 54,
+      "max": 102
+    }
+  },
+  "prototypeToken": {
+    "name": "Megassauro",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 3,
+    "height": 3,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 310,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!6N9EmlX2ZqwPgXVu"
+}

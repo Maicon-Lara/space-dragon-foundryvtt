@@ -1,0 +1,64 @@
+{
+  "name": "Cristaloide",
+  "type": "monster",
+  "_id": "78IY3wTRw3nQFwkL",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "cristaloide",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "neutro",
+    "habitat": "TERRENOS ROCHOSOS",
+    "description": "<p><em>Minerio humanoidis</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 7 · <strong>CON</strong> 16 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p><strong>Redução de dano</strong> 6/FÍSICO</p><p>Cristaloides são formas de vida vagamente humanoides cujo corpo é formado de cristais, mas sem detalhes específicos como rostos definidos, mãos ou dedos. Por serem formados de cristais comumente são encontrados em terrenos rochosos, em especial montanhas ou cavernas. Essa característica também faz com que feixes de laser ou outras formas de energia sejam refletidas em seus corpos, podendo inclusive reverter-se contra os atiradores. Reflexão em uma falha crítica com uma arma de energia contra um cristaloide ele poderá redirecionar intencionalmente o feixe contra um inimigo qualquer em seu campo de visão. O novo alvo deverá fazer uma JPR para desviar-se.</p>",
+    "described_attacks": "1 PANCADA +7 (1D10+6)",
+    "encounters": "ERRANTE 1D2 GRUPO 1D6",
+    "xp": "945 XP",
+    "dv": "8+3 (35/67)",
+    "ca": "16 (CORPO DE CRISTAL +6)",
+    "jp": "14 (IMUNE A VENENO)",
+    "mo": "80%",
+    "mv": "6",
+    "hp": {
+      "value": 35,
+      "max": 67
+    }
+  },
+  "prototypeToken": {
+    "name": "Cristaloide",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 110,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!78IY3wTRw3nQFwkL"
+}

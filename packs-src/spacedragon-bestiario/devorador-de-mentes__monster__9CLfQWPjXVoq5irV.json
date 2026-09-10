@@ -1,0 +1,64 @@
+{
+  "name": "Devorador De Mentes",
+  "type": "monster",
+  "_id": "9CLfQWPjXVoq5irV",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-pequeno.webp",
+  "system": {
+    "odo_id": "devorador-de-mentes",
+    "concept": "Humanoide",
+    "size": "pequeno",
+    "alignment": "caotico",
+    "habitat": "QUALQUER",
+    "description": "<p><em>Mentis glutonius</em></p><p><strong>FOR</strong> 5 · <strong>DES</strong> 10 · <strong>CON</strong> 4 · <strong>INT</strong> 16 · <strong>CIE</strong> 14 · <strong>COM</strong> 12</p><p>Devoradores de mentes assemelham- se a seres humanos em miniatura, do tamanho aproximado de uma criança, porém têm a pele cinza, cabeça ovaloide e olhos completamente negros. Eles nunca se locomovem com as pernas, movendo- se através de levitação causada por seus poderes mentais inerentes. Possuem tecnologia tão avançada quanto à humana ou ainda superior, mas são solitários por natureza, sendo incrivelmente raro encontrar mais de um membro da espécie ao mesmo tempo. Poderes mentais devoradores de mentes podem utilizar poderes mentais até a 3ª grandeza, com alcance mental diário de 10%. Eles não precisam realizar jogadas percentuais para realizar poderes desconhecidos, visto que sabem naturalmente utilizar todos eles. DRAGÃO | Draco mithicos Os dragões, répteis de imensa estatura, comumente capazes de voar e ex- pelir fogo de suas bocas, fazem parte do folclore humano desde a gênese da espécie. Considerados lendas por alguns e realidade por outros, a sociedade humana em geral se divide na crença ou não, na existência desses seres. Embora evidências concretas de sua existência nunca tenham sido des- cobertas, foram traçados perfis científico-biológicos de nove subespécies dracônicas, divididas entre dragões telúricos e jovianos, embora os dados sejam apenas especulativos e incompletos. Supostamente os telúricos são incapazes de voo, enquanto os jovianos o são. Os nomes de cada espécie especulativa derivam de registros ancestrais das crenças de um império humano primitivo, cujas divindades possuí- am características significativamente similares às dos dragões folclóricos. Esses registros também mencionam a associação das divindades com corpos celestes, o que remete à junção de religião e astronáutica que se especula ter havido antes da conquista espacial, e a um provável culto aos dragões como deuses. Também supõe-se que os dragões seriam capazes de utilizar poderes men- tais, principalmente de comunicação telepática. Essa especulação acaba por fazer com que os crentes em sua existência associem a ordem dos mentá- licos a esses répteis míticos, como possível explicação da hiperciência por trás de seus poderes mentais. As características comuns a todos os dragões lendários estão compiladas na tabela T11-10 e informações específicas de cada subespécie são dadas nos respectivos tópicos.</p>",
+    "described_attacks": "PODERES MENTAIS (VER TEXTO)",
+    "encounters": "1",
+    "xp": "D 175 XP",
+    "dv": "3 (12/24)",
+    "ca": "12 (ESCUDO DE ENERGIA +2)",
+    "jp": "17",
+    "mo": "80%",
+    "mv": "9",
+    "hp": {
+      "value": 12,
+      "max": 24
+    }
+  },
+  "prototypeToken": {
+    "name": "Devorador De Mentes",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-pequeno.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 130,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!9CLfQWPjXVoq5irV"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Lobo Sônico",
+  "type": "monster",
+  "_id": "g2EVgEgwVqm11IfK",
+  "img": "systems/olddragon2e/assets/concepts/besta-medio.webp",
+  "system": {
+    "odo_id": "lobo-sonico",
+    "concept": "Besta",
+    "size": "medio",
+    "alignment": "ordeiro",
+    "habitat": "FLORESTAS E PLANÍCIES",
+    "description": "<p><em>Lupus sonicus</em></p><p><strong>FOR</strong> 10 · <strong>DES</strong> 16 · <strong>CON</strong> 12 · <strong>INT</strong> 8 · <strong>CIE</strong> 0 · <strong>COM</strong> 6</p><p>Lobos sônicos são quase idênticos à sua contraparte comum, com a exceção de que são capazes de emitir um uivo atordoante, que usam para desorientar suas presas. São muito astutos e costumam caçar em grupo, pois entendem que não seriam uma grande ameaça sozinhos. Uivo sônico o uivo do lobo sônico pode deixar uma pessoa atordoada, conferindo-lhe uma penalidade de -2 em todos os testes que fizer, se ela falhar em uma JPM. A quantidade de lobos uivando não interfere nas jogadas. Envolver em um ataque bem-sucedido com a língua, cujo alcance é de 15 metros, o lagarto do deserto pode envolver uma vítima que falhe em uma JPR. Uma vítima presa sofre 1d4 pontos de dano por turno por esmagamento, e corre o risco de ser engolida. Um teste resistido de Força pode ser feito para se soltar.</p>",
+    "described_attacks": "1 MORDIDA +2 (1D6) UIVO SÔNICO (VER TEXTO)",
+    "encounters": "ERRANTE 1D2 ALCATEIA 2D6",
+    "xp": "100 XP",
+    "dv": "2+1 (9/17)",
+    "ca": "13",
+    "jp": "16",
+    "mo": "90%",
+    "mv": "18",
+    "hp": {
+      "value": 9,
+      "max": 17
+    }
+  },
+  "prototypeToken": {
+    "name": "Lobo Sônico",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 270,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!g2EVgEgwVqm11IfK"
+}

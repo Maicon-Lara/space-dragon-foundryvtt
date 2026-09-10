@@ -1,0 +1,64 @@
+{
+  "name": "Gatuno (Nível 1)",
+  "type": "monster",
+  "_id": "78YJbhI03WDfFfJC",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "gatuno-nivel-1",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "neutro",
+    "habitat": "QUALQUER",
+    "description": "<p><strong>FOR</strong> 10 · <strong>DES</strong> 16 · <strong>CON</strong> 12 · <strong>INT</strong> 10 · <strong>CIE</strong> 12 · <strong>COM</strong> 10</p><p>Sabotagem 20% (Nv. 1) ou 40% (Nv. 5) de chance de sabotar máquinas e abrir portas, levando 1d8 rodadas para tal. Escalar 80% (Nv. 1) ou 84% (Nv. 5) de chance de escalar qualquer superfície. Furtividade 35% (Nv. 1) ou 55% (Nv. 5) de chance de ficar furtivo. Furtar 35% (Nv. 1) ou 55% (Nv. 5) de chance de furtar objetos. Percepção sucesso em percepção com um resultado 1-2 (Nv. 1) ou 1-3 (Nv. 5) em 1d6. Ataque furtivo: qualquer ataque feito pelo gatuno enquanto estiver furtivo causa o dano x2. Ele revela sua posição logo após atacar.</p>",
+    "described_attacks": "1 PISTOLA LASER +4 (1D6)",
+    "encounters": "1D2",
+    "xp": "U 100 XP",
+    "dv": "1D6+1 (4)",
+    "ca": "14 (VESTES LEVES)",
+    "jp": "15",
+    "mo": "50%",
+    "mv": "10",
+    "hp": {
+      "value": 4,
+      "max": 4
+    }
+  },
+  "prototypeToken": {
+    "name": "Gatuno (Nível 1)",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "S8agGTOipbrT4SKh",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 40,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!78YJbhI03WDfFfJC"
+}

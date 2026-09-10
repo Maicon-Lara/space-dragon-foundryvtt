@@ -1,0 +1,65 @@
+{
+  "name": "Escaravelho Radioativo",
+  "type": "monster",
+  "_id": "Sq84Pda5KDiGptgF",
+  "img": "systems/olddragon2e/assets/concepts/inseto-grande.webp",
+  "system": {
+    "odo_id": "escaravelho-radioativo",
+    "concept": "Inseto",
+    "size": "grande",
+    "alignment": "neutro",
+    "habitat": "RUÍNAS",
+    "description": "<p><em>Scarabus uranius</em></p><p><strong>FOR</strong> 12 · <strong>DES</strong> 10 · <strong>CON</strong> 14 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Escaravelhos radioativos são besouros marrons maiores que seres humanos e emitem um brilho verde devido a sua radioatividade. Em geral, habitam as ruínas de antigas estações humanas, onde acabam sendo contaminados por vazamentos radioativos. Atacarão usando suas pinças, com as quais cortam suas vítimas ao meio antes de devorá-las. Radioatividade qualquer personagem que sofra um ataque bem-sucedido de um escaravelho radioativo tem 15% de chance de sofrer também uma contaminação radioativa. Mesmo que um personagem não seja atingido pela criatura a simples proximidade também confere uma chance de 5% de contaminação.</p>",
+    "described_attacks": "1 PINÇA +6 (1D6+4+RADIOATIVIDADE)",
+    "encounters": "GRUPO 1D4 INFESTAÇÃO 2D6",
+    "xp": "405 XP",
+    "dv": "5+2 (22/42)",
+    "ca": "14 (CARAPAÇA GROSSA +4)",
+    "jp": "16",
+    "mo": "60%",
+    "mv": "6",
+    "mvv": "4",
+    "hp": {
+      "value": 22,
+      "max": 42
+    }
+  },
+  "prototypeToken": {
+    "name": "Escaravelho Radioativo",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/inseto-grande.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 2,
+    "height": 2,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 160,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!Sq84Pda5KDiGptgF"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Humanoide Robótico",
+  "type": "monster",
+  "_id": "Ob2GjGv4o4H3mwAn",
+  "img": "systems/olddragon2e/assets/concepts/constructo-medio.webp",
+  "system": {
+    "odo_id": "humanoide-robotico",
+    "concept": "Constructo",
+    "size": "medio",
+    "alignment": "neutro",
+    "habitat": "RUÍNAS",
+    "description": "<p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 16 · <strong>INT</strong> 10 · <strong>CIE</strong> 12 · <strong>COM</strong> 8</p><p>Humanoides robóticos representam o último estágio de desenvolvimento tecnológico em relação ao cérebro positrônico antes que ele fosse aperfeiçoado para o modelo atual. Sua inteligência ainda é primitiva se comparada à humana, mas significativamente desenvolvida em comparação a animais e certos alienígenas. Podem comunicar-se através de frases simples, são capazes de aprender comandos e executá-los. Desativação humanoides robóticos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
+    "described_attacks": "1 PANCADA +8 (1D8+4) 1 RAIO LASER +4 (1D6)",
+    "encounters": "ERRANTE 1D2 GRUPO 1D4",
+    "xp": "ODU 1.075 XP",
+    "dv": "9+3 (39/75)",
+    "ca": "15 (CORPO ROBÓTICO +4)",
+    "jp": "12",
+    "mo": "100%",
+    "mv": "9",
+    "hp": {
+      "value": 39,
+      "max": 75
+    }
+  },
+  "prototypeToken": {
+    "name": "Humanoide Robótico",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/constructo-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 230,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!Ob2GjGv4o4H3mwAn"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Simihomem",
+  "type": "monster",
+  "_id": "n1MxUWCr0LzWOtvu",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "simihomem",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "neutro",
+    "habitat": "FLORESTAS E RUÍNAS",
+    "description": "<p><em>Simio sapiens</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 14 · <strong>CON</strong> 14 · <strong>INT</strong> 11 · <strong>CIE</strong> 5 · <strong>COM</strong> 12</p><p><strong>Resistência mental</strong> 5%</p>",
+    "described_attacks": "1 ESPADA DE LÂMINA +6 (1D8+4) 1 ZARABATANA +3 (1D4 + VENENO)",
+    "encounters": "ERRANTE 1D6 GRUPO 3D6",
+    "xp": "U 450 XP",
+    "dv": "5+2 (22/42)",
+    "ca": "14 (ROUPAS PROTETORAS +2)",
+    "jp": "14",
+    "mo": "80%",
+    "mv": "9",
+    "hp": {
+      "value": 22,
+      "max": 42
+    }
+  },
+  "prototypeToken": {
+    "name": "Simihomem",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 480,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!n1MxUWCr0LzWOtvu"
+}

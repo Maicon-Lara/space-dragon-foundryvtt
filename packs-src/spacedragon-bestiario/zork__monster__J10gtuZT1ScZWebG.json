@@ -1,0 +1,64 @@
+{
+  "name": "Zork",
+  "type": "monster",
+  "_id": "J10gtuZT1ScZWebG",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "zork",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "QUALQUER",
+    "description": "<p><em>Zorko sapiens</em></p><p><strong>FOR</strong> 17 · <strong>DES</strong> 12 · <strong>CON</strong> 12 · <strong>INT</strong> 10 · <strong>CIE</strong> 7 · <strong>COM</strong> 6</p><p><strong>Resistência mental</strong> 20%</p>",
+    "described_attacks": "1 PISTOLA LASER +1 (1D6) 1 LANÇA DE LÂMINA +3 (1D8+3)",
+    "encounters": "BANDO 3D6 BASE 10D6",
+    "xp": "OD 37 XP",
+    "dv": "1+1 (5/9)",
+    "ca": "15 (TRAJES DE COMBATE)",
+    "jp": "16",
+    "mo": "70%",
+    "mv": "6",
+    "hp": {
+      "value": 5,
+      "max": 9
+    }
+  },
+  "prototypeToken": {
+    "name": "Zork",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 560,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!J10gtuZT1ScZWebG"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Metalópode",
+  "type": "monster",
+  "_id": "aNVLKdS8E3MPGCnu",
+  "img": "systems/olddragon2e/assets/concepts/constructo-imenso.webp",
+  "system": {
+    "odo_id": "metalopode",
+    "concept": "Constructo",
+    "size": "imenso",
+    "alignment": "caotico",
+    "habitat": "RUÍNAS",
+    "description": "<p><strong>FOR</strong> 14 · <strong>DES</strong> 14 · <strong>CON</strong> 10 · <strong>INT</strong> 6 · <strong>CIE</strong> 12 · <strong>COM</strong> 4</p><p>Metalópodes são máquinas de guerra robóticas de tamanho enorme que lembram vagamente aranhas metálicas. Têm quatro longas pernas que se conectam a seus corpos quase perfeitamente esféricos, do qual se projeta um canhão protônico, sua única arma. Em tempos passados foram frequentemente usados em guerras como batedores. Acerebral embora sejam robôs os metalópodes não podem ser desativados por um disruptor positrônico, pois não têm cérebros.</p>",
+    "described_attacks": "1 DISPARADOR PROTÔNICO +8 (1D12)",
+    "encounters": "ERRANTE 1D2 GRUPO 1D4",
+    "xp": "OD 1.150 XP",
+    "dv": "9 (36/72)",
+    "ca": "15 (CORPO ROBÓTICO +3)",
+    "jp": "14",
+    "mo": "100%",
+    "mv": "12",
+    "hp": {
+      "value": 36,
+      "max": 72
+    }
+  },
+  "prototypeToken": {
+    "name": "Metalópode",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/constructo-imenso.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 3,
+    "height": 3,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 330,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!aNVLKdS8E3MPGCnu"
+}

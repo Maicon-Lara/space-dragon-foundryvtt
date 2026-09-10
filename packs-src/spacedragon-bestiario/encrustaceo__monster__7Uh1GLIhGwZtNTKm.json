@@ -1,0 +1,64 @@
+{
+  "name": "Encrustáceo",
+  "type": "monster",
+  "_id": "7Uh1GLIhGwZtNTKm",
+  "img": "systems/olddragon2e/assets/concepts/inseto-grande.webp",
+  "system": {
+    "odo_id": "encrustaceo",
+    "concept": "Inseto",
+    "size": "grande",
+    "alignment": "neutro",
+    "habitat": "TERRENOS ROCHOSOS",
+    "description": "<p><em>Crustaceo mineralis</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 10 · <strong>CON</strong> 14 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p><strong>Redução de dano</strong> 4/ÁCIDO</p><p>Os encrustáceos à primeira vista não passam de grandes rochas calcárias, mas elas na verdade são apenas a concha dos crustáceos semelhantes a lagostas que vivem dentro delas. Embora sejam uma camuflagem eficaz, seu propósito é fornecer proteção contra ataques. Em um combate, os encrustáceos atacarão com ambas as enormes garras, que podem dilacerar carne facilmente. Defesa rochosa um encrustáceo pode esconder- se em sua concha, ficando virtualmente invulnerável a quaisquer ataques, exceto a dano ácido ou forças extremamente brutais.</p>",
+    "described_attacks": "2 GARRAS +4 (1D6+2)",
+    "encounters": "GRUPO 1D4 COLÔNIA 2D6",
+    "xp": "405 XP",
+    "dv": "5+2 (22/42)",
+    "ca": "16 (CONCHA DE ROCHA +6)",
+    "jp": "14",
+    "mo": "70%",
+    "mv": "6",
+    "hp": {
+      "value": 22,
+      "max": 42
+    }
+  },
+  "prototypeToken": {
+    "name": "Encrustáceo",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/inseto-grande.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 2,
+    "height": 2,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 150,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!7Uh1GLIhGwZtNTKm"
+}

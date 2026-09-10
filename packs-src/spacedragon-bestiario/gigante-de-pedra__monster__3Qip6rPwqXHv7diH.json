@@ -1,0 +1,64 @@
+{
+  "name": "Gigante De Pedra",
+  "type": "monster",
+  "_id": "3Qip6rPwqXHv7diH",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-imenso.webp",
+  "system": {
+    "odo_id": "gigante-de-pedra",
+    "concept": "Humanoide",
+    "size": "imenso",
+    "alignment": "caotico",
+    "habitat": "MONTANHAS",
+    "description": "<p><em>Giganto petricus</em></p><p><strong>FOR</strong> 22 · <strong>DES</strong> 14 · <strong>CON</strong> 18 · <strong>INT</strong> 8 · <strong>CIE</strong> 6 · <strong>COM</strong> 4</p><p><strong>Redução de dano</strong> 6/ÁCIDO</p><p>Os gigantes de pedra são enormes humanoides inteiramente feitos de rocha, mas ao contrário de cristaloides e outras formas de vida rochosas, possuem detalhes faciais e corporais similares a humanos, embora não tão refinados. Raramente são vistos e lendas de povos primitivos dos planetas que habitam comumente os tinham como ídolos, personificações da força da natureza. Corpo de pedra gigantes de pedra ignoram boa parte do dano que sofrem, exceto quando a fonte de dano é ácida o suficiente para corroer seu corpo de pedra.</p>",
+    "described_attacks": "1 PANCADA +12 (4D6+6) 1 ROCHA ARREMESSADA +6 (3D6)",
+    "encounters": "ERRANTE 1D2 GRUPO 1D4",
+    "xp": "1.480 XP",
+    "dv": "10+4 (44/84)",
+    "ca": "18 (CORPO DE PEDRA +6)",
+    "jp": "12",
+    "mo": "80%",
+    "mv": "11",
+    "hp": {
+      "value": 44,
+      "max": 84
+    }
+  },
+  "prototypeToken": {
+    "name": "Gigante De Pedra",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-imenso.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 3,
+    "height": 3,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 190,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!3Qip6rPwqXHv7diH"
+}

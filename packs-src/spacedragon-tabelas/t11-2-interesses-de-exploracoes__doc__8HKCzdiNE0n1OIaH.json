@@ -1,0 +1,173 @@
+{
+  "folder": null,
+  "name": "T11-2: Interesses de explorações",
+  "_id": "8HKCzdiNE0n1OIaH",
+  "img": "systems/olddragon2e/assets/icons/d6.svg",
+  "description": "O que motiva uma expedição, ou o que ela pode render.",
+  "results": [
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "qrKKcFfJuRuokopB",
+      "name": "",
+      "description": "Registro de espécie alienígena inteligente",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.qrKKcFfJuRuokopB"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "kMcErWljcvBcGEdg",
+      "name": "",
+      "description": "Máquina ancestral poderosa",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.kMcErWljcvBcGEdg"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "vemEvFR2vBA78UXY",
+      "name": "",
+      "description": "Recuperação de espaçonave acidentada",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.vemEvFR2vBA78UXY"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "VSQEsUr1wE3dCN0b",
+      "name": "",
+      "description": "Fonte de energia inesgotável e disputada",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.VSQEsUr1wE3dCN0b"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "3sxeY7x5QGjuPCRR",
+      "name": "",
+      "description": "Documentos ancestrais sobre a espécie humana",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.3sxeY7x5QGjuPCRR"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "8MO6mWbej4YHgoL7",
+      "name": "",
+      "description": "Coleta de amostra vegetal alienígena",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.8MO6mWbej4YHgoL7"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "zOdaxKWU1iXy0IDR",
+      "name": "",
+      "description": "Captura de espécime animal alienígena",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.zOdaxKWU1iXy0IDR"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "vD1AbSwkVmo6tFmg",
+      "name": "",
+      "description": "Relíquia tecnológica valiosa",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.vD1AbSwkVmo6tFmg"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "2yQjhcTM5nLYjzvb",
+      "name": "",
+      "description": "Segredo de estado ou militar",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.2yQjhcTM5nLYjzvb"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "formula": "1d9",
+  "sort": 9,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!tables!8HKCzdiNE0n1OIaH"
+}

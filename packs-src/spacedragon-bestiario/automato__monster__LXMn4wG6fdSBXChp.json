@@ -1,0 +1,64 @@
+{
+  "name": "Autômato",
+  "type": "monster",
+  "_id": "LXMn4wG6fdSBXChp",
+  "img": "systems/olddragon2e/assets/concepts/constructo-medio.webp",
+  "system": {
+    "odo_id": "automato",
+    "concept": "Constructo",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "RUÍNAS",
+    "description": "<p><strong>FOR</strong> 14 · <strong>DES</strong> 10 · <strong>CON</strong> 12 · <strong>INT</strong> 7 · <strong>CIE</strong> 10 · <strong>COM</strong> 3</p><p>Autômatos são robôs humanoides programados para uma única função, a qual cumprem repetidamente e sem parar, sem a necessidade de controle humano. Com a deterioração de seus circuitos não é incomum que autômatos executem repetidamente apenas a função de afastar intrusos através de ataques rudimentares, dificilmente perseguindo-os. Seus cérebros positrônicos são primitivos, incapazes de raciocínio complexo, reagindo apenas a estímulos. Desativação autômatos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
+    "described_attacks": "1 PANCADA +2 (1D6+2)",
+    "encounters": "ERRANTE 1D2 GRUPO 1D6",
+    "xp": "O 245 XP",
+    "dv": "4+1 (17/33)",
+    "ca": "14 (CORPO ROBÓTICO +4)",
+    "jp": "15",
+    "mo": "100%",
+    "mv": "9",
+    "hp": {
+      "value": 17,
+      "max": 33
+    }
+  },
+  "prototypeToken": {
+    "name": "Autômato",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/constructo-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 90,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!LXMn4wG6fdSBXChp"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Xheniano",
+  "type": "monster",
+  "_id": "SnLcJ7NkCydnJMdp",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "xheniano",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "QUALQUER",
+    "description": "<p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 10 · <strong>INT</strong> 20 · <strong>CIE</strong> 20 · <strong>COM</strong> 12</p><p><strong>Resistência mental</strong> 90%</p>",
+    "described_attacks": "2 GARRAS +3 (1D8+2) PODERES MENTAIS (VER TEXTO)",
+    "encounters": "ERRANTE 1D4, BASE 2D6",
+    "xp": "ODU 610 XP",
+    "dv": "6 (24/48)",
+    "ca": "12 (VESTES LEVES)",
+    "jp": "14",
+    "mo": "80%",
+    "mv": "6",
+    "hp": {
+      "value": 24,
+      "max": 48
+    }
+  },
+  "prototypeToken": {
+    "name": "Xheniano",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 540,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!SnLcJ7NkCydnJMdp"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Monstro De Gelo",
+  "type": "monster",
+  "_id": "RndrOff02V8Nebxs",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
+  "system": {
+    "odo_id": "monstro-de-gelo",
+    "concept": "Humanoide",
+    "size": "grande",
+    "alignment": "caotico",
+    "habitat": "GELEIRAS E MONTANHAS CONGELADAS",
+    "description": "<p><strong>FOR</strong> 18 · <strong>DES</strong> 12 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p>",
+    "described_attacks": "1 PANCADA +6 (1D10+4) 1 SOPO GÉLIDO (1D6 FRIO, VER TEXTO)",
+    "encounters": "1",
+    "xp": "555 XP",
+    "dv": "6+2 (26/50)",
+    "ca": "15 (CORPO DE GELO +4)",
+    "jp": "14 (+4 CONTRA FOGO,",
+    "mo": "70%",
+    "mv": "6",
+    "hp": {
+      "value": 26,
+      "max": 50
+    }
+  },
+  "prototypeToken": {
+    "name": "Monstro De Gelo",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 2,
+    "height": 2,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 350,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!RndrOff02V8Nebxs"
+}

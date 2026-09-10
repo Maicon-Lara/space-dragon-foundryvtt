@@ -1,0 +1,64 @@
+{
+  "name": "Bolha Verde",
+  "type": "monster",
+  "_id": "S2aTg7unyUR9sfBC",
+  "img": "systems/olddragon2e/assets/concepts/gosma-pequeno.webp",
+  "system": {
+    "odo_id": "bolha-verde",
+    "concept": "Gosma",
+    "size": "pequeno",
+    "alignment": "neutro",
+    "habitat": "RUÍNAS",
+    "description": "<p><em>Blobus errantis</em></p><p><strong>FOR</strong> 5 · <strong>DES</strong> 7 · <strong>CON</strong> 2 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Bolhas verdes são massas microbianas gelatinosas que se desenvolvem em ambientes deteriorados com matéria apodrecida. São pegajosas, possuem uma coloração verde bem característica e cheiram a comida podre. Não representam perigo direto, a não ser que envolvam uma pessoa completamente, o que pode asfixiá-la e levá-la à morte. Quando muitas bolhas verdes juntam-se é formada uma geleia espacial. Envolver bolhas verdes não atacam, apenas envolvem um alvo, que pode fazer uma JPR para esquivar-se ou um teste de Força para retirar uma bolha que já esteja presa em seu corpo. Para cada bolha envolvendo um alvo ele terá uma penalidade de -1 nesses testes, com um máximo de -10.</p>",
+    "described_attacks": "ENVOLVER (ESPECIAL, VER TEXTO)",
+    "encounters": "GRUPO 2D10 INFESTAÇÃO 4D10",
+    "xp": "37 XP",
+    "dv": "1 (4/8)",
+    "ca": "10",
+    "jp": "19",
+    "mo": "60%",
+    "mv": "4",
+    "hp": {
+      "value": 4,
+      "max": 8
+    }
+  },
+  "prototypeToken": {
+    "name": "Bolha Verde",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/gosma-pequeno.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 100,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!S2aTg7unyUR9sfBC"
+}

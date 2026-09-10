@@ -1,0 +1,65 @@
+{
+  "name": "Pteroave",
+  "type": "monster",
+  "_id": "Y9NQFqOaWzFw43DH",
+  "img": "systems/olddragon2e/assets/concepts/besta-grande.webp",
+  "system": {
+    "odo_id": "pteroave",
+    "concept": "Besta",
+    "size": "grande",
+    "alignment": "caotico",
+    "habitat": "FLORESTAS E MONTANHAS",
+    "description": "<p><em>Ptero avius</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 20 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 3</p><p>Pteroaves são grandes criaturas aladas que acredita- se serem descendentes de alienossauros. Possuem penugem primitiva e grossa das mais diversas colorações, bico alongado e garras afiadas. Costumam devorar criaturas pequenas que avistam durante o voo com sua visão aguçada. Suspensão a pteroave pode suspender um inimigo de tamanho humano ou menor no ar caso ataque com suas duas garras e obtenha sucesso em ambas as rolagens de ataque. O alvo deve fazer uma JPR para escapar, ou estará à mercê da pteroave.</p>",
+    "described_attacks": "1 BICADA +8 (1D8+5) 2 GARRAS +3 (1D6+3 + SUSPENSÃO)",
+    "encounters": "ERRANTE 1D2 NINHO 1D6",
+    "xp": "945 XP",
+    "dv": "8+2 (34/66)",
+    "ca": "17 (PENUGEM GROSSA +2)",
+    "jp": "11",
+    "mo": "80%",
+    "mv": "6",
+    "mvv": "14",
+    "hp": {
+      "value": 34,
+      "max": 66
+    }
+  },
+  "prototypeToken": {
+    "name": "Pteroave",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-grande.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 2,
+    "height": 2,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 400,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!Y9NQFqOaWzFw43DH"
+}

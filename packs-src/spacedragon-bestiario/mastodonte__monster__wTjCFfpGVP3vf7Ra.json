@@ -1,0 +1,64 @@
+{
+  "name": "Mastodonte",
+  "type": "monster",
+  "_id": "wTjCFfpGVP3vf7Ra",
+  "img": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+  "system": {
+    "odo_id": "mastodonte",
+    "concept": "Besta",
+    "size": "imenso",
+    "alignment": "neutro",
+    "habitat": "PLANÍCIES",
+    "description": "<p><em>Mamutis gigantus</em></p><p><strong>FOR</strong> 26 · <strong>DES</strong> 14 · <strong>CON</strong> 20 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p><p>Mastodontes são enormes mamíferos aparentados a elefantes, mas cobertos de pelos grossos. Suas enormes presas frontais são afiadas e mortais quando usadas para um ataque. São herbívoros e vivem em manadas pelas planícies, sempre migrando para onde haja pasto e plantas rasteiras. Quando a manada é ameaçada todos os membros disparam contra os inimigos, atropelando todos em seu caminho. Arremesso uma vítima atingida por um ataque com as presas do mastodonte é arremessada a 1d6 metros de distância, se não passar em uma JPR. Atropelar um mastodonte em corrida pode atropelar todos em sua frente que não passarem em uma JPR. O atropelamento causa o mesmo dano do ataque com presas.</p>",
+    "described_attacks": "1 ATAQUE COM PRESAS +14 (2D8+8+ARREMESSO) ATROPELAR (VER TEXTO)",
+    "encounters": "ERRANTE 1D2 MANADA 2D6",
+    "xp": "2.075 XP",
+    "dv": "12+5 (53/101)",
+    "ca": "15 (PELAGEM GROSSA +3)",
+    "jp": "11",
+    "mo": "80%",
+    "mv": "10",
+    "hp": {
+      "value": 53,
+      "max": 101
+    }
+  },
+  "prototypeToken": {
+    "name": "Mastodonte",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 3,
+    "height": 3,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 290,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!wTjCFfpGVP3vf7Ra"
+}

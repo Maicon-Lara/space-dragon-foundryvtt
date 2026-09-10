@@ -39,5 +39,8 @@
   "olddragon2e.arcane_spell_short": "M",
   "olddragon2e.sheet.spells_empty": "Arraste poderes mentais do compêndio para listá-los aqui.",
   "olddragon2e.spell_circle.10": "10º",
-  "TYPES.Item.spell": "Poder Mental"
+  "TYPES.Item.spell": "Poder Mental",
+  "olddragon2e.ordeiro": "Leal",
+  "olddragon2e.caotico": "Rebelde",
+  "olddragon2e.alignment": "Afiliação"
 }

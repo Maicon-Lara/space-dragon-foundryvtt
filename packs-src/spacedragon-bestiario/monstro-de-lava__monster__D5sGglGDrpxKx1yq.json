@@ -1,0 +1,64 @@
+{
+  "name": "Monstro De Lava",
+  "type": "monster",
+  "_id": "D5sGglGDrpxKx1yq",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
+  "system": {
+    "odo_id": "monstro-de-lava",
+    "concept": "Humanoide",
+    "size": "grande",
+    "alignment": "caotico",
+    "habitat": "VULCÕES",
+    "description": "<p><strong>FOR</strong> 20 · <strong>DES</strong> 12 · <strong>CON</strong> 16 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p><p>Monstros de lava integram a lista de criaturas sem explicação científica válida. Segundo relatos, eles se formam no interior de vulcões ativos, e nunca se distanciam muito deles. A aparição de monstros de lava é muito rara, e pouco se sabe sobre eles além de sua capacidade de soprar fogo contra seus inimigos. Baforada de chamas esta baforada alcança uma área de até 6 metros à frente da criatura, e todos devem fazer uma JPR para evitar os efeitos. Uma vítima afetada tem 25% de chance de pegar fogo e sofrer 1d10 de dano a cada rodada subsequente.</p>",
+    "described_attacks": "1 PANCADA +8 (1D10+6 FOGO) 1 BAFORADA DE CHAMAS (1D6 FOGO, VER TEXTO)",
+    "encounters": "1",
+    "xp": "735 XP",
+    "dv": "7+3 (31/59)",
+    "ca": "15 (CORPO DE LAVA +4)",
+    "jp": "14  (+4 CONTRA GELO,",
+    "mo": "70%",
+    "mv": "6",
+    "hp": {
+      "value": 31,
+      "max": 59
+    }
+  },
+  "prototypeToken": {
+    "name": "Monstro De Lava",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 2,
+    "height": 2,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 370,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!D5sGglGDrpxKx1yq"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Cosmonauta (Nível 1)",
+  "type": "monster",
+  "_id": "rj1Qdn0KnHugTTfU",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "cosmonauta-nivel-1",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "neutro",
+    "habitat": "QUALQUER",
+    "description": "<p><strong>FOR</strong> 14 · <strong>DES</strong> 14 · <strong>CON</strong> 12 · <strong>INT</strong> 10 · <strong>CIE</strong> 10 · <strong>COM</strong> 10</p><p>Pilotagem 80% de chance de pilotar qualquer veículo ou espaçonave. Desarmar 30% de chance de desarmar qualquer inimigo. Subjugar 30% de chance de subjugar um inimigo desarmado.</p>",
+    "described_attacks": "1 RIFLE LASER +3 (1D8)     |     1 ESPADA DE ENERGIA+3  (1D8+2)",
+    "encounters": "1D6",
+    "xp": "D,U 100 XP",
+    "dv": "1D10+1 (6)",
+    "ca": "14 (VESTES MÉDIAS)",
+    "jp": "16",
+    "mo": "50%",
+    "mv": "10",
+    "hp": {
+      "value": 6,
+      "max": 6
+    }
+  },
+  "prototypeToken": {
+    "name": "Cosmonauta (Nível 1)",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "S8agGTOipbrT4SKh",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 20,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!rj1Qdn0KnHugTTfU"
+}

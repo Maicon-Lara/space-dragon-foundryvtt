@@ -1,0 +1,65 @@
+{
+  "name": "Eletricobra",
+  "type": "monster",
+  "_id": "JJKf6tSajdH4Ia5X",
+  "img": "systems/olddragon2e/assets/concepts/dragao-medio.webp",
+  "system": {
+    "odo_id": "eletricobra",
+    "concept": "Dragão",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "FLORESTAS",
+    "description": "<p><em>Vipera eletricus</em></p><p><strong>FOR</strong> 8 · <strong>DES</strong> 18 · <strong>CON</strong> 8 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p>Eletricobras são répteis rastejantes de coloração azul com marcas amarelas na pele que caçam mordendo suas vítimas e as matando com as descargas elétricas por elas produzidas. Embora prefiram viver em terra as eletricobras também são ótimas nadadoras, e sua bioeletricidade torna-se mais mortal em ambientes inundados. Descarga elétrica a descarga elétrica da eletricobra atinge uma área de 5m² ao redor da criatura. Todos nessa área devem fazer uma JPR para sofrer apenas metade do dano. Quem falhar nessa jogada sofre o dano normalmente e deve fazer uma JPF, para não ficar paralisado por 4d10 segundos.</p>",
+    "described_attacks": "1 MORDIDA +4 (1D6+1D4 ELÉTRICO) 1 DESCARGA ELÉTRICA 1D8 ELÉTRICO + PARALISAÇÃO, VER TEXTO)",
+    "encounters": "GRUPO 1D6 NINHO 3D6",
+    "xp": "100 XP",
+    "dv": "2 (8/16)",
+    "ca": "14",
+    "jp": "14",
+    "mo": "60%",
+    "mv": "9",
+    "mvn": "6",
+    "hp": {
+      "value": 8,
+      "max": 16
+    }
+  },
+  "prototypeToken": {
+    "name": "Eletricobra",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/dragao-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 140,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!JJKf6tSajdH4Ia5X"
+}

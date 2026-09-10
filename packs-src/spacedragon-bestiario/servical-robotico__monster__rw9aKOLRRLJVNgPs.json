@@ -1,0 +1,64 @@
+{
+  "name": "Serviçal Robótico",
+  "type": "monster",
+  "_id": "rw9aKOLRRLJVNgPs",
+  "img": "systems/olddragon2e/assets/concepts/constructo-medio.webp",
+  "system": {
+    "odo_id": "servical-robotico",
+    "concept": "Constructo",
+    "size": "medio",
+    "alignment": "neutro",
+    "habitat": "RUÍNAS",
+    "description": "<p><strong>FOR</strong> 12 · <strong>DES</strong> 12 · <strong>CON</strong> 14 · <strong>INT</strong> 10 · <strong>CIE</strong> 12 · <strong>COM</strong> 10</p><p>Serviçais robóticos são robôs programados para obedecer a uma pessoa ou grupo, executando todo tipo de tarefa. Seus cérebros positrônicos são desenvolvidos, embora menos capazes do que os presentes em metahumanos e androides. São capazes de fala e pensamento lógico complexo, mas estão presos à obediência programada em seus cérebros. Desativação serviçais robóticos podem ser desativados por cientistas através de um disruptor positrônico. Envolver um shoggoth que acerte três ataques consecutivos em um alvo pode tentar envolvê-lo. O alvo pode fazer uma JPR para desvencilhar- se, mas caso seja envolto sofrerá 1d6 pontos de dano por rodada até ser libertado, com a morte do shoggoth.</p>",
+    "described_attacks": "1 PISTOLA LASER +6 (1D6) 1 RIFLE LASER +3 (1D8)",
+    "encounters": "ERRANTE 1D2 GRUPO 1D6",
+    "xp": "ODU 500 XP",
+    "dv": "6+2 (26/50)",
+    "ca": "15 (CORPO ROBÓTICO +4)",
+    "jp": "14",
+    "mo": "80%",
+    "mv": "9",
+    "hp": {
+      "value": 26,
+      "max": 50
+    }
+  },
+  "prototypeToken": {
+    "name": "Serviçal Robótico",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/constructo-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 470,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!rw9aKOLRRLJVNgPs"
+}

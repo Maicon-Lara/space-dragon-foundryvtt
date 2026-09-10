@@ -1,0 +1,64 @@
+{
+  "name": "Multiforma",
+  "type": "monster",
+  "_id": "m9phw2HJJJhlJKRs",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+  "system": {
+    "odo_id": "multiforma",
+    "concept": "Humanoide",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "QUALQUER",
+    "description": "<p><em>Mutatio sapiens</em></p><p><strong>FOR</strong> 12 · <strong>DES</strong> 14 · <strong>CON</strong> 12 · <strong>INT</strong> 13 · <strong>CIE</strong> 14 · <strong>COM</strong> 10</p><p><strong>Resistência mental</strong> 30%</p><p>Os multiformas são um povo sapiente capaz de alterar sua morfologia corporal, assumindo a forma de qualquer outro ser vivo do tamanho humano ou menor. Em sua forma original são esguios e têm a cabeça alongada, além de apresentarem olhos amarelados. Quando transformados, os multiforma apresentarão quaisquer características e habilidades que a espécie emulada teria normalmente. Resistência mental os cérebros dos multiformas são 70% iguais aos dos humanos, o que lhes confere 30% de resistência contra poderes mentais. Metamorfose o multiforma pode transformar-se em qualquer criatura média ou menor por um período indefinido de tempo, emulando quaisquer características e habilidades inerentes à espécie. A metamorfose é revertida caso o multiforma morra.</p>",
+    "described_attacks": "1 PANCADA +3 (1D6+1)",
+    "encounters": "GRUPO 1D4 NAVE 2D6",
+    "xp": "ODU 205 XP",
+    "dv": "3+1 (13/25)",
+    "ca": "14 (VESTES MÉDIAS)",
+    "jp": "16",
+    "mo": "70%",
+    "mv": "9",
+    "hp": {
+      "value": 13,
+      "max": 25
+    }
+  },
+  "prototypeToken": {
+    "name": "Multiforma",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 380,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!m9phw2HJJJhlJKRs"
+}

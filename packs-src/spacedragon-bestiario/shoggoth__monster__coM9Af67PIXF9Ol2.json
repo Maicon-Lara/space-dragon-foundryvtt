@@ -1,0 +1,64 @@
+{
+  "name": "Shoggoth",
+  "type": "monster",
+  "_id": "coM9Af67PIXF9Ol2",
+  "img": "systems/olddragon2e/assets/concepts/gosma-medio.webp",
+  "system": {
+    "odo_id": "shoggoth",
+    "concept": "Gosma",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "QUALQUER",
+    "description": "<p><strong>FOR</strong> 15 · <strong>DES</strong> 8 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 3 · <strong>COM</strong> 2</p><p>Shoggoths são massas protoplásmicas gosmentas que apresentam uma miríade de órgãos primitivamente desenvolvidos, como olhos e bocas. Existem nos mais diversos tamanhos, o que indica o quanto de matéria orgânica o shoggoth conseguiu devorar para se desenvolver. Relatos de shoggoths de dezenas e centenas de metros são tidos como ficção, embora sejam plausíveis cientificamente. Múltiplos membros por não ter morfologia definida o shoggoth é capaz de atacar todos os inimigos a seu redor ao mesmo tempo.</p>",
+    "described_attacks": "1 PANCADA +2 POR METRO (1D4/M) 1 MORDIDA +1 POR METRO (1D6/M) ENVOLVER (VER TEXTO)",
+    "encounters": "ERRANTE 1D4 COVIL 2D6",
+    "xp": "125 XP PARA CADA 2M",
+    "dv": "2+2 (10/18) PARA CADA 2M",
+    "ca": "10   |   JP 16",
+    "jp": "",
+    "mo": "70%",
+    "mv": "9",
+    "hp": {
+      "value": 10,
+      "max": 18
+    }
+  },
+  "prototypeToken": {
+    "name": "Shoggoth",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/gosma-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 460,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!coM9Af67PIXF9Ol2"
+}

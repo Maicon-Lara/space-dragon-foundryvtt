@@ -16,7 +16,7 @@ import { compilePack } from "@foundryvtt/foundryvtt-cli";
 
 import {
   folderDoc, raceDoc, raceAbilityDoc, classDoc, classAbilityDoc, journalDoc, rollTableDoc, macroDoc,
-  weaponDoc, armorDoc, spellDoc, miscDoc,
+  weaponDoc, armorDoc, spellDoc, miscDoc, monsterDoc,
   itemUuid, writeSource, aninhaPastas, pintaPastas, makeId, stats,
 } from "./lib.mjs";
 import { especies } from "./data/especies.mjs";
@@ -34,6 +34,9 @@ import { APARATOS, CATEGORIAS_POR_CLASSE } from "./data/aparatos.mjs";
 import { aparatosJournal } from "./data/aparatos-journal.mjs";
 import { combateJournal } from "./data/combate-journal.mjs";
 import { navesJournal } from "./data/naves-journal.mjs";
+import { CRIATURAS } from "./data/bestiario.mjs";
+import { mestreJournal } from "./data/mestre-journal.mjs";
+import { CLICHES, INTERESSES } from "./data/mestre.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -48,6 +51,7 @@ const P_MACROS = "spacedragon-macros";
 const P_EQUIPAMENTO = "spacedragon-equipamento";
 const P_PODERES = "spacedragon-poderes";
 const P_APARATOS = "spacedragon-aparatos";
+const P_BESTIARIO = "spacedragon-bestiario";
 
 /** Cor por pasta: sem isso o compêndio vira uma lista cinza indistinguível. */
 const PALETA = {
@@ -58,6 +62,8 @@ const PALETA = {
   "Poderes Mentais": "#5c2f7c",
   "Aparatos Tecnológicos": "#7c6b2f",
   "Feitos Científicos": "#2f7c5c",
+  "Bestiário": "#7c2f3a",
+  "Personagens de Exemplo": "#4a4a7c",
 };
 
 // ── Espécies ────────────────────────────────────────────────────────────────
@@ -234,21 +240,41 @@ function montaClasses() {
 // dados, que é outra coisa.
 function montaTabelas() {
   const docs = [];
-  for (const [nome, lado, desc] of [
-    ["T2-1: Mutações — Aprimoramentos", "aprimoramento",
-     "Role 1d10. Role também na tabela de Degenerações; se os dois dados derem o MESMO número, rerrole os dois."],
-    ["T2-1: Mutações — Degenerações", "degeneracao",
-     "Role 1d10. Role também na tabela de Aprimoramentos; se os dois dados derem o MESMO número, rerrole os dois."],
+
+  // As duas colunas da T2-1 são tabelas SEPARADAS de 1d10, e não uma de 2d10:
+  // o livro manda rolar um dado em cada coluna e rerrolar se derem igual. Uma
+  // tabela de 2d10 somaria os dados, que é outra coisa.
+  for (const [nome, lado] of [
+    ["T2-1: Mutações — Aprimoramentos", "aprimoramento"],
+    ["T2-1: Mutações — Degenerações", "degeneracao"],
   ]) {
+    const outra = lado === "aprimoramento" ? "Degenerações" : "Aprimoramentos";
     docs.push(rollTableDoc({
       nome,
-      desc,
+      desc: `Role 1d10. Role também na tabela de ${outra}; se os dois dados derem o MESMO número, rerrole os dois.`,
       formula: "1d10",
       // `range` e `text` são os nomes que o rollTableDoc espera — conferidos na
       // lib, não deduzidos. Cada resultado ocupa uma face só.
       resultados: PARES.map((p) => ({ text: p[lado].nome, range: [p.indice, p.indice] })),
     }, PARES.length));
   }
+
+  // As do Capítulo 11 são listas simples: a fórmula é 1dN, com N sendo o
+  // tamanho da lista. A T11-1 tem ONZE entradas, então é 1d11 — não 1d10.
+  for (const [nome, desc, lista] of [
+    ["T11-1: Clichês de ficção científica",
+     "Role para um gancho de aventura pulp.", CLICHES],
+    ["T11-2: Interesses de explorações",
+     "O que motiva uma expedição, ou o que ela pode render.", INTERESSES],
+  ]) {
+    docs.push(rollTableDoc({
+      nome,
+      desc,
+      formula: `1d${lista.length}`,
+      resultados: lista.map((texto, i) => ({ text: texto, range: [i + 1, i + 1] })),
+    }, lista.length));
+  }
+
   return docs;
 }
 
@@ -446,6 +472,24 @@ function montaAparatos() {
   return docs;
 }
 
+// ── Bestiário ───────────────────────────────────────────────────────────────
+//
+// Os oito personagens de exemplo ficam em pasta separada das criaturas. São
+// coisas diferentes: um é o cientista de 1º nível que o Mestre usa como PNJ ou
+// como modelo de ficha; o outro é o Zork que ataca a base.
+function montaBestiario() {
+  const docs = [];
+  const pCriaturas = folderDoc("Bestiário", "Actor", "sd-bestiario");
+  const pExemplos = folderDoc("Personagens de Exemplo", "Actor", "sd-exemplos");
+  docs.push(pCriaturas, pExemplos);
+
+  CRIATURAS.forEach((c, i) => {
+    const exemplo = /\(Nível \d+\)/.test(c.nome);
+    docs.push(monsterDoc(c, exemplo ? pExemplos._id : pCriaturas._id, "sd-bicho", i * 10));
+  });
+  return docs;
+}
+
 // ── Guarda: todo teste tem de achar a habilidade dele ───────────────────────
 //
 // O painel da ficha enfia o botão de rolagem DENTRO da habilidade de classe,
@@ -572,7 +616,11 @@ async function main() {
   await compila(P_ESPECIES, esp);
 
   await compila(P_TABELAS, montaTabelas());
-  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal, combateJournal, navesJournal];
+  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal, combateJournal, navesJournal, mestreJournal];
+  let best = aninhaPastas(montaBestiario());
+  pintaPastas(best, PALETA);
+  await compila(P_BESTIARIO, best);
+
   let ap = aninhaPastas(montaAparatos());
   pintaPastas(ap, PALETA);
   await compila(P_APARATOS, ap);

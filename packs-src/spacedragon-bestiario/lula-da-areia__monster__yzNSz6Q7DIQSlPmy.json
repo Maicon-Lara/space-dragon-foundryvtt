@@ -1,0 +1,64 @@
+{
+  "name": "Lula Da Areia",
+  "type": "monster",
+  "_id": "yzNSz6Q7DIQSlPmy",
+  "img": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+  "system": {
+    "odo_id": "lula-da-areia",
+    "concept": "Besta",
+    "size": "imenso",
+    "alignment": "neutro",
+    "habitat": "DESERTOS",
+    "description": "<p><em>Moluscus arena</em></p><p><strong>FOR</strong> 20 · <strong>DES</strong> 14 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>As lulas da areia são reminiscentes de oceanos desertificados que se adaptaram à vida sob a areia. Costumam ficar enterradas até que vítimas desavisadas passem por perto, quando atacarão com seus tentáculos e tentarão engoli-las. Há diversos relatos de pessoas que foram arrastadas para baixo da areia por essas criaturas e nunca mais foram vistas. Agarrar em um ataque bem-sucedido com um tentáculo, a lula da areia pode prender uma vítima, que falhe em uma JPR. Uma vítima envolta por um tentáculo pode tentar um teste resistido de Força para soltar-se, ou corre o risco de ser arrastada para baixo da areia.</p>",
+    "described_attacks": "2 TENTÁCULOS +8 (1D6+6+AGARRAR)",
+    "encounters": "1",
+    "xp": "1.390 XP",
+    "dv": "10+2 (42/82)",
+    "ca": "12",
+    "jp": "12",
+    "mo": "70%",
+    "mv": "4",
+    "hp": {
+      "value": 42,
+      "max": 82
+    }
+  },
+  "prototypeToken": {
+    "name": "Lula Da Areia",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 3,
+    "height": 3,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 280,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!yzNSz6Q7DIQSlPmy"
+}

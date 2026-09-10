@@ -1,0 +1,64 @@
+{
+  "name": "Homenzinho Verde",
+  "type": "monster",
+  "_id": "UONb9uvWHIsBGr8z",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-pequeno.webp",
+  "system": {
+    "odo_id": "homenzinho-verde",
+    "concept": "Humanoide",
+    "size": "pequeno",
+    "alignment": "neutro",
+    "habitat": "QUALQUER",
+    "description": "<p><em>Verdis sapiens</em></p><p><strong>FOR</strong> 8 · <strong>DES</strong> 14 · <strong>CON</strong> 9 · <strong>INT</strong> 16 · <strong>CIE</strong> 16 · <strong>COM</strong> 14</p><p><strong>Resistência mental</strong> 15%</p><p>Os homenzinhos verdes são uma raça humanoide sapiente com a qual a humanidade tem tido contato desde tempos imemoriais. Registros ancestrais fazem relação desses pequenos seres do tamanho de um bebê humano e os dragões marcianos, possivelmente o planeta de origem. Possuem ciência avançada, sendo capazes de viagem espacial e de experimentos científicos, embora não se tenha conhecimento de estações espaciais ou dos planetas onde vivem. Resistência mental os cérebros dos homenzinhos verdes são 85% iguais aos dos humanos, o que lhes confere 15% de resistência contra poderes mentais.</p>",
+    "described_attacks": "1 MINI PISTOLA LASER +2  (1D4)",
+    "encounters": "GRUPO 1D10 NAVE 3D10",
+    "xp": "ODU 37 XP",
+    "dv": "1 (4/8)",
+    "ca": "13 (VESTES LEVES)",
+    "jp": "18",
+    "mo": "70%",
+    "mv": "4",
+    "hp": {
+      "value": 4,
+      "max": 8
+    }
+  },
+  "prototypeToken": {
+    "name": "Homenzinho Verde",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-pequeno.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 240,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!UONb9uvWHIsBGr8z"
+}

@@ -851,3 +851,174 @@ export function pintaPastas(docs, paleta) {
   }
   return pastas.filter((p) => p.color).length;
 }
+
+// ── Ator do tipo monster ────────────────────────────────────────────────────
+//
+// ── POR QUE UM CONSTRUTOR PRÓPRIO, E NÃO O DO MÓDULO STAR WARS ──────────────
+//
+// O do Star Wars parte de um bloco NUMÉRICO: separa "14+5" em dado e bônus,
+// deriva PV do DV, monta itens de ataque. O bloco do Space Dragon é TEXTO com
+// parênteses explicativos — "CP 14 (COURAÇA GROSSA +1)", "DV 3+1 (13/25)" —, e
+// o esquema do OD2 guarda esses campos como string. Jogar o texto inteiro no
+// campo preserva a explicação que o livro dá; parsear jogaria fora.
+//
+// O único número que precisa sair do texto são os PV, para a barra do token
+// funcionar. O livro já os dá entre parênteses: "(13/25)" é média e máximo.
+
+/** "humanoide robótico médio rebelde" → o conceito que o OD2 desenha. */
+const CONCEITO_SD = [
+  [/robótic|autômato|robô/i, "Constructo"],
+  [/amórfic|gosma|geleia|bolha/i, "Gosma"],
+  [/vegetal|planta/i, "Planta"],
+  [/inseto|aracníd|crustáceo|anelídeo/i, "Inseto"],
+  [/dragão|réptil/i, "Dragão"],
+  [/humanoide/i, "Humanoide"],
+];
+
+const TAMANHO_SD = {
+  minúsculo: "miudo", miúdo: "miudo", pequeno: "pequeno", pequena: "pequeno",
+  médio: "medio", média: "medio", grande: "grande",
+  imenso: "imenso", gigante: "imenso", colossal: "colossal",
+};
+
+// Leal, neutro e rebelde entram nos três campos do OD2. A correspondência é
+// POSICIONAL, não conceitual: Afiliação e alinhamento são eixos diferentes, e o
+// journal de Subatributos explica isso. O lang do módulo troca os rótulos.
+const AFILIACAO_SD = { leal: "ordeiro", neutro: "neutro", rebelde: "caotico" };
+
+const semAcento = (s) =>
+  String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+function conceitoDe(tipo) {
+  for (const [rx, c] of CONCEITO_SD) if (rx.test(tipo)) return c;
+  return "Besta";
+}
+
+function tamanhoDe(tipo) {
+  for (const [palavra, valor] of Object.entries(TAMANHO_SD)) {
+    // `\\b` e não `\b`: num template literal, `\b` é o caractere de backspace,
+    // e o RegExp recebia um controle invisível no lugar da borda de palavra.
+    // Todo monstro saía "médio" porque nada casava.
+    if (new RegExp(`\\b${semAcento(palavra)}\\b`).test(semAcento(tipo))) return valor;
+  }
+  return "medio";
+}
+
+function afiliacaoDe(tipo) {
+  for (const [palavra, valor] of Object.entries(AFILIACAO_SD)) {
+    if (new RegExp(`\\b${palavra}\\b`).test(semAcento(tipo))) return valor;
+  }
+  return "neutro";
+}
+
+/**
+ * Os pontos de vida, do que o livro escreve na linha de DV.
+ *
+ *   "3+1 (13/25)"  → 13 de 25. Os parênteses são média e máximo.
+ *   "1D8+1 (5)"    → 5, quando o livro dá um número só.
+ *   "1 PV"         → 1. A medusa elétrica não tem dado de vida nenhum:
+ *                    ela tem literalmente um ponto de vida.
+ */
+function pvDoDV(dv) {
+  const t = String(dv ?? "");
+  const faixa = t.match(/\((\d+)\s*\/\s*(\d+)\)/);
+  if (faixa) return { value: Number(faixa[1]), max: Number(faixa[2]) };
+  const so = t.match(/\((\d+)\)/);
+  if (so) return { value: Number(so[1]), max: Number(so[1]) };
+  const literal = t.match(/^(\d+)\s*PV$/i);
+  if (literal) return { value: Number(literal[1]), max: Number(literal[1]) };
+  return null;
+}
+
+/** "10M ESCALANDO 6M" → { mv: "10", mvo: "6" }. */
+function movimentoDe(mov) {
+  const t = semAcento(mov);
+  const out = {};
+  const base = t.match(/^(\d+)\s*m/);
+  if (base) out.mv = base[1];
+  const nadando = t.match(/nadando\s*(\d+)/);
+  if (nadando) out.mvn = nadando[1];
+  const voando = t.match(/voando\s*(\d+)/);
+  if (voando) out.mvv = voando[1];
+  const outro = t.match(/(?:escalando|escavando|deslizando)\s*(\d+)/);
+  if (outro) out.mvo = outro[1];
+  return out;
+}
+
+const QUADRADOS = { miudo: 1, pequeno: 1, medio: 1, grande: 2, imenso: 3, colossal: 4 };
+
+export function monsterDoc(c, folderId, seedPrefix, sort) {
+  const id = makeId(`monster:${seedPrefix}:${c.nome}`);
+  const conceito = conceitoDe(c.tipo);
+  const tamanho = tamanhoDe(c.tipo);
+  const img = `systems/olddragon2e/assets/concepts/${
+    { Humanoide: "humanoide", Constructo: "constructo", Gosma: "gosma", Planta: "planta",
+      Inseto: "inseto", "Dragão": "dragao", Besta: "besta" }[conceito]
+  }-${tamanho}.webp`;
+
+  // Os seis atributos, RM e RD não existem em monstro de OD2. Entram no topo da
+  // descrição, que é onde a mesa vai procurá-los.
+  const at = c.atributos ?? {};
+  const linhaAt = Object.entries(at)
+    .filter(([, v]) => v !== null && v !== undefined)
+    .map(([k, v]) => `<strong>${k}</strong> ${v}`)
+    .join(" · ");
+
+  const extras = [];
+  if (c.rm) extras.push(`<strong>Resistência mental</strong> ${c.rm}`);
+  if (c.rd) extras.push(`<strong>Redução de dano</strong> ${c.rd}`);
+
+  const desc =
+    (c.cientifico ? `<p><em>${c.cientifico}</em></p>` : "") +
+    (linhaAt ? `<p>${linhaAt}</p>` : "") +
+    (extras.length ? `<p>${extras.join(" · ")}</p>` : "") +
+    (c.texto ? `<p>${c.texto}</p>` : "");
+
+  const system = {
+    odo_id: slug(c.nome),
+    concept: conceito,
+    size: tamanho,
+    alignment: afiliacaoDe(c.tipo),
+    habitat: c.habitat ?? "",
+    description: desc,
+    described_attacks: c.ataques ?? "",
+    encounters: c.encontros ?? "",
+    xp: c.premios ?? "",
+    dv: c.dv ?? "",
+    ca: c.cp ?? "",
+    jp: c.jp ?? "",
+    mo: c.moral ?? "",
+    ...movimentoDe(c.movimento),
+  };
+  const pv = pvDoDV(c.dv);
+  if (pv) system.hp = pv;
+
+  const lado = QUADRADOS[tamanho] ?? 1;
+  return {
+    name: c.nome,
+    type: "monster",
+    _id: id,
+    img,
+    system,
+    prototypeToken: {
+      name: c.nome,
+      displayName: 20,
+      actorLink: false,
+      appendNumber: true,
+      texture: { src: img, scaleX: 1, scaleY: 1 },
+      width: lado,
+      height: lado,
+      disposition: -1,
+      displayBars: 40,
+      bar1: { attribute: "hp" },
+    },
+    items: [],
+    effects: [],
+    folder: folderId,
+    flags: {},
+    _stats: stats(),
+    sort,
+    ownership: { default: 0 },
+    _key: `!actors!${id}`,
+  };
+}

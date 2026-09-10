@@ -1,0 +1,64 @@
+{
+  "name": "Monstro Do Pântano",
+  "type": "monster",
+  "_id": "HdulJbllBclRw5EW",
+  "img": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
+  "system": {
+    "odo_id": "monstro-do-pantano",
+    "concept": "Humanoide",
+    "size": "grande",
+    "alignment": "caotico",
+    "habitat": "PÂNTANOS",
+    "description": "<p><strong>FOR</strong> 18 · <strong>DES</strong> 12 · <strong>CON</strong> 18 · <strong>INT</strong> 6 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p><p>Monstros do pântano, integrantes do grupo de seres inexplicáveis cientificamente, são criaturas humanoides inteiramente feitas de lama, lodo e material orgânico em decomposição encontrado em pântanos. Relatos de aparições são raros, mas muitos desaparecimentos em regiões pantanosas são atribuídos à ação de uma destas criaturas. Pouco se sabe sobre seus hábitos, mas especula-se que vivam sob a água, camuflando-se na lama.</p>",
+    "described_attacks": "1 PANCADA+10 (2D8+4)",
+    "encounters": "1",
+    "xp": "875 XP",
+    "dv": "8+4 (36/68)",
+    "ca": "14 (COBERTURA DE MUSGO +3)",
+    "jp": "13",
+    "mo": "80%",
+    "mv": "6",
+    "hp": {
+      "value": 36,
+      "max": 68
+    }
+  },
+  "prototypeToken": {
+    "name": "Monstro Do Pântano",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 2,
+    "height": 2,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 360,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!HdulJbllBclRw5EW"
+}

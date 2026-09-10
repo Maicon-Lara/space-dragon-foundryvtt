@@ -1,0 +1,205 @@
+{
+  "folder": null,
+  "name": "T11-1: Clichês de ficção científica",
+  "_id": "nUoEpY0p3U4HjnhO",
+  "img": "systems/olddragon2e/assets/icons/d6.svg",
+  "description": "Role para um gancho de aventura pulp.",
+  "results": [
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "SDhQZzchRD12cz6l",
+      "name": "",
+      "description": "Espécie alienígena inteligente faz contato",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.SDhQZzchRD12cz6l"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "AYiiM4j1in555y5z",
+      "name": "",
+      "description": "Máquinas se rebelam contra seus criadores",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.AYiiM4j1in555y5z"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "6PeAbiAICAfLbNmC",
+      "name": "",
+      "description": "Espaçonave cai em um planeta hostil",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.6PeAbiAICAfLbNmC"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "ABXGAz8eIdShfif7",
+      "name": "",
+      "description": "Ocorre uma guerra de dimensões galácticas",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.ABXGAz8eIdShfif7"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "twJd1CAmm1pbeMhl",
+      "name": "",
+      "description": "Pesquisadores buscam a origem da espécie humana",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.twJd1CAmm1pbeMhl"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "Bx4rchW8L0KEvUdU",
+      "name": "",
+      "description": "Androide ou ginoide se envolve amorosamente com um humano",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.Bx4rchW8L0KEvUdU"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "fZ09pvEPWVi4LAWy",
+      "name": "",
+      "description": "Nave apresenta defeitos e fica à deriva no espaço",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.fZ09pvEPWVi4LAWy"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "1gFB40zE5TK2bJZw",
+      "name": "",
+      "description": "Heroína é raptada por um vilão maligno",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.1gFB40zE5TK2bJZw"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "6BBndbQXPz0a5qcz",
+      "name": "",
+      "description": "Viagem no tempo altera o universo como é conhecido",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.6BBndbQXPz0a5qcz"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "YFUCuoIyvceOoZSh",
+      "name": "",
+      "description": "Cientista louco brinca de divindade",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.YFUCuoIyvceOoZSh"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "VvyLzBp7fmnCb0qt",
+      "name": "",
+      "description": "A nave dos protagonistas é raptada por outra nave gigantesca",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!nUoEpY0p3U4HjnhO.VvyLzBp7fmnCb0qt"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "formula": "1d11",
+  "sort": 11,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!tables!nUoEpY0p3U4HjnhO"
+}

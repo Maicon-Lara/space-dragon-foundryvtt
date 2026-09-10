@@ -1,0 +1,65 @@
+{
+  "name": "Crocossauro",
+  "type": "monster",
+  "_id": "VNuh67nnrTuz6Ltc",
+  "img": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+  "system": {
+    "odo_id": "crocossauro",
+    "concept": "Besta",
+    "size": "imenso",
+    "alignment": "caotico",
+    "habitat": "RIOS E PÂNTANOS",
+    "description": "<p><em>Croco saurus</em></p><p><strong>FOR</strong> 16 · <strong>DES</strong> 13 · <strong>CON</strong> 14 · <strong>INT</strong> 8 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Crocossauros são répteis de tamanho descomunal que habitam áreas pantanosas e rios, onde se camuflam e esperam passar despercebidos de suas presas até o momento do ataque. Para tanto costumam submergir nas águas, deixando apenas as narinas e os olhos para fora. Uma vítima que é mordida por um crocossauro corre sério risco de ser arrastada para a água e nunca mais ser vista. Agarrar em uma mordida bem- sucedida o crocossauro pode tentar agarrar uma vítima de tamanho humano, ou menor, com a boca com um teste resistido de Força. Caso a criatura saia vitoriosa, a vítima estará presa e o crocossauro tentará um giro mortal em seu próximo turno, que pede uma JPF para que os ossos da vítima não quebrem, causando 2d10+4 pontos de dano. A vítima pode tentar soltar-se em seu turno com um novo teste resistido de Força, sofrendo 1d6 pontos de dano, caso consiga livrar-se da mordida.</p>",
+    "described_attacks": "1 MORDIDA +6 (1D10+4+AGARRAR) 1 ATAQUE COM CAUDA +3 (1D6+1)",
+    "encounters": "GRUPO 1D4 NINHO 1D8",
+    "xp": "555 XP",
+    "dv": "6+2 (26/50)",
+    "ca": "16 (COURAÇA GROSSA +4)",
+    "jp": "14",
+    "mo": "80%",
+    "mv": "9",
+    "mvn": "12",
+    "hp": {
+      "value": 26,
+      "max": 50
+    }
+  },
+  "prototypeToken": {
+    "name": "Crocossauro",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 3,
+    "height": 3,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 120,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!VNuh67nnrTuz6Ltc"
+}

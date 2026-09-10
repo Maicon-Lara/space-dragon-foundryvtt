@@ -1,0 +1,64 @@
+{
+  "name": "Gigantossauro",
+  "type": "monster",
+  "_id": "3Q5WVxzgUndgSzik",
+  "img": "systems/olddragon2e/assets/concepts/besta-colossal.webp",
+  "system": {
+    "odo_id": "gigantossauro",
+    "concept": "Besta",
+    "size": "colossal",
+    "alignment": "neutro",
+    "habitat": "PLANÍCIES",
+    "description": "<p><em>Giganto saurus</em></p><p><strong>FOR</strong> 28 · <strong>DES</strong> 12 · <strong>CON</strong> 20 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p>Gigantossauros, os maiores alienossauros já descobertos, vivem em grupos familiares em planícies, onde se alimentam da vegetação rasteira. São muito pacíficos, mas reagem ferozmente quando são ameaçados por predadores como os raptossauros ou tiranossauros. Pisão mortal em uma rolagem crítica de ataque de pisão, o alvo deverá fazer uma JPF para não morrer automaticamente de acordo com a regra de dano massivo, independentemente do dano total causado pelo ataque.</p>",
+    "described_attacks": "1 PISÃO +14 (2D10+9) 1 ATAQUE COM CAUDA +10 (1D10+4)",
+    "encounters": "ERRANTE 1D2 MANADA 1D6",
+    "xp": "7.250 XP",
+    "dv": "20+5 (85/165)",
+    "ca": "18 (COURAÇA GROSSA +7)",
+    "jp": "6",
+    "mo": "90%",
+    "mv": "14",
+    "hp": {
+      "value": 85,
+      "max": 165
+    }
+  },
+  "prototypeToken": {
+    "name": "Gigantossauro",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-colossal.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 4,
+    "height": 4,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 200,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!3Q5WVxzgUndgSzik"
+}

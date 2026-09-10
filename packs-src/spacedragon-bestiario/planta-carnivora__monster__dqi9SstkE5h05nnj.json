@@ -1,0 +1,63 @@
+{
+  "name": "Planta Carnívora",
+  "type": "monster",
+  "_id": "dqi9SstkE5h05nnj",
+  "img": "systems/olddragon2e/assets/concepts/planta-grande.webp",
+  "system": {
+    "odo_id": "planta-carnivora",
+    "concept": "Planta",
+    "size": "grande",
+    "alignment": "neutro",
+    "habitat": "FLORESTAS",
+    "description": "<p><em>Plantae carnivorus</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 8 · <strong>CON</strong> 1 · <strong>INT</strong> 0 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Plantas carnívoras são enormes vegetais que prendem suas vítimas e tentam digeri-las com suas fortes enzimas gástricas. Ao contrário do que possa parecer, as plantas carnívoras não têm inteligência e reagem apenas a estímulos físicos, como o toque ou dano causado. Agarrar as plantas carnívoras reagirão ao toque e tentarão envolver a vítima, que pode fazer uma JPR para escapar. Uma vítima agarrada sofre 1d4 pontos de dano por rodada, e se for engolida sofrerá 1d6 pontos de dano ácido sem regressão a cada rodada, mas poderá fazer testes resistidos de Força para se soltar.</p>",
+    "described_attacks": "AGARRAR (VER TEXTO)",
+    "encounters": "1D6",
+    "xp": "ODU 37 XP",
+    "dv": "1 (4/8)",
+    "ca": "10",
+    "jp": "18",
+    "mo": "100%",
+    "hp": {
+      "value": 4,
+      "max": 8
+    }
+  },
+  "prototypeToken": {
+    "name": "Planta Carnívora",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/planta-grande.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 2,
+    "height": 2,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 390,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!dqi9SstkE5h05nnj"
+}

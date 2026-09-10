@@ -1,0 +1,64 @@
+{
+  "name": "Rinoceratops",
+  "type": "monster",
+  "_id": "WFkgZ4UszVIparSZ",
+  "img": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+  "system": {
+    "odo_id": "rinoceratops",
+    "concept": "Besta",
+    "size": "imenso",
+    "alignment": "caotico",
+    "habitat": "PLANÍCIES",
+    "description": "<p><em>Rhino saurus</em></p><p><strong>FOR</strong> 25 · <strong>DES</strong> 16 · <strong>CON</strong> 20 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p>Rinoceratops são alienossauros quadrúpedes, pesados e que possuem couraças grossas. Têm um poderoso chifre sobre seus focinhos, o qual utilizam para o ataque. Vivem em planícies, e não raramente, entram em conflito com mastodontes que vivam no mesmo lugar, disputando o território. Arremesso uma vítima que é atingida por um ataque com o chifre do rinoceratops é arremessada a 1d6 metros de distância, se não passar em uma JPR.</p>",
+    "described_attacks": "1 CHIFRADA +15 (2D10+8 + ARREMESSO) 1 CABEÇADA +8 (1D10+6)",
+    "encounters": "ERRANTE 1D2 MANADA 1D6",
+    "xp": "1.390 XP",
+    "dv": "10+5 (45/85)",
+    "ca": "17 (COURAÇA GROSSA +4)",
+    "jp": "12",
+    "mo": "90%",
+    "mv": "12",
+    "hp": {
+      "value": 45,
+      "max": 85
+    }
+  },
+  "prototypeToken": {
+    "name": "Rinoceratops",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 3,
+    "height": 3,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 450,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!WFkgZ4UszVIparSZ"
+}

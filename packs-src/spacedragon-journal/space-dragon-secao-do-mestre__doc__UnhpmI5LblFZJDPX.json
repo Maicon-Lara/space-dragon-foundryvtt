@@ -1,0 +1,172 @@
+{
+  "folder": null,
+  "name": "Space Dragon — Seção do Mestre",
+  "_id": "UnhpmI5LblFZJDPX",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Clichês e ganchos",
+      "type": "text",
+      "_id": "EdnW8SSI8Z6rmIfM",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>O gênero é o pulp</h2>\n<p>A ficção científica que o Space Dragon emula é a das revistas e quadrinhos da\nprimeira metade do século 20, e a dos desenhos animados repetidos à exaustão na\ninfância.</p>\n\n<p>O livro faz questão de dizer que a mesa <strong>não precisa ficar presa\nnisso</strong>: cyberpunk existencialista, monstro gigante japonês, ópera\nespacial cômica, faroeste no espaço ou monges com espada laser cabem todos, com\npouco ou nenhum ajuste de regra.</p>\n\n<h2>T11-1: Clichês de ficção científica pulp</h2>\n<table><thead><tr><th>d11</th><th>resultado</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>Espécie alienígena inteligente faz contato</td></tr><tr><td><strong>2</strong></td><td>Máquinas se rebelam contra seus criadores</td></tr><tr><td><strong>3</strong></td><td>Espaçonave cai em um planeta hostil</td></tr><tr><td><strong>4</strong></td><td>Ocorre uma guerra de dimensões galácticas</td></tr><tr><td><strong>5</strong></td><td>Pesquisadores buscam a origem da espécie humana</td></tr><tr><td><strong>6</strong></td><td>Androide ou ginoide se envolve amorosamente com um humano</td></tr><tr><td><strong>7</strong></td><td>Nave apresenta defeitos e fica à deriva no espaço</td></tr><tr><td><strong>8</strong></td><td>Heroína é raptada por um vilão maligno</td></tr><tr><td><strong>9</strong></td><td>Viagem no tempo altera o universo como é conhecido</td></tr><tr><td><strong>10</strong></td><td>Cientista louco brinca de divindade</td></tr><tr><td><strong>11</strong></td><td>A nave dos protagonistas é raptada por outra nave gigantesca</td></tr></tbody></table>\n\n<h2>T11-2: Interesses de explorações</h2>\n<p>Créditos não ficam jogados por aí. A riqueza vem de <strong>negociar o que se\ntraz</strong> de uma expedição: acadêmicos pagam por escrituras de planetas\nabandonados, cientistas por um espécime vivo de planta carnívora, colecionadores\npor arma arcaica.</p>\n\n<p>O quanto vale depende da relevância do achado e da negociação na mesa.</p>\n\n<table><thead><tr><th>d9</th><th>resultado</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>Registro de espécie alienígena inteligente</td></tr><tr><td><strong>2</strong></td><td>Máquina ancestral poderosa</td></tr><tr><td><strong>3</strong></td><td>Recuperação de espaçonave acidentada</td></tr><tr><td><strong>4</strong></td><td>Fonte de energia inesgotável e disputada</td></tr><tr><td><strong>5</strong></td><td>Documentos ancestrais sobre a espécie humana</td></tr><tr><td><strong>6</strong></td><td>Coleta de amostra vegetal alienígena</td></tr><tr><td><strong>7</strong></td><td>Captura de espécime animal alienígena</td></tr><tr><td><strong>8</strong></td><td>Relíquia tecnológica valiosa</td></tr><tr><td><strong>9</strong></td><td>Segredo de estado ou militar</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!UnhpmI5LblFZJDPX.EdnW8SSI8Z6rmIfM"
+    },
+    {
+      "sort": 200000,
+      "name": "Relíquias tecnológicas",
+      "type": "text",
+      "_id": "8LEHwi47PCqw6z2b",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Sete rolagens montam uma relíquia</h2>\n<p>A T11-3 não é uma tabela: são sete, cada uma com o seu dado. Role todas.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ A <strong>instabilidade</strong> é a chance de a relíquia falhar. Um 10\nsignifica que ela quebra na primeira utilização — o achado vira uma cena, não um\nitem.</p>\n\n<h3>Tipo de relíquia (1d20)</h3><table><thead><tr><th>rolagem</th><th>resultado</th></tr></thead><tbody><tr><td>1–3</td><td>Arma</td></tr><tr><td>4–6</td><td>Veste</td></tr><tr><td>7–9</td><td>Item mundano</td></tr><tr><td>10–18</td><td>Aparato tecnológico</td></tr><tr><td>19</td><td>Veículo</td></tr><tr><td>20</td><td>Nave</td></tr></tbody></table>\n<h3>Tipo de aparato (1d6)</h3><table><thead><tr><th>rolagem</th><th>resultado</th></tr></thead><tbody><tr><td>1–2</td><td>Ofensivo</td></tr><tr><td>3–4</td><td>Defensivo</td></tr><tr><td>5–6</td><td>Utilitário</td></tr></tbody></table>\n<h3>Nível tecnológico (1d20)</h3><table><thead><tr><th>rolagem</th><th>resultado</th></tr></thead><tbody><tr><td>1–3</td><td>1º NT</td></tr><tr><td>4–6</td><td>2º NT</td></tr><tr><td>7–8</td><td>3º NT</td></tr><tr><td>9–10</td><td>4º NT</td></tr><tr><td>11–12</td><td>5º NT</td></tr><tr><td>13–14</td><td>6º NT</td></tr><tr><td>15–16</td><td>7º NT</td></tr><tr><td>17–18</td><td>8º NT</td></tr><tr><td>19</td><td>9º NT</td></tr><tr><td>20</td><td>10º NT</td></tr></tbody></table>\n<h3>Instabilidade (1d10)</h3><table><thead><tr><th>rolagem</th><th>resultado</th></tr></thead><tbody><tr><td>1</td><td>10%</td></tr><tr><td>2</td><td>20%</td></tr><tr><td>3</td><td>30%</td></tr><tr><td>4</td><td>40%</td></tr><tr><td>5</td><td>50%</td></tr><tr><td>6</td><td>60%</td></tr><tr><td>7</td><td>70%</td></tr><tr><td>8</td><td>80%</td></tr><tr><td>9</td><td>90%</td></tr><tr><td>10</td><td>Um defeito ocorre na primeira utilização e a relíquia é inutilizada.</td></tr></tbody></table>\n<h3>Particularidades (1d10)</h3><table><thead><tr><th>rolagem</th><th>resultado</th></tr></thead><tbody><tr><td>1–5</td><td>Nenhuma</td></tr><tr><td>6–7</td><td>Formato diferenciado</td></tr><tr><td>8–9</td><td>Duas relíquias em uma — role novamente</td></tr><tr><td>10</td><td>Utilizável por qualquer classe</td></tr></tbody></table>\n<h3>Criadores (1d10)</h3><table><thead><tr><th>rolagem</th><th>resultado</th></tr></thead><tbody><tr><td>1–5</td><td>Humanos</td></tr><tr><td>6–7</td><td>Espécie humanoide</td></tr><tr><td>8–9</td><td>Xhenianos</td></tr><tr><td>10</td><td>Desconhecidos</td></tr></tbody></table>\n<h3>Consequências de uso (1d10)</h3><table><thead><tr><th>rolagem</th><th>resultado</th></tr></thead><tbody><tr><td>1–5</td><td>Nenhuma</td></tr><tr><td>6–7</td><td>Instabilidade deteriora</td></tr><tr><td>8–9</td><td>Contaminação radioativa</td></tr><tr><td>10</td><td>Relíquia inteligente</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!UnhpmI5LblFZJDPX.8LEHwi47PCqw6z2b"
+    },
+    {
+      "sort": 300000,
+      "name": "Gerando planetas",
+      "type": "text",
+      "_id": "vz75EYkb1yUwT37o",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Superfície</h2>\n<p>A superfície é o terreno da exploração, e ela puxa o clima e a chance de o\nplaneta ser habitado. Um planeta pode ter <strong>vários biomas</strong>: role\nmais de uma vez.</p>\n\n<table><thead><tr><th>1d10</th><th>superfície</th><th>fauna</th><th>flora</th><th>temperatura</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><strong>Planícies</strong></td><td>Mamíferos, répteis e aves</td><td>Gramíneas</td><td>Moderada</td></tr><tr><td><strong>2</strong></td><td><strong>Colinas</strong></td><td>Mamíferos e aves</td><td>Árvores diversas e gramíneas</td><td>Moderada</td></tr><tr><td><strong>3</strong></td><td><strong>Montanhas</strong></td><td>Mamíferos, répteis e aves de rapina</td><td>Coníferas e gramíneas</td><td>Baixa</td></tr><tr><td><strong>4</strong></td><td><strong>Vulcões</strong></td><td>Répteis</td><td>Líquen</td><td>Altíssima</td></tr><tr><td><strong>5</strong></td><td><strong>Pântanos</strong></td><td>Insetos, répteis e fungos</td><td>Plantas aquáticas e manguezal</td><td>Moderada</td></tr><tr><td><strong>6</strong></td><td><strong>Geleiras</strong></td><td>Mamíferos terrestres, aquáticos e peixes</td><td>Inexistente</td><td>Baixíssima</td></tr><tr><td><strong>7</strong></td><td><strong>Tundras</strong></td><td>Mamíferos e aves</td><td>Líquen e gramíneas</td><td>Baixa</td></tr><tr><td><strong>8</strong></td><td><strong>Desertos</strong></td><td>Répteis e insetos</td><td>Palmeiras e gramíneas</td><td>Altíssima de dia, baixíssima à noite</td></tr><tr><td><strong>9</strong></td><td><strong>Florestas</strong></td><td>Mamíferos, insetos e répteis</td><td>Árvores diversas e gramíneas</td><td>Moderada</td></tr><tr><td><strong>10</strong></td><td><strong>Cidades</strong></td><td>Mamíferos roedores, aves urbanas e domesticados</td><td>Arborização urbana</td><td>Moderada</td></tr></tbody></table>\n\n<h2>T11-6: Atmosfera</h2>\n<p>A coluna que decide a sessão é <strong>respirável</strong>. Numa atmosfera não\nrespirável, sem traje espacial não há exploração.</p>\n\n<table><thead><tr><th>1d10</th><th>atmosfera</th><th>respirável</th><th>efeito colateral</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><strong>Padrão</strong></td><td>sim</td><td>Nenhum.</td></tr><tr><td><strong>2</strong></td><td><strong>Tóxica</strong></td><td><strong>não</strong></td><td>A exposição ao ar gera 50% de chance de contaminação por veneno.</td></tr><tr><td><strong>3</strong></td><td><strong>Rarefeita</strong></td><td>sim</td><td>Cansaço maior do que o normal.</td></tr><tr><td><strong>4</strong></td><td><strong>Poluída</strong></td><td><strong>não</strong></td><td>A exposição ao ar gera 30% de chance de contaminação por doença.</td></tr><tr><td><strong>5</strong></td><td><strong>Úmida</strong></td><td>sim</td><td>Equipamentos eletrônicos podem apresentar defeitos e enferrujar.</td></tr><tr><td><strong>6</strong></td><td><strong>Radioativa</strong></td><td><strong>não</strong></td><td>Permanência sem traje de proteção causa contaminação radioativa imediatamente.</td></tr><tr><td><strong>7</strong></td><td><strong>Seca</strong></td><td>sim</td><td>É necessário ingerir o dobro de líquido para evitar a desidratação.</td></tr><tr><td><strong>8</strong></td><td><strong>Anaeróbica</strong></td><td><strong>não</strong></td><td>A falta de oxigênio torna impossível respirar.</td></tr><tr><td><strong>9</strong></td><td><strong>Desprotegida</strong></td><td>sim</td><td>Traje espacial é recomendado, pelos raios nocivos do sol do planeta.</td></tr><tr><td><strong>10</strong></td><td><strong>Ácida</strong></td><td><strong>não</strong></td><td>Causa dano por ácido fraco a cada minuto de exposição, a personagens e objetos. O dano não regride.</td></tr></tbody></table>\n\n<h2>T11-7 a T11-9: Fauna, flora e sociedade</h2>\n<p>A T11-5 já sugere fauna e flora pela superfície. Estas três existem para rolar\n<strong>separadamente</strong>, quando se quer um planeta que contrarie o\nesperado.</p>\n\n<table><thead><tr><th>1d8</th><th>fauna predominante</th><th>flora predominante</th><th>organização social</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>Mamíferos terrestres</td><td>Gramíneas</td><td>Monarquia</td></tr><tr><td><strong>2</strong></td><td>Répteis terrestres</td><td>Árvores diversas</td><td>Ditadura</td></tr><tr><td><strong>3</strong></td><td>Insetos terrestres e voadores</td><td>Líquen</td><td>Democracia</td></tr><tr><td><strong>4</strong></td><td>Peixes, mamíferos e répteis aquáticos</td><td>Plantas aquáticas</td><td>Hierarquia de castas</td></tr><tr><td><strong>5</strong></td><td>Aves aladas e terrestres</td><td>Vegetação alienígena</td><td>Coletivismo</td></tr><tr><td><strong>6</strong></td><td>Fungos e micro-organismos</td><td>Inexistente</td><td>Parlamentarismo</td></tr><tr><td><strong>7</strong></td><td>Role novamente</td><td>Role novamente</td><td>Poder financeiro</td></tr><tr><td><strong>8</strong></td><td>Role novamente</td><td>Role novamente</td><td>Sem organização formal</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!UnhpmI5LblFZJDPX.vz75EYkb1yUwT37o"
+    },
+    {
+      "sort": 400000,
+      "name": "Dragões",
+      "type": "text",
+      "_id": "CqxRs8SgoMBfdSX5",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Nove dragões, uma tabela</h2>\n<p>Os dragões do Space Dragon <strong>não têm bloco de atributos próprio</strong>.\nTodos usam a T11-10, e o que muda de um para o outro é o <strong>tamanho</strong>\nem que aparecem, o habitat, a grandeza mental e o ataque especial.</p>\n\n<p>Por isso eles não estão no compêndio de Bestiário: não há ator a montar sem\nantes escolher a idade.</p>\n\n<h2>T11-10: Características de Dragões</h2>\n<table><thead><tr><th></th><th>jovem</th><th>adulto</th><th>ancião</th></tr></thead><tbody><tr><td><strong>Atributos</strong></td><td>FOR 25 · DES 10 · CON 17 · INT 16 · CIE 8 · COM 8</td><td>FOR 33 · DES 10 · CON 21 · INT 20 · CIE 10 · COM 10</td><td>FOR 45 · DES 10 · CON 31 · INT 30 · CIE 15 · COM 15</td></tr><tr><td><strong>CP</strong></td><td>14 (couraça grossa +4)</td><td>26 (couraça grossa +16)</td><td>44 (couraça grossa +34)</td></tr><tr><td><strong>JP</strong></td><td>14</td><td>11</td><td>2</td></tr><tr><td><strong>DV</strong></td><td>8+3 (35/67)</td><td>14+5 (61/117)</td><td>24+10 (106/202)</td></tr><tr><td><strong>Resistência mental</strong></td><td>—</td><td>25%</td><td>70%</td></tr><tr><td><strong>Redução de dano</strong></td><td>—</td><td>10/energia</td><td>25/energia</td></tr><tr><td><strong>Ataques</strong></td><td>2 garras +14 (2d6+4) · 1 mordida +6 (1d8+1)</td><td>2 garras +28 (4d6+12) · 1 mordida +18 (3d8+3)</td><td>2 garras +49 (7d6+30) · 1 mordida +36 (6d8+6)</td></tr><tr><td><strong>Movimento telepático</strong></td><td>15 m</td><td>25 m</td><td>35 m</td></tr><tr><td><strong>Movimento</strong></td><td>5 m, voando 10 m</td><td>10 m, voando 20 m</td><td>15 m, voando 30 m</td></tr><tr><td><strong>Prêmios</strong></td><td>1.015 XP</td><td>2.730 XP</td><td>7.500 XP</td></tr></tbody></table>\n\n<h2>Os nove</h2>\n<h3>Dragão Jupiteriano <em>Draco mithicos jupiter</em></h3><p><em>réptil bípede alado leal</em></p><p>Dragões jupiterianos são jovianos e os maiores entre todos os dragões, mas relativamente pacíficos. Têm as escamas da cor de metal oxidado, uma grande mancha vermelha ao longo do dorso e um enorme chifre curvado para frente na testa. Supostamente podem habitar qualquer lugar onde haja espaço suficiente para abrigá-los e alimento disponível.</p>\n<h3>Dragão Marciano <em>Draco mithicos mars</em></h3><p><em>réptil quadrúpede rebelde</em></p><p>Dragões marcianos são telúricos, conhecidos por sua agressividade, apesar de sua estatura relativamente pequena. Suas escamas são de cor vermelha viva e afiadas em seu dorso, sobretudo em sua cauda cônica que termina na forma de uma ponta de flecha, mas as escamas inferiores são verdes e lisas. Preferem as montanhas rochosas áridas para viver, pois não gostam do frio e da neve.</p>\n<h3>Dragão Mercuriano <em>Draco mithicos mercurius</em></h3><p><em>réptil quadrúpede rebelde</em></p><p>Dragões mercurianos têm baixa estatura e fazem parte do grupo telúrico. Suas escamas são lisas e têm a cor de areia desbotada, o que favorece a camuflagem nos desertos que costumam habitar. Esses dragões costumam permanecer enterrados em dunas até que algum alimento em potencial aproxi- me-se, e então atacam de surpresa. Embora sejam incapazes de voo possuem asas rudimentares, as quais supostamente usam para causar tempestades de areia.</p>\n<h3>Dragão Netuniano <em>Draco mithicos neptunis</em></h3><p><em>réptil bípede alado neutro</em></p><p>Dragões netunianos são jovianos, tanto alados quanto aquáticos, sendo capazes de nadar e permanecer submersos por dias sem respirar. Têm as escamas lisas e azuis, e três dentes proeminentes em suas bocas, aos quais usam para capturar animais aquáticos, que são seu alimento. Durante o voo podem realizar um mergulho girando em parafuso, o que pode acabar por gerar um imenso redemoinho no local de impacto, além de ondas enormes.</p>\n<h3>Dragão Saturniano <em>Draco mithicos saturno</em></h3><p><em>réptil bípede alado neutro</em></p><p><strong>Habitat:</strong> GRANDEZA MENTAL  3ª MÉDIO (JOVEM) MONTANHAS GRANDE (ADULTO)</p>\n<h3>Dragão Plutoniano <em>Draco mithicos pluto</em></h3><p><em>réptil quadrúpede neutro</em></p><p>Dragões plutonianos integram o grupo telúrico e são os menores entre todos, o que acabou lhes rendendo a conotação de dragões anões. Suas escamas são completamente negras, o que a primeira vista conflita com seu habitat, embora a ausência de iluminação nesses locais compense o contraste visual. Costumam se alimentar de carniça, a congelam com suas baforadas gélidas e estocam em seus ninhos.</p>\n<h3>Dragão Terraniano <em>Draco mithicos terra</em></h3><p><em>réptil quadrúpede rebelde</em></p><p>Dragões terranianos, telúricos, assemelham-se aos marcianos tanto em estatura quanto em agressividade. Ao contrário deles, entretanto, possuem escamas verdes em seus dorsos e amarelas na parte inferior do corpo. Podem habitar qualquer lugar que os comporte e haja alimento. É o único dragão das nove subes- pécies sem correlação com uma divindade primitiva, com seu nome, talvez significando a personificação do planeta original da espécie humana.</p>\n<h3>Dragão Uraniano <em>Draco mithicos urano</em></h3><p><em>réptil bípede alado neutro</em></p><p>Dragões uranianos são os últimos jovianos, e dentre todos os que menos tempo passam no solo, preferindo a vastidão dos céus. Por esse motivo pouco se sabe sobre sua coloração, embora especule-se que seja azul-celeste e que suas escamas sejam lisas pelo fator aerodinâmico. Seus hábitos alimentares também são totalmente desconhecidos.</p>\n<h3>Dragão Venusiano <em>Draco mithicos venus</em></h3><p><em>réptil quadrúpede leal</em></p><p>Dragões venusianos são os últimos do grupo telúrico, e os mais sociáveis dentre todas as subespécies, comumente vivendo em grupos familiares de até 4 membros. Suas escamas são reflexivas, os dragões desta subespécie são capazes de fazê-las brilhar em qualquer espectro de cor, habilidade que usam para o acasalamento e para afastar invasores. Alimentam-se de quaisquer presas que conseguirem, nunca se distanciando demais dos ninhos. Ataques de dragões espaciais costumam ser devastadores para espaçonaves.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!UnhpmI5LblFZJDPX.CqxRs8SgoMBfdSX5"
+    }
+  ],
+  "flags": {},
+  "sort": 9000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!UnhpmI5LblFZJDPX"
+}

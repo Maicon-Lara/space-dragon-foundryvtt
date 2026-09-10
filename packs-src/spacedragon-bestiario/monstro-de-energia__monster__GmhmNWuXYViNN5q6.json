@@ -1,0 +1,64 @@
+{
+  "name": "Monstro De Energia",
+  "type": "monster",
+  "_id": "GmhmNWuXYViNN5q6",
+  "img": "systems/olddragon2e/assets/concepts/gosma-medio.webp",
+  "system": {
+    "odo_id": "monstro-de-energia",
+    "concept": "Gosma",
+    "size": "medio",
+    "alignment": "caotico",
+    "habitat": "RUÍNAS",
+    "description": "<p><strong>FOR</strong> 0 · <strong>DES</strong> 18 · <strong>CON</strong> 0 · <strong>INT</strong> 6 · <strong>CIE</strong> 4 · <strong>COM</strong> 2</p><p><strong>Redução de dano</strong> IMUNE A</p><p>Monstros de energia são aberrações sem explicação científica plausível, mas perigosas a todos que encontrarem uma. Possuem corpos vagamente humanoides formados de energia elétrica e luminosa, causam dano ao simples toque em matéria sólida. De acordo com a teoria mentálica, estas criaturas são o resultado da fusão de um espírito mental com energia residual de um lugar, embora ainda não tenha sido possível provar essa tese. Incorpóreo por serem incorpóreos os monstros de energia são imunes a quaisquer ataques físicos, e também vencem automaticamente qualquer jogada de proteção que precisarem fazer.</p>",
+    "described_attacks": "1 TOQUE +4 (1D6+2 ELÉTRICO)",
+    "encounters": "1",
+    "xp": "450 XP",
+    "dv": "5 (20/40)",
+    "ca": "14",
+    "jp": "1",
+    "mo": "60%",
+    "mv": "12",
+    "hp": {
+      "value": 20,
+      "max": 40
+    }
+  },
+  "prototypeToken": {
+    "name": "Monstro De Energia",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/gosma-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 340,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!GmhmNWuXYViNN5q6"
+}

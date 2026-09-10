@@ -1,0 +1,64 @@
+{
+  "name": "Protótipo Robótico",
+  "type": "monster",
+  "_id": "q5s8RX1JAjKOUu9z",
+  "img": "systems/olddragon2e/assets/concepts/constructo-medio.webp",
+  "system": {
+    "odo_id": "prototipo-robotico",
+    "concept": "Constructo",
+    "size": "medio",
+    "alignment": "neutro",
+    "habitat": "RUÍNAS",
+    "description": "<p><strong>FOR</strong> 12 · <strong>DES</strong> 8 · <strong>CON</strong> 9 · <strong>INT</strong> 6 · <strong>CIE</strong> 4 · <strong>COM</strong> 2</p><p>Protótipos foram os primeiros robôs humanoides desenvolvidos, portanto, os primeiros a possuírem um cérebro positrônico, embora muito primitivo. Limitam-se a movimentação básica como andar e atacar, sendo incapazes de raciocínio lógico ou reação elaborada a estímulos. Desativação protótipos robóticos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
+    "described_attacks": "1 PANCADA +2 (1D6+1)",
+    "encounters": "ERRANTE 1D4 GRUPO 2D8",
+    "xp": "U 75 XP",
+    "dv": "2 (8/16)",
+    "ca": "11 (CORPO ROBÓTICO +1)",
+    "jp": "17",
+    "mo": "80%",
+    "mv": "4",
+    "hp": {
+      "value": 8,
+      "max": 16
+    }
+  },
+  "prototypeToken": {
+    "name": "Protótipo Robótico",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/constructo-medio.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 1,
+    "height": 1,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 410,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!q5s8RX1JAjKOUu9z"
+}
