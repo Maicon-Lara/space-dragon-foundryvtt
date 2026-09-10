@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Ocultar-se (Gatuno)",
+  "name": "Percepção (Gatuno)",
   "type": "script",
-  "_id": "otENFuPdIgW1H0wz",
+  "_id": "RigKLCakcEuo5J0t",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"ocultar-se\");",
+  "command": "game.spacedragon.teste(\"percepcao\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -23,5 +23,5 @@
     "exportSource": null
   },
   "sort": 900,
-  "_key": "!macros!otENFuPdIgW1H0wz"
+  "_key": "!macros!RigKLCakcEuo5J0t"
 }

@@ -4,7 +4,7 @@
 // fonte. As tabelas são as nativas (T1-1 a T1-6), com a escala do próprio jogo:
 // de 1 a 29, em faixas de dois, com a faixa neutra em 10–11.
 
-import { TABELAS, FAIXAS, ROTULOS, ATRIBUTOS, rotuloColuna } from "./atributos.mjs";
+import { TABELAS, FAIXAS, ROTULOS, ATRIBUTOS } from "./atributos.mjs";
 import { CAMPO_NA_FICHA, NOME } from "./onde-anotar.mjs";
 import { subatributos } from "./subatributos.mjs";
 
@@ -16,9 +16,7 @@ const SEM_SINAL = new Set(["clonagem", "poderMental", "seguidores", "idiomas", "
 function tabelaNativa(chave) {
   const t = TABELAS[chave];
   const cols = Object.keys(t[0]);
-  // O cabeçalho é o do LIVRO, não a chave do objeto: "Esgueirar-se e
-  // Destrancar Portas", e não "esgueirarDestrancar".
-  const cab = cols.map((c) => `<th>${rotuloColuna(c, chave)}</th>`).join("");
+  const cab = cols.map((c) => `<th>${c}</th>`).join("");
   const linhas = t.map((linha, i) => {
     const [min, max] = FAIXAS[i];
     const faixa = min === max ? `${min}` : `${min}–${max}`;
@@ -85,7 +83,7 @@ a faixa neutra continua sendo 10–11. A tabela acima só diz <em>onde escrever<
 cada valor.</p>
 
 <p>A colocação sai do que o próprio livro diz que cada atributo faz: a
-<strong>Ciência</strong> é o saber aplicado — sabotagem, crédito tecnológico; o
+<strong>Ciência</strong> é aptidão tecnológica e saber aplicado; o
 <strong>Intelecto</strong> é proteção mental e força de vontade; a
 <strong>Comunicação</strong> é reação, seguidores e idiomas.</p>
 
@@ -124,13 +122,11 @@ ilustrações e diagramação"</em>, sob <strong>Open Game License</strong> e
 e <strong>nenhuma arte do livro</strong>.</p>
 
 <h2>As porcentagens</h2>
-<p>Space Dragon usa <code>%</code> em muita coisa: subjugar, esgueirar-se,
-ocultar-se, clonagem, operar máquinas, pilotar naves, reproduzir um poder
-mental. O Old Dragon 2 não trabalha assim, e o módulo <strong>não
-converte</strong> — as porcentagens estão como o livro as escreve.</p>
-
-<p>O que o módulo faz é <strong>rolá-las</strong>. Veja a página
-<em>Testes de porcentagem</em> e o compêndio de <strong>Macros</strong>.</p>
+<p>Space Dragon usa <code>%</code> em muita coisa: subjugar, furtividade,
+clonagem, aptidão tecnológica, operar máquinas, pilotar naves, a chance de
+realizar um poder mental. O Old Dragon 2 não trabalha assim, e o módulo
+<strong>não converte</strong> — as porcentagens estão como o livro as escreve, e
+se resolvem rolando percentual na mesa.</p>
 
 <h2>O que ainda não está aqui</h2>
 <p>Capítulos 5 (Créditos e Equipamento), 6 (Aventuras Espaciais),

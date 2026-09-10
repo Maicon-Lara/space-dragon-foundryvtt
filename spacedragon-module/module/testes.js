@@ -43,13 +43,26 @@ function faixaDe(valor) {
   return FAIXAS.findIndex(([min, max]) => valor >= min && valor <= max);
 }
 
-/** "80%" → 80. "1-3" → 3, que é o teto da faixa de ouvir barulhos. */
+/**
+ * A porcentagem de uma célula da tabela.
+ *
+ *   "80%"        → 80
+ *   "1-3"        → 3, o teto da faixa de percepção
+ *   "15% / 1d8"  → 15. O que vem depois da barra são as RODADAS que a
+ *                  sabotagem leva, não parte do alvo.
+ *   "-5%"        → -5
+ */
 function numero(cel) {
   if (typeof cel === "number") return cel;
-  const s = String(cel ?? "");
+  const s = String(cel ?? "").trim();
   const faixa = s.match(/^(\d+)\s*[-–]\s*(\d+)$/);
   if (faixa) return Number(faixa[2]);
-  return Number(s.replace("%", "").replace(/[^\d-]/g, "")) || 0;
+  return Number(s.match(/^[+-]?\d+/)?.[0] ?? 0);
+}
+
+/** "15% / 1d8" → "1d8". O dado de rodadas, quando a célula traz um. */
+function rodadas(cel) {
+  return String(cel ?? "").match(/\/\s*(\S+)\s*$/)?.[1] ?? null;
 }
 
 // ── Leitura da ficha ────────────────────────────────────────────────────────
@@ -165,11 +178,13 @@ export async function rolar(chave, ctx, { ator = null, publico = true } = {}) {
     aviso = `<p class="result"><em>Alvo ${alvo}: só um 100 falha.</em></p>`;
   }
 
+  const giro = rodadas(base.cru);
   const corpo =
     `<div class="sd-teste">` +
     `<p class="result">${veredito} — rolou <strong>${roll.total}</strong>, precisava ${comparador}</p>` +
     `<ul class="sd-parcelas">${parcelas.join("")}</ul>` +
     aviso +
+    (giro ? `<p class="result">Leva <strong>${giro}</strong> rodadas.</p>` : "") +
     (teste.nota ? `<p class="sd-nota"><em>${teste.nota}</em></p>` : "") +
     `</div>`;
 

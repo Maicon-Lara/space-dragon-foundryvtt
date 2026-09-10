@@ -11,15 +11,15 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { TABELAS, FAIXAS, ROTULOS, rotuloColuna } from "./data/atributos.mjs";
-import { CIENTISTA, HOMEM_ESPACIAL, GATUNO, MENTALICO, TALENTOSGATUNO } from "./data/progressao.mjs";
+import { TABELAS, FAIXAS, ROTULOS } from "./data/atributos.mjs";
+import { CIENTISTA, COSMONAUTA, GATUNO, MENTALICO, TALENTOSGATUNO } from "./data/progressao.mjs";
 import { TESTES } from "./data/testes.mjs";
 import { CAMPO_NA_FICHA, NOME } from "./data/onde-anotar.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const DESTINO = path.resolve(AQUI, "..", "spacedragon-module", "module", "dados.js");
 
-const PROGRESSOES = { CIENTISTA, HOMEM_ESPACIAL, GATUNO, MENTALICO, TALENTOSGATUNO };
+const PROGRESSOES = { CIENTISTA, COSMONAUTA, GATUNO, MENTALICO, TALENTOSGATUNO };
 
 /** Só as colunas que algum teste usa. O resto seria peso morto no cliente. */
 function enxuga() {
@@ -42,10 +42,18 @@ function enxuga() {
 
 const { prog, attr } = enxuga();
 
+// O cabeçalho que o Aprimorado dá a cada coluna usada num teste.
+const ROTULO_COLUNA = {
+  "forca.subjugar": "Subjugar",
+  "destreza.furtividade": "Furtividade, Furtar e Desarmar",
+  "constituicao.clonagem": "Probabilidade de Clonagem",
+  "intelecto.poderMental": "Realizar e Aprender Poder Mental",
+  "ciencia.aptidao": "Aptidão Tecnológica",
+};
 const rotulos = {};
 for (const t of TESTES) {
   for (const f of [t.base, t.ajuste]) {
-    if (f?.atributo) rotulos[`${f.atributo}.${f.coluna}`] = rotuloColuna(f.coluna, f.atributo);
+    if (f?.atributo) rotulos[`${f.atributo}.${f.coluna}`] = ROTULO_COLUNA[`${f.atributo}.${f.coluna}`] ?? f.coluna;
   }
 }
 

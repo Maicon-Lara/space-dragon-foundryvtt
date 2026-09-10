@@ -5,7 +5,7 @@
   "_id": "VBPkjqMVPh6RHAj0",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>Com um <strong>disruptor positrônico</strong>, desativa robôs. <strong>Não é teste de porcentagem</strong>: rola-se <strong>1d20</strong> contra a tabela <strong>T3-2</strong>, pelo nível do disruptor, e o resultado precisa ser <strong>igual ou maior</strong>. Um “A” na tabela desativa automaticamente.</p><p>A <strong>quantidade</strong> de robôs sai da T1-5 da <strong>Ciência</strong> <em>(o campo Inteligência da ficha)</em>, e é um <strong>dado</strong>, não um número fixo: 1d2 com Ciência 10–11, 1d6 com 16–17, 1d20 com 28–29.</p>",
+    "description": "<p>Com o equipamento apropriado, desativa robôs. A <strong>quantidade</strong> sai da tabela T1-5 da <strong>Ciência</strong> <em>(anotada no campo Inteligência da ficha)</em>, e é um <strong>dado</strong>, não um número fixo: 1d2 com Ciência 10–11, 1d6 com 16–17, 1d20 com 28–29.</p>",
     "level": 1,
     "level3": "",
     "level6": "",

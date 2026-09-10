@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Localizar e sabotar máquinas (Gatuno)",
+  "name": "Desarmar (Cosmonauta)",
   "type": "script",
-  "_id": "TTWt9tSUGNQnH3GK",
+  "_id": "fM35EPAcsKTrwwIp",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"localizar-sabotar\");",
+  "command": "game.spacedragon.teste(\"desarmar\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 600,
-  "_key": "!macros!TTWt9tSUGNQnH3GK"
+  "sort": 300,
+  "_key": "!macros!fM35EPAcsKTrwwIp"
 }

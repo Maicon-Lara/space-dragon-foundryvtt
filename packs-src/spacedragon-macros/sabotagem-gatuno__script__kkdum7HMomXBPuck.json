@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Escalar superfícies (Gatuno)",
+  "name": "Sabotagem (Gatuno)",
   "type": "script",
-  "_id": "Dvi7BcSAnCo8dJKZ",
+  "_id": "kkdum7HMomXBPuck",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"escalar-superficies\");",
+  "command": "game.spacedragon.teste(\"sabotagem\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 700,
-  "_key": "!macros!Dvi7BcSAnCo8dJKZ"
+  "sort": 500,
+  "_key": "!macros!kkdum7HMomXBPuck"
 }

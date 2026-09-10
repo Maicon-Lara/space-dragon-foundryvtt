@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Destrancar portas (Gatuno)",
+  "name": "Subjugar (Cosmonauta)",
   "type": "script",
-  "_id": "FgOlLJLE4SKs2zkB",
+  "_id": "HrqEQPypm9vP96Bb",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"destrancar-portas\");",
+  "command": "game.spacedragon.teste(\"subjugar\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 500,
-  "_key": "!macros!FgOlLJLE4SKs2zkB"
+  "sort": 400,
+  "_key": "!macros!HrqEQPypm9vP96Bb"
 }

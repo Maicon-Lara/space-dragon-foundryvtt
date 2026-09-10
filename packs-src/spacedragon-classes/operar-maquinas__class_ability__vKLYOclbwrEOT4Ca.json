@@ -5,7 +5,7 @@
   "_id": "vKLYOclbwrEOT4Ca",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>Porcentagem de sucesso ao operar e consertar máquinas. Começa em <strong>80%</strong> no 1º nível e sobe 1 ponto por nível, chegando a 99% no 20º.</p><p>Rola-se <strong>1d100</strong>, e passa com resultado <strong>menor ou igual</strong>. O livro não dá modificador de atributo para este teste.</p>",
+    "description": "<p>Porcentagem de sucesso ao operar e consertar máquinas. Começa em <strong>80%</strong> no 1º nível e sobe 1 ponto por nível, chegando a 99% no 20º.</p><p>Modificada pela <strong>Aptidão Tecnológica</strong> da Ciência <em>(anotada no campo Inteligência da ficha)</em>.</p>",
     "level": 1,
     "level3": "",
     "level6": "",

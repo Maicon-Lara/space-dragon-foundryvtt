@@ -6,11 +6,21 @@
 // cartão do chat mostrar um número que ninguém esperava.
 
 import { TESTES } from "./testes.mjs";
-import { CIENTISTA, HOMEM_ESPACIAL, GATUNO, MENTALICO, TALENTOSGATUNO } from "./progressao.mjs";
-import { TABELAS, rotuloColuna } from "./atributos.mjs";
+import { CIENTISTA, COSMONAUTA, GATUNO, MENTALICO, TALENTOSGATUNO } from "./progressao.mjs";
+import { TABELAS } from "./atributos.mjs";
+
+// O cabeçalho que o Aprimorado dá a cada coluna usada num teste.
+const ROTULO_COLUNA = {
+  "forca.subjugar": "Subjugar",
+  "destreza.furtividade": "Furtividade, Furtar e Desarmar",
+  "constituicao.clonagem": "Probabilidade de Clonagem",
+  "intelecto.poderMental": "Realizar e Aprender Poder Mental",
+  "ciencia.aptidao": "Aptidão Tecnológica",
+};
+const rotuloColuna = (c, a) => ROTULO_COLUNA[`${a}.${c}`] ?? c;
 import { NOME, ondeAnotar } from "./onde-anotar.mjs";
 
-const PROG = { CIENTISTA, HOMEM_ESPACIAL, GATUNO, MENTALICO, TALENTOSGATUNO };
+const PROG = { CIENTISTA, COSMONAUTA, GATUNO, MENTALICO, TALENTOSGATUNO };
 
 /** "1º nível → 20%, 20º → 88%", que é o que a mesa quer saber de relance. */
 function extremos(f) {
@@ -74,17 +84,17 @@ cada parcela saiu.</p>
 
 <p>⚠️ <strong>O que as macros não fazem:</strong> aplicar os efeitos de
 especialização. O bônus do sabotador, a troca de coluna do espião, o congelamento
-do assassino — nada disso é automático. Entram no campo <em>modificador de
+de coluna de cada uma — nada disso é automático. Entram no campo <em>modificador de
 situação</em>.</p>
 
 <p>Os campos vêm preenchidos com o que o módulo conseguiu ler da ficha. Como o
 Space Dragon mora numa ficha de outro jogo — a ${ondeAnotar("ciencia")}, por
 exemplo — vale conferir antes de rolar.</p>
 
-<h2>Duas rolagens são do Mestre</h2>
-<p><strong>Esgueirar-se</strong> e <strong>ocultar-se</strong>. O livro é
-explícito: o gatuno vai achar que passou até algo provar o contrário. As macros
-desses dois mandam o cartão <strong>sussurrado ao Mestre</strong>.</p>
+<h2>Uma rolagem é do Mestre</h2>
+<p>O movimento furtivo. O livro é explícito: o gatuno vai achar que
+passou até algo provar o contrário. A macro de <strong>furtividade</strong> manda
+o cartão <strong>sussurrado ao Mestre</strong>.</p>
 `,
     },
     {
@@ -96,20 +106,20 @@ desses dois mandam o cartão <strong>sussurrado ao Mestre</strong>.</p>
 <tbody>${linhas}</tbody>
 </table>
 
-<p>⚠️ marca as rolagens que o livro manda o Mestre fazer.</p>
+<p>⚠️ marca a rolagem que o livro manda o Mestre fazer.</p>
 
 <h2>O que não é teste de porcentagem</h2>
 <ul>
-<li><strong>Ouvir barulhos</strong> é 1d6, e passa dentro de uma faixa que
+<li><strong>Percepção</strong> é 1d6, e passa dentro de uma faixa que
 cresce de 1–2 a 1–5. A macro rola e compara.</li>
 <li><strong>Desativar robôs</strong> é 1d20 contra a T3-2, pelo nível do
 disruptor, e o resultado precisa ser <em>maior</em> ou igual. Depende do
 Capítulo 8, que o módulo ainda não traz.</li>
-<li><strong>Ataque pelas costas</strong> e <strong>dano crítico</strong> são
+<li><strong>Ataque furtivo</strong> e <strong>dano crítico</strong> são
 multiplicadores de dano, não chances.</li>
 <li><strong>Alcance mental</strong> é orçamento diário: usar um poder desconta
 um percentual igual à grandeza dele. Não se rola.</li>
-<li><strong>Crédito tecnológico</strong> é desconto em compras.</li>
+<li><strong>Aptidão tecnológica</strong> também dá desconto em compras, para o cientista.</li>
 </ul>
 `,
     },

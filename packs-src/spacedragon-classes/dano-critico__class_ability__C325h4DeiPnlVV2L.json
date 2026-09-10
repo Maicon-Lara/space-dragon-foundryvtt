@@ -1,11 +1,11 @@
 {
-  "folder": "h4n2O6LyayXZpi8m",
-  "name": "Furtar",
+  "folder": "xAyADm72rem7DcT5",
+  "name": "Dano Crítico",
   "type": "class_ability",
-  "_id": "JslFuuGl6x4Nm6fJ",
-  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "_id": "C325h4DeiPnlVV2L",
+  "img": "systems/olddragon2e/assets/icons/melee.svg",
   "system": {
-    "description": "<p>Afanar os pertences de quem não estiver prestando atenção. <strong>20%</strong> no 1º nível, <strong>88%</strong> no 20º.</p><p>⚠️ Rolar o <strong>dobro do alvo ou mais</strong> faz <strong>todos em volta perceberem</strong> a tentativa, inclusive a vítima.</p><p>Soma a coluna <em>Ocultar-se, Furtar e Desarmar</em> da <strong>Destreza</strong>.</p>",
+    "description": "<p>O multiplicador de dano num acerto crítico: <strong>×2</strong> do 1º ao 5º nível, <strong>×3</strong> do 6º ao 11º, <strong>×4</strong> do 12º em diante.</p>",
     "level": 1,
     "level3": "",
     "level6": "",
@@ -42,9 +42,9 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 5,
+  "sort": 3,
   "ownership": {
     "default": 0
   },
-  "_key": "!items!JslFuuGl6x4Nm6fJ"
+  "_key": "!items!C325h4DeiPnlVV2L"
 }

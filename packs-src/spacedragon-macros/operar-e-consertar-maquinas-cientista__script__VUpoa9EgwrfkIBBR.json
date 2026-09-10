@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Esgueirar-se (Gatuno)",
+  "name": "Operar e consertar máquinas (Cientista)",
   "type": "script",
-  "_id": "RxzVyJVFLQ5DGCY1",
+  "_id": "VUpoa9EgwrfkIBBR",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"esgueirar-se\");",
+  "command": "game.spacedragon.teste(\"operar-maquinas\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 800,
-  "_key": "!macros!RxzVyJVFLQ5DGCY1"
+  "sort": 100,
+  "_key": "!macros!VUpoa9EgwrfkIBBR"
 }

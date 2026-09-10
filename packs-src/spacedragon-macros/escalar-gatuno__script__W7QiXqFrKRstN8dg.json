@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Ouvir barulhos (Gatuno)",
+  "name": "Escalar (Gatuno)",
   "type": "script",
-  "_id": "yisHrj0wtE36jej8",
+  "_id": "W7QiXqFrKRstN8dg",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"ouvir-barulhos\");",
+  "command": "game.spacedragon.teste(\"escalar\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 1100,
-  "_key": "!macros!yisHrj0wtE36jej8"
+  "sort": 600,
+  "_key": "!macros!W7QiXqFrKRstN8dg"
 }

@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Subjugar (Homem Espacial)",
+  "name": "Pilotar naves (Cosmonauta)",
   "type": "script",
-  "_id": "xajDw8rIhXnqFClZ",
+  "_id": "CAw7RZuadbpZyyJ6",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"subjugar\");",
+  "command": "game.spacedragon.teste(\"pilotar-naves\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 400,
-  "_key": "!macros!xajDw8rIhXnqFClZ"
+  "sort": 200,
+  "_key": "!macros!CAw7RZuadbpZyyJ6"
 }

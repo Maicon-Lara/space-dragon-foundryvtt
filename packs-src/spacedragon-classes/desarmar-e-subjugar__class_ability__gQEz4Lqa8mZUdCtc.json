@@ -1,11 +1,11 @@
 {
-  "folder": "h4n2O6LyayXZpi8m",
-  "name": "Destrancar Portas",
+  "folder": "xAyADm72rem7DcT5",
+  "name": "Desarmar e Subjugar",
   "type": "class_ability",
-  "_id": "GPTteub8lUr18FbF",
-  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "_id": "gQEz4Lqa8mZUdCtc",
+  "img": "systems/olddragon2e/assets/icons/unarmed.svg",
   "system": {
-    "description": "<p><strong>15%</strong> no 1º nível, <strong>80%</strong> no 20º.</p><p>Uma tentativa <strong>por porta</strong>, e só com os instrumentos em mãos.</p><p>Soma a coluna <em>Esgueirar-se e Destrancar Portas</em> da <strong>Destreza</strong>.</p>",
+    "description": "<p>Porcentagem começando em <strong>20%</strong> e subindo 5 pontos por nível até o 11º, depois mais devagar.</p><p><strong>Desarmar</strong> é modificado pela Destreza; <strong>Subjugar</strong>, pela Força — cada um pela sua coluna na tabela do atributo.</p>",
     "level": 1,
     "level3": "",
     "level6": "",
@@ -42,9 +42,9 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 0,
+  "sort": 2,
   "ownership": {
     "default": 0
   },
-  "_key": "!items!GPTteub8lUr18FbF"
+  "_key": "!items!gQEz4Lqa8mZUdCtc"
 }

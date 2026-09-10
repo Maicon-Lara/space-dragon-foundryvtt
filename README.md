@@ -38,7 +38,7 @@ Space Dragon têm nome próprio, então o módulo adota esta colocação:
 
 **Isto é convenção do módulo, não regra do jogo.** Nenhum número muda — a tabela
 só diz onde escrever. A colocação sai do que o próprio livro diz que cada
-atributo faz: a Ciência é sabotagem e crédito tecnológico, o Intelecto é proteção mental, a
+atributo faz: a Ciência é aptidão tecnológica, o Intelecto é proteção mental, a
 Comunicação é reação e seguidores. Vive em `tools/data/onde-anotar.mjs`.
 
 ## O que já está pronto
@@ -46,30 +46,15 @@ Comunicação é reação e seguidores. Vive em `tools/data/onde-anotar.mjs`.
 | Compêndio | Conteúdo |
 |---|---|
 | **Espécies** | Humano, Androide, Mutante — o Mutante escolhe as duas mutações na própria ficha |
-| **Classes** | as 4 do Cap. 3 e as 13 especializações, uma subpasta por classe |
-| **Macros** | um botão por teste de porcentagem — rola 1d100 e faz a conta |
+| **Classes** | as 4 do Cap. 3 e as 12 especializações, uma subpasta por classe |
 | **Tabelas** | T2-1 rolável, uma por coluna |
 | **Regras** | as seis tabelas de atributo, os subatributos do Cap. 4, e as 20 mutações por extenso |
 
 ## As porcentagens
 
-Subjugar, esgueirar-se, ocultar-se, clonagem e a chance de poder mental são `%`,
-e o OD2 não trabalha assim. Estão **como o livro as escreve** — o módulo não
-converte.
-
-O que ele faz é **rolá-las**. Rola 1d100 e passa com **menor ou igual**, que é o
-contrário do d20 do OD2 e por isso nenhum campo da ficha resolve. O compêndio de
-Macros tem um botão por teste: soma a porcentagem do nível à coluna do atributo,
-deixa corrigir tudo antes de rolar, e o cartão mostra de onde cada parcela saiu.
-Os alvos são verificados contra o livro em `npm run verifica`, incluindo dois
-exemplos que o próprio livro resolve.
-
-## Os nomes são os do livro
-
-A classe de combate é o **Homem Espacial**, não "cosmonauta"; os talentos do
-Gatuno são **esgueirar-se**, **ocultar-se** e **localizar e sabotar máquinas**,
-não furtividade e sabotagem. Essas outras palavras são do *guia de conversão para
-Old Dragon 2*, que este módulo não usa.
+Subjugar, furtividade, clonagem, aptidão tecnológica e a chance de poder mental
+são `%`, e o OD2 não trabalha assim. Estão **como o livro as escreve** — o
+módulo não converte, e elas se resolvem rolando percentual na mesa.
 
 ## Estrutura
 

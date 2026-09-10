@@ -1,12 +1,12 @@
 {
-  "folder": "WmRhhuYaZ5Dq83FG",
-  "name": "Ataques Múltiplos",
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Talentos de Gatuno",
   "type": "class_ability",
-  "_id": "D0HhtXoOCSsH23zn",
-  "img": "systems/olddragon2e/assets/icons/melee.svg",
+  "_id": "l6QU3VKI64mwebSx",
+  "img": "systems/olddragon2e/assets/icons/bag.svg",
   "system": {
-    "description": "<p>A partir do <strong>7º nível</strong> a base de ataque ganha um segundo valor (<code>+7/+1</code>), que é um <strong>ataque adicional na mesma rodada</strong>. No 10º vira <code>+10/+4</code>, e assim por diante até <code>+15/+9</code> no 20º.</p>",
-    "level": 7,
+    "description": "<p>Seis talentos, cada um com progressão própria em porcentagem: <strong>Sabotagem</strong>, <strong>Escalar</strong>, <strong>Furtividade</strong>, <strong>Furtar</strong>, <strong>Percepção</strong> e <strong>Ataque Furtivo</strong>.</p><p><em>Furtividade</em> e <em>Furtar</em> são modificados pela Destreza; <em>Sabotagem</em>, pela Aptidão Tecnológica da Ciência <em>(anotada no campo Inteligência da ficha)</em>.</p><p>Os valores por nível estão na tabela T3-5, na descrição da classe.</p>",
+    "level": 1,
     "level3": "",
     "level6": "",
     "level10": "",
@@ -46,5 +46,5 @@
   "ownership": {
     "default": 0
   },
-  "_key": "!items!D0HhtXoOCSsH23zn"
+  "_key": "!items!l6QU3VKI64mwebSx"
 }

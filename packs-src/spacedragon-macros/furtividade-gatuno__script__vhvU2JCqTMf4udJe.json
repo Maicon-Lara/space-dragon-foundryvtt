@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Reproduzir e aprender poder mental (Mentálico)",
+  "name": "Furtividade (Gatuno)",
   "type": "script",
-  "_id": "9MdBNIWUPlJ3r5zo",
+  "_id": "vhvU2JCqTMf4udJe",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"reproduzir-poder\");",
+  "command": "game.spacedragon.teste(\"furtividade\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 1200,
-  "_key": "!macros!9MdBNIWUPlJ3r5zo"
+  "sort": 700,
+  "_key": "!macros!vhvU2JCqTMf4udJe"
 }

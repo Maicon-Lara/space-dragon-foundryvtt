@@ -1,11 +1,11 @@
 {
   "folder": "gFZHaYQqhiOIzTb7",
-  "name": "Pilotar naves (Homem Espacial)",
+  "name": "Realizar e aprender poder mental (Mentálico)",
   "type": "script",
-  "_id": "cLns4fGLraMiuQWH",
+  "_id": "YejeluSiFUdm5Ql6",
   "img": "icons/svg/dice-target.svg",
   "scope": "global",
-  "command": "game.spacedragon.teste(\"pilotar-naves\");",
+  "command": "game.spacedragon.teste(\"realizar-poder\");",
   "author": "swspacedragonbld",
   "ownership": {
     "default": 2
@@ -22,6 +22,6 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 200,
-  "_key": "!macros!cLns4fGLraMiuQWH"
+  "sort": 1000,
+  "_key": "!macros!YejeluSiFUdm5Ql6"
 }

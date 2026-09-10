@@ -149,21 +149,17 @@ function montaMacros() {
   const pasta = folderDoc("Testes de porcentagem", "Macro", "sd-macros");
   docs.push(pasta);
 
-  docs.push({
-    ...macroDoc({
-      nome: "Teste de porcentagem",
-      comando: "game.spacedragon.teste();",
-      img: "icons/svg/d20-highlight.svg",
-    }, pasta._id, 0),
-  });
+  docs.push(macroDoc({
+    nome: "Teste de porcentagem",
+    comando: "game.spacedragon.teste();",
+    img: "icons/svg/d20-highlight.svg",
+  }, pasta._id, 0));
 
   TESTES.forEach((t, i) => {
-    docs.push({
-      ...macroDoc({
-        nome: t.classe ? `${t.nome} (${t.classe})` : t.nome,
-        comando: `game.spacedragon.teste("${t.chave}");`,
-      }, pasta._id, (i + 1) * 100),
-    });
+    docs.push(macroDoc({
+      nome: t.classe ? `${t.nome} (${t.classe})` : t.nome,
+      comando: `game.spacedragon.teste("${t.chave}");`,
+    }, pasta._id, (i + 1) * 100));
   });
   return docs;
 }

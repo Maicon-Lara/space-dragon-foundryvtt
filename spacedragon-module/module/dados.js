@@ -119,7 +119,7 @@ export const PROGRESSAO = {
       "99%"
     ]
   },
-  "HOMEM_ESPACIAL": {
+  "COSMONAUTA": {
     "pilotarNaves": [
       "80%",
       "81%",
@@ -166,51 +166,29 @@ export const PROGRESSAO = {
     ]
   },
   "TALENTOSGATUNO": {
-    "destrancarPortas": [
-      "15%",
-      "20%",
-      "25%",
-      "30%",
-      "35%",
-      "40%",
-      "45%",
-      "50%",
-      "55%",
-      "60%",
-      "62%",
-      "64%",
-      "66%",
-      "68%",
-      "70%",
-      "72%",
-      "74%",
-      "76%",
-      "78%",
-      "80%"
+    "sabotagem": [
+      "15% / 1d8",
+      "20% / 1d8",
+      "25% / 1d8",
+      "30% / 1d8",
+      "35% / 1d8",
+      "40% / 1d6",
+      "45% / 1d6",
+      "50% / 1d6",
+      "55% / 1d6",
+      "60% / 1d6",
+      "62% / 1d4",
+      "64% / 1d4",
+      "66% / 1d4",
+      "68% / 1d4",
+      "70% / 1d4",
+      "72% / 1",
+      "74% / 1",
+      "76% / 1",
+      "78% / 1",
+      "80% / 1"
     ],
-    "localizarSabotar": [
-      "20%",
-      "25%",
-      "30%",
-      "35%",
-      "40%",
-      "45%",
-      "50%",
-      "55%",
-      "60%",
-      "62%",
-      "64%",
-      "66%",
-      "68%",
-      "70%",
-      "72%",
-      "74%",
-      "76%",
-      "78%",
-      "80%",
-      "82%"
-    ],
-    "escalarSuperficies": [
+    "escalar": [
       "80%",
       "81%",
       "82%",
@@ -232,7 +210,7 @@ export const PROGRESSAO = {
       "98%",
       "99%"
     ],
-    "esgueirarSe": [
+    "furtividade": [
       "20%",
       "25%",
       "30%",
@@ -253,28 +231,6 @@ export const PROGRESSAO = {
       "84%",
       "86%",
       "88%"
-    ],
-    "ocultarSe": [
-      "10%",
-      "15%",
-      "20%",
-      "25%",
-      "30%",
-      "35%",
-      "40%",
-      "45%",
-      "50%",
-      "55%",
-      "60%",
-      "62%",
-      "64%",
-      "66%",
-      "68%",
-      "70%",
-      "72%",
-      "74%",
-      "76%",
-      "78%"
     ],
     "furtar": [
       "20%",
@@ -298,7 +254,7 @@ export const PROGRESSAO = {
       "86%",
       "88%"
     ],
-    "ouvirBarulhos": [
+    "percepcao": [
       "1-2",
       "1-2",
       "1-2",
@@ -326,24 +282,7 @@ export const PROGRESSAO = {
 /** Colunas de tabela de atributo, indexadas pela faixa. */
 export const ATRIBUTO = {
   "destreza": {
-    "ocultarFurtarDesarmar": [
-      -25,
-      -20,
-      -15,
-      -10,
-      -5,
-      0,
-      0,
-      5,
-      10,
-      15,
-      20,
-      25,
-      30,
-      35,
-      40
-    ],
-    "esgueirarDestrancar": [
+    "furtividade": [
       -25,
       -20,
       -15,
@@ -381,14 +320,12 @@ export const ATRIBUTO = {
     ]
   },
   "ciencia": {
-    "localizarSabotar": [
+    "aptidao": [
       -25,
       -20,
       -15,
       -10,
       -5,
-      0,
-      0,
       0,
       5,
       10,
@@ -396,7 +333,9 @@ export const ATRIBUTO = {
       20,
       25,
       30,
-      35
+      35,
+      40,
+      45
     ]
   },
   "intelecto": {
@@ -441,32 +380,31 @@ export const ATRIBUTO = {
 
 /** O cabeçalho que o livro dá a cada coluna de atributo usada num teste. */
 export const ROTULO_COLUNA = {
-  "destreza.ocultarFurtarDesarmar": "Ocultar-se, Furtar e Desarmar",
+  "destreza.furtividade": "Furtividade, Furtar e Desarmar",
   "forca.subjugar": "Subjugar",
-  "destreza.esgueirarDestrancar": "Esgueirar-se e Destrancar Portas",
-  "ciencia.localizarSabotar": "Localizar e Sabotar Máquinas",
-  "intelecto.poderMental": "Reproduzir e Aprender Poder Mental",
+  "ciencia.aptidao": "Aptidão Tecnológica",
+  "intelecto.poderMental": "Realizar e Aprender Poder Mental",
   "constituicao.clonagem": "Probabilidade de Clonagem"
 };
 
 export const TESTES = [
   {
     "chave": "operar-maquinas",
-    "nome": "Operar máquinas",
+    "nome": "Operar e consertar máquinas",
     "classe": "Cientista",
     "base": {
       "tabela": "CIENTISTA",
       "coluna": "operarMaquinas"
     },
     "ajuste": null,
-    "nota": "Operar e consertar máquinas. O livro não dá modificador de atributo para este."
+    "nota": "Máquinas avariadas precisam ser consertadas antes de ficarem operáveis. Serve para pilotar naves, mas o cosmonauta faz isso melhor."
   },
   {
     "chave": "pilotar-naves",
     "nome": "Pilotar naves",
-    "classe": "Homem Espacial",
+    "classe": "Cosmonauta",
     "base": {
-      "tabela": "HOMEM_ESPACIAL",
+      "tabela": "COSMONAUTA",
       "coluna": "pilotarNaves"
     },
     "ajuste": null,
@@ -475,23 +413,23 @@ export const TESTES = [
   {
     "chave": "desarmar",
     "nome": "Desarmar",
-    "classe": "Homem Espacial",
+    "classe": "Cosmonauta",
     "base": {
-      "tabela": "HOMEM_ESPACIAL",
+      "tabela": "COSMONAUTA",
       "coluna": "desarmarSubjugar"
     },
     "ajuste": {
       "atributo": "destreza",
-      "coluna": "ocultarFurtarDesarmar"
+      "coluna": "furtividade"
     },
     "nota": "Custa um ataque, ou os dois. O adversário precisa ser desarmado antes de ser subjugado."
   },
   {
     "chave": "subjugar",
     "nome": "Subjugar",
-    "classe": "Homem Espacial",
+    "classe": "Cosmonauta",
     "base": {
-      "tabela": "HOMEM_ESPACIAL",
+      "tabela": "COSMONAUTA",
       "coluna": "desarmarSubjugar"
     },
     "ajuste": {
@@ -501,73 +439,44 @@ export const TESTES = [
     "nota": "Mesma porcentagem de tabela que desarmar — o que muda é o atributo que ajusta."
   },
   {
-    "chave": "destrancar-portas",
-    "nome": "Destrancar portas",
+    "chave": "sabotagem",
+    "nome": "Sabotagem",
     "classe": "Gatuno",
     "base": {
       "tabela": "TALENTOSGATUNO",
-      "coluna": "destrancarPortas"
-    },
-    "ajuste": {
-      "atributo": "destreza",
-      "coluna": "esgueirarDestrancar"
-    },
-    "nota": "Uma tentativa por porta, e só com os instrumentos em mãos."
-  },
-  {
-    "chave": "localizar-sabotar",
-    "nome": "Localizar e sabotar máquinas",
-    "classe": "Gatuno",
-    "base": {
-      "tabela": "TALENTOSGATUNO",
-      "coluna": "localizarSabotar"
+      "coluna": "sabotagem"
     },
     "ajuste": {
       "atributo": "ciencia",
-      "coluna": "localizarSabotar"
+      "coluna": "aptidao"
     },
-    "nota": "Um uso por máquina, e só com os instrumentos. O talento diz se deu certo, não o quê."
+    "nota": "Destranca portas ou avaria máquinas. Um uso por porta ou máquina, e só com os instrumentos. O dado ao lado da porcentagem é quantas RODADAS a sabotagem leva."
   },
   {
-    "chave": "escalar-superficies",
-    "nome": "Escalar superfícies",
+    "chave": "escalar",
+    "nome": "Escalar",
     "classe": "Gatuno",
     "base": {
       "tabela": "TALENTOSGATUNO",
-      "coluna": "escalarSuperficies"
+      "coluna": "escalar"
     },
     "ajuste": null,
     "nota": "Cada sucesso vale 3 metros. Falhar derruba, com 1d6 por 3 metros já subidos — a queda da primeira jogada não machuca."
   },
   {
-    "chave": "esgueirar-se",
-    "nome": "Esgueirar-se",
+    "chave": "furtividade",
+    "nome": "Furtividade",
     "classe": "Gatuno",
     "base": {
       "tabela": "TALENTOSGATUNO",
-      "coluna": "esgueirarSe"
+      "coluna": "furtividade"
     },
     "ajuste": {
       "atributo": "destreza",
-      "coluna": "esgueirarDestrancar"
+      "coluna": "furtividade"
     },
     "segredo": true,
-    "nota": "O livro manda o MESTRE rolar: o gatuno acha que passou até algo provar o contrário."
-  },
-  {
-    "chave": "ocultar-se",
-    "nome": "Ocultar-se",
-    "classe": "Gatuno",
-    "base": {
-      "tabela": "TALENTOSGATUNO",
-      "coluna": "ocultarSe"
-    },
-    "ajuste": {
-      "atributo": "destreza",
-      "coluna": "ocultarFurtarDesarmar"
-    },
-    "segredo": true,
-    "nota": "Também é rolagem do Mestre. Escondido, só se move esgueirando-se."
+    "nota": "Esconder-se ou mover-se em silêncio. No movimento furtivo o livro manda o MESTRE rolar: o gatuno acha que passou até algo provar o contrário."
   },
   {
     "chave": "furtar",
@@ -579,32 +488,32 @@ export const TESTES = [
     },
     "ajuste": {
       "atributo": "destreza",
-      "coluna": "ocultarFurtarDesarmar"
+      "coluna": "furtividade"
     },
     "nota": "Tirar o DOBRO do alvo ou mais faz todo mundo em volta perceber, inclusive a vítima."
   },
   {
-    "chave": "ouvir-barulhos",
-    "nome": "Ouvir barulhos",
+    "chave": "percepcao",
+    "nome": "Percepção",
     "classe": "Gatuno",
     "dado": "1d6",
     "base": {
       "tabela": "TALENTOSGATUNO",
-      "coluna": "ouvirBarulhos"
+      "coluna": "percepcao"
     },
     "ajuste": null,
     "nota": "Não é porcentagem: 1d6, e passa se cair dentro da faixa do nível."
   },
   {
-    "chave": "reproduzir-poder",
-    "nome": "Reproduzir e aprender poder mental",
+    "chave": "realizar-poder",
+    "nome": "Realizar e aprender poder mental",
     "classe": "Mentálico",
     "base": {
       "atributo": "intelecto",
       "coluna": "poderMental"
     },
     "ajuste": null,
-    "nota": "A chance sai INTEIRA do Intelecto — a tabela da classe não entra. O que a classe dá é o alcance mental diário, que é orçamento, não rolagem."
+    "nota": "A chance sai INTEIRA do Intelecto, pela T1-4 — a tabela da classe não entra. O que a classe dá é o alcance mental diário, que é orçamento, não rolagem."
   },
   {
     "chave": "clonagem",
