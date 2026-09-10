@@ -1,0 +1,35 @@
+{
+  "folder": "pOnkXk3ymR0lKRDm",
+  "name": "Granada De Fumaça",
+  "type": "misc",
+  "_id": "Pq38Ota8bi1pBR8Q",
+  "img": "systems/olddragon2e/assets/icons/throw.svg",
+  "system": {
+    "odo_id": "granada-de-fumaca",
+    "description": "Aparato utilitário de 3º nível tecnológico. Operam: Cientista, Cosmonauta, Gatuno, Mentálico. Custo $60.000. Tempo de construção 1d6 horas. Esta bomba libera uma espessa fumaça ao ser detonada, prejudicando a visão de todos em um raio de 20m². Todos na área têm uma penalidade de -4 em rolagens de ataque, de acordo com a tabela T7-3.",
+    "quantity": 1,
+    "cost": "$60.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 190,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!Pq38Ota8bi1pBR8Q"
+}

@@ -1,0 +1,35 @@
+{
+  "folder": "pOnkXk3ymR0lKRDm",
+  "name": "Cortador Laser",
+  "type": "misc",
+  "_id": "VEfxDmPSPQBLpXBY",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "odo_id": "cortador-laser",
+    "description": "Aparato ofensivo de 1º nível tecnológico. Operam: Cientista. Custo $40.000. Tempo de construção 1d10 horas. Este aparato emite um pequeno feixe de laser que pode ser usado para cortar lentamente superfícies finas como portas ou paredes. Se usado como arma realiza-se uma jogada de ataque corpo-a-corpo que causa 1d4 pontos de dano mais o modificador de Destreza do personagem.",
+    "quantity": 1,
+    "cost": "$40.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 10,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!VEfxDmPSPQBLpXBY"
+}

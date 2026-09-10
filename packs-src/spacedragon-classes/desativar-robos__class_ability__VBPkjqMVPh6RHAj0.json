@@ -5,7 +5,7 @@
   "_id": "VBPkjqMVPh6RHAj0",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>Com o equipamento apropriado, desativa robôs. A <strong>quantidade</strong> sai da tabela T1-5 da <strong>Ciência</strong> <em>(anotada no campo Inteligência da ficha)</em>, e é um <strong>dado</strong>, não um número fixo: 1d2 com Ciência 10–11, 1d6 com 16–17, 1d20 com 28–29.</p>",
+    "description": "<p>Com um <strong>disruptor positrônico</strong>, desativa robôs.</p><p>⚠️ <strong>É o único teste do jogo em 1d20</strong>, e no sentido oposto ao resto: o resultado precisa ser <strong>igual ou maior</strong> que o número da <strong>T3-2</strong>. Todo o resto do Space Dragon é 1d100 com sucesso no menor ou igual.</p><p>A linha da tabela é o <strong>nível do disruptor</strong>, não o do cientista — o disruptor é um aparato do Capítulo 8 e sobe pelas regras de lá. Um cientista de 10º com um disruptor de 3º usa a linha do 3º.</p><p>Na tabela, <strong>A</strong> desativa automaticamente, <strong>N</strong> significa que aquele tipo não é afetado, e <strong>D</strong> destrói o robô por completo.</p><p>A tabela diz <em>se</em> desativa. <strong>Quantos</strong> sai da tabela T1-5 da <strong>Ciência</strong> <em>(anotada no campo Inteligência da ficha)</em>, e é um <strong>dado</strong>, não um número fixo: 1d2 com Ciência 10–11, 1d6 com 16–17, 1d20 com 28–29.</p>",
     "level": 1,
     "level3": "",
     "level6": "",

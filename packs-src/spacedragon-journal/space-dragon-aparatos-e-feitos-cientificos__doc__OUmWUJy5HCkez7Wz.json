@@ -1,0 +1,135 @@
+{
+  "folder": null,
+  "name": "Space Dragon — Aparatos e Feitos Científicos",
+  "_id": "OUmWUJy5HCkez7Wz",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Como funcionam",
+      "type": "text",
+      "_id": "pFXoOr7GDw9ZiRkh",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Duas coisas diferentes</h2>\n<p><strong>Aparatos tecnológicos</strong> são objetos: alguém os constrói, alguém\nos carrega, alguém os usa. <strong>Feitos científicos</strong> são\nprocedimentos, e só o cientista os realiza — não há o que carregar.</p>\n\n<h2>A categoria decide quem pode usar</h2>\n<p>Todo aparato é <strong>ofensivo</strong>, <strong>defensivo</strong> ou\n<strong>utilitário</strong>, e cada classe opera só as suas:</p>\n\n<table>\n<thead><tr><th>classe</th><th>opera</th></tr></thead>\n<tbody><tr><td><strong>Cientista</strong></td><td>Ofensivo, Defensivo, Utilitário</td></tr><tr><td><strong>Cosmonauta</strong></td><td>Defensivo, Utilitário</td></tr><tr><td><strong>Gatuno</strong></td><td>Utilitário</td></tr><tr><td><strong>Mentálico</strong></td><td>Utilitário</td></tr></tbody>\n</table>\n\n<p>É a categoria que responde <em>\"meu gatuno pode usar isto?\"</em>. Por isso\nela está no item, e não perdida no meio da descrição.</p>\n\n<h2>Nível tecnológico</h2>\n<p>O <strong>NT</strong> mede o quanto o aparato é avançado. Ele limita o que o\ncientista consegue <strong>construir</strong> — não o que consegue\n<strong>usar</strong>: não há limite de nível para usar.</p>\n\n<p>O <em>Nível Tecnológico Máximo</em> do Cientista sobe um degrau a cada dois\nníveis de classe.</p>\n\n<p>Dois itens têm <strong>NT variável</strong>: a <em>Injeção de adrenalina</em>\ne os <em>Reparos robóticos</em>. O custo deles também é.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!OUmWUJy5HCkez7Wz.pFXoOr7GDw9ZiRkh"
+    },
+    {
+      "sort": 200000,
+      "name": "A lista",
+      "type": "text",
+      "_id": "eKktjQKE2Vj08Y0G",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Os 80, por nível tecnológico</h2>\n<p>Todos estão no compêndio <strong>Aparatos</strong>, prontos para arrastar.</p>\n<h3>1º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Bracelete Radiocomunicador</td><td>Utilitário</td><td>$90.000</td><td>1d6 horas</td></tr><tr><td>Cortador Laser</td><td>Ofensivo</td><td>$40.000</td><td>1d10 horas</td></tr><tr><td>Disruptor Positrônico</td><td>Ofensivo</td><td>$70.000</td><td>1d4 horas</td></tr><tr><td>Medidor De Radiação</td><td>Utilitário</td><td>$70.000</td><td>1d4 horas</td></tr><tr><td>Trajes Antirradiação</td><td>Defensivo</td><td>$80.000</td><td>1d10 horas</td></tr><tr><td>Óculos De Visão Noturna</td><td>Utilitário</td><td>$40.000</td><td>1d6 horas</td></tr><tr><td>Óculos De Visão Térmica</td><td>Utilitário</td><td>$20.000</td><td>1d6 horas</td></tr><tr><td>Curar Doença</td><td><em>feito</em></td><td>Variável</td><td>Variável</td></tr><tr><td>Diagnosticar Doença</td><td><em>feito</em></td><td>Nenhum</td><td>1d10 minutos</td></tr></tbody></table>\n<h3>2º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Algemas Eletrônicas</td><td>Ofensivo</td><td>$80.000</td><td>1d4 horas</td></tr><tr><td>Bloqueador De Ondas De Rádio</td><td>Utilitário</td><td>$160.000</td><td>1d6 horas</td></tr><tr><td>Broca Pneumática Portátil</td><td>Utilitário</td><td>$140.000</td><td>1d6 horas</td></tr><tr><td>Cilindro De Dados</td><td>Utilitário</td><td>$140.000</td><td>1d4 horas</td></tr><tr><td>Câmera Remota</td><td>Utilitário</td><td>$160.000</td><td>1d4 dias</td></tr><tr><td>Dispositivo Rastreador</td><td>Utilitário</td><td>$60.000</td><td>1d4 horas</td></tr><tr><td>Lançador De Gancho</td><td>Utilitário</td><td>$80.000</td><td>1d4 horas</td></tr><tr><td>Projetor Holográfico</td><td>Utilitário</td><td>$40.000</td><td>1d4 dias</td></tr><tr><td>Construir Robô</td><td><em>feito</em></td><td>Indefinido</td><td>Variável</td></tr><tr><td>Identificar Espécie</td><td><em>feito</em></td><td>Nenhum</td><td>Variável</td></tr><tr><td>Operação Cirúrgica Simples</td><td><em>feito</em></td><td>$100.000</td><td>Variável</td></tr></tbody></table>\n<h3>3º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Bracelete Vídeocomunicador</td><td>Utilitário</td><td>$150.000</td><td>1d10 horas</td></tr><tr><td>Comunicador Idiomático</td><td>Utilitário</td><td>$180.000</td><td>1d6 semanas</td></tr><tr><td>Detector De Mentiras</td><td>Utilitário</td><td>$90.000</td><td>1d8 horas</td></tr><tr><td>Explosivo Remotamente Controlado</td><td>Ofensivo</td><td>Variável</td><td>1d4 horas</td></tr><tr><td>Granada De Fumaça</td><td>Utilitário</td><td>$60.000</td><td>1d6 horas</td></tr><tr><td>Luvas De Indução Elétrica</td><td>Ofensivo</td><td>$180.000</td><td>1d4 dias</td></tr><tr><td>Mochila A Jato</td><td>Utilitário</td><td>$150.000</td><td>1d4 dias</td></tr><tr><td>Destilar Antídoto</td><td><em>feito</em></td><td>$240.000</td><td>1d4 horas</td></tr><tr><td>Identificar Veneno</td><td><em>feito</em></td><td>Nenhum</td><td>1d4 horas</td></tr><tr><td>Solidificar Líquido</td><td><em>feito</em></td><td>$150.000</td><td>1d8 horas</td></tr></tbody></table>\n<h3>4º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Botas Antigravidade</td><td>Utilitário</td><td>$200.000</td><td>1d6 dias</td></tr><tr><td>Campo De Força Individual</td><td>Defensivo</td><td>$240.000</td><td>1d4 dias</td></tr><tr><td>Pistola De Repetição</td><td>Ofensivo</td><td>$320.000</td><td>1d10 horas</td></tr><tr><td>Pílula De Recuperação Rápida</td><td>Utilitário</td><td>$180.000</td><td>1d4 horas</td></tr><tr><td>Visor De Precisão</td><td>Utilitário</td><td>$80.000</td><td>1d6 horas</td></tr><tr><td>Óculos De Raio X</td><td>Utilitário</td><td>$300.00</td><td>1d4 dias</td></tr><tr><td>Decodificar Dna</td><td><em>feito</em></td><td>$320.000</td><td>1d4 meses</td></tr><tr><td>Identificar Micro-Organismo</td><td><em>feito</em></td><td>Nenhum</td><td>1d8 horas</td></tr><tr><td>Operação Cirúrgica Moderada</td><td><em>feito</em></td><td>$200.000</td><td>Variável</td></tr></tbody></table>\n<h3>5º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Cinto De Deflexão</td><td>Defensivo</td><td>$450.000</td><td>1d10 horas</td></tr><tr><td>Laço De Energia</td><td>Ofensivo</td><td>$400.000</td><td>1d4 semanas</td></tr><tr><td>Metralhadora Energética</td><td>Ofensivo</td><td>$240.000</td><td>1d4 dias</td></tr><tr><td>Miniaturizador</td><td>Utilitário</td><td>$150.000</td><td>1d6 semanas</td></tr><tr><td>Pílula De Aprimoramento</td><td>Utilitário</td><td>$200.000</td><td>1d6 horas</td></tr><tr><td>Respirador Subaquático</td><td>Utilitário</td><td>$250.000</td><td>1d4 horas</td></tr><tr><td>Trocador Instantâneo De Trajes</td><td>Utilitário</td><td>$200.000</td><td>1d4 semanas</td></tr><tr><td>Aprimoramento Permanente</td><td><em>feito</em></td><td>$300.000</td><td>1d4 dias</td></tr><tr><td>Clonagem Animal</td><td><em>feito</em></td><td>$300.000</td><td>Variável (ver abaixo)</td></tr><tr><td>Operação Cirúrgica Complexa</td><td><em>feito</em></td><td>$300.000</td><td>Variável</td></tr></tbody></table>\n<h3>6º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Bracelete Controlador</td><td>Ofensivo</td><td>$180.000</td><td>1d4 dias</td></tr><tr><td>Campo De Força Coletivo</td><td>Defensivo</td><td>$420.000</td><td>1d6 dias</td></tr><tr><td>Canhão De Fótons</td><td>Ofensivo</td><td>$480.000</td><td>1d6 semanas</td></tr><tr><td>Capacete De Detecção Mental</td><td>Utilitário</td><td>$120.000</td><td>1d4 dias</td></tr><tr><td>Fórmula De Controle Corporal</td><td>Utilitário</td><td>$420.000</td><td>1d6 horas</td></tr><tr><td>Membro Biônico</td><td>Utilitário</td><td>$240.000</td><td>1d4 semanas</td></tr><tr><td>Míssil Teleguiado</td><td>Ofensivo</td><td>$100.000</td><td>1d6 horas</td></tr><tr><td>Cirurgia Biônica</td><td><em>feito</em></td><td>$240.000</td><td>1d8 horas</td></tr><tr><td>Imunizar Paciente</td><td><em>feito</em></td><td>Variável</td><td>Variável</td></tr><tr><td>Transplantar Cérebro Positrônico</td><td><em>feito</em></td><td>Nenhum</td><td>1d8 horas</td></tr></tbody></table>\n<h3>7º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Capacete De Proteção Mental</td><td>Defensivo</td><td>$210.000</td><td>1d4 semanas</td></tr><tr><td>Cinto De Invisibilidade</td><td>Utilitário</td><td>$420.000</td><td>1d6 semanas</td></tr><tr><td>Coleira De Controle Alienígena</td><td>Ofensivo</td><td>$700.000</td><td>1d4 dias</td></tr><tr><td>Raio Paralisador</td><td>Ofensivo</td><td>$350.000</td><td>1d6 dias</td></tr><tr><td>Órgão Biônico</td><td>Utilitário</td><td>$300.000</td><td>1d4 semanas</td></tr><tr><td>Provocar Mutação Genética</td><td><em>feito</em></td><td>$700.000</td><td>1d8 semanas</td></tr><tr><td>Sondagem Cerebral</td><td><em>feito</em></td><td>$500.000</td><td>1d4 horas</td></tr></tbody></table>\n<h3>8º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Gerador De Campo Repulsor</td><td>Defensivo</td><td>$700.000</td><td>1d6 dias</td></tr><tr><td>Lança-Chamas</td><td>Ofensivo</td><td>$560.000</td><td>1d4 dias</td></tr><tr><td>Visor De Realidade Alternativa</td><td>Utilitário</td><td>$600.000</td><td>1d10 dias</td></tr><tr><td>Clonagem Humana</td><td><em>feito</em></td><td>$800.000</td><td>Variável (ver abaixo)</td></tr><tr><td>Construir Cérebro Positrônico</td><td><em>feito</em></td><td>Variável</td><td>1d4 meses</td></tr></tbody></table>\n<h3>9º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Pistola Desintegradora</td><td>Ofensivo</td><td>$630.000</td><td>1d4 meses</td></tr><tr><td>Teletransportador</td><td>Utilitário</td><td>$800.000</td><td>1d10 semanas</td></tr><tr><td>Combinar Espécies</td><td><em>feito</em></td><td>$360.000</td><td>1d10 meses</td></tr><tr><td>Hibernação Criogênica</td><td><em>feito</em></td><td>$550.000</td><td>Indefinido</td></tr></tbody></table>\n<h3>10º nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Máquina Do Tempo</td><td>Utilitário</td><td>$2.000.000</td><td>1d4 anos</td></tr><tr><td>Criar Nova Espécie</td><td><em>feito</em></td><td>$600.000</td><td>1d4 anos</td></tr><tr><td>Reanimar Cadáver</td><td><em>feito</em></td><td>$500.000</td><td>1d4 dias</td></tr></tbody></table>\n<h3>variável nível tecnológico</h3><table><thead><tr><th>nome</th><th>tipo</th><th>custo</th><th>tempo</th></tr></thead><tbody><tr><td>Injeção De Adrenalina</td><td>Utilitário</td><td>Variável</td><td>1d4 horas</td></tr><tr><td>Reparos Robóticos</td><td><em>feito</em></td><td>Variável</td><td>Variável</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!OUmWUJy5HCkez7Wz.eKktjQKE2Vj08Y0G"
+    },
+    {
+      "sort": 300000,
+      "name": "Desativar robôs",
+      "type": "text",
+      "_id": "BrRYEIe4uufQQZtt",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>O único teste em 1d20</h2>\n<p>O Cientista com um <strong>disruptor positrônico</strong> desativa robôs. Role\n<strong>1d20</strong>: o resultado precisa ser <strong>igual ou maior</strong>\nque o número da tabela.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ <strong>É o sentido oposto do resto do jogo.</strong> Todo o resto do Space\nDragon é 1d100 com sucesso no <em>menor ou igual</em>. Aqui se quer o número\nalto, como no Old Dragon 2.</p>\n\n<h2>A linha é o disruptor, não o cientista</h2>\n<p>O nível da tabela é o do <strong>disruptor positrônico</strong>, que é um\naparato e sobe pelas regras do Capítulo 8. Um cientista de 10º nível com um\ndisruptor de 3º usa a linha do <strong>3º</strong>.</p>\n\n<h2>As três letras</h2>\n<ul><li><strong>A</strong> — desativado automaticamente, sem rolagem</li><li><strong>N</strong> — não é afetado neste nível de disruptor</li><li><strong>D</strong> — destruído e completamente inutilizado</li></ul>\n\n<h2>Quantos robôs</h2>\n<p>A tabela diz <em>se</em> desativa. <strong>Quantos</strong> sai da\n<strong>T1-5</strong> da Ciência, e é um <strong>dado</strong>: 1d2 com Ciência\n10–11, 1d6 com 16–17, 1d20 com 28–29.</p>\n\n<h2>T3-2: Desativar Robôs</h2>\n<table>\n<thead><tr><th>nível do disruptor</th><th>sucata</th><th>protótipo</th><th>repetidor</th><th>autômato</th><th>humanoide</th><th>serviçal</th><th>metahumano</th><th>androide</th></tr></thead>\n<tbody><tr><td><strong>1º</strong></td><td>13</td><td>17</td><td>19</td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td></tr><tr><td><strong>2º</strong></td><td>11</td><td>15</td><td>18</td><td>20</td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td></tr><tr><td><strong>3º</strong></td><td>9</td><td>13</td><td>17</td><td>19</td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td></tr><tr><td><strong>4º</strong></td><td>7</td><td>11</td><td>15</td><td>18</td><td>20</td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td></tr><tr><td><strong>5º</strong></td><td>5</td><td>9</td><td>13</td><td>17</td><td>19</td><td><strong>N</strong></td><td><strong>N</strong></td><td><strong>N</strong></td></tr><tr><td><strong>6º</strong></td><td>3</td><td>7</td><td>11</td><td>15</td><td>18</td><td>20</td><td><strong>N</strong></td><td><strong>N</strong></td></tr><tr><td><strong>7º</strong></td><td><strong>A</strong></td><td>5</td><td>9</td><td>13</td><td>17</td><td>19</td><td><strong>N</strong></td><td><strong>N</strong></td></tr><tr><td><strong>8º</strong></td><td><strong>A</strong></td><td>3</td><td>7</td><td>11</td><td>15</td><td>18</td><td>20</td><td><strong>N</strong></td></tr><tr><td><strong>9º</strong></td><td><strong>A</strong></td><td>2</td><td>5</td><td>9</td><td>13</td><td>17</td><td>19</td><td><strong>N</strong></td></tr><tr><td><strong>10º</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td>3</td><td>7</td><td>11</td><td>15</td><td>18</td><td>20</td></tr><tr><td><strong>11º</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td>2</td><td>5</td><td>9</td><td>13</td><td>17</td><td>19</td></tr><tr><td><strong>12º</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td><strong>A</strong></td><td>3</td><td>7</td><td>11</td><td>15</td><td>18</td></tr><tr><td><strong>13º</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td>2</td><td>5</td><td>9</td><td>13</td><td>17</td></tr><tr><td><strong>14º</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td><strong>A</strong></td><td>3</td><td>7</td><td>11</td><td>15</td></tr><tr><td><strong>15º</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td>2</td><td>5</td><td>9</td><td>13</td></tr><tr><td><strong>16º</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td><strong>A</strong></td><td>3</td><td>7</td><td>11</td></tr><tr><td><strong>17º</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td>2</td><td>5</td><td>9</td></tr><tr><td><strong>18º</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td><strong>A</strong></td><td>3</td><td>7</td></tr><tr><td><strong>19º</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td>2</td><td>5</td></tr><tr><td><strong>20º</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>D</strong></td><td><strong>A</strong></td><td><strong>A</strong></td><td>3</td></tr></tbody>\n</table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!OUmWUJy5HCkez7Wz.BrRYEIe4uufQQZtt"
+    }
+  ],
+  "flags": {},
+  "sort": 6000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!OUmWUJy5HCkez7Wz"
+}

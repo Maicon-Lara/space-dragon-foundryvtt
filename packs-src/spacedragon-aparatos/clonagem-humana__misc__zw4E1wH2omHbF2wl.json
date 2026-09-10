@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Clonagem Humana",
+  "type": "misc",
+  "_id": "zw4E1wH2omHbF2wl",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "clonagem-humana",
+    "description": "Feito científico de 8º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo $800.000. Tempo de construção Variável (ver abaixo). O cientista cria um clone perfeito de um Homo sapiens ou Homo novus através de uma amostra de DNA como sangue ou cabelo, que deve ser decodificada previamente com o feito específico. Deve ser feita uma rolagem percentual da probabilidade de clonagem inerente ao atributo Constituição do personagem que será clonado, uma falha indica que o cientista em questão não conseguirá cloná-lo. Não é necessário haver gestação embrionária, o processo leva 1 mês para cada DV do humano original, resultando em um clone com as mesmas estatísticas do original. Se o clone for de um Homo novus é necessário realizar outra jogada percentual com a mesma probabilidade, representando a chance do clone apresentar as mesmas mutações do original. Uma falha nesta rolagem significa que o clone será um Homo sapiens, porém incrementos de atributo passam a ser calculados a partir do nível inicial do clone. Este processo não transfere a personalidade ou memórias do original ao clone.",
+    "quantity": 1,
+    "cost": "$800.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 730,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!zw4E1wH2omHbF2wl"
+}

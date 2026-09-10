@@ -1,0 +1,35 @@
+{
+  "folder": "pOnkXk3ymR0lKRDm",
+  "name": "Mochila A Jato",
+  "type": "misc",
+  "_id": "JXHYibN7Al6DBAwJ",
+  "img": "systems/olddragon2e/assets/icons/container.svg",
+  "system": {
+    "odo_id": "mochila-a-jato",
+    "description": "Aparato utilitário de 3º nível tecnológico. Operam: Cientista, Cosmonauta, Gatuno, Mentálico. Custo $150.000. Tempo de construção 1d4 dias. Esta mochila permite que o usuário voe e tem autonomia aproximada de 4 horas. De maneira similar à pilotagem de espaçonaves, será necessário efe tuar uma rolagem de pilotagem ou pilotagem improvisada em situações de perigo potencial, mas não para manobras simples. O personagem fica com as mãos livres, mas sofre penalidade de atacar pilotando conforme a tabela T7-3. A criação de mais combustível para a mochila a jato é coberta pela regra de consertos.",
+    "quantity": 1,
+    "cost": "$150.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 210,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!JXHYibN7Al6DBAwJ"
+}

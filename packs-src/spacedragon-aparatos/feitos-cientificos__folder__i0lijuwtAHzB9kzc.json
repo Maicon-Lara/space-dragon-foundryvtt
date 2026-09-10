@@ -1,0 +1,22 @@
+{
+  "name": "Feitos Científicos",
+  "sorting": "m",
+  "folder": null,
+  "type": "Item",
+  "_id": "i0lijuwtAHzB9kzc",
+  "description": "",
+  "sort": 0,
+  "color": "#2f7c5c",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!i0lijuwtAHzB9kzc"
+}

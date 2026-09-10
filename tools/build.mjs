@@ -16,7 +16,7 @@ import { compilePack } from "@foundryvtt/foundryvtt-cli";
 
 import {
   folderDoc, raceDoc, raceAbilityDoc, classDoc, classAbilityDoc, journalDoc, rollTableDoc, macroDoc,
-  weaponDoc, armorDoc, spellDoc,
+  weaponDoc, armorDoc, spellDoc, miscDoc,
   itemUuid, writeSource, aninhaPastas, pintaPastas, makeId, stats,
 } from "./lib.mjs";
 import { especies } from "./data/especies.mjs";
@@ -30,6 +30,8 @@ import { testesJournal } from "./data/testes-journal.mjs";
 import { ARMAS, VESTES, TIPOS, PORTES } from "./data/equipamento.mjs";
 import { equipamentoJournal } from "./data/equipamento-journal.mjs";
 import { PODERES } from "./data/poderes.mjs";
+import { APARATOS, CATEGORIAS_POR_CLASSE } from "./data/aparatos.mjs";
+import { aparatosJournal } from "./data/aparatos-journal.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -43,6 +45,7 @@ const P_JOURNAL = "spacedragon-journal";
 const P_MACROS = "spacedragon-macros";
 const P_EQUIPAMENTO = "spacedragon-equipamento";
 const P_PODERES = "spacedragon-poderes";
+const P_APARATOS = "spacedragon-aparatos";
 
 /** Cor por pasta: sem isso o compêndio vira uma lista cinza indistinguível. */
 const PALETA = {
@@ -51,6 +54,8 @@ const PALETA = {
   "Armas": "#7c4a2f",
   "Vestes e Proteção": "#2f6b6b",
   "Poderes Mentais": "#5c2f7c",
+  "Aparatos Tecnológicos": "#7c6b2f",
+  "Feitos Científicos": "#2f7c5c",
 };
 
 // ── Espécies ────────────────────────────────────────────────────────────────
@@ -398,6 +403,47 @@ function montaPoderes() {
   return docs;
 }
 
+// ── Aparatos e Feitos ───────────────────────────────────────────────────────
+//
+// Ambos viram `misc`. O OD2 não tem tipo para "aparato", e forçá-los em `weapon`
+// tornaria o Lança-chamas atacável e a Mochila a Jato também — `misc` é o que
+// a ficha trata como equipamento que se carrega e se usa.
+//
+// FEITO CIENTÍFICO não é objeto: é procedimento, e ninguém o carrega. Vai para
+// pasta separada, e a descrição deixa isso claro logo na primeira linha.
+function corpoAparato(a) {
+  const linhas = [];
+  linhas.push(a.feito
+    ? `Feito científico de ${a.nt === null ? "nível tecnológico variável" : `${a.nt}º nível tecnológico`}. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar.`
+    : `Aparato ${a.categoria.toLowerCase()} de ${a.nt === null ? "nível tecnológico variável" : `${a.nt}º nível tecnológico`}.`);
+  if (!a.feito) {
+    // Quem NÃO pode usar é a informação que falta na hora de comprar.
+    const podem = Object.entries(CATEGORIAS_POR_CLASSE)
+      .filter(([, cats]) => cats.includes(a.categoria))
+      .map(([classe]) => classe);
+    linhas.push(`Operam: ${podem.join(", ")}.`);
+  }
+  linhas.push(`Custo ${a.custo}. Tempo de construção ${a.tempo}.`);
+  linhas.push(a.texto);
+  return linhas.join(" ");
+}
+
+function montaAparatos() {
+  const docs = [];
+  const pAparatos = folderDoc("Aparatos Tecnológicos", "Item", "sd-aparatos");
+  const pFeitos = folderDoc("Feitos Científicos", "Item", "sd-feitos");
+  docs.push(pAparatos, pFeitos);
+
+  APARATOS.forEach((a, i) => {
+    docs.push(miscDoc({
+      nome: a.nome,
+      desc: corpoAparato(a),
+      cost: a.custo,
+    }, a.feito ? pFeitos._id : pAparatos._id, a.feito ? "sd-feito" : "sd-aparato", i * 10));
+  });
+  return docs;
+}
+
 // ── Guarda: todo teste tem de achar a habilidade dele ───────────────────────
 //
 // O painel da ficha enfia o botão de rolagem DENTRO da habilidade de classe,
@@ -494,7 +540,11 @@ async function main() {
   await compila(P_ESPECIES, esp);
 
   await compila(P_TABELAS, montaTabelas());
-  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal];
+  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal];
+  let ap = aninhaPastas(montaAparatos());
+  pintaPastas(ap, PALETA);
+  await compila(P_APARATOS, ap);
+
   let pod = aninhaPastas(montaPoderes());
   pintaPastas(pod, PALETA);
   await compila(P_PODERES, pod);

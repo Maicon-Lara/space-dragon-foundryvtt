@@ -1,0 +1,35 @@
+{
+  "folder": "pOnkXk3ymR0lKRDm",
+  "name": "Máquina Do Tempo",
+  "type": "misc",
+  "_id": "9bFlFrS5GxqLFzXy",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "odo_id": "maquina-do-tempo",
+    "description": "Aparato utilitário de 10º nível tecnológico. Operam: Cientista, Cosmonauta, Gatuno, Mentálico. Custo $2.000.000. Tempo de construção 1d4 anos. Uma máquina do tempo é um aparato extremamente poderoso capaz de transportar uma ou mais pessoas através do espaço-tempo a qualquer ponto no passado ou futuro do universo. A existência de tal aparato é apenas hipotética, visto que nunca foi construído devido às implicações paradoxais que uma viagem no tempo poderia ter no curso histórico conhecido. Um cientista que desenvolva uma máquina do tempo estará sujeito a todo tipo de controvérsia e polêmica, portanto deve estar preparado para isso.",
+    "quantity": 1,
+    "cost": "$2.000.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 520,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!9bFlFrS5GxqLFzXy"
+}

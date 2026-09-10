@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Construir Robô",
+  "type": "misc",
+  "_id": "isPPcAVjcYhYUuLz",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "construir-robo",
+    "description": "Feito científico de 2º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo Indefinido. Tempo de construção Variável. O cientista é capaz de construir robôs que o terão como seu mestre. A tabela T3-2 é usada para a progressão desse feito, iniciando com a construção de protótipos simples e terminando com androides, visto que sucatas são simplesmente versões deterioradas dos demais tipos de robô. A construção de um robô pede três sucessos consecutivos em rolagens de 1d20 com a dificuldade expressa na tabela para a desativação do tipo de robô sendo construído de acordo com o nível do cientista. Cada rolagem é feita após 1 mês de trabalho, o que significa que o período mínimo para a construção é geralmente de 3 meses. Um “A” na tabela indica que a rolagem é automaticamente bem-sucedida, embora o mínimo de 3 meses ainda deva ser respeitado. Já um “D” significa que o procedimento pode ser feito em apenas 1 mês. O robô criado é exatamente igual ao descrito para sua categoria no capítulo 11 e obedecerá ao cientista incondicionalmente, exceto os androides. Um cientista que deseje criar um Homo machina deve estar ciente das implicações morais e sociais de seu feito. Além disso, androides precisam de um cérebro positrônico para serem ativados, criado com o feito específico. Nesse caso, o transplante do cérebro já faz parte da construção, dispensando o uso do feito de transplante de cérebros positrônicos. O custo deste feito dependerá do mestre. Cientistas que não tenham uma maneira de construir um cérebro positrônico podem conseguir um de outros meios, talvez no mercado negro de uma grande cidade, em um ferro velho ou desmontando um outro robô – neste caso, a categoria do robô construído para fins de desativação deve ser considerada a mesma do portador original do cérebro positrônico.",
+    "quantity": 1,
+    "cost": "Indefinido",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 560,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!isPPcAVjcYhYUuLz"
+}

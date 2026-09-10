@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Hibernação Criogênica",
+  "type": "misc",
+  "_id": "CPlvMFTFIP4DwXZm",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "hibernacao-criogenica",
+    "description": "Feito científico de 9º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo $550.000. Tempo de construção Indefinido. O cientista é capaz de colocar um único indivíduo ou alienígena em um sono induzido em uma câmara criogênica. Este estado pode manter-se virtualmente para sempre, desde que o equipamento tenha manutenção preventiva constante, que deve ser feita a cada ano de acordo com a regra de consertos. Uma câmara criogênica sem manutenção tem 10% de chance cumulativa de apresentar defeitos a cada 50 anos que se passarem. O indivíduo preservado acordará assim que o equipamento for desligado.",
+    "quantity": 1,
+    "cost": "$550.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 760,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!CPlvMFTFIP4DwXZm"
+}

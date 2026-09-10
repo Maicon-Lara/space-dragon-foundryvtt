@@ -1,0 +1,35 @@
+{
+  "folder": "pOnkXk3ymR0lKRDm",
+  "name": "Bracelete Vídeocomunicador",
+  "type": "misc",
+  "_id": "vdMLMjT4YZpgk0ww",
+  "img": "systems/olddragon2e/assets/icons/magic-scroll.svg",
+  "system": {
+    "odo_id": "bracelete-videocomunicador",
+    "description": "Aparato utilitário de 3º nível tecnológico. Operam: Cientista, Cosmonauta, Gatuno, Mentálico. Custo $150.000. Tempo de construção 1d10 horas. Funciona da mesma forma que o bracelete radiocomunicador, mas inclui um visor pelo qual é possível ver e ser visto pelos interlocutores. Seu alcance entretanto é mais curto, de apenas 5 Km, e é possível sintonizar apenas 4 braceletes vídeocomunicadores na mesma frequência.",
+    "quantity": 1,
+    "cost": "$150.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 150,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!vdMLMjT4YZpgk0ww"
+}

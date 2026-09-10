@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Aprimoramento Permanente",
+  "type": "misc",
+  "_id": "Rhq48LadIOmrTrIP",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "aprimoramento-permanente",
+    "description": "Feito científico de 5º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo $300.000. Tempo de construção 1d4 dias. Através de um tratamento especial o cientista é capaz de aprimorar permanentemente um atributo de um indivíduo em 2 pontos. Esse aprimoramento, entretanto, tem o efeito colateral de reduzir outro atributo igualmente, deixando-o 2 pontos menor. O atributo aprimorado e o degenerado devem estar na mesma categoria, seja de atributos físicos (Força, Destreza e Constituição) ou mentais (Intelecto e Ciência). O atributo social Comunicação pode ser aumentado em troca de prejudicar qualquer outro atributo do personagem.’",
+    "quantity": 1,
+    "cost": "$300.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 650,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!Rhq48LadIOmrTrIP"
+}

@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Identificar Espécie",
+  "type": "misc",
+  "_id": "CVJeHr55hGnJdzHT",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "identificar-especie",
+    "description": "Feito científico de 2º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo Nenhum. Tempo de construção Variável. O cientista é capaz de determinar a espécie de uma forma de vida não microbiana que encontrar, através de análise em laboratório ou identificação visual. A identificação permite ao cientista saber o nome biológico do espécime e suas características mais básicas como hábitos alimentares e sociais. De acordo com o nível do cientista, o mestre pode fornecer mais informações como, os ataques do alienígena ou estimativas de seus atributos, mas também pode vetar informações se essa for uma espécie rara ou nova.",
+    "quantity": 1,
+    "cost": "Nenhum",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 570,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!CVJeHr55hGnJdzHT"
+}

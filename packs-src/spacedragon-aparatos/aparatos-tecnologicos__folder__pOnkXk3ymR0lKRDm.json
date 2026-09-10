@@ -1,0 +1,22 @@
+{
+  "name": "Aparatos Tecnológicos",
+  "sorting": "m",
+  "folder": null,
+  "type": "Item",
+  "_id": "pOnkXk3ymR0lKRDm",
+  "description": "",
+  "sort": 0,
+  "color": "#7c6b2f",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!pOnkXk3ymR0lKRDm"
+}

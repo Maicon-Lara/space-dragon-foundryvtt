@@ -2,7 +2,7 @@
   "id": "spacedragon",
   "title": "Space Dragon — Livro Básico",
   "description": "O conteudo do Livro Basico Aprimorado de Space Dragon como compendios para o Foundry VTT, no sistema Old Dragon 2. As regras sao as do livro base, sem conversao.",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -70,6 +70,17 @@
       "name": "spacedragon-poderes",
       "label": "Space Dragon — Poderes Mentais",
       "path": "packs/spacedragon-poderes",
+      "type": "Item",
+      "system": "olddragon2e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "spacedragon-aparatos",
+      "label": "Space Dragon — Aparatos",
+      "path": "packs/spacedragon-aparatos",
       "type": "Item",
       "system": "olddragon2e",
       "ownership": {

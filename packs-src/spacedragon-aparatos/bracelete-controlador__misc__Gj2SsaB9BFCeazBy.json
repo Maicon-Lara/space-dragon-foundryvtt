@@ -1,0 +1,35 @@
+{
+  "folder": "pOnkXk3ymR0lKRDm",
+  "name": "Bracelete Controlador",
+  "type": "misc",
+  "_id": "Gj2SsaB9BFCeazBy",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "bracelete-controlador",
+    "description": "Aparato ofensivo de 6º nível tecnológico. Operam: Cientista. Custo $180.000. Tempo de construção 1d4 dias. Este bracelete aparentemente inofensivo pode ser controlado remotamente por um cientista a até 100 metros do usuário. O membro em que o bracelete se encontrar agirá de acordo com os comandos do cientista, negando qualquer controle ao usuário do bracelete. É possível controlar a mão caso o aparato seja acoplado ao braço, permitindo, por exemplo, o saque e disparo de uma arma. O efeito é quebrado se o bracelete for removido.",
+    "quantity": 1,
+    "cost": "$180.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 350,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!Gj2SsaB9BFCeazBy"
+}

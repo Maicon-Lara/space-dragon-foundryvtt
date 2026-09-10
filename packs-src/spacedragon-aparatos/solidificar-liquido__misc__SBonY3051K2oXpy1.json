@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Solidificar Líquido",
+  "type": "misc",
+  "_id": "SBonY3051K2oXpy1",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "solidificar-liquido",
+    "description": "Feito científico de 3º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo $150.000. Tempo de construção 1d8 horas. O cientista é capaz de solidificar virtualmente qualquer tipo de líquido através de manipulação molecular, formando uma espécie de cristal. O líquido solidificado não ferve, evapora ou derrete, e manterá sua forma indefinidamente. Para revertê-lo ao estado normal basta aplicar algumas gotas do mesmo tipo de líquido não solidificado sobre o sólido.",
+    "quantity": 1,
+    "cost": "$150.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 610,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!SBonY3051K2oXpy1"
+}

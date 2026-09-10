@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Curar Doença",
+  "type": "misc",
+  "_id": "8L6Ofb2uQr12G7L4",
+  "img": "systems/olddragon2e/assets/icons/magic-potion.svg",
+  "system": {
+    "odo_id": "curar-doenca",
+    "description": "Feito científico de 1º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo Variável. Tempo de construção Variável. Após diagnosticar uma doença e os agentes causadores, o cientista pode iniciar o processo de cura da mesma. O procedimento necessário, seu custo e duração dependerão do mestre. Ele também pode pedir testes de Ciência por parte do cientista que esteja realizando o tratamento e de Constituição por parte do paciente. Em casos de doenças causadas por micro-organismos, pode ser necessário identificá-los antes de efetuar o tratamento e debilitações provocadas por venenos precisam que o cientista providencie o antídoto.",
+    "quantity": 1,
+    "cost": "Variável",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 540,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!8L6Ofb2uQr12G7L4"
+}

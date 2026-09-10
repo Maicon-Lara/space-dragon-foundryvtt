@@ -1,0 +1,35 @@
+{
+  "folder": "pOnkXk3ymR0lKRDm",
+  "name": "Míssil Teleguiado",
+  "type": "misc",
+  "_id": "2G4eGYcoI7nChF55",
+  "img": "systems/olddragon2e/assets/icons/throw.svg",
+  "system": {
+    "odo_id": "missil-teleguiado",
+    "description": "Aparato ofensivo de 6º nível tecnológico. Operam: Cientista. Custo $100.000. Tempo de construção 1d6 horas. Este míssil seguirá a assinatura térmica do alvo contra o qual for disparado por 1d4+1 rodadas. Ele é disparado por um lança-mísseis comum e não é necessário fazer uma jogada de ataque, visto que só acertará o alvo se este falhar em uma JPR que deve ser feita a cada rodada, causando 2d10 pontos de dano. O procedimento cria um único míssil.",
+    "quantity": 1,
+    "cost": "$100.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 410,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!2G4eGYcoI7nChF55"
+}

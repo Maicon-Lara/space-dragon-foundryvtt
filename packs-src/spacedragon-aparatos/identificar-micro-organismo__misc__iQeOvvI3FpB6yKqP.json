@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Identificar Micro-Organismo",
+  "type": "misc",
+  "_id": "iQeOvvI3FpB6yKqP",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "identificar-micro-organismo",
+    "description": "Feito científico de 4º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo Nenhum. Tempo de construção 1d8 horas. O cientista consegue identificar um micro-organismo existente através de uma amostra de material contaminado, ou determinar se trata-se de uma nova variedade de micróbio. A identificação aponta o nome científico do micro-organismo e a forma como é comumente combatido, caso seja possível.",
+    "quantity": 1,
+    "cost": "Nenhum",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 630,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!iQeOvvI3FpB6yKqP"
+}

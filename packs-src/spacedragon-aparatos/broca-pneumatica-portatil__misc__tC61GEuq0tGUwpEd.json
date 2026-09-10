@@ -1,0 +1,35 @@
+{
+  "folder": "pOnkXk3ymR0lKRDm",
+  "name": "Broca Pneumática Portátil",
+  "type": "misc",
+  "_id": "tC61GEuq0tGUwpEd",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "odo_id": "broca-pneumatica-portatil",
+    "description": "Aparato utilitário de 2º nível tecnológico. Operam: Cientista, Cosmonauta, Gatuno, Mentálico. Custo $140.000. Tempo de construção 1d6 horas. Esta broca pode ser utilizada para escavações em rocha e minerais ou para forçar a entrada através de portas ou paredes. A broca tem uma vida útil de 6 horas de uso contínuo, período após o qual é necessário efetuar reparos para que ela continue sendo utilizada.",
+    "quantity": 1,
+    "cost": "$140.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 90,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!tC61GEuq0tGUwpEd"
+}

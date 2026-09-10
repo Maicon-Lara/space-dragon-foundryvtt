@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Cirurgia Biônica",
+  "type": "misc",
+  "_id": "kTb3h2h4S1wPmg0g",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "cirurgia-bionica",
+    "description": "Feito científico de 6º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo $240.000. Tempo de construção 1d8 horas. Através deste feito o cientista implanta um membro ou órgão biônico em um humano. O paciente deve fazer uma JPF para que seu corpo aceite o novo componente, caso contrário sofrerá rejeição ao implante biônico, situação em que a cirurgia deverá ser refeita.",
+    "quantity": 1,
+    "cost": "$240.000",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 680,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!kTb3h2h4S1wPmg0g"
+}

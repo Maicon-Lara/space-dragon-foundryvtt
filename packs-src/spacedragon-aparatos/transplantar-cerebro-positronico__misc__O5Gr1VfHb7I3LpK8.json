@@ -1,0 +1,35 @@
+{
+  "folder": "i0lijuwtAHzB9kzc",
+  "name": "Transplantar Cérebro Positrônico",
+  "type": "misc",
+  "_id": "O5Gr1VfHb7I3LpK8",
+  "img": "systems/olddragon2e/assets/icons/brain.svg",
+  "system": {
+    "odo_id": "transplantar-cerebro-positronico",
+    "description": "Feito científico de 6º nível tecnológico. É um procedimento, não um objeto: só o cientista o realiza, e não há o que carregar. Custo Nenhum. Tempo de construção 1d8 horas. Este feito envolve transplantar um cérebro positrônico de um corpo robótico para outro, mas não sua construção ou reparo. Ao final do processo o cientista deve ser bem-sucedido em um teste de Ciência, caso contrário o procedimento deve ser repetido. O cérebro passará a funcionar no novo corpo robótico, mas o personagem embutido nele terá -2 em quaisquer rolagens que fizer por 1d4 semanas de adaptação.",
+    "quantity": 1,
+    "cost": "Nenhum",
+    "weight_in_load": 0,
+    "weight_in_grams": 0,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 700,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!O5Gr1VfHb7I3LpK8"
+}
