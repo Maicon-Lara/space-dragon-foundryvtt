@@ -38,6 +38,8 @@ globalThis.Hooks = {
 // O modelo de dados do personagem, com os getters que o sistema define. É
 // neste protótipo que o módulo troca a tabela de modificadores.
 class FichaOD2 {
+  // O sistema devolve os itens na ordem da coleção do ator, sem ordenar.
+  get class_abilities() { return this._habilidades ?? []; }
   get mod_forca() { return od2(this.forca); }
   get mod_destreza() { return od2(this.destreza); }
   get mod_constituicao() { return od2(this.constituicao); }
@@ -445,4 +447,60 @@ if (probTema.length) {
   for (const p of probTema) console.error(`  ✘ ${p}`);
   process.exit(1);
 }
-console.log(`  ✔ tema: liga, desliga e religa, e as ${regras.length} regras estão sob body.spacedragon-tema`);
+// ── E as regras GANHAM do sistema? ────────────────────────────────────────
+//
+// A primeira versão do tema perdeu na contagem de especificidade: o sistema
+// pinta o carmim em seletores de cinco classes, e as regras curtas do tema têm
+// três. As barras de equipamento e as etiquetas de nível ficaram vermelhas, sem
+// erro nenhum — só a cor errada na tela.
+//
+// A camada de sobreposição declara `!important` nas cores. O teste exige isso
+// de toda declaração de cor, porque esquecer uma volta a produzir o mesmo
+// sintoma silencioso.
+const cores = [];
+for (const bloco of css.replace(/\/\*[\s\S]*?\*\//g, "").split("}")) {
+  const [sel, corpo] = bloco.split("{");
+  if (!corpo || !sel.includes("body.spacedragon-tema")) continue;
+  if (sel.trim() === "body.spacedragon-tema") continue; // o bloco das variáveis
+  for (const decl of corpo.split(";")) {
+    const d = decl.trim();
+    if (!/^(background-color|color|border-color|accent-color|border-bottom-color)\s*:/.test(d)) continue;
+    if (!d.includes("!important")) cores.push(`${sel.trim().split(",")[0].slice(0, 50)} → ${d.slice(0, 40)}`);
+  }
+}
+if (cores.length) {
+  for (const c of cores) console.error(`  ✘ cor sem !important, vai perder para o sistema: ${c}`);
+  process.exit(1);
+}
+
+console.log(`  ✔ tema: liga, desliga e religa, ${regras.length} regras sob a classe, cores com precedência`);
+
+// ── As habilidades de classe saem em ordem de nível? ──────────────────────
+const { ordenarHabilidades } = await import("../spacedragon-module/module/atributos.js");
+const hab = (nome, level, sort) => ({ name: nome, sort, system: { level } });
+const fichaOrdem = Object.assign(new CONFIG.Actor.dataModels.character(), {
+  _habilidades: [
+    hab("Ataques Múltiplos", 7, 0),
+    hab("Pilotar Naves", 1, 10),
+    hab("Desarmar e Subjugar", 1, 20),
+    hab("Dano Crítico", 1, 30),
+  ],
+});
+// O gancho `ready` do módulo já rodou na importação, então o getter JÁ está
+// trocado aqui. Para provar que o dublê reproduz o problema, a ordem crua é
+// medida numa classe virgem.
+class FichaCrua { get class_abilities() { return this._habilidades ?? []; } }
+const crua = Object.assign(new FichaCrua(), { _habilidades: fichaOrdem._habilidades });
+if (crua.class_abilities[0].name !== "Ataques Múltiplos") {
+  console.error("  ✘ o dublê não reproduz a ordem crua do sistema");
+  process.exit(1);
+}
+ordenarHabilidades(true);
+const ordem = fichaOrdem.class_abilities.map((h) => `${h.system.level}:${h.name}`);
+const esperadaOrdem = ["1:Pilotar Naves", "1:Desarmar e Subjugar", "1:Dano Crítico", "7:Ataques Múltiplos"];
+if (ordem.join(" ") !== esperadaOrdem.join(" ")) {
+  console.error(`  ✘ ordem saiu ${ordem.join(", ")}`);
+  console.error(`    esperava  ${esperadaOrdem.join(", ")}`);
+  process.exit(1);
+}
+console.log("  ✔ habilidades: ordenadas por nível, desempatando pela ordem do livro");

@@ -130,3 +130,50 @@ function od2(v) {
   if (v < 19) return 3;
   return 4;
 }
+
+/**
+ * As habilidades de classe saem em ordem de NÍVEL.
+ *
+ * ── POR QUE A CORREÇÃO NO COMPÊNDIO NÃO BASTOU ──────────────────────────────
+ *
+ * O compêndio passou a listar as habilidades ordenadas, mas a ficha não lê o
+ * compêndio: lê o ATOR.
+ *
+ *     get class_abilities() { return actor.items.filter(i => i.type === "class_ability") }
+ *
+ * A ordem é a da coleção de itens do ator, fixada quando eles foram criados.
+ * Toda ficha montada antes da correção continuou mostrando "Ataques Múltiplos"
+ * (7º nível) antes de "Pilotar Naves" (1º) — e reordenar o compêndio não
+ * alcança quem já tem os itens.
+ *
+ * Ordenar no getter conserta as fichas existentes sem pedir que ninguém
+ * rearraste nada, e vale também para quem montar a classe à mão, item por item.
+ *
+ * O desempate é o `sort` do próprio item, que preserva a ordem do livro entre
+ * habilidades do mesmo nível.
+ */
+export function ordenarHabilidades(ligado) {
+  const proto = CONFIG.Actor?.dataModels?.character?.prototype;
+  if (!proto) return false;
+
+  const desc = Object.getOwnPropertyDescriptor(proto, "class_abilities");
+  if (!desc?.get) {
+    console.warn(`${ID} | class_abilities não é getter — a ordem fica a do sistema`);
+    return false;
+  }
+  if (!ligado) return false;
+
+  const original = desc.get;
+  Object.defineProperty(proto, "class_abilities", {
+    configurable: true,
+    get() {
+      const lista = original.call(this) ?? [];
+      return [...lista].sort(
+        (a, b) =>
+          (Number(a.system?.level) || 1) - (Number(b.system?.level) || 1) ||
+          (a.sort ?? 0) - (b.sort ?? 0)
+      );
+    },
+  });
+  return true;
+}

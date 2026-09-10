@@ -1,31 +1,41 @@
 /* Tema Space Dragon para as fichas do Old Dragon 2.
  *
- * ── O QUE ELE TROCA, E POR QUE SÃO POUCAS REGRAS ──────────────────────────
+ * ── O QUE ELE TROCA ───────────────────────────────────────────────────────
  *
  * O tema do sistema tem a paleta concentrada em quatro cores:
  *
  *   #ece9d5  o pergaminho — barra lateral, cabeçalho e corpo
  *   #e0ddca  a caixa preenchida, um pergaminho mais escuro
- *   #d72240  o carmim de destaque — aba ativa, hover, barra de seção
+ *   #d72240  o carmim — barras de seção, etiquetas de nível, aba ativa
  *   #ef4458  o carmim claro, em links de formulário
  *
- * Trocar essas quatro muda a cara inteira. O resto da folha de estilo do
- * sistema — medidas, grades, tipografia — fica como está, e é de propósito:
- * quem mantém o layout é o sistema, e reescrevê-lo aqui significaria persegui-lo
- * a cada versão.
+ * Trocar essas quatro muda a cara inteira. Medidas, grades e tipografia ficam
+ * com o sistema, de propósito: reescrevê-las aqui significaria persegui-lo a
+ * cada versão.
  *
- * ── A PALETA VEM DA FICHA OFICIAL ─────────────────────────────────────────
+ * ── POR QUE `!important` ──────────────────────────────────────────────────
  *
- * Fundo claro e frio no lugar do pergaminho, caixas em azul-lavanda, e as
- * barras de seção em azul-espaço quase preto com texto branco. O ciano entra
- * onde havia carmim de interação; o vermelho fica reservado para falha, que é
- * o único lugar onde ele ainda comunica alguma coisa.
+ * Porque o sistema pinta o mesmo carmim em VINTE E TRÊS seletores diferentes,
+ * cada um com um caminho próprio e longo:
+ *
+ *   .olddragon2e.sheet.character .character-tab-class .class-abilities .tab-title
+ *   .olddragon2e.sheet.character .character-tab-equipment .weapon .list
+ *   .olddragon2e.sheet.character .character-tab-race .race-abilities ol li .ability-header .ability-level
+ *
+ * A primeira versão deste arquivo usou regras curtas e genéricas, e elas
+ * PERDERAM: `.olddragon2e.sheet .tab-title` tem três classes e o seletor do
+ * sistema tem cinco, então o carmim continuou lá. As barras de equipamento e as
+ * etiquetas de nível dos poderes ficaram vermelhas.
+ *
+ * As saídas eram três: copiar os vinte e três caminhos, e quebrar quando o
+ * sistema mexer em qualquer um; empilhar a classe do tema até ganhar na
+ * contagem, que é o mesmo truque com outra roupa; ou declarar que esta folha é
+ * uma camada de sobreposição, que é o que ela é.
  *
  * ── COMO SE LIGA E DESLIGA ────────────────────────────────────────────────
  *
  * Tudo está sob `body.spacedragon-tema`. A classe entra e sai por uma opção do
- * módulo, sem recarregar. Sem ela, nada aqui alcança nada — quem instalar o
- * módulo só pelos compêndios não vê diferença nenhuma. */
+ * módulo, sem recarregar. Sem ela, nada aqui alcança nada. */
 
 body.spacedragon-tema {
   --sd-fundo: #eef0f8;
@@ -33,28 +43,21 @@ body.spacedragon-tema {
   --sd-barra: #1b2340;
   --sd-tinta: #10162c;
   --sd-brilho: #2f9e8f;
-  --sd-perigo: #d72240;
 }
 
-/* ── Os três fundos ─────────────────────────────────────────────────────── */
+/* ── Os fundos ──────────────────────────────────────────────────────────── */
 
-body.spacedragon-tema .olddragon2e.sheet.character .sheet-container .sidebar,
-body.spacedragon-tema .olddragon2e.sheet.character .sheet-container .body .header,
-body.spacedragon-tema .olddragon2e.sheet.character .sheet-container .body .main,
-body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .sidebar,
-body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .body .header,
-body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .body .main,
-body.spacedragon-tema .olddragon2e.sheet.retainer .sheet-container .sidebar,
-body.spacedragon-tema .olddragon2e.sheet.retainer .sheet-container .body .header,
-body.spacedragon-tema .olddragon2e.sheet.retainer .sheet-container .body .main {
-  background-color: var(--sd-fundo);
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .sidebar,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .main,
+body.spacedragon-tema .journal-sheet .journal-entry-page {
+  background-color: var(--sd-fundo) !important;
 }
 
-/* O céu estrelado é CSS puro, sem imagem: o módulo não carrega nenhum recurso
- * gráfico, e um punhado de gradientes radiais custa menos que um arquivo. Fica
+/* O céu estrelado é CSS puro, sem imagem: o módulo não carrega recurso gráfico
+ * nenhum, e um punhado de gradientes radiais custa menos que um arquivo. Fica
  * só na barra lateral, que é a área grande e vazia da ficha. */
-body.spacedragon-tema .olddragon2e.sheet.character .sheet-container .sidebar,
-body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .sidebar {
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .sidebar {
   background-image:
     radial-gradient(1px 1px at 12% 18%, rgba(27, 35, 64, 0.5) 50%, transparent 50%),
     radial-gradient(1px 1px at 78% 9%, rgba(27, 35, 64, 0.4) 50%, transparent 50%),
@@ -66,56 +69,63 @@ body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .sidebar {
   background-size: 160px 220px;
 }
 
-/* ── As caixas preenchidas ──────────────────────────────────────────────── */
+/* ── As caixas preenchidas e os campos ──────────────────────────────────── */
 
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .jp .jp-group .jp-value,
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .basic-info .race .race-value,
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .overview .ca .ca-value,
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .overview .ba .ba-value {
-  background-color: var(--sd-caixa);
-}
-
-/* Todo campo da ficha, que no sistema herda o pergaminho do pai. */
+body.spacedragon-tema .olddragon2e.sheet .jp-value,
+body.spacedragon-tema .olddragon2e.sheet .race-value,
+body.spacedragon-tema .olddragon2e.sheet .ca-value,
+body.spacedragon-tema .olddragon2e.sheet .ba-value,
 body.spacedragon-tema .olddragon2e.sheet input[type='text'],
 body.spacedragon-tema .olddragon2e.sheet input[type='number'],
 body.spacedragon-tema .olddragon2e.sheet select,
 body.spacedragon-tema .olddragon2e.sheet textarea {
-  background-color: var(--sd-caixa);
-  color: var(--sd-tinta);
-  border-color: rgba(27, 35, 64, 0.25);
+  background-color: var(--sd-caixa) !important;
+  color: var(--sd-tinta) !important;
+  border-color: rgba(27, 35, 64, 0.25) !important;
 }
 
 body.spacedragon-tema .olddragon2e.sheet input:disabled {
-  background-color: rgba(204, 211, 240, 0.55);
-  color: rgba(16, 22, 44, 0.7);
+  background-color: rgba(204, 211, 240, 0.55) !important;
+  color: rgba(16, 22, 44, 0.7) !important;
 }
 
-/* ── O carmim vira azul-espaço, e o interativo vira ciano ───────────────── */
+/* ── Tudo o que era carmim vira azul-espaço ─────────────────────────────── */
+/*
+ * `.list` são as barras de Armas, Vestes, Ataques e Magias; `.tab-title` são os
+ * títulos de seção; `.ability-level` é a etiqueta com o número do nível ao lado
+ * de cada poder. Os três usam a mesma cor no sistema. */
 
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .tabs .item.active,
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .sidebar a:hover,
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .overview a:hover,
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .main a.item:hover,
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .basic-info .race a:hover,
-body.spacedragon-tema .border-button:hover {
-  color: var(--sd-brilho);
-}
-
-body.spacedragon-tema .olddragon2e.sheet .sheet-container .tabs .item.active {
-  border-bottom-color: var(--sd-brilho);
-}
-
-/* A barra de seção: azul-espaço com texto branco, como na ficha oficial. */
 body.spacedragon-tema .olddragon2e.sheet .tab-title,
-body.spacedragon-tema .olddragon2e.sheet .character-tab-attacks .attack .list,
-body.spacedragon-tema .olddragon2e.sheet .class-abilities > label,
-body.spacedragon-tema .olddragon2e.sheet .race-abilities > label {
-  background-color: var(--sd-barra);
-  color: #ffffff;
+body.spacedragon-tema .olddragon2e.sheet .list,
+body.spacedragon-tema .olddragon2e.sheet .ability-level,
+body.spacedragon-tema .class-tab-abilities ol li span,
+body.spacedragon-tema .journal-sheet .journal-page-content .tab-title {
+  background-color: var(--sd-barra) !important;
+  color: #ffffff !important;
 }
 
+/* ── E o interativo vira ciano ──────────────────────────────────────────── */
+
+body.spacedragon-tema .olddragon2e.sheet .tabs .item.active,
+body.spacedragon-tema .olddragon2e.sheet a:hover,
+body.spacedragon-tema .border-button:hover,
+body.spacedragon-tema .race-ability-tab-mechanics a,
+body.spacedragon-tema .class-ability-tab-mechanics a {
+  color: var(--sd-brilho) !important;
+}
+
+body.spacedragon-tema .olddragon2e.sheet .tabs .item.active {
+  border-bottom-color: var(--sd-brilho) !important;
+}
+
+body.spacedragon-tema .olddragon2e.sheet input[type='checkbox'] {
+  accent-color: var(--sd-brilho) !important;
+}
+
+/* A caixa marcada de memorizado e de uso diário é pintada com background, e
+ * não com accent-color — por isso ela precisa de regra própria. */
 body.spacedragon-tema .olddragon2e.sheet input[type='checkbox']:checked {
-  accent-color: var(--sd-brilho);
+  background-color: var(--sd-brilho) !important;
 }
 
 /* ── O painel de testes, para não destoar ───────────────────────────────── */
@@ -126,17 +136,11 @@ body.spacedragon-tema .spacedragon-testes {
 }
 
 body.spacedragon-tema .spacedragon-testes .sd-rolar {
-  color: var(--sd-barra);
+  color: var(--sd-barra) !important;
 }
 
 body.spacedragon-tema .spacedragon-testes .sd-rolar:hover {
-  color: var(--sd-brilho);
-}
-
-/* ── Journal ────────────────────────────────────────────────────────────── */
-
-body.spacedragon-tema .journal-sheet .journal-entry-page {
-  background-color: var(--sd-fundo);
+  color: var(--sd-brilho) !important;
 }
 
 /* A nota de casa fica visualmente separada da regra: ela é comentário do

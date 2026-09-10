@@ -23,7 +23,7 @@
 
 import { abrirTeste, rolar, preparar, TESTES } from "./testes.js";
 import { ligarPainel, diagnostico } from "./painel.js";
-import { aplicarModificadores, compararEscalas } from "./atributos.js";
+import { aplicarModificadores, compararEscalas, ordenarHabilidades } from "./atributos.js";
 import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
 import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
@@ -78,6 +78,7 @@ Hooks.once("ready", () => {
   estendeNiveis();
   ligarTema();
   aplicarModificadores(game.settings.get(ID, "modificadores"));
+  ordenarHabilidades(true);
   ligarPainel();
   ligarCabecalho();
   ligarGrandezas();
