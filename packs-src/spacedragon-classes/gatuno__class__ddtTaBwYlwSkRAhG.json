@@ -1,5 +1,5 @@
 {
-  "folder": "jPHQjBiNQZgIeCuA",
+  "folder": "h4n2O6LyayXZpi8m",
   "name": "Gatuno",
   "type": "class",
   "_id": "ddtTaBwYlwSkRAhG",
@@ -120,10 +120,7 @@
       }
     },
     "class_abilities": [
-      "Compendium.spacedragon.spacedragon-classes.Item.l6QU3VKI64mwebSx",
-      "Compendium.spacedragon.spacedragon-classes.Item.AfqOBOeyhL3BTGpB",
-      "Compendium.spacedragon.spacedragon-classes.Item.syMEGx1GT6AZB2NM",
-      "Compendium.spacedragon.spacedragon-classes.Item.Cq0vgofby12nqaTm"
+      "Compendium.spacedragon.spacedragon-classes.Item.l6QU3VKI64mwebSx"
     ]
   },
   "effects": [],
@@ -139,7 +136,7 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 3000,
+  "sort": 0,
   "ownership": {
     "default": 0
   },

@@ -66,15 +66,53 @@ function montaEspecies() {
   return docs;
 }
 
-// ── Classes ───────────────────────────────────────────────────────
+// ── Classes ─────────────────────────────────────────────────────────────────
+//
+// ── AS ESPECIALIZAÇÕES SÃO CLASSES, NÃO HABILIDADES ─────────────────────────
+//
+// No 5º nível o personagem ESCOLHE uma, e a partir dali sobe nela em vez de
+// subir na classe-base. Isso é troca de classe, não ganho de habilidade.
+//
+// A primeira versão as fazia `class_ability` da classe-base, e a ficha ficava
+// mostrando as três de uma vez — o cosmonauta lia Emissário, Mercenário e
+// Caçador de Recompensas empilhados, sem nenhum ser o dele. É o mesmo desenho
+// das Sendas do módulo Star Wars, e a solução é a mesma:
+//
+//   · cada especialização vira um item `class` próprio, "Cosmonauta —
+//     Emissário", com a MESMA progressão de níveis da base;
+//   · ela carrega as habilidades da classe-base POR REFERÊNCIA, mais a sua.
+//     "Eles recebem poderes da classe base e novos das especializações";
+//   · o jogador troca o item de classe na ficha quando escolhe.
+//
+// A classe-base continua existindo sozinha, para quem não se especializar.
+//
+// ── OS DEGRAUS DE 5, 10 E 20 ────────────────────────────────────────────────
+//
+// O `class_ability` do OD2 tem campos para 3º, 6º e 10º nível, e o template
+// desenha a descrição PRIMEIRO e os degraus DEPOIS. Pôr o 20º na descrição
+// fazia ele aparecer antes do bloco de 10º — fora de ordem na tela.
+//
+// Então os três degraus vão todos na descrição, em ordem, com o rótulo do
+// nível. Perde-se a etiqueta que o sistema desenha; ganha-se o texto na ordem
+// em que se lê.
+function degraus(e) {
+  const bloco = (n, txt) =>
+    txt ? `<p><strong>No ${n}º nível.</strong> ${txt}</p>` : "";
+  return (
+    `<p><em>Especialização de ${e.classe}, para quem tem Afiliação ` +
+    `<strong>${e.afiliacao}</strong>.</em></p>` +
+    bloco(5, e.n5) + bloco(10, e.n10) + bloco(20, e.n20)
+  );
+}
+
 function montaClasses() {
   const docs = [];
   const pasta = folderDoc("Classes", "Item", "sd-classes");
   docs.push(pasta);
 
   classes.forEach((cls, i) => {
-    // Uma subpasta POR CLASSE. Sem isso, as 24 habilidades e especializações
-    // caem numa lista única em ordem alfabética, e achar o que é do Gatuno vira
+    // Uma subpasta POR CLASSE. Sem isso, as habilidades e especializações caem
+    // numa lista única em ordem alfabética, e achar o que é do Gatuno vira
     // caça. O "Pai — Filho" no nome é o que a aninhaPastas lê para hierarquizar.
     const sub = folderDoc(`Classes — ${cls.nome}`, "Item", `sd-classe:${cls.nome}`);
     docs.push(sub);
@@ -82,30 +120,39 @@ function montaClasses() {
     const habs = (cls.habilidades ?? []).map((h, j) =>
       classAbilityDoc(h, sub._id, `sd-class-ab:${cls.nome}`, j));
     docs.push(...habs);
-    // As especializações da classe entram como habilidades dela: a escolha
-    // acontece no 5º nível e CONGELA uma coluna da progressão-base, então elas
-    // pertencem à classe em vez de substituí-la.
-    const specs = especializacoes
-      .filter((e) => e.classe === cls.nome)
-      .map((e, j) => classAbilityDoc({
-        nome: `${e.nome} (${e.afiliacao})`,
-        level: 5,
-        desc:
-          `<p><em>Especialização de ${e.classe}, para quem tem Afiliação ` +
-          `<strong>${e.afiliacao}</strong>.</em></p>` +
-          `<p><strong>A partir do 5º nível.</strong> ${e.n5}</p>` +
-          (e.n20 ? `<p><strong>No 20º nível.</strong> ${e.n20}</p>` : "") +
-          `<p class='nota-casa'><em>O degrau de 20º nível aparece aqui na descrição ` +
-          `porque a ficha do Old Dragon 2 só tem campos para 3º, 6º e 10º.</em></p>`,
-        level10: e.n10 || "",
-      }, sub._id, `sd-espec:${cls.nome}`, 100 + j));
-    docs.push(...specs);
+    const uuidsBase = habs.map((h) => itemUuid(P_CLASSES, h._id));
 
-    const todas = [...habs, ...specs];
+    // A classe-base, para quem não se especializar.
     docs.push({
-      ...classDoc(cls, pasta._id, todas.map((h) => itemUuid(P_CLASSES, h._id))),
-      sort: (i + 1) * 1000,
+      ...classDoc(cls, sub._id, uuidsBase),
+      sort: 0,
     });
+
+    // Uma classe por especialização, herdando as habilidades da base.
+    especializacoes
+      .filter((e) => e.classe === cls.nome)
+      .forEach((e, j) => {
+        const hab = classAbilityDoc(
+          { nome: e.nome, level: 5, desc: degraus(e) },
+          sub._id, `sd-espec:${cls.nome}`, 100 + j
+        );
+        docs.push(hab);
+        docs.push({
+          ...classDoc({
+            ...cls,
+            // O _id continua semeado pelo nome completo: encurtar o rótulo na
+            // ficha não pode trocar o UUID de uma classe já em uso.
+            seedNome: `${cls.nome} — ${e.nome}`,
+            nome: `${cls.nome} — ${e.nome}`,
+            flavor: `<p><em>${cls.nome} de Afiliação <strong>${e.afiliacao}</strong>.</em></p>`,
+            descricao:
+              `<p>Especialização escolhida no <strong>5º nível</strong>. A partir dali o ` +
+              `personagem sobe nela, e não mais na classe-base — mas mantém tudo o que ` +
+              `${cls.nome} já lhe deu.</p>` + degraus(e) + cls.descricao,
+          }, sub._id, [...uuidsBase, itemUuid(P_CLASSES, hab._id)]),
+          sort: (j + 1) * 10,
+        });
+      });
   });
   return docs;
 }
@@ -134,6 +181,7 @@ function montaTabelas() {
   }
   return docs;
 }
+
 
 // ── Macros ──────────────────────────────────────────────────────────────────
 //

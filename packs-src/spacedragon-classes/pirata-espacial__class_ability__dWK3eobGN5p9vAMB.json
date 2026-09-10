@@ -1,0 +1,50 @@
+{
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Pirata Espacial",
+  "type": "class_ability",
+  "_id": "dWK3eobGN5p9vAMB",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p><em>Especialização de Gatuno, para quem tem Afiliação <strong>rebelde</strong>.</em></p><p><strong>No 5º nível.</strong> a partir do 5° nível, gatunos rebeldes podem tornar-se piratas espaciais. Eles param de progredir em sabotagem e furtar, mas passam a poder empregar a aptidão tecnológica do atributo Ciência para descontos da mesma forma que cientistas, mas para qualquer negociação, não apenas as de cunho tecnológico. O dobro dessa porcentagem também pode ser usado como probabilidade de extorquir com sucesso uma pessoa. Eles também se tornam proficientes no uso de escudos de energia. No</p><p><strong>No 10º nível.</strong> 10° nível, um pirata não mais progride em furtividade e sabotagem, mas pode utilizar a progressão de furtividade como a probabilidade de conseguir realizar um ataque adicional em seu turno. Esse segundo ataque é realizado utilizando seu bônus de ataque de 7 níveis inferiores. Ele também é capaz de usar qualquer aparato tecnológico, inclusive pilotar naves, com um teste bem-sucedido de operar máquinas como um cientista com metade de seus níveis de gatuno, e pode ter uma tripulação composta por um número de pessoas igual ao número máximo de seguidores de seu atributo Comunicação, com número mínimo de 2. No</p><p><strong>No 20º nível.</strong> 20° nível o pirata poderá sempre realizar dois ataques em seu turno, com a diferença do bônus de ataque caindo para 5 níveis abaixo. Ele também poderá usar o dobro da aptidão tecnológica em suas negociações e quatro vezes o valor em suas extorsões. Ele sempre terá uma tripulação fiel composta por um número de pessoas igual a três vezes o número máximo de seguidores de seu atributo Comunicação, com um mínimo de 4.</p>",
+    "level": 5,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 102,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!dWK3eobGN5p9vAMB"
+}

@@ -5,7 +5,7 @@
   "_id": "3NgG5W8YSpp7wMCV",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>Quantos poderes o Mentálico manifesta por dia. O <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em> acrescenta alcance adicional pela tabela T1-4.</p>",
+    "description": "<p>Um <strong>orçamento diário em porcentagem</strong>: <strong>1%</strong> no 1º nível, <strong>100%</strong> no 16º, <strong>150%</strong> no 20º.</p><p>Usar um poder <strong>desconta um percentual igual à grandeza dele</strong>. Um poder de 3ª grandeza custa 3%.</p><blockquote><p>Um mentálico de 1º nível tem 1%, e portanto usa <strong>um</strong> poder de 1ª grandeza por dia. Um de 4º nível tem 6%, e usa <strong>seis</strong>.</p></blockquote><p>O total diário é expandido pela coluna <em>Alcance Mental Adicional</em> do <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>.</p>",
     "level": 1,
     "level3": "",
     "level6": "",
@@ -42,7 +42,7 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 1,
+  "sort": 0,
   "ownership": {
     "default": 0
   },

@@ -1,12 +1,12 @@
 {
   "folder": "DtkZxms0VmR2Hb47",
-  "name": "Poderes Mentais",
+  "name": "O Corpo Fica para Trás",
   "type": "class_ability",
-  "_id": "TrozwUTWDCfZP22D",
+  "_id": "HEc0bszfMiXAK0Th",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>A porcentagem de <strong>realizar e aprender</strong> um poder que ainda não domina começa em <strong>1%</strong> no 1º nível e chega a <strong>150%</strong> no 20º.</p><p>Somada à coluna do <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>: com Intelecto 10–11 são +15 pontos; com 28–29, +100.</p>",
-    "level": 1,
+    "description": "<p>No <strong>16º nível</strong> o mentálico atinge 100% da capacidade mental, e o corpo não acompanha: <strong>base de ataque e jogadas de proteção param de progredir</strong>, e ele <strong>não ganha mais pontos de vida</strong> ao subir de nível.</p>",
+    "level": 16,
     "level3": "",
     "level6": "",
     "level10": "",
@@ -42,9 +42,9 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 0,
+  "sort": 3,
   "ownership": {
     "default": 0
   },
-  "_key": "!items!TrozwUTWDCfZP22D"
+  "_key": "!items!HEc0bszfMiXAK0Th"
 }

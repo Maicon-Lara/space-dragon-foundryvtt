@@ -1,5 +1,5 @@
 {
-  "folder": "jPHQjBiNQZgIeCuA",
+  "folder": "xAyADm72rem7DcT5",
   "name": "Cosmonauta",
   "type": "class",
   "_id": "MzruFr664SQ7U06u",
@@ -123,10 +123,7 @@
       "Compendium.spacedragon.spacedragon-classes.Item.C8IaXAk5k8YVfGu7",
       "Compendium.spacedragon.spacedragon-classes.Item.B5Z4VDi0gfHYsSFL",
       "Compendium.spacedragon.spacedragon-classes.Item.gQEz4Lqa8mZUdCtc",
-      "Compendium.spacedragon.spacedragon-classes.Item.C325h4DeiPnlVV2L",
-      "Compendium.spacedragon.spacedragon-classes.Item.EvbEHpXkRQ4iCYx2",
-      "Compendium.spacedragon.spacedragon-classes.Item.Ci1kpA9X0jeWoaTL",
-      "Compendium.spacedragon.spacedragon-classes.Item.dW0gcOX5VUFx2uRm"
+      "Compendium.spacedragon.spacedragon-classes.Item.C325h4DeiPnlVV2L"
     ]
   },
   "effects": [],
@@ -142,7 +139,7 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 2000,
+  "sort": 0,
   "ownership": {
     "default": 0
   },

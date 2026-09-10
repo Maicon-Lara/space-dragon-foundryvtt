@@ -1,0 +1,50 @@
+{
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Espião",
+  "type": "class_ability",
+  "_id": "hcOT7SWJTREG6Xui",
+  "img": "systems/olddragon2e/assets/icons/bag.svg",
+  "system": {
+    "description": "<p><em>Especialização de Gatuno, para quem tem Afiliação <strong>leal</strong>.</em></p><p><strong>No 5º nível.</strong> um gatuno que seja leal a alguma organização ou governo pode tornar-se um espião a partir do 5° nível. Seu talento de sabotagem passa a ter uma porcentagem igual e a progredir de forma idêntica ao de furtividade. Além disso, o bônus por aptidão tecnológica do atributo Ciência é dobrado, se houver. O espião também pode usar a progressão de seu talento de furtar para se fazer passar por outra pessoa com uma rolagem bem-sucedida, aplicando o ajuste de reação do seu atributo Comunicação. A partir do</p><p><strong>No 10º nível.</strong> 10° nível o espião pode usar sua porcentagem de escalar como probabilidade de possuir alguma informação relevante ao que estiver investigando, seja através de contatos ou registros. Também passa a poder utilizar aparatos tecnológicos defensivos como um cientista. 49 No</p><p><strong>No 20º nível.</strong> 20° nível o espião atinge praticamente a perfeição, com seus talentos de furtividade, sabotagem e furtar igualando sua porcentagem de 99% de escalar superfícies.</p>",
+    "level": 5,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 100,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!hcOT7SWJTREG6Xui"
+}

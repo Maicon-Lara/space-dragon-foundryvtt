@@ -1,11 +1,11 @@
 {
   "folder": "DtkZxms0VmR2Hb47",
-  "name": "Grandeza Mental Limite",
+  "name": "Realizar e Aprender Poder Mental",
   "type": "class_ability",
-  "_id": "6ytCPiSPPbrQC4QQ",
+  "_id": "w7WV77XlEOXo7Oka",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>O teto da Grandeza de poder que o mentálico alcança. Sobe um degrau a cada dois níveis: <strong>1ª</strong> no nível 1, <strong>2ª</strong> no 3, e assim por diante.</p>",
+    "description": "<p>A probabilidade de realizar e aprender qualquer poder mental que o mentálico ainda não domina. Rola-se <strong>1d100</strong> e passa com <strong>menor ou igual</strong>.</p><p>⚠️ <strong>A chance vem inteira do Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>, pela <strong>T1-4</strong> — a tabela da classe <strong>não entra</strong>. Abaixo de Intelecto 10 não há chance nenhuma; com 10–11 são <strong>15%</strong>, e com 28–29, <strong>100%</strong>.</p>",
     "level": 1,
     "level3": "",
     "level6": "",
@@ -42,9 +42,9 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 2,
+  "sort": 1,
   "ownership": {
     "default": 0
   },
-  "_key": "!items!6ytCPiSPPbrQC4QQ"
+  "_key": "!items!w7WV77XlEOXo7Oka"
 }

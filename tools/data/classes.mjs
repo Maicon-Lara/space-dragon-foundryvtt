@@ -55,7 +55,7 @@ const R = {
   nivel: "nível", xp: "XP", dv: "DV", ba: "BA", jp: "JP",
   operarMaquinas: "operar máquinas", ntMaximo: "NT máximo",
   pilotarNaves: "pilotar naves", desarmarSubjugar: "desarmar e subjugar", danoCritico: "dano crítico",
-  realizarAprender: "realizar e aprender", grandezaMental: "grandeza mental",
+  alcanceMental: "alcance mental", grandezaMental: "grandeza mental limite",
   sabotagem: "sabotagem", escalar: "escalar", furtividade: "furtividade",
   furtar: "furtar", percepcao: "percepção", ataqueFurtivo: "ataque furtivo",
 };
@@ -162,23 +162,42 @@ export const classes = [
     levels: levelsOD2(MENTALICO),
     flavor: "<p>A mente como ferramenta, e como arma.</p>",
     descricao:
-      "<p>Manifesta <strong>poderes mentais</strong>. O quanto consegue realizar e aprender sai da " +
-      "porcentagem da tabela, modificada pelo <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>.</p>" +
+      "<p>Manifesta <strong>poderes mentais</strong>, divididos em <strong>grandezas de 1 a 10</strong>.</p>" +
+      "<p>⚠️ <strong>Duas coisas diferentes, fáceis de confundir:</strong> o <em>alcance mental</em> da " +
+      "tabela é um <strong>orçamento diário</strong>; a <strong>chance</strong> de realizar e aprender um " +
+      "poder sai inteira da tabela do <strong>Intelecto</strong>.</p>" +
       tabelaHTML("T3-6: Mentálico", MENTALICO, R) +
       SO_NA_TABELA("O <em>alcance mental</em> e a <em>grandeza mental limite</em>") +
       espec("Psiquista", "Radiestésico", "Hipercientista"),
     habilidades: [
-      { nome: "Poderes Mentais", level: 1,
-        desc: "<p>A porcentagem de <strong>realizar e aprender</strong> um poder que ainda não domina " +
-              "começa em <strong>1%</strong> no 1º nível e chega a <strong>150%</strong> no 20º.</p>" +
-              "<p>Somada à coluna do <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>: com " +
-              "Intelecto 10–11 são +15 pontos; com 28–29, +100.</p>" },
       { nome: "Alcance Mental", level: 1,
-        desc: "<p>Quantos poderes o Mentálico manifesta por dia. O <strong>Intelecto</strong> " +
-              "<em>(anotado no campo Sabedoria da ficha)</em> acrescenta alcance adicional pela tabela T1-4.</p>" },
+        desc: "<p>Um <strong>orçamento diário em porcentagem</strong>: <strong>1%</strong> no 1º nível, " +
+              "<strong>100%</strong> no 16º, <strong>150%</strong> no 20º.</p>" +
+              "<p>Usar um poder <strong>desconta um percentual igual à grandeza dele</strong>. Um poder de " +
+              "3ª grandeza custa 3%.</p>" +
+              "<blockquote><p>Um mentálico de 1º nível tem 1%, e portanto usa <strong>um</strong> poder de " +
+              "1ª grandeza por dia. Um de 4º nível tem 6%, e usa <strong>seis</strong>.</p></blockquote>" +
+              "<p>O total diário é expandido pela coluna <em>Alcance Mental Adicional</em> do " +
+              "<strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>.</p>" +
+              "<p class='nota-casa'><em>Não há rolagem aqui: é um recurso que se gasta.</em></p>" },
+      { nome: "Realizar e Aprender Poder Mental", level: 1,
+        desc: "<p>A probabilidade de realizar e aprender qualquer poder mental que o mentálico ainda " +
+              "não domina. Rola-se <strong>1d100</strong> e passa com <strong>menor ou igual</strong>.</p>" +
+              "<p>⚠️ <strong>A chance vem inteira do Intelecto</strong> <em>(anotado no campo Sabedoria " +
+              "da ficha)</em>, pela <strong>T1-4</strong> — a tabela da classe <strong>não entra</strong>. " +
+              "Abaixo de Intelecto 10 não há chance nenhuma; com 10–11 são <strong>15%</strong>, e com " +
+              "28–29, <strong>100%</strong>.</p>" +
+              "<p class='nota-casa'><em>É fácil confundir esta coluna com o alcance mental da tabela da " +
+              "classe. Uma é a chance de conseguir; a outra é quanto se pode gastar por dia.</em></p>" },
       { nome: "Grandeza Mental Limite", level: 1,
-        desc: "<p>O teto da Grandeza de poder que ele alcança. Sobe um degrau a cada dois níveis: " +
-              "<strong>1ª</strong> no nível 1, <strong>2ª</strong> no 3, e assim por diante.</p>" },
+        desc: "<p>O teto da Grandeza de poder que o mentálico alcança. Sobe um degrau a cada dois " +
+              "níveis: <strong>1ª</strong> no nível 1, <strong>2ª</strong> no 3, e assim por diante.</p>" },
+      { nome: "O Corpo Fica para Trás", level: 16,
+        desc: "<p>No <strong>16º nível</strong> o mentálico atinge 100% da capacidade mental, e o corpo " +
+              "não acompanha: <strong>base de ataque e jogadas de proteção param de progredir</strong>, " +
+              "e ele <strong>não ganha mais pontos de vida</strong> ao subir de nível.</p>" +
+              "<p class='nota-casa'><em>Está na tabela: do 17º ao 20º a coluna de DV é um traço, e o BA " +
+              "e a JP não mudam mais.</em></p>" },
     ],
   },
 ];

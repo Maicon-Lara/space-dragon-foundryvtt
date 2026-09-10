@@ -1,0 +1,50 @@
+{
+  "folder": "xAyADm72rem7DcT5",
+  "name": "Emissário",
+  "type": "class_ability",
+  "_id": "y2GNsCmqnmXiVVFY",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p><em>Especialização de Cosmonauta, para quem tem Afiliação <strong>leal</strong>.</em></p><p><strong>No 5º nível.</strong> cosmonautas que sigam esta especialização interrompem a progressão de dano crítico no 5° nível, mas podem usar essa mesma progressão até o 20º nível como multiplicador do ajuste de reação de seu atributo Comunicação. Essa multiplicação não é cumulativa, e deve ser refeita cada vez que o multiplicador mudar. Os emissários também passam a receber, mensalmente, um salário equivalente a $20.000 x seu nível. Um emissário de 5° nível, portanto, tem uma verba de 100.000 créditos disponível a cada mês, que aumenta conforme adquire novos níveis. Atingindo o</p><p><strong>No 10º nível.</strong> 10° nível os emissários param de progredir em desarmar e subjugar, mas terão uma nave patrocinada pelo governo ou instituição a que representa, sendo custeadas despesas com combustível e reparos. Eles também podem ter uma tripulação composta por um número de pessoas igual ao número máximo de seguidores de seu atributo Comunicação. No</p><p><strong>No 20º nível.</strong> 20° nível sua tripulação triplica, e ele pode usar a porcentagem de desarme e submissão desse nível como probabilidade de qualquer criatura inteligente ter uma reação amigável com ele.</p>",
+    "level": 5,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 100,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!y2GNsCmqnmXiVVFY"
+}

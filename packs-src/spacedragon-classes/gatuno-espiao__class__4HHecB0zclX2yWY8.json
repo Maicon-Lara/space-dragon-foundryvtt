@@ -1,0 +1,145 @@
+{
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Gatuno — Espião",
+  "type": "class",
+  "_id": "4HHecB0zclX2yWY8",
+  "img": "systems/olddragon2e/assets/icons/bag.svg",
+  "system": {
+    "flavor": "<p><em>Gatuno de Afiliação <strong>leal</strong>.</em></p>",
+    "description": "<p>Especialização escolhida no <strong>5º nível</strong>. A partir dali o personagem sobe nela, e não mais na classe-base — mas mantém tudo o que Gatuno já lhe deu.</p><p><em>Especialização de Gatuno, para quem tem Afiliação <strong>leal</strong>.</em></p><p><strong>No 5º nível.</strong> um gatuno que seja leal a alguma organização ou governo pode tornar-se um espião a partir do 5° nível. Seu talento de sabotagem passa a ter uma porcentagem igual e a progredir de forma idêntica ao de furtividade. Além disso, o bônus por aptidão tecnológica do atributo Ciência é dobrado, se houver. O espião também pode usar a progressão de seu talento de furtar para se fazer passar por outra pessoa com uma rolagem bem-sucedida, aplicando o ajuste de reação do seu atributo Comunicação. A partir do</p><p><strong>No 10º nível.</strong> 10° nível o espião pode usar sua porcentagem de escalar como probabilidade de possuir alguma informação relevante ao que estiver investigando, seja através de contatos ou registros. Também passa a poder utilizar aparatos tecnológicos defensivos como um cientista. 49 No</p><p><strong>No 20º nível.</strong> 20° nível o espião atinge praticamente a perfeição, com seus talentos de furtividade, sabotagem e furtar igualando sua porcentagem de 99% de escalar superfícies.</p><p>Seis talentos que evoluem em porcentagem, cada um com a sua coluna.</p><p><strong>T3-4: Gatuno</strong></p><table><thead><tr><th>nível</th><th>XP</th><th>DV</th><th>BA</th><th>JP</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>1</td><td>+1</td><td>15</td></tr><tr><td>2</td><td>1.250</td><td>2</td><td>+1</td><td>15</td></tr><tr><td>3</td><td>2.500</td><td>3</td><td>+2</td><td>15</td></tr><tr><td>4</td><td>5.000</td><td>4</td><td>+2</td><td>14</td></tr><tr><td>5</td><td>10.000</td><td>5</td><td>+2</td><td>14</td></tr><tr><td>6</td><td>20.000</td><td>6</td><td>+3</td><td>14</td></tr><tr><td>7</td><td>40.000</td><td>7</td><td>+3</td><td>13</td></tr><tr><td>8</td><td>80.000</td><td>8</td><td>+3</td><td>13</td></tr><tr><td>9</td><td>160.000</td><td>9</td><td>+4</td><td>13</td></tr><tr><td>10</td><td>240.000</td><td>+1 PV</td><td>+4</td><td>12</td></tr><tr><td>11</td><td>400.000</td><td>+1 PV</td><td>+4</td><td>12</td></tr><tr><td>12</td><td>520.000</td><td>+2 PV</td><td>+5</td><td>12</td></tr><tr><td>13</td><td>640.000</td><td>+2 PV</td><td>+5</td><td>11</td></tr><tr><td>14</td><td>760.000</td><td>+2 PV</td><td>+5</td><td>11</td></tr><tr><td>15</td><td>880.000</td><td>+3 PV</td><td>+6</td><td>11</td></tr><tr><td>16</td><td>1.000.000</td><td>+3 PV</td><td>+6</td><td>10</td></tr><tr><td>17</td><td>1.120.000</td><td>+3 PV</td><td>+6</td><td>10</td></tr><tr><td>18</td><td>1.240.000</td><td>+4 PV</td><td>+7</td><td>10</td></tr><tr><td>19</td><td>1.360.000</td><td>+4 PV</td><td>+7</td><td>9</td></tr><tr><td>20</td><td>1.480.000</td><td>+4 PV</td><td>+7</td><td>9</td></tr></tbody></table><p><strong>T3-5: Talentos de Gatuno</strong></p><table><thead><tr><th>nível</th><th>sabotagem</th><th>escalar</th><th>furtividade</th><th>furtar</th><th>percepção</th><th>ataque furtivo</th></tr></thead><tbody><tr><td>1</td><td>15% / 1d8</td><td>80%</td><td>20%</td><td>20%</td><td>1-2</td><td>x2</td></tr><tr><td>2</td><td>20% / 1d8</td><td>81%</td><td>25%</td><td>25%</td><td>1-2</td><td>x2</td></tr><tr><td>3</td><td>25% / 1d8</td><td>82%</td><td>30%</td><td>30%</td><td>1-2</td><td>x2</td></tr><tr><td>4</td><td>30% / 1d8</td><td>83%</td><td>35%</td><td>35%</td><td>1-2</td><td>x2</td></tr><tr><td>5</td><td>35% / 1d8</td><td>84%</td><td>40%</td><td>40%</td><td>1-3</td><td>x2</td></tr><tr><td>6</td><td>40% / 1d6</td><td>85%</td><td>45%</td><td>45%</td><td>1-3</td><td>x3</td></tr><tr><td>7</td><td>45% / 1d6</td><td>86%</td><td>50%</td><td>50%</td><td>1-3</td><td>x3</td></tr><tr><td>8</td><td>50% / 1d6</td><td>87%</td><td>55%</td><td>55%</td><td>1-3</td><td>x3</td></tr><tr><td>9</td><td>55% / 1d6</td><td>88%</td><td>60%</td><td>60%</td><td>1-3</td><td>x3</td></tr><tr><td>10</td><td>60% / 1d6</td><td>89%</td><td>65%</td><td>65%</td><td>1-4</td><td>x3</td></tr><tr><td>11</td><td>62% / 1d4</td><td>90%</td><td>70%</td><td>70%</td><td>1-4</td><td>x3</td></tr><tr><td>12</td><td>64% / 1d4</td><td>91%</td><td>72%</td><td>72%</td><td>1-4</td><td>x4</td></tr><tr><td>13</td><td>66% / 1d4</td><td>92%</td><td>74%</td><td>74%</td><td>1-4</td><td>x4</td></tr><tr><td>14</td><td>68% / 1d4</td><td>93%</td><td>76%</td><td>76%</td><td>1-4</td><td>x4</td></tr><tr><td>15</td><td>70% / 1d4</td><td>94%</td><td>78%</td><td>78%</td><td>1-4</td><td>x4</td></tr><tr><td>16</td><td>72% / 1</td><td>95%</td><td>80%</td><td>80%</td><td>1-5</td><td>x4</td></tr><tr><td>17</td><td>74% / 1</td><td>96%</td><td>82%</td><td>82%</td><td>1-5</td><td>x4</td></tr><tr><td>18</td><td>76% / 1</td><td>97%</td><td>84%</td><td>84%</td><td>1-5</td><td>x5</td></tr><tr><td>19</td><td>78% / 1</td><td>98%</td><td>86%</td><td>86%</td><td>1-5</td><td>x5</td></tr><tr><td>20</td><td>80% / 1</td><td>99%</td><td>88%</td><td>88%</td><td>1-5</td><td>x5</td></tr></tbody></table><p><strong>Especializações</strong> — uma por Afiliação:</p><ul><li><strong>Espião</strong> — leal</li><li><strong>Sabotador</strong> — neutro</li><li><strong>Pirata Espacial</strong> — rebelde</li></ul>",
+    "hp": 6,
+    "high_level_hp_bonus": null,
+    "equipment_restrictions": {
+      "weapons": "Sem restrições.",
+      "armors": "Sem restrições.",
+      "magic_items": "Sem restrições."
+    },
+    "restrictions": {
+      "alignments": [],
+      "races": []
+    },
+    "levels": {
+      "1": {
+        "ba": 1,
+        "jp": 15
+      },
+      "2": {
+        "ba": 1,
+        "jp": 15,
+        "xp": 1250
+      },
+      "3": {
+        "ba": 2,
+        "jp": 15,
+        "xp": 2500
+      },
+      "4": {
+        "ba": 2,
+        "jp": 14,
+        "xp": 5000
+      },
+      "5": {
+        "ba": 2,
+        "jp": 14,
+        "xp": 10000
+      },
+      "6": {
+        "ba": 3,
+        "jp": 14,
+        "xp": 20000
+      },
+      "7": {
+        "ba": 3,
+        "jp": 13,
+        "xp": 40000
+      },
+      "8": {
+        "ba": 3,
+        "jp": 13,
+        "xp": 80000
+      },
+      "9": {
+        "ba": 4,
+        "jp": 13,
+        "xp": 160000
+      },
+      "10": {
+        "ba": 4,
+        "jp": 12,
+        "xp": 240000
+      },
+      "11": {
+        "ba": 4,
+        "jp": 12,
+        "xp": 400000
+      },
+      "12": {
+        "ba": 5,
+        "jp": 12,
+        "xp": 520000
+      },
+      "13": {
+        "ba": 5,
+        "jp": 11,
+        "xp": 640000
+      },
+      "14": {
+        "ba": 5,
+        "jp": 11,
+        "xp": 760000
+      },
+      "15": {
+        "ba": 6,
+        "jp": 11,
+        "xp": 880000
+      },
+      "16": {
+        "ba": 6,
+        "jp": 10,
+        "xp": 1000000
+      },
+      "17": {
+        "ba": 6,
+        "jp": 10,
+        "xp": 1120000
+      },
+      "18": {
+        "ba": 7,
+        "jp": 10,
+        "xp": 1240000
+      },
+      "19": {
+        "ba": 7,
+        "jp": 9,
+        "xp": 1360000
+      },
+      "20": {
+        "ba": 7,
+        "jp": 9,
+        "xp": 1480000
+      }
+    },
+    "class_abilities": [
+      "Compendium.spacedragon.spacedragon-classes.Item.l6QU3VKI64mwebSx",
+      "Compendium.spacedragon.spacedragon-classes.Item.hcOT7SWJTREG6Xui"
+    ]
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 10,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!4HHecB0zclX2yWY8"
+}

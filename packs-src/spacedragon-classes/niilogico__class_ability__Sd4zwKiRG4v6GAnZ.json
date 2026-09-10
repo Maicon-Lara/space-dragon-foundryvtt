@@ -1,0 +1,50 @@
+{
+  "folder": "muvzjkE03WGziO1Q",
+  "name": "Niilógico",
+  "type": "class_ability",
+  "_id": "Sd4zwKiRG4v6GAnZ",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p><em>Especialização de Cientista, para quem tem Afiliação <strong>rebelde</strong>.</em></p><p><strong>No 5º nível.</strong> o cientista que seguir esta especialização começa a questionar a busca científica pelo conhecimento a partir do 5° nível, quando passa a ser capaz de realizar sabotagens como um gatuno com um terço de seus níveis de cientista. 39 No</p><p><strong>No 10º nível.</strong> 10° nível o niilógico convence-se de que o conhecimento verdadeiro jamais será obtido pelos humanos, e passa a repudiar os avanços tecnológicos convencionais. Ele para de progredir em sua capacidade de operar máquinas e seu desconto tecnológico é ignorado, mas pode optar por reprogramar robôs ao invés de desativá-los. Um “D” na tabela T3-2 significa que o robô é automaticamente reprogramado para obedecer ao cientista indefinidamente, e um “A” simboliza que o robô será controlável por 24 horas. Os demais robôs não são afetados. No</p><p><strong>No 20º nível.</strong> 20° nível os niilógicos reconhecem que a sabedoria absoluta está diluída nas mentes de todos os seres do universo, inclusive daqueles que já morreram. Eles tornam-se capazes de manifestar poderes mentais de 1ª grandeza, com alcance mental diário igual ao bônus do atributo Intelecto. Caso o valor do atributo do personagem não confira bônus, seu alcance mental diário é de 1%.</p>",
+    "level": 5,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 102,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!Sd4zwKiRG4v6GAnZ"
+}
