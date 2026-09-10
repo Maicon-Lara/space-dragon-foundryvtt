@@ -6,6 +6,7 @@
 
 import { TABELAS, FAIXAS, ROTULOS, ATRIBUTOS } from "./atributos.mjs";
 import { CAMPO_NA_FICHA, NOME } from "./onde-anotar.mjs";
+import { subatributos } from "./subatributos.mjs";
 
 const sinal = (n) => (n > 0 ? `+${n}` : n === 0 ? "—" : `${n}`);
 
@@ -128,11 +129,12 @@ realizar um poder mental. O Old Dragon 2 não trabalha assim, e o módulo
 se resolvem rolando percentual na mesa.</p>
 
 <h2>O que ainda não está aqui</h2>
-<p>Capítulos 4 (Subatributos), 5 (Equipamento), 6 (Aventuras Espaciais),
+<p>Capítulos 5 (Créditos e Equipamento), 6 (Aventuras Espaciais),
 7 (Combate e Danos), 8 (Aparatos e Feitos Científicos), 9 (Poderes Mentais),
-10 (Espaçonaves) e 11 (Seção do Mestre).</p>
+10 (Espaçonaves e Estações) e 11 (Seção do Mestre).</p>
 `,
       },
     ],
   },
+  subatributos,
 ];

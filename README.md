@@ -6,7 +6,7 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 0.5.0.** Capítulos 1, 2 e 3 portados — 59 de 245 páginas.
+> **Estado: 0.6.0.** Capítulos 1 a 4 portados — 65 de 245 páginas.
 
 ## O que ele é
 
@@ -83,7 +83,7 @@ npm run publicar    # build + zip
 | 1 — Atributos | 9 | ✅ as seis tabelas T1-1 a T1-6 |
 | 2 — Espécies | 15 | ✅ as três, com as 20 mutações |
 | 3 — Classes | 24 | ✅ as quatro, com as 12 especializações |
-| 4 — Subatributos | 6 | ⬜ |
+| 4 — Subatributos | 6 | ✅ PV, CP, BA, JP, idiomas, Afiliação |
 | 5 — Créditos e Equipamento | 10 | ⬜ |
 | 6 — Aventuras Espaciais | 10 | ⬜ |
 | 7 — Combate e Danos | 16 | ⬜ |

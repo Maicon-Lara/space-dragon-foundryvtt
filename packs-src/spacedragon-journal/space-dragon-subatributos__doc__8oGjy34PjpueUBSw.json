@@ -1,0 +1,209 @@
+{
+  "folder": null,
+  "name": "Space Dragon — Subatributos",
+  "_id": "8oGjy34PjpueUBSw",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Pontos de Vida",
+      "type": "text",
+      "_id": "CODrhW34ezBBiqcC",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Como se calcula</h2>\n<p>Três coisas determinam os PV: a <strong>classe</strong> (que dá o dado de\nvida), o <strong>nível</strong> (quantos dados) e a <strong>Constituição</strong>\n(o modificador aplicado a toda rolagem de PV).</p>\n\n<p><strong>No 1º nível não se rola.</strong> O personagem recebe o\n<strong>máximo</strong> do dado de vida da classe, e aplica o modificador de\nConstituição.</p>\n\n<p>A cada novo nível, role o dado de vida da classe e aplique o modificador.</p>\n\n<blockquote><p>Um mentálico de 1º nível recebe <strong>4</strong> PV — o máximo\ndo d4. Com Constituição 9, o modificador é <strong>−1</strong>, e ele começa com\n<strong>3</strong> PV. No 2º nível rola 1d4, tira 3, aplica o −1, e ganha\n2 PV.</p></blockquote>\n\n<h2>Onde a morte acontece</h2>\n<p>O personagem não morre em 0 PV: morre nos <strong>Danos Mortais</strong>, um\nnúmero negativo que sai da tabela <strong>T1-3</strong> da Constituição. Com\nConstituição 10–11 são <strong>−10 PV</strong>; com 18–19, <strong>−14</strong>.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!8oGjy34PjpueUBSw.CODrhW34ezBBiqcC"
+    },
+    {
+      "sort": 200000,
+      "name": "Coeficiente de Proteção",
+      "type": "text",
+      "_id": "UIhhHdLq8OkCUVDJ",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>CP, e não CA</h2>\n<p>O <strong>Coeficiente de Proteção</strong> é o quanto o personagem evita ser\natingido. Um ataque precisa <strong>igualar ou superar</strong> o CP do alvo.</p>\n\n<p><strong>CP = proteção das vestes + ajuste de Destreza + bônus por nível +\naparatos defensivos + mutações + poderes mentais.</strong></p>\n\n<h2>O bônus por nível</h2>\n<p>A cada quatro níveis o personagem fica melhor em evitar disparos. Os valores\n<strong>não são cumulativos</strong>: cada um é o bônus <em>total</em> de quem\nestá naquela faixa.</p>\n\n<table><thead><tr><th>nível do personagem</th><th>bônus no CP</th></tr></thead><tbody><tr><td>1–3</td><td>—</td></tr><tr><td>4–7</td><td>+1</td></tr><tr><td>8–11</td><td>+2</td></tr><tr><td>12–15</td><td>+3</td></tr><tr><td>16–19</td><td>+4</td></tr><tr><td>20</td><td>+5</td></tr></tbody></table>\n\n<blockquote><p>Uma cosmonauta de 1º nível com vestes médias (proteção 12) e\nDestreza 13 (ajuste +1) tem CP <strong>13</strong>. Ela ainda não chegou ao 4º\nnível, então não há bônus de nível nenhum.</p></blockquote>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!8oGjy34PjpueUBSw.UIhhHdLq8OkCUVDJ"
+    },
+    {
+      "sort": 300000,
+      "name": "Bônus de Ataque",
+      "type": "text",
+      "_id": "oHhHg1osKjEtfriN",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Duas vertentes, não uma</h2>\n<p>O ataque é <strong>1d20 + BA</strong>, e precisa igualar ou superar o CP do\nalvo. Mas o BA se divide em dois, conforme a arma:</p>\n\n<ul>\n<li><strong>Corpo a corpo</strong> — base de ataque da classe + ajuste de\n<strong>Força</strong> + aparatos + mutações + poderes mentais</li>\n<li><strong>À distância</strong> — base de ataque da classe + ajuste de\n<strong>Destreza</strong> + aparatos + mutações + poderes mentais</li>\n</ul>\n\n<p>A única diferença entre os dois é o atributo. Tudo o mais é igual.</p>\n\n<blockquote><p>Um gatuno de 3º nível com Força 12 e Destreza 17 tem\n<strong>+5</strong> com a pistola laser (base +2 da classe, mais +3 de Destreza)\ne apenas <strong>+3</strong> com a faca de sobrevivência (base +2, mais +1 de\nForça).</p></blockquote>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!8oGjy34PjpueUBSw.oHhHg1osKjEtfriN"
+    },
+    {
+      "sort": 400000,
+      "name": "Jogadas de Proteção",
+      "type": "text",
+      "_id": "FBD2kKk1FjtzKJC5",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Um valor, três modificadores</h2>\n<p>A JP resiste ao que não é ataque direto. <strong>O valor base vem da tabela da\nclasse</strong> — é um só — e o que muda entre os três tipos é\n<strong>qual atributo modifica a rolagem</strong>.</p>\n\n<table>\n<thead><tr><th>tipo</th><th>quando</th><th>modificador</th></tr></thead>\n<tbody>\n<tr><td><strong>JPR</strong> — reflexos</td><td>esquivar de explosões, desmoronamentos</td><td>Destreza</td></tr>\n<tr><td><strong>JPF</strong> — física</td><td>infecções, venenos, o que debilita o corpo</td><td>Constituição</td></tr>\n<tr><td><strong>JPM</strong> — mental</td><td>resistir a poderes mentais</td><td>Intelecto</td></tr>\n</tbody>\n</table>\n\n<p>Role <strong>1d20</strong>, aplique o modificador adequado, e o resultado\nprecisa <strong>igualar ou superar</strong> o valor da tabela da classe.</p>\n\n<p>Situações que não caem em nenhum dos três ficam a critério do Mestre, que\ndefine a rolagem e os modificadores.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!8oGjy34PjpueUBSw.FBD2kKk1FjtzKJC5"
+    },
+    {
+      "sort": 500000,
+      "name": "Idiomas e Afiliação",
+      "type": "text",
+      "_id": "OuD28ddeioYGBz3y",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Idiomas</h2>\n<p>Todo personagem começa sabendo <strong>falar dois</strong>: o dialeto do seu\nplaneta de origem e o <strong>idioma espacial</strong>, comum à maior parte da\ngaláxia.</p>\n\n<p>A <strong>Comunicação</strong> concede idiomas adicionais pela tabela\n<strong>T1-6</strong>: nenhum até 11, um com 12–13, e assim por diante até nove\ncom 28–29.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ <strong>Comunicação até 6 é analfabeto.</strong> O personagem\n<em>fala</em>, mas não lê nem escreve — nem no idioma nativo, nem no espacial.\nQuem não é proficiente na escrita também tem um sotaque que o denuncia como\nestrangeiro.</p>\n\n<h2>Afiliação</h2>\n<p>A afiliação é o modo de pensar e agir do personagem. Não limita o que ele\npode fazer: é um guia de como ele agiria. Duas pessoas de mesma afiliação podem\nter condutas opostas, dependendo do motivo de a seguirem.</p>\n\n<p><strong>E ela decide a especialização.</strong> A partir do 5º nível, a classe\nsó abre a especialização correspondente à afiliação do personagem.</p>\n\n<ul>\n<li><strong>Lealdade</strong> — votos a uma crença, governo ou organização,\nformais ou inerentes. Costuma vir com um código de conduta. Mas lealdade a algo\nnão significa que esse algo seja bom: o código tanto pode ser preservar a vida\nquanto dominar o universo.</li>\n<li><strong>Neutralidade</strong> — tanto a indiferença aos assuntos de facções\nrivais quanto a recusa deliberada de tomar partido. O neutro busca o que mais o\nbeneficia enquanto contraparte neutra, e serve bem de mediador.</li>\n<li><strong>Rebeldia</strong> — comportamento errante e imprevisível, ou oposição\ndeclarada a alguma regra. O rebelde pode pensar só em si ou servir a uma causa\nsubversiva; em geral é impulsivo e indisciplinado.</li>\n</ul>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!8oGjy34PjpueUBSw.OuD28ddeioYGBz3y"
+    }
+  ],
+  "flags": {},
+  "sort": 2000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!8oGjy34PjpueUBSw"
+}
