@@ -5,10 +5,11 @@
   "license": "MIT",
   "description": "Livro Basico de Space Dragon como compendios para o sistema Old Dragon 2",
   "scripts": {
-    "build": "node tools/gera-dados.mjs && node tools/build.mjs && node tools/verifica.mjs",
+    "build": "node tools/gera-dados.mjs && node tools/build.mjs && node tools/verifica.mjs && node tools/fumaca.mjs",
     "empacotar": "python tools/empacotar.py",
     "publicar": "npm run build && npm run empacotar",
-    "verifica": "node tools/gera-dados.mjs && node tools/verifica.mjs"
+    "verifica": "node tools/gera-dados.mjs && node tools/verifica.mjs",
+    "fumaca": "node tools/fumaca.mjs"
   },
   "devDependencies": {
     "@foundryvtt/foundryvtt-cli": "^3.0.3"

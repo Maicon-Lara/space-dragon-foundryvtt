@@ -92,16 +92,56 @@ function montaEspecies() {
 // desenha a descrição PRIMEIRO e os degraus DEPOIS. Pôr o 20º na descrição
 // fazia ele aparecer antes do bloco de 10º — fora de ordem na tela.
 //
-// Então os três degraus vão todos na descrição, em ordem, com o rótulo do
-// nível. Perde-se a etiqueta que o sistema desenha; ganha-se o texto na ordem
-// em que se lê.
+// Então os três degraus vão todos na descrição, em ordem. Perde-se a etiqueta
+// que o sistema desenha; ganha-se o texto na ordem em que se lê.
+//
+// ── A COSTURA DOS DEGRAUS ───────────────────────────────────────────────────
+//
+// O texto foi transcrito para ser CONCATENADO, não empilhado. Cada bloco
+// termina com o conector e o seguinte começa no número:
+//
+//   n5  "…não ser seus próprios artefatos. Ao atingir o"
+//   n10 "10° nível ele pode usar a porcentagem…              …penalidade. No"
+//   n20 "20° nível seu desconto tecnológico…"
+//
+// Empilhar isso com um rótulo produzia "No 10º nível. 10° nível o mercenário
+// receberá…" — o número duas vezes, e um "Ao atingir o" pendurado no fim do
+// bloco anterior.
+//
+// Então o conector MUDA DE BLOCO: sai do fim de um e vai para o começo do
+// seguinte, onde ele sempre pertenceu. O texto do livro não é reescrito, só
+// recortado no lugar certo.
+const CONECTOR =
+  /\s*(?:\d{1,3}\s+)?(No|A partir do|Ao atingir o|Atingindo o|Ao chegar no|Ao chegar ao|Já no|Chegando ao|atingindo o|ao atingir o)\s*$/;
+
+/** Tira o conector do fim de um bloco e devolve os dois pedaços. */
+function separaConector(txt) {
+  const m = (txt ?? "").match(CONECTOR);
+  if (!m) return { corpo: (txt ?? "").trim(), conector: null };
+  return { corpo: txt.slice(0, m.index).trim(), conector: m[1] };
+}
+
 function degraus(e) {
-  const bloco = (n, txt) =>
-    txt ? `<p><strong>No ${n}º nível.</strong> ${txt}</p>` : "";
+  const a = separaConector(e.n5);
+  const b = separaConector(e.n10);
+
+  // O conector do bloco anterior abre o seguinte. Sem conector, o rótulo
+  // genérico entra no lugar — algumas transcrições não têm nenhum.
+  const abre = (conector, nivel, txt) => {
+    if (!txt) return "";
+    const jaTemNivel = new RegExp(`^${nivel}\\s*[°º]`).test(txt);
+    const cabeca = conector
+      ? `${conector} `
+      : jaTemNivel ? "" : `No ${nivel}º nível `;
+    return `<p>${cabeca}${txt}</p>`;
+  };
+
   return (
     `<p><em>Especialização de ${e.classe}, para quem tem Afiliação ` +
     `<strong>${e.afiliacao}</strong>.</em></p>` +
-    bloco(5, e.n5) + bloco(10, e.n10) + bloco(20, e.n20)
+    (a.corpo ? `<p>${a.corpo}</p>` : "") +
+    abre(a.conector, 10, b.corpo) +
+    abre(b.conector, 20, separaConector(e.n20).corpo)
   );
 }
 

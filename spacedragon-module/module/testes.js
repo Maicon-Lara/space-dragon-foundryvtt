@@ -33,6 +33,12 @@ import {
   PROGRESSAO, ATRIBUTO, ROTULO_COLUNA, TESTES,
 } from "./dados.js";
 
+// Reexportado de propósito: quem quer a regra importa daqui, não do arquivo
+// gerado. Sem esta linha, `import { TESTES } from "./testes.js"` é SyntaxError
+// na carga — e um erro de carga derruba o módulo INTEIRO em silêncio, o que já
+// custou uma versão publicada sem botão nenhum e sem nível acima do 15º.
+export { TESTES };
+
 const porChave = (c) => TESTES.find((t) => t.chave === c);
 const sinal = (n) => (n > 0 ? `+${n}` : `${n}`);
 

@@ -98,33 +98,48 @@ function bloco(lista, nivel, valores) {
 }
 
 /**
- * Injeta, em cada habilidade de classe da ficha, os testes que pertencem a ela.
+ * O nome da habilidade escrito no `<li>`.
  *
- * O casamento é pelo NOME do item, e não pelo id: o compêndio gera ids novos a
- * cada rebuild, mas o nome da habilidade é estável e é o que o autor controla.
+ * ── POR QUE DO DOM, E NÃO DE `ator.items` ───────────────────────────────────
+ *
+ * Foi assim que a primeira versão falhou em silêncio. `data-item-id` aponta
+ * para a habilidade dentro de `actor.system.class_abilities`, que o sistema
+ * resolve a partir dos UUIDs do COMPÊNDIO. Nem sempre esses documentos estão
+ * embutidos no ator, e `ator.items.get(id)` devolvia `undefined` — o laço
+ * pulava tudo e a ficha ficava sem botão nenhum, sem erro no console.
+ *
+ * O template escreve `<span><strong>{{ability.name}}</strong>:</span>` dentro
+ * de `.ability`. O nome está ali, sempre, venha o documento de onde vier.
  */
-export function ligarPainel() {
-  Hooks.on("renderOD2CharacterSheet", (app, html) => {
-    const raiz = html?.[0] ?? html;
-    if (!raiz?.querySelector) return;
+function nomeDaHabilidade(li) {
+  const forte = li.querySelector(".ability strong");
+  return forte ? forte.textContent.trim().replace(/:$/, "") : null;
+}
 
-    const ator = app.actor;
-    if (!ator?.system?.class) return;
+/** Desenha os testes dentro de cada habilidade de classe da ficha. */
+function injeta(app, elemento) {
+  try {
+    const raiz = elemento instanceof HTMLElement ? elemento : elemento?.[0];
+    const ator = app?.actor ?? app?.document;
+    if (!raiz?.querySelectorAll || ator?.type !== "character") return;
+    if (!ator.system?.class) return;
 
     // Idempotente: o Foundry pode renderizar a mesma ficha várias vezes.
     for (const velho of raiz.querySelectorAll(`.${MARCA}`)) velho.remove();
 
     const nivel = Number(ator.system?.level) || 1;
     const valores = valoresDe(ator);
+    let postos = 0;
 
-    for (const li of raiz.querySelectorAll(".character-tab-class .class-abilities .item")) {
-      const item = ator.items.get(li.dataset.itemId);
-      if (!item) continue;
+    for (const li of raiz.querySelectorAll(".class-abilities .item")) {
+      const nome = nomeDaHabilidade(li);
+      if (!nome) continue;
 
-      const lista = TESTES.filter((t) => t.habilidade === item.name);
+      const lista = TESTES.filter((t) => t.habilidade === nome);
       if (!lista.length) continue;
 
       li.insertAdjacentHTML("beforeend", bloco(lista, nivel, valores));
+      postos += lista.length;
     }
 
     for (const a of raiz.querySelectorAll(`.${MARCA} .sd-rolar`)) {
@@ -143,6 +158,46 @@ export function ligarPainel() {
         );
       });
     }
+
+    if (!postos) {
+      console.debug(`${ID} | nenhum teste casou em ${ator.name}. Rode game.spacedragon.diagnostico()`);
+    }
+  } catch (e) {
+    // Nunca quebrar a ficha do sistema por causa de um botão do módulo.
+    console.warn(`${ID} | testes não puderam ser desenhados`, e);
+  }
+}
+
+/**
+ * Diz por que a ficha aberta não mostrou botão, comparando os nomes que o
+ * módulo espera com os que estão desenhados na tela.
+ */
+export function diagnostico() {
+  const app = Object.values(ui.windows).find((w) => w?.actor?.type === "character");
+  if (!app) return ui.notifications.warn("Abra a ficha de um personagem primeiro.");
+
+  const raiz = app.element?.[0] ?? app.element;
+  const naTela = [...(raiz?.querySelectorAll(".class-abilities .item") ?? [])]
+    .map(nomeDaHabilidade)
+    .filter(Boolean);
+  const esperados = [...new Set(TESTES.map((t) => t.habilidade).filter(Boolean))];
+
+  console.group(`${ID} | diagnóstico — ${app.actor.name}`);
+  console.log("classe na ficha :", app.actor.system?.class?.name ?? "(nenhuma)");
+  console.log("nível           :", app.actor.system?.level);
+  console.log("habilidades na tela:", naTela);
+  console.log("nomes que o módulo espera:", esperados);
+  console.log("casaram:", naTela.filter((n) => esperados.includes(n)));
+  console.groupEnd();
+  return { naTela, esperados };
+}
+
+export function ligarPainel() {
+  // Os dois ganchos disparam neste sistema. Usamos o específico e caímos no
+  // genérico se ele sumir numa versão futura — sem desenhar duas vezes.
+  Hooks.on("renderOD2CharacterSheet", injeta);
+  Hooks.on("renderActorSheet", (app, el) => {
+    if (app?.constructor?.name !== "OD2CharacterSheet") injeta(app, el);
   });
 
   console.log(`${ID} | testes ligados às habilidades de classe na ficha`);
