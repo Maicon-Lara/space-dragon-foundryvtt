@@ -1,0 +1,50 @@
+{
+  "folder": "jPHQjBiNQZgIeCuA",
+  "name": "Talentos de Gatuno",
+  "type": "class_ability",
+  "_id": "l6QU3VKI64mwebSx",
+  "img": "systems/olddragon2e/assets/icons/bag.svg",
+  "system": {
+    "description": "<p>Seis talentos, cada um com progressão própria em porcentagem: <strong>Sabotagem</strong>, <strong>Escalar</strong>, <strong>Furtividade</strong>, <strong>Furtar</strong>, <strong>Percepção</strong> e <strong>Ataque Furtivo</strong>.</p><p><em>Furtividade</em> e <em>Furtar</em> são modificados pela Destreza; <em>Sabotagem</em>, pela Aptidão Tecnológica da Ciência <em>(Inteligência no OD2)</em>.</p><p>Os valores por nível estão na tabela T3-5, na descrição da classe.</p>",
+    "level": 1,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!l6QU3VKI64mwebSx"
+}

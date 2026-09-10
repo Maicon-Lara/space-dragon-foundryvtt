@@ -1,0 +1,50 @@
+{
+  "folder": "jPHQjBiNQZgIeCuA",
+  "name": "Desativar Robôs",
+  "type": "class_ability",
+  "_id": "VBPkjqMVPh6RHAj0",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p>Com o equipamento apropriado, desativa robôs. A <strong>quantidade</strong> sai da tabela T1-5 da <strong>Ciência</strong> <em>(Inteligência no OD2)</em>, e é um <strong>dado</strong>, não um número fixo: 1d2 com Ciência 10–11, 1d6 com 16–17, 1d20 com 28–29.</p>",
+    "level": 1,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 2,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!VBPkjqMVPh6RHAj0"
+}

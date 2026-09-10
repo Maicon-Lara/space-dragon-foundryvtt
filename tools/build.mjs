@@ -15,10 +15,11 @@ import { fileURLToPath } from "node:url";
 import { compilePack } from "@foundryvtt/foundryvtt-cli";
 
 import {
-  folderDoc, raceDoc, raceAbilityDoc, journalDoc, rollTableDoc,
+  folderDoc, raceDoc, raceAbilityDoc, classDoc, classAbilityDoc, journalDoc, rollTableDoc,
   itemUuid, writeSource, aninhaPastas, pintaPastas, makeId, stats,
 } from "./lib.mjs";
 import { especies } from "./data/especies.mjs";
+import { classes } from "./data/classes.mjs";
 import { PARES, T2_2, T2_3, T2_4, T2_5 } from "./data/mutacoes.mjs";
 import { regras } from "./data/regras.mjs";
 import { NOME_SD, NOME_OD2 } from "./data/conversao.mjs";
@@ -28,6 +29,7 @@ const ROOT = path.resolve(AQUI, "..");
 const SRC = path.join(ROOT, "packs-src");
 const OUT = path.join(ROOT, "spacedragon-module", "packs");
 
+const P_CLASSES = "spacedragon-classes";
 const P_ESPECIES = "spacedragon-especies";
 const P_MUTACOES = "spacedragon-mutacoes";
 const P_TABELAS = "spacedragon-tabelas";
@@ -36,6 +38,7 @@ const P_JOURNAL = "spacedragon-journal";
 /** Cor por pasta: sem isso o compêndio vira uma lista cinza indistinguível. */
 const PALETA = {
   "Espécies": "#2f5d7c",
+  "Classes": "#5a3f7c",
   "Aprimoramentos": "#2f6b46",
   "Degenerações": "#7c3a2f",
 };
@@ -52,6 +55,24 @@ function montaEspecies() {
     docs.push(...habs);
     docs.push({
       ...raceDoc(esp, pasta._id, habs.map((h) => itemUuid(P_ESPECIES, h._id))),
+      sort: (i + 1) * 1000,
+    });
+  });
+  return docs;
+}
+
+// ── Classes ───────────────────────────────────────────────────────
+function montaClasses() {
+  const docs = [];
+  const pasta = folderDoc("Classes", "Item", "sd-classes");
+  docs.push(pasta);
+
+  classes.forEach((cls, i) => {
+    const habs = (cls.habilidades ?? []).map((h, j) =>
+      classAbilityDoc(h, pasta._id, `sd-class-ab:${cls.nome}`, j));
+    docs.push(...habs);
+    docs.push({
+      ...classDoc(cls, pasta._id, habs.map((h) => itemUuid(P_CLASSES, h._id))),
       sort: (i + 1) * 1000,
     });
   });
@@ -165,6 +186,10 @@ async function compila(nome, docs) {
 
 async function main() {
   console.log("Montando o Space Dragon…");
+
+  let cls = aninhaPastas(montaClasses());
+  pintaPastas(cls, PALETA);
+  await compila(P_CLASSES, cls);
 
   let esp = aninhaPastas(montaEspecies());
   pintaPastas(esp, PALETA);

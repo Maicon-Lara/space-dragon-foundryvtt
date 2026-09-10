@@ -2,30 +2,58 @@
   "id": "spacedragon",
   "title": "Space Dragon — Livro Básico",
   "description": "O conteúdo do Livro Básico Aprimorado de Space Dragon como compêndios para o sistema Old Dragon 2, seguindo as equivalências do guia \"Jogando Space Dragon com Old Dragon 2\", de Francisco Martellini.",
-  "version": "0.2.0",
-  "compatibility": { "minimum": "13", "verified": "13" },
+  "version": "0.3.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
   "relationships": {
     "systems": [
       {
         "id": "olddragon2e",
         "type": "system",
         "manifest": "https://github.com/olddragoneditora/olddragon2e-foundryvtt/releases/latest/download/olddragon2e.json",
-        "compatibility": { "minimum": "2.0.0", "verified": "2.6.0" }
+        "compatibility": {
+          "minimum": "2.0.0",
+          "verified": "2.6.0"
+        }
       }
     ]
   },
-  "authors": [{ "name": "Maicon Lara" }],
+  "authors": [
+    {
+      "name": "Maicon Lara"
+    }
+  ],
   "languages": [
-    { "lang": "pt-BR", "name": "Português (Brasil)", "path": "lang/pt-BR.json" }
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    }
   ],
   "packs": [
+    {
+      "name": "spacedragon-classes",
+      "label": "Space Dragon — Classes",
+      "path": "packs/spacedragon-classes",
+      "type": "Item",
+      "system": "olddragon2e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
     {
       "name": "spacedragon-especies",
       "label": "Space Dragon — Espécies",
       "path": "packs/spacedragon-especies",
       "type": "Item",
       "system": "olddragon2e",
-      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "spacedragon-mutacoes",
@@ -33,7 +61,10 @@
       "path": "packs/spacedragon-mutacoes",
       "type": "Item",
       "system": "olddragon2e",
-      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "spacedragon-tabelas",
@@ -41,7 +72,10 @@
       "path": "packs/spacedragon-tabelas",
       "type": "RollTable",
       "system": "olddragon2e",
-      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "spacedragon-journal",
@@ -49,7 +83,10 @@
       "path": "packs/spacedragon-journal",
       "type": "JournalEntry",
       "system": "olddragon2e",
-      "ownership": { "PLAYER": "OBSERVER", "ASSISTANT": "OWNER" }
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     }
   ],
   "manifest": "https://cdn.jsdelivr.net/gh/Maicon-Lara/space-dragon-foundryvtt@main/spacedragon-module/module.json",
