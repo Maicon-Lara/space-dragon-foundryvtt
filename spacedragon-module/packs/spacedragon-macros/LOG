@@ -1,5 +1,5 @@
-2026/09/10-10:06:39.601 58c4 Delete type=3 #1
-2026/09/10-10:06:39.614 b1e0 Level-0 table #5: started
-2026/09/10-10:06:39.618 b1e0 Level-0 table #5: 2051 bytes OK
-2026/09/10-10:06:39.620 b1e0 Delete type=0 #3
-2026/09/10-10:06:39.620 b1e0 Manual compaction at level-0 from '!folders!gFZHaYQqhiOIzTb7' @ 72057594037927935 : 1 .. '!macros!vhvU2JCqTMf4udJe' @ 0 : 0; will stop at (end)
+2026/09/10-10:10:45.473 9040 Delete type=3 #1
+2026/09/10-10:10:45.486 f428 Level-0 table #5: started
+2026/09/10-10:10:45.489 f428 Level-0 table #5: 2051 bytes OK
+2026/09/10-10:10:45.490 f428 Delete type=0 #3
+2026/09/10-10:10:45.490 f428 Manual compaction at level-0 from '!folders!gFZHaYQqhiOIzTb7' @ 72057594037927935 : 1 .. '!macros!vhvU2JCqTMf4udJe' @ 0 : 0; will stop at (end)

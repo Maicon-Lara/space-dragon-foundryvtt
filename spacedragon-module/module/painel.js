@@ -37,17 +37,32 @@ const ID = "spacedragon";
 const MARCA = "spacedragon-painel";
 
 /**
- * Quais testes valem para esta ficha.
+ * A classe-base por trás do item de classe da ficha.
  *
- * A classe da ficha pode ser "Cosmonauta" ou "Cosmonauta — Emissário": a
- * especialização é um item de classe próprio que herda as habilidades da base,
- * então o casamento é por PREFIXO, não por igualdade.
+ * A especialização é um item de classe próprio, rotulado
+ * "Emissário — Cosmonauta": a especialização primeiro, porque é o nome que o
+ * jogador procura. A classe-base é o último segmento.
  *
- * Os testes sem classe (clonagem) valem para todo mundo.
+ *   "Cosmonauta"              → "Cosmonauta"
+ *   "Emissário — Cosmonauta"  → "Cosmonauta"
+ *
+ * O separador é o travessão com espaços, o mesmo que o build escreve. Um hífen
+ * comum não conta: "Caçador de Recompensas" tem espaços mas nenhum travessão, e
+ * partir no lugar errado faria a ficha não achar teste nenhum.
+ */
+function classeBase(ator) {
+  const nome = ator.system?.class?.name ?? "";
+  const partes = nome.split(" — ");
+  return partes[partes.length - 1].trim();
+}
+
+/**
+ * Quais testes valem para esta ficha. Os sem classe — clonagem — valem para
+ * todo mundo.
  */
 function testesDe(ator) {
-  const classe = ator.system?.class?.name ?? "";
-  return TESTES.filter((t) => !t.classe || classe.startsWith(t.classe));
+  const base = classeBase(ator);
+  return TESTES.filter((t) => !t.classe || t.classe === base);
 }
 
 /** O valor de um atributo do Space Dragon, no campo do OD2 onde ele é anotado. */

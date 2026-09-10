@@ -140,10 +140,15 @@ function montaClasses() {
         docs.push({
           ...classDoc({
             ...cls,
-            // O _id continua semeado pelo nome completo: encurtar o rótulo na
-            // ficha não pode trocar o UUID de uma classe já em uso.
+            // O _id continua semeado pela forma "Classe — Especialização", que
+            // foi a que gerou os UUIDs: inverter o RÓTULO não pode trocar o
+            // UUID de uma classe já em uso.
             seedNome: `${cls.nome} — ${e.nome}`,
-            nome: `${cls.nome} — ${e.nome}`,
+            // A especialização vem primeiro porque é ela que o jogador procura.
+            // "Emissário — Cosmonauta" acha na hora; "Cosmonauta — Emissário"
+            // esconde o nome que importa atrás de um prefixo repetido três
+            // vezes na lista.
+            nome: `${e.nome} — ${cls.nome}`,
             flavor: `<p><em>${cls.nome} de Afiliação <strong>${e.afiliacao}</strong>.</em></p>`,
             descricao:
               `<p>Especialização escolhida no <strong>5º nível</strong>. A partir dali o ` +
