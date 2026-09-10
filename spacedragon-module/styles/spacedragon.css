@@ -107,54 +107,36 @@
   cursor: help;
 }
 
-/* ── Danos Mortais no lugar das moedas ────────────────────────────────────
+/* ── Créditos e Danos Mortais no cabeçalho ────────────────────────────────
  *
- * A caixa .economy do sistema tem três colunas de moeda; ficam duas, e o
- * layout de grade do sistema já as distribui. Só o essencial é redefinido. */
+ * Quase nada aqui é layout: os Danos Mortais entram como `.hp-value`, que é a
+ * classe do sistema, e herdam moldura, alinhamento e tipografia das caixas de
+ * PV Atual e Total. Só o campo de créditos precisa de ajuste, porque ele
+ * substitui três colunas de moeda por uma. */
 
-.spacedragon-mortais .currency {
+.spacedragon-creditos .currency {
   display: flex;
-  gap: 0.5rem;
   justify-content: center;
 }
 
-/* Sem moldura nem título: a caixa deixa de ser um bloco e vira só dois
- * campos, como as outras do cabeçalho. */
-.spacedragon-mortais {
-  border: none;
-  padding: 0;
-}
-
-.spacedragon-mortais .sd-mortais,
-.spacedragon-mortais .sd-creditos {
+.spacedragon-creditos .sd-creditos {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* "Danos Mortais" é rótulo longo; sem largura mínima ele quebra em duas
- * linhas e desalinha do CR ao lado. */
-.spacedragon-mortais .sd-mortais {
   min-width: 6rem;
 }
 
-.spacedragon-mortais .sd-creditos {
-  min-width: 3.5rem;
+.spacedragon-creditos .sd-creditos input {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
 }
 
-.spacedragon-mortais .label label {
-  white-space: nowrap;
-}
-
-.spacedragon-mortais .sd-mortais input {
+/* O valor é derivado da Constituição, não digitado: fica claro que não se
+ * escreve nele. */
+.spacedragon-mortais input {
   text-align: center;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
-}
-
-.spacedragon-mortais .sd-creditos input {
-  text-align: center;
-  font-variant-numeric: tabular-nums;
 }
 
 /* ── Janela e cartão da Ordem de Ação ─────────────────────────────────────── */

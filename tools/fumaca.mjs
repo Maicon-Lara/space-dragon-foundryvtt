@@ -238,18 +238,30 @@ if (erros.length) {
 }
 console.log("  ✔ modificadores: escala do Space Dragon aplicada, e reversível");
 
-// ── As moedas viraram Danos Mortais? ───────────────────────────────────────
+// ── Danos Mortais no PV, e a Economia virou Créditos? ─────────────────────
 //
-// A marcação abaixo é a da caixa .economy do character-sheet.hbs do
-// olddragon2e 2.6.0. Se o sistema mudar isso, o teste avisa em vez de a ficha
-// simplesmente continuar com peças de ouro.
+// A marcação abaixo é a do character-sheet.hbs do olddragon2e 2.6.0: a linha de
+// Pontos de Vida com Atual e Total, e a caixa de Economia com as três moedas.
+//
+// A versão anterior punha os dois juntos numa caixa sem título, e ficou órfã na
+// tela: mais alta que as vizinhas e sem dizer o que era. Agora cada um vai para
+// onde pertence, e o teste exige os dois lugares.
 const CABECALHO = `
-<div class="economy border">
-  <label class="font-bold">Economia</label>
-  <div class="currency">
-    <div class="gp"><input name="system.economy.gp" type="text" value="120"></div>
-    <div class="sp"><input name="system.economy.sp" type="text" value="0"></div>
-    <div class="cp"><input name="system.economy.cp" type="text" value="0"></div>
+<div class="header">
+  <div class="hp">
+    <label class="font-bold">PV | Pontos de Vida</label>
+    <div class="hp-values">
+      <div class="hp-value"><input name="system.hp.value" type="text" value="10"></div>
+      <div class="hp-value"><input name="system.hp.max" type="text" value="10"></div>
+    </div>
+  </div>
+  <div class="economy border">
+    <label class="font-bold">Economia</label>
+    <div class="currency">
+      <div class="gp"><input name="system.economy.gp" type="text" value="120"></div>
+      <div class="sp"><input name="system.economy.sp" type="text" value="0"></div>
+      <div class="cp"><input name="system.economy.cp" type="text" value="0"></div>
+    </div>
   </div>
 </div>`;
 
@@ -267,33 +279,37 @@ const trocaCab = ganchos.filter((g) => g.nome === "renderOD2CharacterSheet");
 for (const g of trocaCab) g.fn({ actor: atorCab }, cab);
 
 const falhasCab = [];
-// A moldura e o título saem: sobram dois campos rotulados, como nas outras
-// caixas do cabeçalho.
+
+// Danos Mortais entra como TERCEIRA caixa de PV, herdando o visual das outras.
+const caixasPV = cab.querySelectorAll(".hp-values .hp-value");
+if (caixasPV.length !== 3) falhasCab.push(`${caixasPV.length} caixas de PV, esperava 3`);
+const mortais = cab.querySelector(".spacedragon-mortais input")?.atributos.value;
+if (mortais !== "-9") falhasCab.push(`danos mortais deu ${mortais}, esperava -9 para Constituição 9`);
+const rotuloMortais = cab.querySelector(".spacedragon-mortais label")?.textContent.trim();
+if (rotuloMortais !== "Mortais") falhasCab.push(`o rótulo ficou "${rotuloMortais}"`);
+
+// A Economia vira Créditos, COM moldura — é ela que iguala a caixa às vizinhas.
 const economia = cab.querySelector(".economy");
-if (economia?.classList.contains("border")) falhasCab.push("a moldura da caixa sobreviveu");
-const rotuloMortais = cab.querySelector(".sd-mortais label")?.textContent.trim();
-if (rotuloMortais !== "Danos Mortais") falhasCab.push(`o campo ficou rotulado "${rotuloMortais}"`);
-if (cab.querySelectorAll(".sd-mortais label").length !== 1) falhasCab.push("rótulo duplicado");
-
-const valorMortais = cab.querySelector(".sd-mortais input")?.atributos.value;
-if (valorMortais !== "-9") falhasCab.push(`danos mortais deu ${valorMortais}, esperava -9 para Constituição 9`);
-
+if (!economia?.classList.contains("border")) falhasCab.push("a caixa de Créditos ficou sem moldura");
+const tituloCR = economia?.querySelector("label")?.textContent.trim();
+if (tituloCR !== "CR | Créditos") falhasCab.push(`o título ficou "${tituloCR}"`);
 const cr = cab.querySelector(".sd-creditos input");
 if (cr?.atributos.name !== "system.economy.gp") falhasCab.push("os créditos não gravam em system.economy.gp");
 if (cr?.atributos.value !== "120") falhasCab.push(`créditos vieram ${cr?.atributos.value}, esperava 120`);
-
 if (cab.querySelectorAll(".sp").length || cab.querySelectorAll(".cp").length) {
   falhasCab.push("prata ou cobre sobreviveram à troca");
 }
-// Rodar de novo não pode desfazer nem duplicar.
+
+// Rodar de novo não pode duplicar nem desfazer.
 for (const g of trocaCab) g.fn({ actor: atorCab }, cab);
-if (cab.querySelectorAll(".sd-mortais").length !== 1) falhasCab.push("renderizar duas vezes duplicou a caixa");
+if (cab.querySelectorAll(".spacedragon-mortais").length !== 1) falhasCab.push("renderizar duas vezes duplicou os Danos Mortais");
+if (cab.querySelectorAll(".sd-creditos").length !== 1) falhasCab.push("renderizar duas vezes duplicou os Créditos");
 
 if (falhasCab.length) {
   for (const f of falhasCab) console.error(`  ✘ ${f}`);
   process.exit(1);
 }
-console.log("  ✔ cabeçalho: sem moldura, campo \"Danos Mortais\" −9, créditos em system.economy.gp");
+console.log("  ✔ cabeçalho: Danos Mortais −9 como 3ª caixa de PV, e Créditos com moldura e título");
 
 // ── A 10ª Grandeza para de cair no 1º círculo? ─────────────────────────────
 //
