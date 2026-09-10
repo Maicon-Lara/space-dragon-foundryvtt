@@ -5,7 +5,7 @@
   "_id": "3NgG5W8YSpp7wMCV",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>Quantos poderes o Mentálico manifesta por dia. O <strong>Intelecto</strong> <em>(Sabedoria no OD2)</em> acrescenta alcance adicional pela tabela T1-4.</p>",
+    "description": "<p>Quantos poderes o Mentálico manifesta por dia. O <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em> acrescenta alcance adicional pela tabela T1-4.</p>",
     "level": 1,
     "level3": "",
     "level6": "",

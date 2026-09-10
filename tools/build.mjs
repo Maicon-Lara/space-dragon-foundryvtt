@@ -23,7 +23,7 @@ import { classes } from "./data/classes.mjs";
 import { especializacoes } from "./data/especializacoes.mjs";
 import { PARES, T2_2, T2_3, T2_4, T2_5 } from "./data/mutacoes.mjs";
 import { regras } from "./data/regras.mjs";
-import { NOME_SD, NOME_OD2 } from "./data/conversao.mjs";
+import { NOME, CAMPO_NA_FICHA } from "./data/onde-anotar.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -120,11 +120,11 @@ function corpoDaMutacao(m, subtabela) {
         // Os DOIS nomes: a subtabela do livro diz "Intelecto", e quem mexe na
         // ficha do OD2 precisa saber que isso é Sabedoria. É a razão de o
         // módulo existir.
-        ? `<tr><td>${l.d6}</td><td><strong>${NOME_SD[l.atributo]}</strong> ${l.ajuste > 0 ? "+" : ""}${l.ajuste}` +
-          // só quando os nomes DIFEREM: repetir "Força no OD2" é ruído que
-          // esconde as três linhas que realmente importam.
-          (NOME_OD2[l.atributo] !== NOME_SD[l.atributo]
-            ? `<br><em style="opacity:.7">${NOME_OD2[l.atributo]} no OD2</em>` : "") +
+        ? `<tr><td>${l.d6}</td><td><strong>${NOME[l.atributo]}</strong> ${l.ajuste > 0 ? "+" : ""}${l.ajuste}` +
+          // Só quando o campo da ficha tem OUTRO nome. Repetir "campo Força"
+          // seria ruído que esconde as três linhas em que a dica importa.
+          (ROTULO_FICHA[CAMPO_NA_FICHA[l.atributo]] !== NOME[l.atributo]
+            ? `<br><em style="opacity:.7">campo ${ROTULO_FICHA[CAMPO_NA_FICHA[l.atributo]]} da ficha</em>` : "") +
           `</td><td>${l.fenotipo}</td></tr>`
         : `<tr><td>${l.d6}</td><td><strong>${l.sentido}</strong></td><td>${l.fenotipo}. ${l.funcionamento}</td></tr>`
     ).join("");
@@ -135,6 +135,11 @@ function corpoDaMutacao(m, subtabela) {
   }
   return html;
 }
+
+const ROTULO_FICHA = {
+  forca: "Força", destreza: "Destreza", constituicao: "Constituição",
+  inteligencia: "Inteligência", sabedoria: "Sabedoria", carisma: "Carisma",
+};
 
 const SUBTABELAS = {
   "Atributo Ampliado": { nome: "T2-2: Atributo Ampliado", col2: "Atributo", linhas: T2_2 },

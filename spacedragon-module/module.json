@@ -1,8 +1,8 @@
 {
   "id": "spacedragon",
   "title": "Space Dragon — Livro Básico",
-  "description": "O conteúdo do Livro Básico Aprimorado de Space Dragon como compêndios para o sistema Old Dragon 2, seguindo as equivalências do guia \"Jogando Space Dragon com Old Dragon 2\", de Francisco Martellini.",
-  "version": "0.4.0",
+  "description": "O conteudo do Livro Basico Aprimorado de Space Dragon como compendios para o Foundry VTT, no sistema Old Dragon 2. As regras sao as do livro base, sem conversao.",
+  "version": "0.5.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"

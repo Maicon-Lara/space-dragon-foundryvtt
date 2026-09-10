@@ -1,4 +1,4 @@
-// As quatro classes do Capítulo 3, convertidas para o Old Dragon 2.
+// As quatro classes do Capítulo 3 do Livro Básico Aprimorado.
 //
 // ── O QUE CABE NO OD2 E O QUE NÃO CABE ──────────────────────────────────────
 //
@@ -89,14 +89,14 @@ export const classes = [
       { nome: "Operar Máquinas", level: 1,
         desc: "<p>Porcentagem de sucesso ao operar e consertar máquinas. Começa em <strong>80%</strong> " +
               "no 1º nível e sobe 1 ponto por nível, chegando a 99% no 20º.</p>" +
-              "<p>Modificada pela <strong>Aptidão Tecnológica</strong> da Ciência <em>(Inteligência no OD2)</em>.</p>" },
+              "<p>Modificada pela <strong>Aptidão Tecnológica</strong> da Ciência <em>(anotada no campo Inteligência da ficha)</em>.</p>" },
       { nome: "Nível Tecnológico Máximo", level: 1,
         desc: "<p>O teto do que o Cientista consegue <em>construir</em> — não do que consegue usar. " +
               "Sobe um degrau a cada dois níveis: <strong>1º</strong> no nível 1, <strong>2º</strong> no 3, " +
               "e assim até o <strong>10º</strong> no nível 19.</p>" },
       { nome: "Desativar Robôs", level: 1,
         desc: "<p>Com o equipamento apropriado, desativa robôs. A <strong>quantidade</strong> sai da " +
-              "tabela T1-5 da <strong>Ciência</strong> <em>(Inteligência no OD2)</em>, e é um " +
+              "tabela T1-5 da <strong>Ciência</strong> <em>(anotada no campo Inteligência da ficha)</em>, e é um " +
               "<strong>dado</strong>, não um número fixo: 1d2 com Ciência 10–11, 1d6 com 16–17, " +
               "1d20 com 28–29.</p>" },
     ],
@@ -151,7 +151,7 @@ export const classes = [
               "<strong>Escalar</strong>, <strong>Furtividade</strong>, <strong>Furtar</strong>, " +
               "<strong>Percepção</strong> e <strong>Ataque Furtivo</strong>.</p>" +
               "<p><em>Furtividade</em> e <em>Furtar</em> são modificados pela Destreza; " +
-              "<em>Sabotagem</em>, pela Aptidão Tecnológica da Ciência <em>(Inteligência no OD2)</em>.</p>" +
+              "<em>Sabotagem</em>, pela Aptidão Tecnológica da Ciência <em>(anotada no campo Inteligência da ficha)</em>.</p>" +
               "<p>Os valores por nível estão na tabela T3-5, na descrição da classe.</p>" },
     ],
   },
@@ -163,7 +163,7 @@ export const classes = [
     flavor: "<p>A mente como ferramenta, e como arma.</p>",
     descricao:
       "<p>Manifesta <strong>poderes mentais</strong>. O quanto consegue realizar e aprender sai da " +
-      "porcentagem da tabela, modificada pelo <strong>Intelecto</strong> <em>(Sabedoria no OD2)</em>.</p>" +
+      "porcentagem da tabela, modificada pelo <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>.</p>" +
       tabelaHTML("T3-6: Mentálico", MENTALICO, R) +
       SO_NA_TABELA("O <em>alcance mental</em> e a <em>grandeza mental limite</em>") +
       espec("Psiquista", "Radiestésico", "Hipercientista"),
@@ -171,11 +171,11 @@ export const classes = [
       { nome: "Poderes Mentais", level: 1,
         desc: "<p>A porcentagem de <strong>realizar e aprender</strong> um poder que ainda não domina " +
               "começa em <strong>1%</strong> no 1º nível e chega a <strong>150%</strong> no 20º.</p>" +
-              "<p>Somada à coluna do <strong>Intelecto</strong> <em>(Sabedoria no OD2)</em>: com " +
+              "<p>Somada à coluna do <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>: com " +
               "Intelecto 10–11 são +15 pontos; com 28–29, +100.</p>" },
       { nome: "Alcance Mental", level: 1,
         desc: "<p>Quantos poderes o Mentálico manifesta por dia. O <strong>Intelecto</strong> " +
-              "<em>(Sabedoria no OD2)</em> acrescenta alcance adicional pela tabela T1-4.</p>" },
+              "<em>(anotado no campo Sabedoria da ficha)</em> acrescenta alcance adicional pela tabela T1-4.</p>" },
       { nome: "Grandeza Mental Limite", level: 1,
         desc: "<p>O teto da Grandeza de poder que ele alcança. Sobe um degrau a cada dois níveis: " +
               "<strong>1ª</strong> no nível 1, <strong>2ª</strong> no 3, e assim por diante.</p>" },

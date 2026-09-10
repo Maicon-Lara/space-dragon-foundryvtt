@@ -5,7 +5,7 @@
   "_id": "TrozwUTWDCfZP22D",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>A porcentagem de <strong>realizar e aprender</strong> um poder que ainda não domina começa em <strong>1%</strong> no 1º nível e chega a <strong>150%</strong> no 20º.</p><p>Somada à coluna do <strong>Intelecto</strong> <em>(Sabedoria no OD2)</em>: com Intelecto 10–11 são +15 pontos; com 28–29, +100.</p>",
+    "description": "<p>A porcentagem de <strong>realizar e aprender</strong> um poder que ainda não domina começa em <strong>1%</strong> no 1º nível e chega a <strong>150%</strong> no 20º.</p><p>Somada à coluna do <strong>Intelecto</strong> <em>(anotado no campo Sabedoria da ficha)</em>: com Intelecto 10–11 são +15 pontos; com 28–29, +100.</p>",
     "level": 1,
     "level3": "",
     "level6": "",

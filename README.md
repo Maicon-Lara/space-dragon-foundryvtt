@@ -1,36 +1,45 @@
 # Space Dragon — módulo para Foundry VTT
 
 O conteúdo do *Space Dragon — Livro Básico Aprimorado* como compêndios para o
-sistema **Old Dragon 2**, seguindo as equivalências de *Jogando Space Dragon com
-Old Dragon 2*, de Francisco Martellini.
+Foundry VTT, rodando no sistema **Old Dragon 2**.
 
-> **Estado: 0.2.0.** Capítulos 1 e 2 portados. O resto do livro ainda não.
+**As regras são as do livro base, sem conversão.** Os modificadores, as
+porcentagens e a escala de 1 a 29 são os do Space Dragon.
+
+> **Estado: 0.5.0.** Capítulos 1, 2 e 3 portados — 59 de 245 páginas.
 
 ## O que ele é
 
 Um **módulo de conteúdo** para o sistema `olddragon2e` — não um sistema próprio.
 O sistema continua sendo o do Old Dragon 2; este módulo só entrega compêndios.
 
-## A armadilha que define o módulo
+## O que a ficha do OD2 calcula errado
 
-Space Dragon e Old Dragon 2 **não têm os mesmos atributos**, e a equivalência não
-é a que o nome sugere:
+A ficha calcula o modificador pela tabela **dela**: faixa neutra em 9–12, e para
+em 20. A do Space Dragon tem faixa neutra em **10–11** e vai até **29**.
 
-| Space Dragon | Old Dragon 2 |
+**Ignore o modificador que a ficha exibe** e use o das tabelas T1-1 a T1-6, que
+estão no compêndio de Regras. Não há como consertar isso de dentro de um módulo
+— quem calcula é o sistema.
+
+## Onde anotar cada atributo
+
+A ficha do OD2 tem seis campos rotulados com os nomes dele. Três atributos do
+Space Dragon têm nome próprio, então o módulo adota esta colocação:
+
+| Space Dragon | campo na ficha |
 |---|---|
 | Força | Força |
 | Destreza | Destreza |
 | Constituição | Constituição |
 | **Ciência** | **Inteligência** |
 | **Intelecto** | **Sabedoria** |
-| **Comunicação** | Carisma |
+| **Comunicação** | **Carisma** |
 
-**Intelecto vira Sabedoria, não Inteligência.** O guia de Francisco Martellini
-justifica: o Intelecto "tem uma semelhança maior com a Sabedoria do que com a
-Inteligência, sendo usado inclusive nas Jogadas de Proteção". Mapear pelo nome
-parecido inverte dois atributos no módulo inteiro.
-
-A tabela vive em `tools/data/conversao.mjs` e tem teste automático.
+**Isto é convenção do módulo, não regra do jogo.** Nenhum número muda — a tabela
+só diz onde escrever. A colocação sai do que o próprio livro diz que cada
+atributo faz: a Ciência é aptidão tecnológica, o Intelecto é proteção mental, a
+Comunicação é reação e seguidores. Vive em `tools/data/onde-anotar.mjs`.
 
 ## O que já está pronto
 
@@ -39,25 +48,19 @@ A tabela vive em `tools/data/conversao.mjs` e tem teste automático.
 | **Espécies** | Humano, Androide, Mutante — com os traços mecânicos |
 | **Mutações** | as 20 da T2-1, com as subtabelas T2-2 a T2-5 embutidas |
 | **Tabelas** | T2-1 rolável, uma por coluna |
-| **Regras** | a conversão, as tabelas nativas T1-1 a T1-6, e os limites |
-
-## Onde a ficha do OD2 mostra o número errado
-
-A tabela do Space Dragon vai de 1 a 29; a do OD2 para em 20 e não tem a faixa do
-1 isolada. Nos valores **1 e de 21 a 29** os dois discordam, e a ficha calcula
-pela tabela dela. O Mestre corrige à mão — não há como consertar de dentro de um
-módulo, e está avisado no journal.
+| **Regras** | as seis tabelas de atributo, onde anotar, e os limites |
 
 ## As porcentagens
 
 Subjugar, furtividade, clonagem, aptidão tecnológica e a chance de poder mental
-são `%`, e o OD2 não trabalha assim. Estão **transcritas, não convertidas**.
+são `%`, e o OD2 não trabalha assim. Estão **como o livro as escreve** — o
+módulo não converte, e elas se resolvem rolando percentual na mesa.
 
 ## Estrutura
 
 ```
 tools/data/     o conteúdo — é AQUI que se edita
-  conversao.mjs   a equivalência SD → OD2, com teste
+  onde-anotar.mjs onde cada atributo mora na ficha (convenção, não regra)
   atributos.mjs   as tabelas nativas T1-1..T1-6
   mutacoes.mjs    as 20 mutações e as subtabelas
   especies.mjs    Humano, Androide, Mutante
@@ -77,9 +80,9 @@ npm run publicar    # build + zip
 
 | Capítulo | Págs. | Estado |
 |---|--:|---|
-| 1 — Atributos | 9 | ✅ conversão e tabelas nativas |
+| 1 — Atributos | 9 | ✅ as seis tabelas T1-1 a T1-6 |
 | 2 — Espécies | 15 | ✅ as três, com as 20 mutações |
-| 3 — Classes | 24 | ⬜ Cientista · Cosmonauta · Gatuno · Mentálico |
+| 3 — Classes | 24 | ✅ as quatro, com as 12 especializações |
 | 4 — Subatributos | 6 | ⬜ |
 | 5 — Créditos e Equipamento | 10 | ⬜ |
 | 6 — Aventuras Espaciais | 10 | ⬜ |

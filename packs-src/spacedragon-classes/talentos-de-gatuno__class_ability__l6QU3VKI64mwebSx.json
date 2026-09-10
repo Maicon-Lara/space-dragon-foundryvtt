@@ -5,7 +5,7 @@
   "_id": "l6QU3VKI64mwebSx",
   "img": "systems/olddragon2e/assets/icons/bag.svg",
   "system": {
-    "description": "<p>Seis talentos, cada um com progressão própria em porcentagem: <strong>Sabotagem</strong>, <strong>Escalar</strong>, <strong>Furtividade</strong>, <strong>Furtar</strong>, <strong>Percepção</strong> e <strong>Ataque Furtivo</strong>.</p><p><em>Furtividade</em> e <em>Furtar</em> são modificados pela Destreza; <em>Sabotagem</em>, pela Aptidão Tecnológica da Ciência <em>(Inteligência no OD2)</em>.</p><p>Os valores por nível estão na tabela T3-5, na descrição da classe.</p>",
+    "description": "<p>Seis talentos, cada um com progressão própria em porcentagem: <strong>Sabotagem</strong>, <strong>Escalar</strong>, <strong>Furtividade</strong>, <strong>Furtar</strong>, <strong>Percepção</strong> e <strong>Ataque Furtivo</strong>.</p><p><em>Furtividade</em> e <em>Furtar</em> são modificados pela Destreza; <em>Sabotagem</em>, pela Aptidão Tecnológica da Ciência <em>(anotada no campo Inteligência da ficha)</em>.</p><p>Os valores por nível estão na tabela T3-5, na descrição da classe.</p>",
     "level": 1,
     "level3": "",
     "level6": "",

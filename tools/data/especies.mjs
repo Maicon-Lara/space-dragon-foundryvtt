@@ -1,10 +1,11 @@
-// Espécies do Capítulo 2, convertidas para o Old Dragon 2.
+// Espécies do Capítulo 2 do Livro Básico Aprimorado.
 //
-// Onde o livro cita um atributo, a ficha cita OS DOIS nomes — o do Space Dragon
-// e o do OD2. Quem joga tem o livro na mão e a ficha do OD2 na tela, e obrigar
-// a tradução de cabeça é justamente o que este módulo existe para evitar.
+// As regras vêm do Livro Básico Aprimorado e de nenhuma outra fonte. Onde o
+// texto cita um atributo, a ficha diz também EM QUAL CAMPO da ficha do OD2
+// anotá-lo — que é convenção deste módulo, não conversão de regra. Ver
+// onde-anotar.mjs.
 
-import { par } from "./conversao.mjs";
+import { ondeAnotar } from "./onde-anotar.mjs";
 
 /** Nota de rodapé comum: o que a ficha do OD2 não consegue aplicar sozinha. */
 const AJUSTE_MANUAL =
@@ -58,7 +59,7 @@ export const especies = [
     habilidades: [
       {
         nome: "Resistência Física",
-        desc: `<p>Mais fortes que humanos comuns: <strong>+2</strong> em ${par("forca")}.</p>` + AJUSTE_MANUAL,
+        desc: `<p>Mais fortes que humanos comuns: <strong>+2</strong> em ${ondeAnotar("forca")}.</p>` + AJUSTE_MANUAL,
       },
       {
         nome: "Corpo Robótico",
@@ -75,7 +76,7 @@ export const especies = [
         desc:
           "<p>O cérebro emula a mente humana com 95% de exatidão, o que dá <strong>5% de resistência " +
           "a poderes mentais</strong>.</p>" +
-          `<p>A falha justamente na emulação social cobra o preço: <strong>−2</strong> em ${par("comunicacao")}.</p>` +
+          `<p>A falha justamente na emulação social cobra o preço: <strong>−2</strong> em ${ondeAnotar("comunicacao")}.</p>` +
           AJUSTE_MANUAL,
       },
     ],

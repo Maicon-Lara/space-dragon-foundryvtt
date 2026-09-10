@@ -5,7 +5,7 @@
   "_id": "DlkcXuy98VXBvmI7",
   "img": "systems/olddragon2e/assets/icons/brain.svg",
   "system": {
-    "description": "<p>O cérebro emula a mente humana com 95% de exatidão, o que dá <strong>5% de resistência a poderes mentais</strong>.</p><p>A falha justamente na emulação social cobra o preço: <strong>−2</strong> em <strong>Comunicação</strong> <em>(Carisma no OD2)</em>.</p>",
+    "description": "<p>O cérebro emula a mente humana com 95% de exatidão, o que dá <strong>5% de resistência a poderes mentais</strong>.</p><p>A falha justamente na emulação social cobra o preço: <strong>−2</strong> em <strong>Comunicação</strong> <em>(o campo Carisma da ficha)</em>.</p>",
     "xp": null,
     "jp": {
       "jpc": false,
