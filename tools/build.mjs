@@ -51,8 +51,12 @@ function montaEspecies() {
   docs.push(pasta);
 
   especies.forEach((esp, i) => {
+    // Mesma razão das classes: as habilidades da espécie ficam junto DELA.
+    const sub = folderDoc(`Espécies — ${esp.nome}`, "Item", `sd-especie:${esp.nome}`);
+    docs.push(sub);
+
     const habs = (esp.habilidades ?? []).map((h, j) =>
-      raceAbilityDoc(h, pasta._id, `sd-race-ab:${esp.nome}`, j));
+      raceAbilityDoc(h, sub._id, `sd-race-ab:${esp.nome}`, j));
     docs.push(...habs);
     docs.push({
       ...raceDoc(esp, pasta._id, habs.map((h) => itemUuid(P_ESPECIES, h._id))),
@@ -69,8 +73,14 @@ function montaClasses() {
   docs.push(pasta);
 
   classes.forEach((cls, i) => {
+    // Uma subpasta POR CLASSE. Sem isso, as 24 habilidades e especializações
+    // caem numa lista única em ordem alfabética, e achar o que é do Gatuno vira
+    // caça. O "Pai — Filho" no nome é o que a aninhaPastas lê para hierarquizar.
+    const sub = folderDoc(`Classes — ${cls.nome}`, "Item", `sd-classe:${cls.nome}`);
+    docs.push(sub);
+
     const habs = (cls.habilidades ?? []).map((h, j) =>
-      classAbilityDoc(h, pasta._id, `sd-class-ab:${cls.nome}`, j));
+      classAbilityDoc(h, sub._id, `sd-class-ab:${cls.nome}`, j));
     docs.push(...habs);
     // As especializações da classe entram como habilidades dela: a escolha
     // acontece no 5º nível e CONGELA uma coluna da progressão-base, então elas
@@ -88,7 +98,7 @@ function montaClasses() {
           `<p class='nota-casa'><em>O degrau de 20º nível aparece aqui na descrição ` +
           `porque a ficha do Old Dragon 2 só tem campos para 3º, 6º e 10º.</em></p>`,
         level10: e.n10 || "",
-      }, pasta._id, `sd-espec:${cls.nome}`, 100 + j));
+      }, sub._id, `sd-espec:${cls.nome}`, 100 + j));
     docs.push(...specs);
 
     const todas = [...habs, ...specs];
