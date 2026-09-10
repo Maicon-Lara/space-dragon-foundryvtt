@@ -1,0 +1,50 @@
+{
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Assassino (neutro)",
+  "type": "class_ability",
+  "_id": "32fVaWge5ILiA2Bf",
+  "img": "systems/olddragon2e/assets/icons/piercing.svg",
+  "system": {
+    "description": "<p><em>Especialização de Gatuno, para quem tem Afiliação <strong>neutro</strong>.</em></p><p><strong>A partir do 5º nível.</strong> gatunos neutros podem passar a trabalhar cometendo assassínios por encomenda a partir do 5° nível. Eles param de progredir nos talentos de escalar superfícies e, localização e sabotagem de máquinas, mas seu ataque pelas costas recebe um bônus de 1 ponto, tornando-se x3 nesse nível, x4 ao atingir o 6° nível e assim por diante.43</p><p><strong>No 20º nível.</strong> No 20° nível todos os ataques realizados pelo assassino são considerados ataques pelas costas, e um acerto crítico seu pede que o alvo realize uma JPF para não morrer, de acordo com a regra de dano massivo.</p>",
+    "level": 5,
+    "level3": "",
+    "level6": "",
+    "level10": "No 10° nível ele para de progredir em abrir fechaduras, mas recebe uma chance de 20% de qualquer ataque bem-sucedido que realizar ser considerado um ataque pelas costas, exceto aqueles que já seguiriam essa regra. Ele também se torna capaz de desenvolver venenos, cujos efeitos devem ser discutidos com o mestre.",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 102,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!32fVaWge5ILiA2Bf"
+}

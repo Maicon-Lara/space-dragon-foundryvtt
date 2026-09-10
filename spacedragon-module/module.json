@@ -2,7 +2,7 @@
   "id": "spacedragon",
   "title": "Space Dragon — Livro Básico",
   "description": "O conteudo do Livro Basico Aprimorado de Space Dragon como compendios para o Foundry VTT, no sistema Old Dragon 2. As regras sao as do livro base, sem conversao.",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -76,11 +76,28 @@
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
       }
+    },
+    {
+      "name": "spacedragon-macros",
+      "label": "Space Dragon — Macros",
+      "path": "packs/spacedragon-macros",
+      "type": "Macro",
+      "system": "olddragon2e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     }
   ],
   "manifest": "https://cdn.jsdelivr.net/gh/Maicon-Lara/space-dragon-foundryvtt@main/spacedragon-module/module.json",
   "download": "https://cdn.jsdelivr.net/gh/Maicon-Lara/space-dragon-foundryvtt@main/spacedragon.zip",
   "url": "https://github.com/Maicon-Lara/space-dragon-foundryvtt",
   "license": "LICENSE.md",
-  "readme": "README.md"
+  "readme": "README.md",
+  "esmodules": [
+    "module/spacedragon.js"
+  ],
+  "styles": [
+    "styles/spacedragon.css"
+  ]
 }

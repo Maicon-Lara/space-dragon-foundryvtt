@@ -1,0 +1,27 @@
+{
+  "folder": "gFZHaYQqhiOIzTb7",
+  "name": "Pilotar naves (Homem Espacial)",
+  "type": "script",
+  "_id": "cLns4fGLraMiuQWH",
+  "img": "icons/svg/dice-target.svg",
+  "scope": "global",
+  "command": "game.spacedragon.teste(\"pilotar-naves\");",
+  "author": "swspacedragonbld",
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 200,
+  "_key": "!macros!cLns4fGLraMiuQWH"
+}

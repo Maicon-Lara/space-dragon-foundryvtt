@@ -1,0 +1,50 @@
+{
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Ouvir Barulhos",
+  "type": "class_ability",
+  "_id": "V2e5TcQSuM0ybDqg",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p><strong>Não é porcentagem.</strong> Rola-se <strong>1d6</strong>, e o gatuno é bem-sucedido se o resultado cair dentro da faixa do seu nível: <strong>1–2</strong> até o 4º nível, <strong>1–3</strong> do 5º ao 9º, <strong>1–4</strong> do 10º ao 15º e <strong>1–5</strong> do 16º em diante.</p>",
+    "level": 1,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 6,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!V2e5TcQSuM0ybDqg"
+}

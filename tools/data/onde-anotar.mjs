@@ -14,9 +14,10 @@
 // módulo, tomada a partir do que o PRÓPRIO LIVRO BÁSICO diz que cada atributo
 // faz:
 //
-//   Ciência (T1-5)     — "aptidão tecnológica", quantidade de robôs
-//                        desativados. É o atributo do saber aplicado.
-//   Intelecto (T1-4)   — "proteção mental", realizar e aprender poder mental.
+//   Ciência (T1-5)     — localizar e sabotar máquinas, crédito tecnológico,
+//                        quantidade de robôs desativados. É o atributo do
+//                        saber aplicado.
+//   Intelecto (T1-4)   — proteção mental, reproduzir e aprender poder mental.
 //                        É o atributo da vontade e da percepção.
 //   Comunicação (T1-6) — seguidores, ajuste de reação, idiomas. É o atributo
 //                        social.

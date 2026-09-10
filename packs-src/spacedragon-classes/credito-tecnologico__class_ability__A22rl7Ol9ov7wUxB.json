@@ -1,0 +1,50 @@
+{
+  "folder": "muvzjkE03WGziO1Q",
+  "name": "Crédito Tecnológico",
+  "type": "class_ability",
+  "_id": "A22rl7Ol9ov7wUxB",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p>O <strong>desconto</strong> que a <strong>Ciência</strong> <em>(o campo Inteligência da ficha)</em> concede em qualquer gasto com equipamento, pela T1-5: nenhum até 11, <strong>10%</strong> com 12–13, subindo até <strong>50%</strong> com 28–29.</p><p>Não é bônus de rolagem nenhum — é preço. Várias especializações mexem justamente nele.</p>",
+    "level": 1,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 3,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!A22rl7Ol9ov7wUxB"
+}

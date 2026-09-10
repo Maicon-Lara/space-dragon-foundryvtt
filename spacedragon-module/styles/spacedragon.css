@@ -1,0 +1,43 @@
+/* Space Dragon — só o cartão de teste e o diálogo.
+ *
+ * O módulo NÃO repinta a ficha do Old Dragon 2. Tudo aqui está escopado em
+ * .sd-*, que só existe no que este módulo cria. */
+
+.sd-teste .sd-parcelas {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0 0 0 0.25rem;
+  font-size: var(--font-size-13, 0.85rem);
+}
+
+.sd-teste .sd-parcelas li {
+  padding: 0.05rem 0;
+  border: none;
+}
+
+.sd-teste .sd-parcelas li em {
+  opacity: 0.75;
+}
+
+.sd-teste .sd-nota {
+  margin: 0.4rem 0 0;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.3);
+  font-size: var(--font-size-12, 0.8rem);
+  opacity: 0.85;
+}
+
+.sd-dialogo .sd-explica {
+  margin: 0 0 0.5rem;
+  font-size: var(--font-size-12, 0.8rem);
+  opacity: 0.85;
+}
+
+.sd-dialogo .form-group {
+  margin-bottom: 0.3rem;
+}
+
+.sd-dialogo .form-group label em {
+  opacity: 0.7;
+  font-weight: normal;
+}

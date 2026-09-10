@@ -40,7 +40,7 @@ export function faixaDe(valor) {
 
 // ── T1-1: FORÇA ─────────────────────────────────────────────────────────────
 // ataque: ajuste de ataque e dano corpo-a-corpo
-// subjugar: % somada à probabilidade de subjugar dos cosmonautas
+// subjugar: % somada à probabilidade de subjugar dos homens espaciais
 // carga: [leve, média, pesada] em kg
 export const FORCA = [
   { ataque: -5, subjugar: -25, carga: [1, 2, 5] },
@@ -62,16 +62,29 @@ export const FORCA = [
 
 // ── T1-2: DESTREZA ──────────────────────────────────────────────────────────
 // ataque: ajuste de ataque à distância e proteção
-// furtividade: % em furtividade, furtar (gatuno) e desarmar (cosmonauta)
+// esgueirarDestrancar: % em esgueirar-se e destrancar portas
+// ocultarFurtarDesarmar: % em ocultar-se e furtar (gatuno) e desarmar
+//   (homem espacial)
+//
+// SÃO DUAS COLUNAS DE PORCENTAGEM, NÃO UMA. Elas não são iguais: acima da
+// faixa neutra a segunda ATRASA um degrau — em 12-13 a primeira já dá +5% e a
+// segunda ainda dá 0 —, e o teto é +40% contra +45%.
 export const DESTREZA = [
-  { ataque: -5, furtividade: -25 }, { ataque: -4, furtividade: -20 },
-  { ataque: -3, furtividade: -15 }, { ataque: -2, furtividade: -10 },
-  { ataque: -1, furtividade: -5 },  { ataque: 0, furtividade: 0 },
-  { ataque: +1, furtividade: +5 },  { ataque: +2, furtividade: +10 },
-  { ataque: +3, furtividade: +15 }, { ataque: +4, furtividade: +20 },
-  { ataque: +5, furtividade: +25 }, { ataque: +6, furtividade: +30 },
-  { ataque: +7, furtividade: +35 }, { ataque: +8, furtividade: +40 },
-  { ataque: +9, furtividade: +45 },
+  { ataque: -5, esgueirarDestrancar: -25, ocultarFurtarDesarmar: -25 },
+  { ataque: -4, esgueirarDestrancar: -20, ocultarFurtarDesarmar: -20 },
+  { ataque: -3, esgueirarDestrancar: -15, ocultarFurtarDesarmar: -15 },
+  { ataque: -2, esgueirarDestrancar: -10, ocultarFurtarDesarmar: -10 },
+  { ataque: -1, esgueirarDestrancar: -5, ocultarFurtarDesarmar: -5 },
+  { ataque: 0, esgueirarDestrancar: 0, ocultarFurtarDesarmar: 0 },
+  { ataque: +1, esgueirarDestrancar: +5, ocultarFurtarDesarmar: 0 },
+  { ataque: +2, esgueirarDestrancar: +10, ocultarFurtarDesarmar: +5 },
+  { ataque: +3, esgueirarDestrancar: +15, ocultarFurtarDesarmar: +10 },
+  { ataque: +4, esgueirarDestrancar: +20, ocultarFurtarDesarmar: +15 },
+  { ataque: +5, esgueirarDestrancar: +25, ocultarFurtarDesarmar: +20 },
+  { ataque: +6, esgueirarDestrancar: +30, ocultarFurtarDesarmar: +25 },
+  { ataque: +7, esgueirarDestrancar: +35, ocultarFurtarDesarmar: +30 },
+  { ataque: +8, esgueirarDestrancar: +40, ocultarFurtarDesarmar: +35 },
+  { ataque: +9, esgueirarDestrancar: +45, ocultarFurtarDesarmar: +40 },
 ];
 
 // ── T1-3: CONSTITUIÇÃO ──────────────────────────────────────────────────────
@@ -113,16 +126,30 @@ export const INTELECTO = [
 
 // ── T1-5: CIÊNCIA ───────────────────────────────────────────────────────────
 // robos: DADO de robôs desativados pelo cientista (string, é rolagem)
-// aptidao: % de aptidão tecnológica, usada por várias classes
+// localizarSabotar: % somada ao talento de localizar e sabotar máquinas do
+//   gatuno. ATRASA TRÊS DEGRAUS acima da faixa neutra: 12-13, 14-15 e 10-11
+//   dão todos 0, e só em 16-17 começa o +5%. O teto é +35%.
+// creditoTecnologico: % de DESCONTO em gastos com equipamento. Não é bônus de
+//   rolagem nenhum — é preço.
+//
+// NÃO EXISTE "aptidão tecnológica" na T1-5. Era uma coluna inventada, que
+// somava uma escala de -25%..+45% em testes onde o livro manda somar outra.
 export const CIENCIA = [
-  { robos: "0", aptidao: -25 },   { robos: "0", aptidao: -20 },
-  { robos: "0", aptidao: -15 },   { robos: "0", aptidao: -10 },
-  { robos: "1", aptidao: -5 },    { robos: "1d2", aptidao: 0 },
-  { robos: "1d3", aptidao: +5 },  { robos: "1d4", aptidao: +10 },
-  { robos: "1d6", aptidao: +15 }, { robos: "1d8", aptidao: +20 },
-  { robos: "2d4", aptidao: +25 }, { robos: "1d10", aptidao: +30 },
-  { robos: "1d12", aptidao: +35 }, { robos: "2d6", aptidao: +40 },
-  { robos: "1d20", aptidao: +45 },
+  { robos: "0", localizarSabotar: -25, creditoTecnologico: 0 },
+  { robos: "0", localizarSabotar: -20, creditoTecnologico: 0 },
+  { robos: "0", localizarSabotar: -15, creditoTecnologico: 0 },
+  { robos: "0", localizarSabotar: -10, creditoTecnologico: 0 },
+  { robos: "1", localizarSabotar: -5, creditoTecnologico: 0 },
+  { robos: "1d2", localizarSabotar: 0, creditoTecnologico: 0 },
+  { robos: "1d3", localizarSabotar: 0, creditoTecnologico: 10 },
+  { robos: "1d4", localizarSabotar: 0, creditoTecnologico: 15 },
+  { robos: "1d6", localizarSabotar: +5, creditoTecnologico: 20 },
+  { robos: "1d8", localizarSabotar: +10, creditoTecnologico: 25 },
+  { robos: "2d4", localizarSabotar: +15, creditoTecnologico: 30 },
+  { robos: "1d10", localizarSabotar: +20, creditoTecnologico: 35 },
+  { robos: "1d12", localizarSabotar: +25, creditoTecnologico: 40 },
+  { robos: "2d6", localizarSabotar: +30, creditoTecnologico: 45 },
+  { robos: "1d20", localizarSabotar: +35, creditoTecnologico: 50 },
 ];
 
 // ── T1-6: COMUNICAÇÃO ───────────────────────────────────────────────────────
@@ -160,6 +187,33 @@ export const ROTULOS = {
   ciencia: { nome: "Ciência", sigla: "CIE" },
   comunicacao: { nome: "Comunicação", sigla: "COM" },
 };
+
+/** O cabeçalho de cada coluna, como o livro o escreve. */
+export const COLUNAS = {
+  ataque: { forca: "Ajuste de Ataque e Dano Corpo-a-Corpo", destreza: "Ajuste de Ataque à Distância e Proteção" },
+  subjugar: "Subjugar",
+  carga: "Capacidade de Carga",
+  esgueirarDestrancar: "Esgueirar-se e Destrancar Portas",
+  ocultarFurtarDesarmar: "Ocultar-se, Furtar e Desarmar",
+  pv: "Ajuste de Pontos de Vida e Proteção",
+  clonagem: "Probabilidade de Clonagem",
+  mortais: "Danos Mortais",
+  poderMental: "Reproduzir e Aprender Poder Mental",
+  alcanceAdicional: "Alcance Mental Adicional",
+  protecaoMental: "Proteção Mental",
+  robos: "Quantidade de Robôs Desativados",
+  localizarSabotar: "Localizar e Sabotar Máquinas",
+  creditoTecnologico: "Crédito Tecnológico",
+  seguidores: "Número Máximo de Seguidores",
+  reacao: "Ajuste de Reação",
+  idiomas: "Idiomas Adicionais",
+};
+
+/** O rótulo da coluna `c` na tabela de `atributo`. */
+export function rotuloColuna(c, atributo) {
+  const r = COLUNAS[c];
+  return typeof r === "string" ? r : (r?.[atributo] ?? c);
+}
 
 /** A linha da tabela de `atributo` para um `valor`. */
 export function tabela(atributo, valor) {

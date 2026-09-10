@@ -1,0 +1,50 @@
+{
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Escalar Superfícies",
+  "type": "class_ability",
+  "_id": "NVQCxB3rF6oaHBG7",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p><strong>80%</strong> no 1º nível, <strong>99%</strong> no 20º. Vale para toda superfície íngreme.</p><p>Cada sucesso vale <strong>3 metros</strong>. Falhar derruba, com <strong>1d6 de dano por 3 metros já escalados</strong> — falhar na primeira jogada não machuca.</p><p>Sem modificador de atributo.</p>",
+    "level": 1,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 2,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!NVQCxB3rF6oaHBG7"
+}

@@ -1,0 +1,50 @@
+{
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Ocultar-se",
+  "type": "class_ability",
+  "_id": "PuiZzFhEADXRd4HA",
+  "img": "systems/olddragon2e/assets/icons/kit.svg",
+  "system": {
+    "description": "<p><strong>10%</strong> no 1º nível, <strong>78%</strong> no 20º — o talento mais difícil da tabela.</p><p>⚠️ <strong>Também é rolagem do Mestre</strong>, pelo mesmo motivo.</p><p>Escondido, o gatuno só se move <strong>esgueirando-se</strong>: movimento comum ou falha revelam a posição. Atacar sempre revela, mas o ataque feito escondido tem os benefícios do <strong>ataque pelas costas</strong>.</p><p>Soma a coluna <em>Ocultar-se, Furtar e Desarmar</em> da <strong>Destreza</strong> — que é <strong>outra</strong> coluna, mais fraca que a de esgueirar-se.</p>",
+    "level": 1,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 4,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!PuiZzFhEADXRd4HA"
+}

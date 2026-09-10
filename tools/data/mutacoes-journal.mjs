@@ -13,7 +13,7 @@
 // descrição de uma opção de dropdown é uma linha de texto puro. Então o texto
 // integral fica aqui, e o seletor carrega o resumo.
 
-import { PARES, T2_2, T2_3, T2_4, T2_5 } from "./mutacoes.mjs";
+import { PARES, T2_3, T2_2, T2_5, T2_4 } from "./mutacoes.mjs";
 import { NOME, CAMPO_NA_FICHA } from "./onde-anotar.mjs";
 
 const ROTULO_FICHA = {
@@ -22,10 +22,10 @@ const ROTULO_FICHA = {
 };
 
 const SUBTABELAS = {
-  "Atributo Ampliado": { nome: "T2-2: Atributo Ampliado", col2: "Atributo", linhas: T2_2 },
-  "Atributo Diminuído": { nome: "T2-4: Atributo Diminuído", col2: "Atributo", linhas: T2_4 },
-  "Sentido Ampliado": { nome: "T2-3: Sentido Ampliado", col2: "Sentido", linhas: T2_3 },
-  "Sentido Diminuído": { nome: "T2-5: Sentido Diminuído", col2: "Sentido", linhas: T2_5 },
+  "Atributo Ampliado": { nome: "T2-3: Atributo Ampliado", col2: "Atributo", linhas: T2_3 },
+  "Atributo Diminuído": { nome: "T2-5: Atributo Diminuído", col2: "Atributo", linhas: T2_5 },
+  "Sentido Ampliado": { nome: "T2-2: Sentido Ampliado", col2: "Sentido", linhas: T2_2 },
+  "Sentido Diminuído": { nome: "T2-4: Sentido Diminuído", col2: "Sentido", linhas: T2_4 },
 };
 
 function subtabelaHTML(sub) {

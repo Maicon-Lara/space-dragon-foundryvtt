@@ -75,7 +75,7 @@ está naquela faixa.</p>
 
 ${tabelaT41}
 
-<blockquote><p>Uma cosmonauta de 1º nível com vestes médias (proteção 12) e
+<blockquote><p>Uma homem espacial de 1º nível com vestes médias (proteção 12) e
 Destreza 13 (ajuste +1) tem CP <strong>13</strong>. Ela ainda não chegou ao 4º
 nível, então não há bônus de nível nenhum.</p></blockquote>
 

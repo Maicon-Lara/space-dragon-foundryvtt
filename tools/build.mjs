@@ -15,7 +15,7 @@ import { fileURLToPath } from "node:url";
 import { compilePack } from "@foundryvtt/foundryvtt-cli";
 
 import {
-  folderDoc, raceDoc, raceAbilityDoc, classDoc, classAbilityDoc, journalDoc, rollTableDoc,
+  folderDoc, raceDoc, raceAbilityDoc, classDoc, classAbilityDoc, journalDoc, rollTableDoc, macroDoc,
   itemUuid, writeSource, aninhaPastas, pintaPastas, makeId, stats,
 } from "./lib.mjs";
 import { especies } from "./data/especies.mjs";
@@ -24,6 +24,8 @@ import { especializacoes } from "./data/especializacoes.mjs";
 import { PARES } from "./data/mutacoes.mjs";
 import { regras } from "./data/regras.mjs";
 import { mutacoesJournal } from "./data/mutacoes-journal.mjs";
+import { TESTES } from "./data/testes.mjs";
+import { testesJournal } from "./data/testes-journal.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -34,6 +36,7 @@ const P_CLASSES = "spacedragon-classes";
 const P_ESPECIES = "spacedragon-especies";
 const P_TABELAS = "spacedragon-tabelas";
 const P_JOURNAL = "spacedragon-journal";
+const P_MACROS = "spacedragon-macros";
 
 /** Cor por pasta: sem isso o compêndio vira uma lista cinza indistinguível. */
 const PALETA = {
@@ -132,6 +135,39 @@ function montaTabelas() {
   return docs;
 }
 
+// ── Macros ──────────────────────────────────────────────────────────────────
+//
+// Uma macro geral e uma por teste. As específicas existem porque é assim que a
+// mesa usa: o gatuno quer um botão "Furtar" na barra, não um menu onde escolher
+// furtar toda vez.
+//
+// O COMANDO É UMA LINHA SÓ, de propósito. Toda a regra vive em
+// module/testes.js; a macro apenas chama. Assim atualizar o módulo atualiza a
+// regra, inclusive para as macros que já foram arrastadas para a barra.
+function montaMacros() {
+  const docs = [];
+  const pasta = folderDoc("Testes de porcentagem", "Macro", "sd-macros");
+  docs.push(pasta);
+
+  docs.push({
+    ...macroDoc({
+      nome: "Teste de porcentagem",
+      comando: "game.spacedragon.teste();",
+      img: "icons/svg/d20-highlight.svg",
+    }, pasta._id, 0),
+  });
+
+  TESTES.forEach((t, i) => {
+    docs.push({
+      ...macroDoc({
+        nome: t.classe ? `${t.nome} (${t.classe})` : t.nome,
+        comando: `game.spacedragon.teste("${t.chave}");`,
+      }, pasta._id, (i + 1) * 100),
+    });
+  });
+  return docs;
+}
+
 // ── Compilação ──────────────────────────────────────────────────────────────
 async function compila(nome, docs) {
   const srcDir = path.join(SRC, nome);
@@ -160,7 +196,8 @@ async function main() {
   await compila(P_ESPECIES, esp);
 
   await compila(P_TABELAS, montaTabelas());
-  const journais = [...regras, mutacoesJournal];
+  const journais = [...regras, mutacoesJournal, testesJournal];
+  await compila(P_MACROS, montaMacros());
   await compila(P_JOURNAL, journais.map((e, i) => journalDoc(e, (i + 1) * 1000)));
 
   console.log("Concluído.");

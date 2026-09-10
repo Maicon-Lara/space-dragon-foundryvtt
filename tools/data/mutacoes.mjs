@@ -175,8 +175,8 @@ export const PARES = [
     },
   },];
 
-/** T2-2: Atributo Ampliado — 1d6. */
-export const T2_2 = [
+/** T2-3: Atributo Ampliado — 1d6. */
+export const T2_3 = [
   { d6: 1, atributo: "forca", ajuste: +3, fenotipo: "Corpo musculoso" },
   { d6: 2, atributo: "destreza", ajuste: +3, fenotipo: "Corpo esguio e boa coordenação motora" },
   { d6: 3, atributo: "constituicao", ajuste: +3, fenotipo: "Aparência saudável" },
@@ -185,8 +185,8 @@ export const T2_2 = [
   { d6: 6, atributo: "comunicacao", ajuste: +3, fenotipo: "Aptidão para socialização" },
 ];
 
-/** T2-4: Atributo Diminuído — 1d6. Espelha a T2-2, com o sinal trocado. */
-export const T2_4 = [
+/** T2-5: Atributo Diminuído — 1d6. Espelha a T2-3, com o sinal trocado. */
+export const T2_5 = [
   { d6: 1, atributo: "forca", ajuste: -3, fenotipo: "Corpo franzino" },
   { d6: 2, atributo: "destreza", ajuste: -3, fenotipo: "Corpo pesado e coordenação motora prejudicada" },
   { d6: 3, atributo: "constituicao", ajuste: -3, fenotipo: "Aparência doentia" },
@@ -195,8 +195,8 @@ export const T2_4 = [
   { d6: 6, atributo: "comunicacao", ajuste: -3, fenotipo: "Introspecção inata" },
 ];
 
-/** T2-3: Sentido Ampliado — 1d6. */
-export const T2_3 = [
+/** T2-2: Sentido Ampliado — 1d6. */
+export const T2_2 = [
   { d6: 1, sentido: "Visão", fenotipo: "Olhos proeminentes ou de coloração diferenciada",
     funcionamento: "Enxerga no escuro e à distância, e recebe +1 para usar armas à distância. Gatunos recebem +1 em jogadas de percepção envolvendo a visão." },
   { d6: 2, sentido: "Audição", fenotipo: "Orelhas proeminentes ou pontudas",
@@ -211,8 +211,8 @@ export const T2_3 = [
     funcionamento: "+2 em qualquer Jogada de Proteção de Reflexos (JPR) e no coeficiente de proteção." },
 ];
 
-/** T2-5: Sentido Diminuído — 1d6. */
-export const T2_5 = [
+/** T2-4: Sentido Diminuído — 1d6. */
+export const T2_4 = [
   { d6: 1, sentido: "Visão", fenotipo: "Olhos pequenos ou com ausência de íris",
     funcionamento: "Incapaz de enxergar bem com muita luz e ao longe, e recebe −1 para usar armas à distância. Gatunos recebem −1 em jogadas de percepção envolvendo a visão." },
   { d6: 2, sentido: "Audição", fenotipo: "Orelhas pouco desenvolvidas ou parcialmente cobertas",
@@ -229,11 +229,11 @@ export const T2_5 = [
 
 /** Quais pares mandam rolar 1d6 numa subtabela depois de sorteados. */
 export const SUBTABELA = {
-  7: { aprimoramento: "T2_3", degeneracao: "T2_5" },   // Sentido ampliado / diminuído
-  8: { aprimoramento: "T2_2", degeneracao: "T2_4" },   // Atributo ampliado / diminuído
+  7: { aprimoramento: "T2_2", degeneracao: "T2_4" },   // Sentido ampliado / diminuído
+  8: { aprimoramento: "T2_3", degeneracao: "T2_5" },   // Atributo ampliado / diminuído
 };
 
-export const SUBTABELAS = { T2_2, T2_3, T2_4, T2_5 };
+export const SUBTABELAS = { T2_3, T2_2, T2_5, T2_4 };
 
 /**
  * Sorteia o par de mutações: 2d10, um dado por coluna, REROLANDO enquanto os
@@ -288,8 +288,8 @@ const slug = (s) =>
    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 const SUB_DO_LADO = {
-  aprimoramento: { "Atributo Ampliado": T2_2, "Sentido Ampliado": T2_3 },
-  degeneracao: { "Atributo Diminuído": T2_4, "Sentido Diminuído": T2_5 },
+  aprimoramento: { "Atributo Ampliado": T2_3, "Sentido Ampliado": T2_2 },
+  degeneracao: { "Atributo Diminuído": T2_5, "Sentido Diminuído": T2_4 },
 };
 
 /** As opções do dropdown para um lado do balanço genético. */

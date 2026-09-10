@@ -1,0 +1,150 @@
+{
+  "folder": "jPHQjBiNQZgIeCuA",
+  "name": "Homem Espacial",
+  "type": "class",
+  "_id": "rBz47kA07FCAdcYp",
+  "img": "systems/olddragon2e/assets/icons/level-up.svg",
+  "system": {
+    "flavor": "<p>O piloto, o soldado, quem encara o vácuo de frente.</p>",
+    "description": "<p>Aventureiros e desbravadores da imensidão sideral: pilotos, mercenários, guarda-costas ou soldados. Usam <strong>qualquer arma, veste ou escudo</strong>, sem restrição, e são proficientes em aparatos defensivos e utilitários — mas <strong>não ofensivos</strong>.</p><p>Os atributos principais são <strong>Força e Destreza, em escala igual</strong>. Ganha <strong>ataques múltiplos</strong> conforme sobe, e é a única classe com <strong>dano crítico</strong> na progressão.</p><p><strong>T3-5: Homem Espacial</strong></p><table><thead><tr><th>nível</th><th>XP</th><th>DV</th><th>BA</th><th>JP</th><th>pilotar naves</th><th>desarmar e subjugar</th><th>dano crítico</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>1</td><td>+1</td><td>16</td><td>80%</td><td>20%</td><td>x2</td></tr><tr><td>2</td><td>2.000</td><td>2</td><td>+2</td><td>16</td><td>81%</td><td>25%</td><td>x2</td></tr><tr><td>3</td><td>4.000</td><td>3</td><td>+3</td><td>16</td><td>82%</td><td>30%</td><td>x2</td></tr><tr><td>4</td><td>8.000</td><td>4</td><td>+4</td><td>15</td><td>83%</td><td>35%</td><td>x2</td></tr><tr><td>5</td><td>16.000</td><td>5</td><td>+5</td><td>15</td><td>84%</td><td>40%</td><td>x2</td></tr><tr><td>6</td><td>32.000</td><td>6</td><td>+6</td><td>15</td><td>85%</td><td>45%</td><td>x3</td></tr><tr><td>7</td><td>64.000</td><td>7</td><td>+7/+1</td><td>14</td><td>86%</td><td>50%</td><td>x3</td></tr><tr><td>8</td><td>128.000</td><td>8</td><td>+8/+2</td><td>14</td><td>87%</td><td>55%</td><td>x3</td></tr><tr><td>9</td><td>256.000</td><td>9</td><td>+9/+3</td><td>14</td><td>88%</td><td>60%</td><td>x3</td></tr><tr><td>10</td><td>304.000</td><td>+2 PV</td><td>+10/+4</td><td>13</td><td>89%</td><td>65%</td><td>x3</td></tr><tr><td>11</td><td>408.000</td><td>+2 PV</td><td>+10/+4</td><td>13</td><td>90%</td><td>70%</td><td>x3</td></tr><tr><td>12</td><td>516.000</td><td>+4 PV</td><td>+11/+5</td><td>13</td><td>91%</td><td>72%</td><td>x4</td></tr><tr><td>13</td><td>632.000</td><td>+4 PV</td><td>+11/+5</td><td>12</td><td>92%</td><td>74%</td><td>x4</td></tr><tr><td>14</td><td>704.000</td><td>+5 PV</td><td>+12/+6</td><td>12</td><td>93%</td><td>76%</td><td>x4</td></tr><tr><td>15</td><td>808.000</td><td>+5 PV</td><td>+12/+6</td><td>12</td><td>94%</td><td>78%</td><td>x4</td></tr><tr><td>16</td><td>916.000</td><td>+6 PV</td><td>+13/+7</td><td>11</td><td>95%</td><td>80%</td><td>x4</td></tr><tr><td>17</td><td>1.032.000</td><td>+6 PV</td><td>+13/+7</td><td>11</td><td>96%</td><td>82%</td><td>x4</td></tr><tr><td>18</td><td>1.064.000</td><td>+7 PV</td><td>+14/+8</td><td>11</td><td>97%</td><td>84%</td><td>x5</td></tr><tr><td>19</td><td>1.128.000</td><td>+7 PV</td><td>+14/+8</td><td>10</td><td>98%</td><td>86%</td><td>x5</td></tr><tr><td>20</td><td>1.256.000</td><td>+8 PV</td><td>+15/+9</td><td>10</td><td>99%</td><td>88%</td><td>x5</td></tr></tbody></table><p><strong>Especializações</strong> — a Afiliação decide qual está aberta:</p><ul><li><strong>Emissário</strong> — leal</li><li><strong>Mercenário</strong> — neutro</li><li><strong>Caçador de Recompensas</strong> — rebelde</li></ul>",
+    "hp": 8,
+    "high_level_hp_bonus": null,
+    "equipment_restrictions": {
+      "weapons": "Sem restrições.",
+      "armors": "Sem restrições.",
+      "magic_items": "Sem restrições."
+    },
+    "restrictions": {
+      "alignments": [],
+      "races": []
+    },
+    "levels": {
+      "1": {
+        "ba": 1,
+        "jp": 16
+      },
+      "2": {
+        "ba": 2,
+        "jp": 16,
+        "xp": 2000
+      },
+      "3": {
+        "ba": 3,
+        "jp": 16,
+        "xp": 4000
+      },
+      "4": {
+        "ba": 4,
+        "jp": 15,
+        "xp": 8000
+      },
+      "5": {
+        "ba": 5,
+        "jp": 15,
+        "xp": 16000
+      },
+      "6": {
+        "ba": 6,
+        "jp": 15,
+        "xp": 32000
+      },
+      "7": {
+        "ba": 7,
+        "jp": 14,
+        "xp": 64000
+      },
+      "8": {
+        "ba": 8,
+        "jp": 14,
+        "xp": 128000
+      },
+      "9": {
+        "ba": 9,
+        "jp": 14,
+        "xp": 256000
+      },
+      "10": {
+        "ba": 10,
+        "jp": 13,
+        "xp": 304000
+      },
+      "11": {
+        "ba": 10,
+        "jp": 13,
+        "xp": 408000
+      },
+      "12": {
+        "ba": 11,
+        "jp": 13,
+        "xp": 516000
+      },
+      "13": {
+        "ba": 11,
+        "jp": 12,
+        "xp": 632000
+      },
+      "14": {
+        "ba": 12,
+        "jp": 12,
+        "xp": 704000
+      },
+      "15": {
+        "ba": 12,
+        "jp": 12,
+        "xp": 808000
+      },
+      "16": {
+        "ba": 13,
+        "jp": 11,
+        "xp": 916000
+      },
+      "17": {
+        "ba": 13,
+        "jp": 11,
+        "xp": 1032000
+      },
+      "18": {
+        "ba": 14,
+        "jp": 11,
+        "xp": 1064000
+      },
+      "19": {
+        "ba": 14,
+        "jp": 10,
+        "xp": 1128000
+      },
+      "20": {
+        "ba": 15,
+        "jp": 10,
+        "xp": 1256000
+      }
+    },
+    "class_abilities": [
+      "Compendium.spacedragon.spacedragon-classes.Item.D0HhtXoOCSsH23zn",
+      "Compendium.spacedragon.spacedragon-classes.Item.lOdZrdGrBakhbeXG",
+      "Compendium.spacedragon.spacedragon-classes.Item.6ob4GEBBIkdptzaC",
+      "Compendium.spacedragon.spacedragon-classes.Item.rXZwVuUKsjBJjG5q",
+      "Compendium.spacedragon.spacedragon-classes.Item.iGK07wAQlVXDbBel",
+      "Compendium.spacedragon.spacedragon-classes.Item.8cIAakLQacAfyVDJ",
+      "Compendium.spacedragon.spacedragon-classes.Item.lbyj6gj0Lo5LC79S"
+    ]
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 2000,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!rBz47kA07FCAdcYp"
+}

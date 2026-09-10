@@ -1,0 +1,27 @@
+{
+  "folder": "gFZHaYQqhiOIzTb7",
+  "name": "Destrancar portas (Gatuno)",
+  "type": "script",
+  "_id": "FgOlLJLE4SKs2zkB",
+  "img": "icons/svg/dice-target.svg",
+  "scope": "global",
+  "command": "game.spacedragon.teste(\"destrancar-portas\");",
+  "author": "swspacedragonbld",
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 500,
+  "_key": "!macros!FgOlLJLE4SKs2zkB"
+}
