@@ -26,6 +26,7 @@ import { ligarPainel, diagnostico } from "./painel.js";
 import { aplicarModificadores, compararEscalas } from "./atributos.js";
 import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
 import { ligarCabecalho, danosMortais } from "./cabecalho.js";
+import { ligarGrandezas } from "./poderes.js";
 
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
@@ -73,6 +74,7 @@ Hooks.once("ready", () => {
   aplicarModificadores(game.settings.get(ID, "modificadores"));
   ligarPainel();
   ligarCabecalho();
+  ligarGrandezas();
 
   // A API que as macros do compêndio chamam. Fica aqui, e não dentro da macro,
   // para que atualizar o módulo atualize a regra: uma macro já arrastada para

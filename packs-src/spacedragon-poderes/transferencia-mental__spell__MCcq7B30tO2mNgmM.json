@@ -1,0 +1,39 @@
+{
+  "folder": "Y6yG1iAWraZhRPNA",
+  "name": "Transferência Mental",
+  "type": "spell",
+  "_id": "MCcq7B30tO2mNgmM",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "transferencia-mental",
+    "school": "arcane",
+    "circle": "8",
+    "arcane": "8",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Toque",
+    "duration": "Permanente",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico pode transferir uma mente que esteja armazenada em sua própria para um novo corpo, cuja personalidade tenha sido isolada anteriormente ou aprisionada em outro lugar. A mente assumirá o corpo como se fosse seu, mantendo os atributos físicos (Força, Destreza e Constituição), mas alterando os atributos mentais e sociais (Intelecto, Ciência e Comunicação) de acordo com suas capacidades mentais.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 90,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!MCcq7B30tO2mNgmM"
+}

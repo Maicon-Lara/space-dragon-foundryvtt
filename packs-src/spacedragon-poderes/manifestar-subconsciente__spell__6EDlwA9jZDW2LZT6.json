@@ -1,0 +1,39 @@
+{
+  "folder": "esrOgJxj1JmueZoO",
+  "name": "Manifestar Subconsciente",
+  "type": "spell",
+  "_id": "6EDlwA9jZDW2LZT6",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "manifestar-subconsciente",
+    "school": "arcane",
+    "circle": "4",
+    "arcane": "4",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "Permanente",
+    "jp": "nenhuma",
+    "description": "<p>Com este poder mental, o mentálico é capaz de manifestar alguma informação do subconsciente do alvo. Essa informação pode ser uma mensagem subliminar, memórias quase esquecidas ou o efeito de algum poder mental. O alvo passará a armazenar a informação em sua memória consciente, que o mentálico lerá instantaneamente.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 70,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!6EDlwA9jZDW2LZT6"
+}

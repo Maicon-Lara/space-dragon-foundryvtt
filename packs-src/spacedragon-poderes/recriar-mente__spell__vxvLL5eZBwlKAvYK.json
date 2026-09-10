@@ -1,0 +1,39 @@
+{
+  "folder": "Y6yG1iAWraZhRPNA",
+  "name": "Recriar Mente",
+  "type": "spell",
+  "_id": "vxvLL5eZBwlKAvYK",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "recriar-mente",
+    "school": "arcane",
+    "circle": "8",
+    "arcane": "8",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Pessoal",
+    "duration": "Permanente",
+    "jp": "nenhuma",
+    "description": "<p>Este poder mental pode construir uma cópia da mente de um indivíduo, através da leitura das memórias de pessoas que conviveram com ele. É necessário ler a memória de pelo menos 5 pessoas que se envolveram com o indivíduo cuja mente será recriada, conferindo uma chance de 25% de sucesso ao poder mental, cada pessoa além das 5 oferece mais 5% de chance de sucesso. Se o mentálico optar por vivenciar as memórias ao invés de lê-las, a chance inicial será de 50% e as adicionais serão de 10%. Se ele optar por interagir com as memórias, a chance inicial será automaticamente de 100%. O mentálico também pode utilizar este poder mental para copiar diretamente a mente de um alvo que falhe em uma JPM. A mente recriada ou copiada ficará armazenada na mente do próprio mentálico até que seja colocada em um novo corpo através de uma transferência mental.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 80,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!vxvLL5eZBwlKAvYK"
+}

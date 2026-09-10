@@ -1,0 +1,39 @@
+{
+  "folder": "Hv22MnCOVEaWxnq3",
+  "name": "Resgatar Mente",
+  "type": "spell",
+  "_id": "KHEROMgwdgsJhnjh",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "resgatar-mente",
+    "school": "arcane",
+    "circle": "9",
+    "arcane": "9",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "Permanente",
+    "jp": "nenhuma",
+    "description": "<p>Este poder mental pode resgatar uma mente aprisionada em um cérebro positrônico e transferi-la para um corpo, ou quebrar o efeito do isolamento de uma mente em um corpo. A resistência mental do cérebro positrônico deve ser superada anteriormente, caso a mente tenha sido aprisionada em um, e a mente a ser resgatada deve vencer uma JPM para que o processo seja bem-sucedido. Ela ficará armazenada indefinidamente na própria mente do mentálico até que ele possa fazer uma transferência mental para o novo corpo, se ela tiver sido aprisionada, ou assumirá novamente o corpo caso tenha sido isolada.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 70,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!KHEROMgwdgsJhnjh"
+}

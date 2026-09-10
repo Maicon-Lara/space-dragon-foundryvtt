@@ -1,0 +1,39 @@
+{
+  "folder": "ID8N7WYp2gN1xOsI",
+  "name": "Detectar Invisibilidade",
+  "type": "spell",
+  "_id": "vrs3cMU6nlG5iCkG",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "detectar-invisibilidade",
+    "school": "arcane",
+    "circle": "2",
+    "arcane": "2",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "10 metros + 3 metros/ nível",
+    "duration": "Instantâneo",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico pode detectar personagens invisíveis dentro do alcance deste poder mental ao analisar os padrões cerebrais presentes no local. A detecção dirá se há alguém invisível e sua direção aproximada.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 30,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!vrs3cMU6nlG5iCkG"
+}

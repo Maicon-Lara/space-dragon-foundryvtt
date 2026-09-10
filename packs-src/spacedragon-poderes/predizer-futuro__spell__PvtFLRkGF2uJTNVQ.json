@@ -1,0 +1,39 @@
+{
+  "folder": "sfXAUcvkI6QH75Oj",
+  "name": "Predizer Futuro",
+  "type": "spell",
+  "_id": "PvtFLRkGF2uJTNVQ",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "predizer-futuro",
+    "school": "arcane",
+    "circle": "7",
+    "arcane": "7",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Especial (ver texto)",
+    "duration": "Instantâneo",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico é capaz de predizer um acontecimento futuro envolvendo um grupo de pessoas, ao analisar os padrões cerebrais de todos os indivíduos. É necessário um grupo de no mínimo 4 pessoas, o que garante ao mentálico uma chance de 30% de predizer corretamente o futuro. Cada pessoa acima disso aumenta a precisão do mentálico em 5% conforme a amostragem mental se torna maior. É possível prever fatos que acontecerão a até 10 minutos para cada nível do mentálico. Já eventos totalmente independentes da ação das pessoas envolvidas, como intervenção de terceiros ou fenômenos naturais, não podem ser previstos.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 70,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!PvtFLRkGF2uJTNVQ"
+}

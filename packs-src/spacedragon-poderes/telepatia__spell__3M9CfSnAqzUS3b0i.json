@@ -1,0 +1,39 @@
+{
+  "folder": "RKihQDQ26wRGKNJy",
+  "name": "Telepatia",
+  "type": "spell",
+  "_id": "3M9CfSnAqzUS3b0i",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "telepatia",
+    "school": "arcane",
+    "circle": "1",
+    "arcane": "1",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "1 Km/ nível",
+    "duration": "15 segundos/nível",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico é capaz de comunicar-se silenciosamente com um único alvo ao alcance do poder mental, como se falasse com ele pessoalmente e em voz alta. É possível comunicar-se telepaticamente tanto com alvos com os quais se tem uma conexão psíquica quanto com outros com os quais não se tem. Se houver conexão psíquica a telepatia será bilateral, sendo possível enviar e receber mensagens, mas a telepatia sem a ligação só permite que o mentálico envie mensagens sem receber nenhuma resposta.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 70,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!3M9CfSnAqzUS3b0i"
+}

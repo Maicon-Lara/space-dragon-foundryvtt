@@ -1,0 +1,39 @@
+{
+  "folder": "qxvTZNb8vhbUB1db",
+  "name": "Hipnose",
+  "type": "spell",
+  "_id": "HloNMM3MI0QJ3Vgx",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "hipnose",
+    "school": "arcane",
+    "circle": "3",
+    "arcane": "3",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "1 minuto/nível",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico consegue manter um controle hipnótico sobre o alvo, caso ele falhe em uma JPM. É possível fazer perguntas e uma única sugestão ao alvo, que dormirá por toda a duração do poder mental e não lembrará de nada. Para fazer uma sugestão pós-hipnótica basta usar o poder mental de mensagem subliminar durante o processo de hipnose, o que tornará possível que o mentálico crie uma palavra de ativação para os efeitos da sugestão.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 50,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!HloNMM3MI0QJ3Vgx"
+}

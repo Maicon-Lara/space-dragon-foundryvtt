@@ -1,0 +1,39 @@
+{
+  "folder": "Y6yG1iAWraZhRPNA",
+  "name": "Dividir Personalidade",
+  "type": "spell",
+  "_id": "6bMfEQKdhnCLYcFv",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "dividir-personalidade",
+    "school": "arcane",
+    "circle": "8",
+    "arcane": "8",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "Permanente",
+    "jp": "nenhuma",
+    "description": "<p>Este poder funciona de forma similar à criação de uma dupla personalidade, com a diferença de que a personalidade original do indivíduo é dividida em duas, sendo que uma retém sua personalidade mas não suas memórias, e a outra retém as memórias mas não a personalidade. Os níveis de personagem devem ser divididos entre as duas personalidades, que devem permanecer na mesma classe original. Caso seja impossível dividir igualmente os níveis, a personalidade que retém as memórias ficará com a maior parcela dos níveis. Personagens de 1º nível que sejam alvos deste poder mental sofrem os efeitos de criação de dupla personalidade ao invés de divisão, como explicado no poder específico.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 40,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!6bMfEQKdhnCLYcFv"
+}

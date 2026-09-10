@@ -1,0 +1,39 @@
+{
+  "folder": "Y6yG1iAWraZhRPNA",
+  "name": "Assumir Mente Desencarnada",
+  "type": "spell",
+  "_id": "XpQKUR53n2tpQDA6",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "assumir-mente-desencarnada",
+    "school": "arcane",
+    "circle": "8",
+    "arcane": "8",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Indefinido",
+    "duration": "1 minuto/nível",
+    "jp": "nenhuma",
+    "description": "<p>Após contatar uma mente desencarnada, com o poder mental específico, o mentálico pode assumir completamente a personalidade e memórias dessa mente pela duração dos efeitos. A personalidade e memórias originais do mentálico são anuladas até que a mente retorne para o Espírito Galáctico. O mentálico terá quaisquer habilidades que a pessoa tinha em vida, mas seus atributos físicos (Força, Destreza e Constituição) permanecem os mesmos. Entretanto seus atributos mentais e sociais (Intelecto, Ciência e Comunicação) assumem automaticamente os valores da mente que foi assumida.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 10,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!XpQKUR53n2tpQDA6"
+}

@@ -1,0 +1,39 @@
+{
+  "folder": "zwkCRoTFJVrAg2qf",
+  "name": "Controlar Mente",
+  "type": "spell",
+  "_id": "WRULS4cWzycvz2po",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "controlar-mente",
+    "school": "arcane",
+    "circle": "6",
+    "arcane": "6",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "1 minuto/nível",
+    "jp": "nenhuma",
+    "description": "<p>O alvo deste poder mental ficará sob o controle do mentálico pela duração dos efeitos, se falhar em uma JPM. Um alvo controlado obedecerá a quaisquer comandos do mentálico, que são transmitidos mentalmente. O mentálico deve sempre manter o alvo ao alcance visual, senão o efeito é perdido. Situações de grande estresse mental ou potencialmente fatais também podem quebrar o efeito, permitindo uma nova JPM por parte do indivíduo sendo controlado.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 30,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!WRULS4cWzycvz2po"
+}

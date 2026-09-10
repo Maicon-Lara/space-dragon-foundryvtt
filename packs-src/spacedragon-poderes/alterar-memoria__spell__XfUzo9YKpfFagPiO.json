@@ -1,0 +1,39 @@
+{
+  "folder": "esrOgJxj1JmueZoO",
+  "name": "Alterar Memória",
+  "type": "spell",
+  "_id": "XfUzo9YKpfFagPiO",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "alterar-memoria",
+    "school": "arcane",
+    "circle": "4",
+    "arcane": "4",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "Permanente",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico pode alterar a memória de um alvo, que não se lembrará da memória verdadeira. É possível alterar memórias de fatos ocorridos há 1 mês para cada nível do mentálico, a quantidade de alterações também depende de seu nível. A cada 4 níveis na classe o mentálico pode alterar um elemento da memória, como um acontecimento, lugar ou identidade de um indivíduo, de modo que um mentálico de 5º nível pode alterar dois elementos, e assim por diante. O alvo pode resistir aos efeitos com uma JPM.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!XfUzo9YKpfFagPiO"
+}

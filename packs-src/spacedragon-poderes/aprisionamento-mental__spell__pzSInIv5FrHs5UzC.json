@@ -1,0 +1,39 @@
+{
+  "folder": "Hv22MnCOVEaWxnq3",
+  "name": "Aprisionamento Mental",
+  "type": "spell",
+  "_id": "pzSInIv5FrHs5UzC",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "aprisionamento-mental",
+    "school": "arcane",
+    "circle": "9",
+    "arcane": "9",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "Permanente",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico pode aprisionar a mente do alvo permanentemente em um cérebro positrônico, se ele falhar em uma JPM. O cérebro não pode conter nenhuma personalidade programada e armazenará a mente até ser destruído. Com a destruição do cérebro a mente voltará ao seu corpo original, caso ele ainda viva, mas se misturará ao Espírito Galáctico caso ele não esteja mais vivo. Uma mente aprisionada pode ser alvo de poderes mentais normalmente, mas ganha a resistência mental de 5% dos Homo machina. O cérebro positrônico pode ser instalado em um corpo robótico, que passará a agir como se fosse a pessoa cuja mente foi aprisionada.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!pzSInIv5FrHs5UzC"
+}

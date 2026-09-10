@@ -278,3 +278,60 @@ if (falhasCab.length) {
   process.exit(1);
 }
 console.log("  ✔ cabeçalho: sem moldura, campo \"Danos Mortais\" −9, créditos em system.economy.gp");
+
+// ── A 10ª Grandeza para de cair no 1º círculo? ─────────────────────────────
+//
+// A ficha do OD2 monta os círculos de 1 a 9 e joga o resto no 1º, sem erro
+// nenhum: um "Universo mental" de 10ª apareceria listado entre os poderes mais
+// fracos, e ninguém percebe até a mesa.
+//
+// O dublê abaixo imita o getData do sistema: nove faixas e o mesmo fallback.
+class FichaFalsa {
+  constructor(itens) { this.actor = { items: itens }; }
+  async getData() {
+    const grade = {};
+    for (let i = 1; i <= 9; i += 1) grade[i] = { circle: i, spells: [] };
+    for (const m of this.actor.items.filter((i) => i.type === "spell")) {
+      const c = parseInt(m.system.arcane, 10);
+      (grade[c] ?? grade[1]).spells.push(m);
+    }
+    return { spell_by_circle: grade };
+  }
+}
+FichaFalsa.prototype.constructor = FichaFalsa;
+Object.defineProperty(FichaFalsa, "name", { value: "OD2CharacterSheet" });
+
+const poder = (nome, g) => ({ type: "spell", name: nome, system: { arcane: String(g) } });
+const itens = [poder("Telepatia", 1), poder("Universo mental", 10), poder("Morte cerebral", 10)];
+itens.filter = Array.prototype.filter.bind(itens);
+
+CONFIG.Actor.sheetClasses = { character: { "olddragon2e.OD2CharacterSheet": { cls: FichaFalsa } } };
+
+// Antes: os dois de 10ª caem no 1º junto com a Telepatia.
+const antes = await new FichaFalsa(itens).getData();
+if (antes.spell_by_circle[1].spells.length !== 3) {
+  console.error("  ✘ o dublê não reproduz o fallback do sistema");
+  process.exit(1);
+}
+
+const { ligarGrandezas } = await import("../spacedragon-module/module/poderes.js");
+ligarGrandezas();
+
+const depois = await new FichaFalsa(itens).getData();
+const problemas10 = [];
+if (!depois.spell_by_circle[10]) problemas10.push("a 10ª Grandeza não existe na grade");
+if (depois.spell_by_circle[1]?.spells.length !== 1) {
+  problemas10.push(`o 1º círculo ficou com ${depois.spell_by_circle[1]?.spells.length} poderes, esperava 1`);
+}
+if (depois.spell_by_circle[10]?.spells.length !== 2) {
+  problemas10.push(`a 10ª ficou com ${depois.spell_by_circle[10]?.spells.length} poderes, esperava 2`);
+}
+if (Object.keys(depois.spell_by_circle).length !== 10) {
+  problemas10.push(`a grade tem ${Object.keys(depois.spell_by_circle).length} faixas, esperava 10`);
+}
+
+if (problemas10.length) {
+  for (const p of problemas10) console.error(`  ✘ ${p}`);
+  process.exit(1);
+}
+console.log("  ✔ grandezas: a grade vai à 10ª, e os poderes de 10ª saíram do 1º círculo");

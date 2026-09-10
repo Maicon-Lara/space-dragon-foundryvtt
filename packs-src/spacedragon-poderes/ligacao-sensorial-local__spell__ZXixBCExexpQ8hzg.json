@@ -1,0 +1,39 @@
+{
+  "folder": "zwkCRoTFJVrAg2qf",
+  "name": "Ligação Sensorial Local",
+  "type": "spell",
+  "_id": "ZXixBCExexpQ8hzg",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "ligacao-sensorial-local",
+    "school": "arcane",
+    "circle": "6",
+    "arcane": "6",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "1 Km/nível",
+    "duration": "6 horas/nível",
+    "jp": "nenhuma",
+    "description": "<p>Este poder mental funciona de forma similar à ligação sensorial pessoal, com a exceção de que o sentido do mentálico estará ligado a um lugar fechado específico, como um aposento ou nave. Pela ausência de órgãos sensoriais só é possível ligar a visão ou a audição ao local alvo, e a transmissão sensorial só funcionará quando houver pelo menos um ser vivo inteligente naquele local, que servirá de canalizador.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 90,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!ZXixBCExexpQ8hzg"
+}

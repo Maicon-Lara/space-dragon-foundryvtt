@@ -28,5 +28,16 @@
   "spacedragon.painel.vazio": "Nenhum teste de porcentagem para esta classe.",
   "spacedragon.painel.rolar": "Rolar 1d100 — passa com menor ou igual",
   "olddragon2e.class_ability.equipment_restrictions.armors": "Vestes",
-  "olddragon2e.class_ability.equipment_restrictions.magic_items": "Aparatos Tecnológicos"
+  "olddragon2e.class_ability.equipment_restrictions.magic_items": "Aparatos Tecnológicos",
+  "olddragon2e.circle": "Grandeza",
+  "olddragon2e.spell": "Poder Mental",
+  "olddragon2e.spells": "Poderes Mentais",
+  "olddragon2e.create_spell": "Criar novo poder mental",
+  "olddragon2e.new_spell": "Novo Poder Mental",
+  "olddragon2e.navigation.character.spells_tab": "Poderes",
+  "olddragon2e.arcane_spell": "Mental",
+  "olddragon2e.arcane_spell_short": "M",
+  "olddragon2e.sheet.spells_empty": "Arraste poderes mentais do compêndio para listá-los aqui.",
+  "olddragon2e.spell_circle.10": "10º",
+  "TYPES.Item.spell": "Poder Mental"
 }

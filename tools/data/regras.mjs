@@ -130,7 +130,7 @@ se resolvem rolando percentual na mesa.</p>
 
 <h2>O que ainda não está aqui</h2>
 <p>Capítulos 6 (Aventuras Espaciais),
-7 (Combate e Danos), 8 (Aparatos e Feitos Científicos), 9 (Poderes Mentais),
+7 (Combate e Danos), 8 (Aparatos e Feitos Científicos),
 10 (Espaçonaves e Estações) e 11 (Seção do Mestre).</p>
 `,
       },

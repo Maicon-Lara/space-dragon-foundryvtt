@@ -16,7 +16,7 @@ import { compilePack } from "@foundryvtt/foundryvtt-cli";
 
 import {
   folderDoc, raceDoc, raceAbilityDoc, classDoc, classAbilityDoc, journalDoc, rollTableDoc, macroDoc,
-  weaponDoc, armorDoc,
+  weaponDoc, armorDoc, spellDoc,
   itemUuid, writeSource, aninhaPastas, pintaPastas, makeId, stats,
 } from "./lib.mjs";
 import { especies } from "./data/especies.mjs";
@@ -29,6 +29,7 @@ import { TESTES } from "./data/testes.mjs";
 import { testesJournal } from "./data/testes-journal.mjs";
 import { ARMAS, VESTES, TIPOS, PORTES } from "./data/equipamento.mjs";
 import { equipamentoJournal } from "./data/equipamento-journal.mjs";
+import { PODERES } from "./data/poderes.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -41,6 +42,7 @@ const P_TABELAS = "spacedragon-tabelas";
 const P_JOURNAL = "spacedragon-journal";
 const P_MACROS = "spacedragon-macros";
 const P_EQUIPAMENTO = "spacedragon-equipamento";
+const P_PODERES = "spacedragon-poderes";
 
 /** Cor por pasta: sem isso o compêndio vira uma lista cinza indistinguível. */
 const PALETA = {
@@ -48,6 +50,7 @@ const PALETA = {
   "Classes": "#5a3f7c",
   "Armas": "#7c4a2f",
   "Vestes e Proteção": "#2f6b6b",
+  "Poderes Mentais": "#5c2f7c",
 };
 
 // ── Espécies ────────────────────────────────────────────────────────────────
@@ -355,6 +358,46 @@ function montaEquipamento() {
   return docs;
 }
 
+// ── Poderes Mentais ─────────────────────────────────────────────────────────
+//
+// Uma subpasta por Grandeza. Cento e um poderes numa lista única seriam
+// impossíveis de percorrer, e a Grandeza é justamente o que o mentálico precisa
+// saber antes do nome — ela limita o que ele alcança e custa do orçamento
+// diário.
+function montaPoderes() {
+  const docs = [];
+  const raiz = folderDoc("Poderes Mentais", "Item", "sd-poderes");
+  docs.push(raiz);
+
+  const porGrandeza = new Map();
+  for (const p of PODERES) {
+    if (!porGrandeza.has(p.grandeza)) porGrandeza.set(p.grandeza, []);
+    porGrandeza.get(p.grandeza).push(p);
+  }
+
+  for (const g of [...porGrandeza.keys()].sort((a, b) => a - b)) {
+    const sub = folderDoc(`Poderes Mentais — ${g}ª Grandeza`, "Item", `sd-grandeza:${g}`);
+    docs.push(sub);
+
+    porGrandeza.get(g).forEach((p, i) => {
+      docs.push(spellDoc({
+        nome: p.nome,
+        // A tradição é `arcane` por falta de uma quinta: o Space Dragon não tem
+        // arcano nem divino. O lang do módulo troca o rótulo.
+        school: "arcane",
+        circle: p.grandeza,
+        range: p.alcance,
+        duration: p.duracao,
+        // Não há campo de JP por poder: quando um pede jogada de proteção, está
+        // escrito no texto dele, e cada um pede a sua.
+        jp: "nenhuma",
+        desc: `<p>${p.texto}</p>`,
+      }, sub._id, `sd-poder:${g}`, i * 10));
+    });
+  }
+  return docs;
+}
+
 // ── Guarda: todo teste tem de achar a habilidade dele ───────────────────────
 //
 // O painel da ficha enfia o botão de rolagem DENTRO da habilidade de classe,
@@ -452,6 +495,10 @@ async function main() {
 
   await compila(P_TABELAS, montaTabelas());
   const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal];
+  let pod = aninhaPastas(montaPoderes());
+  pintaPastas(pod, PALETA);
+  await compila(P_PODERES, pod);
+
   let eq = aninhaPastas(montaEquipamento());
   pintaPastas(eq, PALETA);
   await compila(P_EQUIPAMENTO, eq);

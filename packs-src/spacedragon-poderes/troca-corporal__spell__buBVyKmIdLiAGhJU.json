@@ -1,0 +1,39 @@
+{
+  "folder": "M6fMIjAAADHIl8gg",
+  "name": "Troca Corporal",
+  "type": "spell",
+  "_id": "buBVyKmIdLiAGhJU",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "troca-corporal",
+    "school": "arcane",
+    "circle": "5",
+    "arcane": "5",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "1 hora/nível",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico pode trocar de corpo com o alvo, caso este não passe em uma JPM. Se bem-sucedida, a troca de corpo faz com que a mente do mentálico passe para o alvo e vice-versa. Enquanto estiver no corpo de outra pessoa um personagem assume a ficha de personagem dela, com os atributos físicos (Força, Destreza e Constituição) do novo corpo, mas mantém seus atributos mentais e sociais (Intelecto, Ciência e Comunicação). Este é um poder mental extremamente perigoso, pois se os alvos não estiverem ao alcance para efetuar a destroca quando a duração acabar, ou se um deles morrer, a troca pode se tornar permanente. O mentálico também pode terminar o poder mental a qualquer momento, se estiver dentro do alcance limite.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 100,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!buBVyKmIdLiAGhJU"
+}

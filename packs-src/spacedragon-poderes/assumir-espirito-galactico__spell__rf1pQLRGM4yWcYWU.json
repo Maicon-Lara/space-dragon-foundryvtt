@@ -1,0 +1,39 @@
+{
+  "folder": "tXg69wX4C4gLNHGp",
+  "name": "Assumir Espírito Galáctico",
+  "type": "spell",
+  "_id": "rf1pQLRGM4yWcYWU",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "assumir-espirito-galactico",
+    "school": "arcane",
+    "circle": "10",
+    "arcane": "10",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Pessoal",
+    "duration": "1 segundo/nível",
+    "jp": "nenhuma",
+    "description": "<p>Pela duração deste poder mental o mentálico consegue assumir o Espírito Galáctico, possuindo toda a sabedoria do universo. A personalidade do metálico é suprimida, e quem falará por ele é a mente coletiva de todos os seres inteligentes que já morreram. Ao final do efeito o mentálico desmaiará e ficará desacordado por 1d4 dias, a cada vez que utilizar este poder diminuirá em 10% a chance de conseguir realizá-lo novamente.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!rf1pQLRGM4yWcYWU"
+}

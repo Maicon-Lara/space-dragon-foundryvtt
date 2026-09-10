@@ -1,0 +1,39 @@
+{
+  "folder": "ID8N7WYp2gN1xOsI",
+  "name": "Detectar Mentiras",
+  "type": "spell",
+  "_id": "VfYV0QakvFFSkRKy",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "detectar-mentiras",
+    "school": "arcane",
+    "circle": "2",
+    "arcane": "2",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "1 minuto",
+    "jp": "nenhuma",
+    "description": "<p>Ao utilizar este poder em um alvo, o mentálico é capaz de determinar a veracidade de tudo que ele disser enquanto estiver sob efeito. O alvo precisa estar dentro do alcance deste poder mental, mas a detecção não revela a verdade.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 40,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!VfYV0QakvFFSkRKy"
+}

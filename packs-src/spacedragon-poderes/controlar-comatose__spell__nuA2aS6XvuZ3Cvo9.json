@@ -1,0 +1,39 @@
+{
+  "folder": "Hv22MnCOVEaWxnq3",
+  "name": "Controlar Comatose",
+  "type": "spell",
+  "_id": "nuA2aS6XvuZ3Cvo9",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "controlar-comatose",
+    "school": "arcane",
+    "circle": "9",
+    "arcane": "9",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "1 semana/nível",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico pode colocar um alvo em estado de coma, se este falhar em uma JPM, ou acordar um alvo que já esteja nesse estado, caso ele seja bem-sucedido em uma JPM. Um indivíduo em estado de coma acordará ao final dos efeitos, e não se lembrará de nada que tenha ocorrido após o uso do poder mental.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 30,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!nuA2aS6XvuZ3Cvo9"
+}

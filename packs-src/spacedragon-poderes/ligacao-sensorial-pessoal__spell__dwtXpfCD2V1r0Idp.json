@@ -1,0 +1,39 @@
+{
+  "folder": "M6fMIjAAADHIl8gg",
+  "name": "Ligação Sensorial Pessoal",
+  "type": "spell",
+  "_id": "dwtXpfCD2V1r0Idp",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "ligacao-sensorial-pessoal",
+    "school": "arcane",
+    "circle": "5",
+    "arcane": "5",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "1 Km/nível",
+    "duration": "1 hora/nível",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico é capaz de ligar um de seus cinco sentidos a outra pessoa. Enquanto a ligação estiver ativa o mentálico poderá alternar livremente entre seu próprio sentido e o do alvo, compartilhando os estímulos sensoriais recebidos por ele. No momento da ligação o mentálico deve manter contato visual com o alvo, que pode resistir com uma JPM. Se a distância entre o mentálico e o alvo for maior que o alcance de 1 Km por nível o efeito termina imediatamente.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 80,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!dwtXpfCD2V1r0Idp"
+}

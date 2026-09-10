@@ -1,0 +1,39 @@
+{
+  "folder": "Hv22MnCOVEaWxnq3",
+  "name": "Dano Cerebral",
+  "type": "spell",
+  "_id": "iZSncNbrsCcpXGh6",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "dano-cerebral",
+    "school": "arcane",
+    "circle": "9",
+    "arcane": "9",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "Permanente",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico pode causar 1d6 pontos de dano mental permanente a um alvo que falhe em uma JPM, ou restaurar o dano causado por este mesmo poder mental, caso o alvo seja bem-sucedido em uma JPM. Ao receber dano mental permanente o alvo desmaiará automaticamente e ficará inconsciente por 1d4 dias.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 40,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!iZSncNbrsCcpXGh6"
+}

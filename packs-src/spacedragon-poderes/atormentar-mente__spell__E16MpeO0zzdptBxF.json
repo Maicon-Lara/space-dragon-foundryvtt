@@ -1,0 +1,39 @@
+{
+  "folder": "sfXAUcvkI6QH75Oj",
+  "name": "Atormentar Mente",
+  "type": "spell",
+  "_id": "E16MpeO0zzdptBxF",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "atormentar-mente",
+    "school": "arcane",
+    "circle": "7",
+    "arcane": "7",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "5 segundos/nível",
+    "jp": "nenhuma",
+    "description": "<p>O alvo deste poder mental sofrerá terríveis tormentos mentais, se falhar em uma JPM. Os tormentos podem envolver ilusões audiovisuais, olfativas, táteis – mesmo palatares, senso de desorientação e dificuldade em distinguir entre realidade e a imaginação. Qualquer personagem que sofra esse tormento mental terá -8 em quaisquer rolagens que fizer.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!E16MpeO0zzdptBxF"
+}

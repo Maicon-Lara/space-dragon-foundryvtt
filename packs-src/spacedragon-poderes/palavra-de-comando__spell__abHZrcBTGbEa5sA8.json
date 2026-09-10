@@ -1,0 +1,39 @@
+{
+  "folder": "qxvTZNb8vhbUB1db",
+  "name": "Palavra De Comando",
+  "type": "spell",
+  "_id": "abHZrcBTGbEa5sA8",
+  "img": "systems/olddragon2e/assets/icons/arcane.svg",
+  "system": {
+    "odo_id": "palavra-de-comando",
+    "school": "arcane",
+    "circle": "3",
+    "arcane": "3",
+    "divine": "null",
+    "necromancer": "null",
+    "illusionist": "null",
+    "reverse": false,
+    "range": "Visual",
+    "duration": "Instantâneo",
+    "jp": "nenhuma",
+    "description": "<p>O mentálico é capaz de transmitir mentalmente um único comando a um alvo com uma quantidade de DV igual ou menor do que seus níveis na classe. O comando deve ser uma frase imperativa curta com apenas um verbo e não pode ser ilógica ou potencialmente fatal. Uma JPM por parte do alvo anula os efeitos.</p>"
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 90,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!abHZrcBTGbEa5sA8"
+}
