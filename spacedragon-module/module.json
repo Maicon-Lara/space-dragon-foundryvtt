@@ -2,7 +2,7 @@
   "id": "spacedragon",
   "title": "Space Dragon — Livro Básico",
   "description": "O conteudo do Livro Basico Aprimorado de Space Dragon como compendios para o Foundry VTT, no sistema Old Dragon 2. As regras sao as do livro base, sem conversao.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -133,8 +133,8 @@
       }
     }
   ],
-  "manifest": "https://cdn.jsdelivr.net/gh/Maicon-Lara/space-dragon-foundryvtt@latest/spacedragon-module/module.json",
-  "download": "https://cdn.jsdelivr.net/gh/Maicon-Lara/space-dragon-foundryvtt@latest/spacedragon.zip",
+  "manifest": "https://github.com/Maicon-Lara/space-dragon-foundryvtt/releases/latest/download/module.json",
+  "download": "https://github.com/Maicon-Lara/space-dragon-foundryvtt/releases/latest/download/spacedragon.zip",
   "url": "https://github.com/Maicon-Lara/space-dragon-foundryvtt",
   "license": "LICENSE.md",
   "readme": "README.md",
