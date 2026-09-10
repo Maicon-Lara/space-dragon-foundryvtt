@@ -76,6 +76,18 @@ globalThis.Roll = class { async evaluate() { this.total = 1; return this; } };
 globalThis.ChatMessage = { getSpeaker: () => ({}), create: async () => {} };
 globalThis.FormDataExtended = class { constructor() { this.object = {}; } };
 
+// O tema marca o <body>. Um dublê de classList basta para provar que ele liga
+// e desliga sem depender de gancho de render.
+const classes = new Set();
+globalThis.document = {
+  body: {
+    classList: {
+      toggle: (c, v) => (v ? classes.add(c) : classes.delete(c)),
+      contains: (c) => classes.has(c),
+    },
+  },
+};
+
 await import("../spacedragon-module/module/spacedragon.js");
 
 // ── O que o `ready` tinha de ter feito ──────────────────────────────────────
@@ -89,6 +101,8 @@ else {
   }
   if (Array.isArray(api.TESTES) && !api.TESTES.length) falhas.push("TESTES veio vazio");
 }
+
+if (!classes.has("spacedragon-tema")) falhas.push("o tema não marcou o <body>");
 
 const niveis = Object.keys(CONFIG.olddragon2e.levels).map(Number);
 const teto = Math.max(...niveis);
@@ -391,3 +405,44 @@ if (probOrdem.length) {
   process.exit(1);
 }
 console.log(`  ✔ ordem de ação: crescente (${res.combatentes.map((c) => `${c.nome} ${c.n}`).join(", ")}), rodada de ${res.duracao}s`);
+
+// ── O tema liga e desliga sem recarregar? ──────────────────────────────────
+//
+// Todo o CSS do tema está sob `body.spacedragon-tema`. Se a opção não tirar a
+// classe, não há como voltar à ficha original sem desinstalar o módulo — e
+// repintar a ficha de quem só queria os compêndios seria decidir pelo outro.
+const opcaoTema = "spacedragon.tema";
+const { registrarTema, ligarTema } = await import("../spacedragon-module/module/tema.js");
+
+const probTema = [];
+if (!classes.has("spacedragon-tema")) probTema.push("o tema não estava ligado por padrão");
+
+// A opção é registrada com onChange; simula o usuário desligando.
+const cfgTema = opcoes.get(opcaoTema);
+if (cfgTema !== true) probTema.push(`o padrão da opção é ${cfgTema}, esperava true`);
+
+game.settings.set("spacedragon", "tema", false);
+ligarTema();
+if (classes.has("spacedragon-tema")) probTema.push("desligar não tirou a classe do <body>");
+
+game.settings.set("spacedragon", "tema", true);
+ligarTema();
+if (!classes.has("spacedragon-tema")) probTema.push("religar não devolveu a classe");
+
+// E o CSS tem de estar TODO sob a classe: uma regra solta repintaria a ficha
+// de quem desligou.
+const fs = await import("node:fs");
+const css = fs.readFileSync("spacedragon-module/styles/tema.css", "utf8");
+const regras = css
+  .replace(/\/\*[\s\S]*?\*\//g, "")
+  .split("}")
+  .map((b) => b.split("{")[0].trim())
+  .filter(Boolean);
+const soltas = regras.filter((sel) => !sel.split(",").every((s) => s.includes("body.spacedragon-tema")));
+if (soltas.length) probTema.push(`regras fora da classe do tema: ${soltas.join(" | ").slice(0, 120)}`);
+
+if (probTema.length) {
+  for (const p of probTema) console.error(`  ✘ ${p}`);
+  process.exit(1);
+}
+console.log(`  ✔ tema: liga, desliga e religa, e as ${regras.length} regras estão sob body.spacedragon-tema`);

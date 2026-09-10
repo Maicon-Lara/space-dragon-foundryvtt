@@ -1,0 +1,148 @@
+/* Tema Space Dragon para as fichas do Old Dragon 2.
+ *
+ * ── O QUE ELE TROCA, E POR QUE SÃO POUCAS REGRAS ──────────────────────────
+ *
+ * O tema do sistema tem a paleta concentrada em quatro cores:
+ *
+ *   #ece9d5  o pergaminho — barra lateral, cabeçalho e corpo
+ *   #e0ddca  a caixa preenchida, um pergaminho mais escuro
+ *   #d72240  o carmim de destaque — aba ativa, hover, barra de seção
+ *   #ef4458  o carmim claro, em links de formulário
+ *
+ * Trocar essas quatro muda a cara inteira. O resto da folha de estilo do
+ * sistema — medidas, grades, tipografia — fica como está, e é de propósito:
+ * quem mantém o layout é o sistema, e reescrevê-lo aqui significaria persegui-lo
+ * a cada versão.
+ *
+ * ── A PALETA VEM DA FICHA OFICIAL ─────────────────────────────────────────
+ *
+ * Fundo claro e frio no lugar do pergaminho, caixas em azul-lavanda, e as
+ * barras de seção em azul-espaço quase preto com texto branco. O ciano entra
+ * onde havia carmim de interação; o vermelho fica reservado para falha, que é
+ * o único lugar onde ele ainda comunica alguma coisa.
+ *
+ * ── COMO SE LIGA E DESLIGA ────────────────────────────────────────────────
+ *
+ * Tudo está sob `body.spacedragon-tema`. A classe entra e sai por uma opção do
+ * módulo, sem recarregar. Sem ela, nada aqui alcança nada — quem instalar o
+ * módulo só pelos compêndios não vê diferença nenhuma. */
+
+body.spacedragon-tema {
+  --sd-fundo: #eef0f8;
+  --sd-caixa: #ccd3f0;
+  --sd-barra: #1b2340;
+  --sd-tinta: #10162c;
+  --sd-brilho: #2f9e8f;
+  --sd-perigo: #d72240;
+}
+
+/* ── Os três fundos ─────────────────────────────────────────────────────── */
+
+body.spacedragon-tema .olddragon2e.sheet.character .sheet-container .sidebar,
+body.spacedragon-tema .olddragon2e.sheet.character .sheet-container .body .header,
+body.spacedragon-tema .olddragon2e.sheet.character .sheet-container .body .main,
+body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .sidebar,
+body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .body .header,
+body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .body .main,
+body.spacedragon-tema .olddragon2e.sheet.retainer .sheet-container .sidebar,
+body.spacedragon-tema .olddragon2e.sheet.retainer .sheet-container .body .header,
+body.spacedragon-tema .olddragon2e.sheet.retainer .sheet-container .body .main {
+  background-color: var(--sd-fundo);
+}
+
+/* O céu estrelado é CSS puro, sem imagem: o módulo não carrega nenhum recurso
+ * gráfico, e um punhado de gradientes radiais custa menos que um arquivo. Fica
+ * só na barra lateral, que é a área grande e vazia da ficha. */
+body.spacedragon-tema .olddragon2e.sheet.character .sheet-container .sidebar,
+body.spacedragon-tema .olddragon2e.sheet.monster .sheet-container .sidebar {
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(27, 35, 64, 0.5) 50%, transparent 50%),
+    radial-gradient(1px 1px at 78% 9%, rgba(27, 35, 64, 0.4) 50%, transparent 50%),
+    radial-gradient(1px 1px at 34% 61%, rgba(27, 35, 64, 0.35) 50%, transparent 50%),
+    radial-gradient(1px 1px at 88% 44%, rgba(27, 35, 64, 0.45) 50%, transparent 50%),
+    radial-gradient(1px 1px at 55% 83%, rgba(27, 35, 64, 0.3) 50%, transparent 50%),
+    radial-gradient(1px 1px at 20% 92%, rgba(27, 35, 64, 0.4) 50%, transparent 50%);
+  background-repeat: repeat;
+  background-size: 160px 220px;
+}
+
+/* ── As caixas preenchidas ──────────────────────────────────────────────── */
+
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .jp .jp-group .jp-value,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .basic-info .race .race-value,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .overview .ca .ca-value,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .overview .ba .ba-value {
+  background-color: var(--sd-caixa);
+}
+
+/* Todo campo da ficha, que no sistema herda o pergaminho do pai. */
+body.spacedragon-tema .olddragon2e.sheet input[type='text'],
+body.spacedragon-tema .olddragon2e.sheet input[type='number'],
+body.spacedragon-tema .olddragon2e.sheet select,
+body.spacedragon-tema .olddragon2e.sheet textarea {
+  background-color: var(--sd-caixa);
+  color: var(--sd-tinta);
+  border-color: rgba(27, 35, 64, 0.25);
+}
+
+body.spacedragon-tema .olddragon2e.sheet input:disabled {
+  background-color: rgba(204, 211, 240, 0.55);
+  color: rgba(16, 22, 44, 0.7);
+}
+
+/* ── O carmim vira azul-espaço, e o interativo vira ciano ───────────────── */
+
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .tabs .item.active,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .sidebar a:hover,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .overview a:hover,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .main a.item:hover,
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .body .header .basic-info .race a:hover,
+body.spacedragon-tema .border-button:hover {
+  color: var(--sd-brilho);
+}
+
+body.spacedragon-tema .olddragon2e.sheet .sheet-container .tabs .item.active {
+  border-bottom-color: var(--sd-brilho);
+}
+
+/* A barra de seção: azul-espaço com texto branco, como na ficha oficial. */
+body.spacedragon-tema .olddragon2e.sheet .tab-title,
+body.spacedragon-tema .olddragon2e.sheet .character-tab-attacks .attack .list,
+body.spacedragon-tema .olddragon2e.sheet .class-abilities > label,
+body.spacedragon-tema .olddragon2e.sheet .race-abilities > label {
+  background-color: var(--sd-barra);
+  color: #ffffff;
+}
+
+body.spacedragon-tema .olddragon2e.sheet input[type='checkbox']:checked {
+  accent-color: var(--sd-brilho);
+}
+
+/* ── O painel de testes, para não destoar ───────────────────────────────── */
+
+body.spacedragon-tema .spacedragon-testes {
+  border-left-color: var(--sd-barra);
+  background: rgba(204, 211, 240, 0.35);
+}
+
+body.spacedragon-tema .spacedragon-testes .sd-rolar {
+  color: var(--sd-barra);
+}
+
+body.spacedragon-tema .spacedragon-testes .sd-rolar:hover {
+  color: var(--sd-brilho);
+}
+
+/* ── Journal ────────────────────────────────────────────────────────────── */
+
+body.spacedragon-tema .journal-sheet .journal-entry-page {
+  background-color: var(--sd-fundo);
+}
+
+/* A nota de casa fica visualmente separada da regra: ela é comentário do
+ * módulo, não texto do livro. */
+body.spacedragon-tema .journal-entry-page .nota-casa {
+  border-left: 3px solid var(--sd-brilho);
+  padding-left: 0.6rem;
+  background: rgba(47, 158, 143, 0.07);
+}

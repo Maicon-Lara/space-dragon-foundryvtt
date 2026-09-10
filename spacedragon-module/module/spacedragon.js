@@ -28,6 +28,7 @@ import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
 import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
 import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
+import { registrarTema, ligarTema } from "./tema.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
 const ID = "spacedragon";
@@ -50,6 +51,8 @@ function estendeNiveis() {
 }
 
 Hooks.once("init", () => {
+  registrarTema();
+
   // Uma OPÇÃO, e não um fato consumado: trocar a tabela de modificadores muda
   // ataque, proteção, PV e jogadas de proteção de todo personagem do mundo.
   // Quem instalar o módulo só pelos compêndios pode não querer isso.
@@ -73,6 +76,7 @@ Hooks.once("init", () => {
 
 Hooks.once("ready", () => {
   estendeNiveis();
+  ligarTema();
   aplicarModificadores(game.settings.get(ID, "modificadores"));
   ligarPainel();
   ligarCabecalho();
