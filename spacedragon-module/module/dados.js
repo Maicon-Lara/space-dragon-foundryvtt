@@ -847,3 +847,57 @@ export const FALHAS = [
     "efeito": "Queda: −1 no CP, e uma ação de movimento para se levantar."
   }
 ];
+
+/** T10-6: críticos e falhas de ESPAÇONAVE. Não são os mesmos da T7-4/T7-5. */
+export const CRITICOS_NAVE = [
+  {
+    "d6": 1,
+    "efeito": "Acerto em área crítica, dano ×2."
+  },
+  {
+    "d6": 2,
+    "efeito": "Avaria no sistema de propulsão: dano ×2 e a movimentação da nave cai à metade."
+  },
+  {
+    "d6": 3,
+    "efeito": "Avaria nas armas: dano ×2 e −5 nos ataques desferidos pela nave alvo."
+  },
+  {
+    "d6": 4,
+    "efeito": "Casco avariado: dano ×2 e −5 no CP."
+  },
+  {
+    "d6": 5,
+    "efeito": "Ataque extra contra outra nave ao alcance."
+  },
+  {
+    "d6": 6,
+    "efeito": "Pane geral na espaçonave."
+  }
+];
+export const FALHAS_NAVE = [
+  {
+    "d6": 1,
+    "efeito": "As armas param de funcionar."
+  },
+  {
+    "d6": 2,
+    "efeito": "Perda de controle momentânea: −5 no CP até o próximo turno."
+  },
+  {
+    "d6": 3,
+    "efeito": "Arma temporariamente danificada."
+  },
+  {
+    "d6": 4,
+    "efeito": "Arma permanentemente danificada."
+  },
+  {
+    "d6": 5,
+    "efeito": "Atinge uma nave aliada próxima ao alvo."
+  },
+  {
+    "d6": 6,
+    "efeito": "Perda de controle brusca: −10 no CP até o próximo turno, e um teste de pilotagem para retomar o controle."
+  }
+];

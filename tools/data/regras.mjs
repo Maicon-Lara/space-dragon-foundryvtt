@@ -129,8 +129,7 @@ realizar um poder mental. O Old Dragon 2 não trabalha assim, e o módulo
 se resolvem rolando percentual na mesa.</p>
 
 <h2>O que ainda não está aqui</h2>
-<p>Capítulos 6 (Aventuras Espaciais), 10 (Espaçonaves e Estações)
-e 11 (Seção do Mestre).</p>
+<p>Capítulos 6 (Aventuras Espaciais) e 11 (Seção do Mestre).</p>
 `,
       },
     ],

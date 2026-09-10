@@ -28,7 +28,7 @@ import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
 import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
 import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
-import { CRITICOS, FALHAS } from "./dados.js";
+import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
@@ -88,6 +88,8 @@ Hooks.once("ready", () => {
     ordem: abrirOrdem,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),
     falhaCritica: () => rolarCriticoTabela("T7-5: Falha Crítica", FALHAS),
+    acertoCriticoNave: () => rolarCriticoTabela("T10-6: Acerto Crítico de Espaçonave", CRITICOS_NAVE),
+    falhaCriticaNave: () => rolarCriticoTabela("T10-6: Falha Crítica de Espaçonave", FALHAS_NAVE),
   };
 
   console.log(`${ID} | ${TESTES.length} testes prontos, nível até o ${NIVEL_MAXIMO}º`);

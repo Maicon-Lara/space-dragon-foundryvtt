@@ -1,0 +1,209 @@
+{
+  "folder": null,
+  "name": "Space Dragon — Espaçonaves e Estações",
+  "_id": "jYr0gzzLF15Kkt0q",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "A nave como personagem",
+      "type": "text",
+      "_id": "iwCmmoIZESyag5i4",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Ela tem ficha, com outras contas</h2>\n<p>Uma espaçonave tem <strong>PV, BA, CP e JP</strong>, como qualquer personagem.\nTrês coisas mudam:</p>\n\n<ul>\n<li><strong>Os PV são rolados</strong>, não fixos. Um caça tem 1d100; um cruzador,\n2d1000.</li>\n<li><strong>A JP não vem de atributo nenhum.</strong> O modificador dela sai de um\n<em>teste de pilotagem</em> — o piloto rola primeiro, e o quanto ele foi bem\ndecide o bônus da nave.</li>\n<li><strong>O ataque soma dois bônus</strong>: o BA da nave e o BA à distância de\nquem estiver operando a arma.</li>\n</ul>\n\n<h2>T10-1: Tipos de Espaçonaves</h2>\n<table><thead><tr><th>tipo</th><th>tamanho</th><th>tripulação</th><th>PV</th><th>BA</th><th>CP</th><th>JP</th><th>movimento</th></tr></thead><tbody><tr><td><strong>Caça</strong><br><em>Nave individual de assalto</em></td><td>Pequena</td><td>1</td><td>1d100</td><td>+16</td><td>28</td><td>14</td><td>150m</td></tr><tr><td><strong>Cápsula de exploração e emergência</strong><br><em>Pequena nave para evacuações de emergência e explorações</em></td><td>Pequena</td><td>1 a 4</td><td>1d100</td><td>+10</td><td>28</td><td>16</td><td>120m</td></tr><tr><td><strong>Cargueiro</strong><br><em>Transporte de artigos de todos os tipos</em></td><td>Gigantesca</td><td>50+</td><td>1d1000</td><td>+12</td><td>24</td><td>10</td><td>40m</td></tr><tr><td><strong>Cruzador</strong><br><em>Base militar espacial móvel</em></td><td>Colossal</td><td>100+</td><td>2d1000</td><td>+18</td><td>30</td><td>12</td><td>20m</td></tr><tr><td><strong>Escolta</strong><br><em>Nave para escolta e abordagem</em></td><td>Pequena</td><td>1 a 4</td><td>2d100</td><td>+12</td><td>28</td><td>14</td><td>120m</td></tr><tr><td><strong>Espaçonave particular</strong><br><em>Transporte de pequenos grupos de pessoas</em></td><td>Média</td><td>1 a 10</td><td>3d100</td><td>+12</td><td>26</td><td>16</td><td>100m</td></tr><tr><td><strong>Nave-mãe</strong><br><em>Lar de populações inteiras</em></td><td>Colossal</td><td>1.000+</td><td>3d1000</td><td>+12</td><td>20</td><td>12</td><td>20m</td></tr><tr><td><strong>Transuniversal</strong><br><em>Nave de transporte e lazer civil</em></td><td>Gigantesca</td><td>100+</td><td>1d1000</td><td>+10</td><td>24</td><td>10</td><td>40m</td></tr></tbody></table>\n\n<h2>T10-7: Veículos terrestres, aquáticos e aéreos</h2>\n<p>Mesmas colunas, mesmas regras.</p>\n<table><thead><tr><th>tipo</th><th>tamanho</th><th>tripulação</th><th>PV</th><th>BA</th><th>CP</th><th>JP</th><th>movimento</th></tr></thead><tbody><tr><td><strong>Aerocarro</strong></td><td>Pequeno</td><td>1 a 4</td><td>1d100</td><td>+10</td><td>22</td><td>14</td><td>40m</td></tr><tr><td><strong>Aeroplano</strong></td><td>Enorme</td><td>1 a 20</td><td>1d1000</td><td>+12</td><td>24</td><td>10</td><td>120m</td></tr><tr><td><strong>Cargueiro terrestre</strong></td><td>Enorme</td><td>1 a 20</td><td>1d1000</td><td>+12</td><td>24</td><td>10</td><td>30m</td></tr><tr><td><strong>Hidrocarro</strong></td><td>Pequeno</td><td>1 a 4</td><td>1d100</td><td>+10</td><td>22</td><td>14</td><td>40m</td></tr><tr><td><strong>Submarino</strong></td><td>Grande</td><td>1 a 10</td><td>3d100</td><td>+14</td><td>26</td><td>12</td><td>30m</td></tr><tr><td><strong>Submersível</strong></td><td>Médio</td><td>1 a 6</td><td>2d100</td><td>+16</td><td>28</td><td>16</td><td>40m</td></tr><tr><td><strong>Tanque de guerra</strong></td><td>Grande</td><td>1 a 10</td><td>3d100</td><td>+20</td><td>30</td><td>12</td><td>20m</td></tr><tr><td><strong>Veículo de exploração</strong></td><td>Médio</td><td>1 a 6</td><td>2d100</td><td>+16</td><td>28</td><td>16</td><td>30m</td></tr></tbody></table>\n\n<h2>Gente atirando em nave, e nave atirando em gente</h2>\n<p>Personagens <strong>podem</strong> atacar naves com armas comuns. O CP alto\ntorna difícil, não impossível — e granadas e mísseis forçam uma\n<strong>JP da nave</strong>, o que costuma render mais.</p>\n\n<p>No sentido contrário a regra muda, porque exploradores espaciais desviam de\nlaser: os alvos fazem uma <strong>JPR</strong> e, passando, sofrem\n<strong>metade do dano</strong>. Role o ataque para cada alvo, somando o BA da\nnave e o do operador. <strong>A cada 20 pontos no resultado, os alvos levam −2\nna JPR</strong> — um ataque de 37 dá −2; um de 41 dá −4.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!jYr0gzzLF15Kkt0q.iwCmmoIZESyag5i4"
+    },
+    {
+      "sort": 200000,
+      "name": "Pilotagem",
+      "type": "text",
+      "_id": "XCWMDB9mazxjAKbY",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Quando se rola</h2>\n<p>Para o <strong>cosmonauta</strong>, manobra rotineira — decolar, aterrissar,\nmanobrar normalmente — <strong>não pede teste</strong>. Pedem teste as viagens\nlongas, as entradas em atmosfera, o combate e as situações de tensão: fuga, mau\nfuncionamento.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ <strong>Para todas as outras classes, qualquer situação exige teste.</strong></p>\n\n<h2>Pilotagem improvisada</h2>\n<p>Quem não é cosmonauta pilota com o que tem:</p>\n<ul><li><strong>Cosmonauta</strong> — O talento de pilotar naves. Manobra rotineira nem pede teste.</li><li><strong>Cientista</strong> — Metade da porcentagem de operar máquinas.</li><li><strong>Gatuno</strong> — A porcentagem de sabotagem.</li><li><strong>Mentálico</strong> — A aptidão tecnológica da Ciência, se houver.</li></ul>\n\n<p>Se o talento usado parou de progredir por causa de uma especialização, vale a\nporcentagem <strong>do nível em que parou</strong>.</p>\n\n<h2>Nave avariada pilota pior</h2>\n<p>O Mestre desconta uma penalidade percentual conforme a gravidade das avarias,\nem degraus de 5%, até o teto de <strong>50%</strong>. Um cosmonauta de 1º nível\ncom 80% e penalidade de 20% testa com 60%.</p>\n\n<p>Para quem quiser precisão, o livro sugere <strong>5% de penalidade a cada 10%\nde PV perdidos</strong>. Uma nave de 200 PV que sofreu 70 de dano perdeu mais de\n30% e menos de 40%: penalidade de 15%.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ Mesmo que a penalidade zere a porcentagem, ainda se rola — a falha crítica\ne o sucesso crítico continuam existindo.</p>\n\n<h2>T10-5: o teste de pilotagem vira o modificador da JP</h2>\n<p>Antes de qualquer JP da nave, o piloto testa. O resultado dele dá o\nmodificador do d20 da nave.</p>\n\n<table><thead><tr><th>resultado do teste</th><th>modificador na JP</th></tr></thead><tbody><tr><td>Falha crítica (rolou 100)</td><td>-8</td></tr><tr><td>Falha acima de 80</td><td>-4</td></tr><tr><td>Falha</td><td>-2</td></tr><tr><td>Sucesso</td><td>+2</td></tr><tr><td>Sucesso abaixo de 20</td><td>+4</td></tr><tr><td>Sucesso crítico (rolou 1)</td><td>+8</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!jYr0gzzLF15Kkt0q.XCWMDB9mazxjAKbY"
+    },
+    {
+      "sort": 300000,
+      "name": "Energia e combustível",
+      "type": "text",
+      "_id": "Kiam41IDx4BSuduE",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Um tanque só, de 0% a 100%</h2>\n<p>Não importa quantos reservatórios a nave tenha: o combustível é\n<strong>uma porcentagem</strong>, de 0 a 100. Ela cai ao cruzar o espaço, ao\nmanobrar, ao decolar e ao aterrissar.</p>\n\n<p>O preço da tabela é <strong>por ponto percentual</strong>. Abastecer 10%\ncusta dez vezes o valor listado.</p>\n\n<h2>T10-3: Fontes de Energia</h2>\n<table><thead><tr><th>fonte</th><th>raridade</th><th>custo por ponto % (P/M/G/C)</th><th>autonomia</th></tr></thead><tbody><tr><td>Combustível líquido</td><td>Comum</td><td>500 / 1.000 / 10.000 / 100.000</td><td>Média</td></tr><tr><td>Incineração de detritos</td><td>Incomum</td><td>50 / 100 / 1.000 / 10.000</td><td>Baixa</td></tr><tr><td>Painéis termoenergéticos</td><td>Rara</td><td>—</td><td>Variável</td></tr><tr><td>Reatores atômicos</td><td>Comum</td><td>1.000 / 10.000 / 100.000 / 1.000.000</td><td>Alta</td></tr></tbody></table>\n\n<h2>Quanto se gasta: não há tabela</h2>\n<p>O livro é explícito ao dizer que <em>\"não há uma tabela de quanto combustível\numa espaçonave gasta\"</em>. No lugar, um procedimento em dois passos:</p>\n\n<ol>\n<li>A <strong>autonomia da fonte</strong> escolhe o dado:\n<strong>Baixa</strong> usa d6, <strong>Média</strong> usa d4, <strong>Alta</strong> usa d2.</li>\n<li>O Mestre atribui de <strong>1 a 3</strong> conforme o quanto a ação custa, e\nrola essa quantidade de dados.</li>\n</ol>\n\n<blockquote><p>Uma nave a reator atômico (autonomia alta, d2) numa manobra cara\n(3) rola <strong>3d2</strong> — de 3% a 6% do tanque.</p></blockquote>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!jYr0gzzLF15Kkt0q.Kiam41IDx4BSuduE"
+    },
+    {
+      "sort": 400000,
+      "name": "Combate espacial",
+      "type": "text",
+      "_id": "Z6yef8RcfisqG5rC",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>A ordem de ação é outra</h2>\n<p class=\"spacedragon-aviso\">⚠️ <strong>A T10-6 não é a T7-2.</strong> A ordem de ação das naves usa valores\ndiferentes dos personagens:</p>\n\n<table><thead><tr><th>ação</th><th>valor</th></tr></thead><tbody><tr><td>Disparo de armas</td><td>Rolagem dos dados de dano da arma</td></tr><tr><td>Ativar equipamento</td><td>Bônus de ataque da nave</td></tr><tr><td>Manobras evasivas e movimentação dupla</td><td>Valor da jogada de proteção</td></tr></tbody></table>\n\n<p>Continua valendo o resto: age primeiro o <strong>menor</strong> resultado.</p>\n\n<h2>As ações</h2>\n<ul>\n<li><strong>Disparo de armas</strong> — 1d20 mais o BA da nave mais o BA à\ndistância de quem opera. Iguala ou supera o CP da nave alvo e causa dano. Dá\npara disparar <strong>uma vez por arma instalada</strong>, desde que haja gente\ncontrolando cada uma.</li>\n<li><strong>Ativar equipamento</strong> — escudos, defletores. O Mestre pode\npedir um teste de operar máquinas, com penalidade se houver avaria.</li>\n<li><strong>Manobras evasivas</strong> — <strong>só naves pequenas</strong>.\nPermitem usar a <strong>JP no lugar do CP</strong> para evitar um ataque, mas só\numa vez a cada <strong>5 rodadas</strong>, sempre pedem teste de pilotagem, e\nfalhar significa não poder fazer a JP. Costumam gastar combustível.</li>\n</ul>\n\n<h2>T10-6: Acertos críticos de espaçonave</h2>\n<table><thead><tr><th>1d6</th><th>efeito</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>Acerto em área crítica, dano ×2.</td></tr><tr><td><strong>2</strong></td><td>Avaria no sistema de propulsão: dano ×2 e a movimentação da nave cai à metade.</td></tr><tr><td><strong>3</strong></td><td>Avaria nas armas: dano ×2 e −5 nos ataques desferidos pela nave alvo.</td></tr><tr><td><strong>4</strong></td><td>Casco avariado: dano ×2 e −5 no CP.</td></tr><tr><td><strong>5</strong></td><td>Ataque extra contra outra nave ao alcance.</td></tr><tr><td><strong>6</strong></td><td>Pane geral na espaçonave.</td></tr></tbody></table>\n\n<h2>T10-6: Falhas críticas de espaçonave</h2>\n<table><thead><tr><th>1d6</th><th>efeito</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>As armas param de funcionar.</td></tr><tr><td><strong>2</strong></td><td>Perda de controle momentânea: −5 no CP até o próximo turno.</td></tr><tr><td><strong>3</strong></td><td>Arma temporariamente danificada.</td></tr><tr><td><strong>4</strong></td><td>Arma permanentemente danificada.</td></tr><tr><td><strong>5</strong></td><td>Atinge uma nave aliada próxima ao alvo.</td></tr><tr><td><strong>6</strong></td><td>Perda de controle brusca: −10 no CP até o próximo turno, e um teste de pilotagem para retomar o controle.</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!jYr0gzzLF15Kkt0q.Z6yef8RcfisqG5rC"
+    },
+    {
+      "sort": 500000,
+      "name": "Estações espaciais",
+      "type": "text",
+      "_id": "TMUXhrtABRGllAj2",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>O que existe numa estação</h2>\n<p>Todas as câmaras que existem numa nave existem nas estações, em maior número\ne tamanho. Estações populosas têm qualquer serviço que se precise, salvo o\nMestre decidir o contrário pela função e pela localização dela.</p>\n\n<p>Muitas têm armamento, e <strong>agem de forma hostil</strong> contra naves não\nidentificadas ou suspeitas.</p>\n\n<h2>T10-8: Serviços em Estações Espaciais</h2>\n<table><thead><tr><th>serviço</th><th>preço</th><th>o que é</th></tr></thead><tbody><tr><td><strong>Abastecimento de espaçonave</strong></td><td>Variável</td><td>Pela T10-3, conforme o combustível e o tamanho da nave.</td></tr><tr><td><strong>Estadia da tripulação</strong></td><td>$5.000</td><td>Por pessoa e por dia, com refeições inclusas.</td></tr><tr><td><strong>Manutenção de rotina</strong></td><td>$10.000 / $25.000 / $75.000</td><td>Reparo do que o tempo ou os acidentes danificaram, por tamanho (P, M, G).</td></tr><tr><td><strong>Pouso e estadia no hangar</strong></td><td>$10.000 / $50.000 / $100.000</td><td>Por tamanho de nave.</td></tr></tbody></table>\n\n<h2>Naves são masmorras no espaço</h2>\n<p>O livro faz questão de dizer: uma tripulação explorando uma nave abandonada é\num <em>dungeon crawl</em> com laser no lugar de espada. Salas a investigar,\ninimigos a derrotar, tesouros a achar. As armadilhas são sistemas de segurança,\nos mortos-vivos são robôs, e o enigma mágico vira senha de acesso.</p>\n\n<p>E dá para inverter: se os inimigos acoplarem a nave deles à do grupo, são os\npersonagens que defendem a própria masmorra dos invasores.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!jYr0gzzLF15Kkt0q.TMUXhrtABRGllAj2"
+    }
+  ],
+  "flags": {},
+  "sort": 8000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!jYr0gzzLF15Kkt0q"
+}

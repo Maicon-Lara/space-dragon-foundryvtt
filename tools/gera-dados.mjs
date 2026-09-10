@@ -15,6 +15,7 @@ import { TABELAS, FAIXAS, ROTULOS } from "./data/atributos.mjs";
 import { CIENTISTA, COSMONAUTA, GATUNO, MENTALICO, TALENTOSGATUNO } from "./data/progressao.mjs";
 import { TESTES } from "./data/testes.mjs";
 import { T7_4, T7_5 } from "./data/combate.mjs";
+import { T10_6_CRITICOS, T10_6_FALHAS } from "./data/naves.mjs";
 import { CAMPO_NA_FICHA, NOME } from "./data/onde-anotar.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
@@ -134,5 +135,9 @@ export const CRITICOS = ${j(T7_4)};
 
 /** T7-5: falhas críticas, em 1d6. */
 export const FALHAS = ${j(T7_5)};
+
+/** T10-6: críticos e falhas de ESPAÇONAVE. Não são os mesmos da T7-4/T7-5. */
+export const CRITICOS_NAVE = ${j(T10_6_CRITICOS)};
+export const FALHAS_NAVE = ${j(T10_6_FALHAS)};
 `);
 console.log(`  ✔ module/dados.js: ${TESTES.length} testes, ${Object.keys(prog).length} progressões`);
