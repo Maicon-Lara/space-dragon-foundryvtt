@@ -26,6 +26,23 @@
  * "cosmonauta", "furtividade" e "aptidão tecnológica"; o antigo diz
  * "homem espacial", "esgueirar-se" e "crédito tecnológico".
  *
+ * ── `habilidade` LIGA O TESTE À FICHA ───────────────────────────────────────
+ *
+ * É o nome EXATO da `class_ability` em que o teste mora, e é por ele que o
+ * painel acha onde enfiar o botão de rolagem na aba de Classe. A ligação não é
+ * de um para um:
+ *
+ *   · "Desarmar e Subjugar" é UMA habilidade com DOIS testes, porque a
+ *     porcentagem da tabela é a mesma e só o atributo muda;
+ *   · "Talentos de Gatuno" é UMA habilidade com CINCO, que é como o livro os
+ *     apresenta — uma seção, seis colunas.
+ *
+ * `null` significa que o teste não pertence a habilidade de classe nenhuma.
+ * Clonagem sai da Constituição e vale para qualquer um.
+ *
+ * ⚠️ Mudar o nome de uma habilidade em classes.mjs sem mudar aqui desliga o
+ * botão em silêncio. O build falha se algum nome não casar.
+ *
  * ── O QUE NÃO É TESTE DE PORCENTAGEM ────────────────────────────────────────
  *
  *   · Percepção é 1d6, e passa dentro de uma FAIXA ("1-2" até "1-5").
@@ -41,6 +58,7 @@ export const TESTES = [
   // ── Cientista ──
   {
     chave: "operar-maquinas",
+    habilidade: "Operar Máquinas",
     nome: "Operar e consertar máquinas",
     classe: "Cientista",
     base: { tabela: "CIENTISTA", coluna: "operarMaquinas" },
@@ -51,6 +69,7 @@ export const TESTES = [
   // ── Cosmonauta ──
   {
     chave: "pilotar-naves",
+    habilidade: "Pilotar Naves",
     nome: "Pilotar naves",
     classe: "Cosmonauta",
     base: { tabela: "COSMONAUTA", coluna: "pilotarNaves" },
@@ -59,6 +78,7 @@ export const TESTES = [
   },
   {
     chave: "desarmar",
+    habilidade: "Desarmar e Subjugar",
     nome: "Desarmar",
     classe: "Cosmonauta",
     base: { tabela: "COSMONAUTA", coluna: "desarmarSubjugar" },
@@ -67,6 +87,7 @@ export const TESTES = [
   },
   {
     chave: "subjugar",
+    habilidade: "Desarmar e Subjugar",
     nome: "Subjugar",
     classe: "Cosmonauta",
     base: { tabela: "COSMONAUTA", coluna: "desarmarSubjugar" },
@@ -77,6 +98,7 @@ export const TESTES = [
   // ── Gatuno ──
   {
     chave: "sabotagem",
+    habilidade: "Talentos de Gatuno",
     nome: "Sabotagem",
     classe: "Gatuno",
     base: { tabela: "TALENTOSGATUNO", coluna: "sabotagem" },
@@ -85,6 +107,7 @@ export const TESTES = [
   },
   {
     chave: "escalar",
+    habilidade: "Talentos de Gatuno",
     nome: "Escalar",
     classe: "Gatuno",
     base: { tabela: "TALENTOSGATUNO", coluna: "escalar" },
@@ -93,6 +116,7 @@ export const TESTES = [
   },
   {
     chave: "furtividade",
+    habilidade: "Talentos de Gatuno",
     nome: "Furtividade",
     classe: "Gatuno",
     base: { tabela: "TALENTOSGATUNO", coluna: "furtividade" },
@@ -102,6 +126,7 @@ export const TESTES = [
   },
   {
     chave: "furtar",
+    habilidade: "Talentos de Gatuno",
     nome: "Furtar",
     classe: "Gatuno",
     base: { tabela: "TALENTOSGATUNO", coluna: "furtar" },
@@ -110,6 +135,7 @@ export const TESTES = [
   },
   {
     chave: "percepcao",
+    habilidade: "Talentos de Gatuno",
     nome: "Percepção",
     classe: "Gatuno",
     dado: "1d6",
@@ -121,6 +147,7 @@ export const TESTES = [
   // ── Mentálico ──
   {
     chave: "realizar-poder",
+    habilidade: "Realizar e Aprender Poder Mental",
     nome: "Realizar e aprender poder mental",
     classe: "Mentálico",
     base: { atributo: "intelecto", coluna: "poderMental" },
@@ -131,6 +158,7 @@ export const TESTES = [
   // ── Qualquer um ──
   {
     chave: "clonagem",
+    habilidade: null,
     nome: "Clonagem",
     classe: null,
     base: { atributo: "constituicao", coluna: "clonagem" },

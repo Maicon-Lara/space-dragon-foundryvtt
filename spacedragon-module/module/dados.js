@@ -390,6 +390,7 @@ export const ROTULO_COLUNA = {
 export const TESTES = [
   {
     "chave": "operar-maquinas",
+    "habilidade": "Operar Máquinas",
     "nome": "Operar e consertar máquinas",
     "classe": "Cientista",
     "base": {
@@ -401,6 +402,7 @@ export const TESTES = [
   },
   {
     "chave": "pilotar-naves",
+    "habilidade": "Pilotar Naves",
     "nome": "Pilotar naves",
     "classe": "Cosmonauta",
     "base": {
@@ -412,6 +414,7 @@ export const TESTES = [
   },
   {
     "chave": "desarmar",
+    "habilidade": "Desarmar e Subjugar",
     "nome": "Desarmar",
     "classe": "Cosmonauta",
     "base": {
@@ -426,6 +429,7 @@ export const TESTES = [
   },
   {
     "chave": "subjugar",
+    "habilidade": "Desarmar e Subjugar",
     "nome": "Subjugar",
     "classe": "Cosmonauta",
     "base": {
@@ -440,6 +444,7 @@ export const TESTES = [
   },
   {
     "chave": "sabotagem",
+    "habilidade": "Talentos de Gatuno",
     "nome": "Sabotagem",
     "classe": "Gatuno",
     "base": {
@@ -454,6 +459,7 @@ export const TESTES = [
   },
   {
     "chave": "escalar",
+    "habilidade": "Talentos de Gatuno",
     "nome": "Escalar",
     "classe": "Gatuno",
     "base": {
@@ -465,6 +471,7 @@ export const TESTES = [
   },
   {
     "chave": "furtividade",
+    "habilidade": "Talentos de Gatuno",
     "nome": "Furtividade",
     "classe": "Gatuno",
     "base": {
@@ -480,6 +487,7 @@ export const TESTES = [
   },
   {
     "chave": "furtar",
+    "habilidade": "Talentos de Gatuno",
     "nome": "Furtar",
     "classe": "Gatuno",
     "base": {
@@ -494,6 +502,7 @@ export const TESTES = [
   },
   {
     "chave": "percepcao",
+    "habilidade": "Talentos de Gatuno",
     "nome": "Percepção",
     "classe": "Gatuno",
     "dado": "1d6",
@@ -506,6 +515,7 @@ export const TESTES = [
   },
   {
     "chave": "realizar-poder",
+    "habilidade": "Realizar e Aprender Poder Mental",
     "nome": "Realizar e aprender poder mental",
     "classe": "Mentálico",
     "base": {
@@ -517,6 +527,7 @@ export const TESTES = [
   },
   {
     "chave": "clonagem",
+    "habilidade": null,
     "nome": "Clonagem",
     "classe": null,
     "base": {

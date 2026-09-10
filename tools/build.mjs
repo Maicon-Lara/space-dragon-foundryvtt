@@ -188,6 +188,32 @@ function montaTabelas() {
 }
 
 
+// ── Guarda: todo teste tem de achar a habilidade dele ───────────────────────
+//
+// O painel da ficha enfia o botão de rolagem DENTRO da habilidade de classe,
+// casando por nome. Se alguém renomear "Talentos de Gatuno" em classes.mjs e
+// esquecer o testes.mjs, o botão some sem erro nenhum — a ficha só fica sem
+// ele, e ninguém percebe até a mesa.
+//
+// Então o build quebra aqui em vez de publicar um painel mudo.
+function conferePonteiros() {
+  const existentes = new Set(
+    classes.flatMap((c) => (c.habilidades ?? []).map((h) => h.nome))
+  );
+  const orfas = TESTES
+    .filter((t) => t.habilidade && !existentes.has(t.habilidade))
+    .map((t) => `${t.chave} → "${t.habilidade}"`);
+
+  if (orfas.length) {
+    for (const o of orfas) console.error(`  ✘ ${o}`);
+    console.error("  habilidades disponíveis:", [...existentes].sort().join(", "));
+    throw new Error(
+      `${orfas.length} teste(s) apontam para habilidade que não existe em classes.mjs`
+    );
+  }
+  console.log(`  ✔ ponteiros: ${TESTES.filter((t) => t.habilidade).length} testes ligados a habilidades`);
+}
+
 // ── Macros ──────────────────────────────────────────────────────────────────
 //
 // Uma macro geral e uma por teste. As específicas existem porque é assim que a
@@ -235,6 +261,7 @@ async function compila(nome, docs) {
 
 async function main() {
   console.log("Montando o Space Dragon…");
+  conferePonteiros();
 
   let cls = aninhaPastas(montaClasses());
   pintaPastas(cls, PALETA);
