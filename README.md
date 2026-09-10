@@ -45,10 +45,10 @@ Comunicação é reação e seguidores. Vive em `tools/data/onde-anotar.mjs`.
 
 | Compêndio | Conteúdo |
 |---|---|
-| **Espécies** | Humano, Androide, Mutante — com os traços mecânicos |
-| **Mutações** | as 20 da T2-1, com as subtabelas T2-2 a T2-5 embutidas |
+| **Espécies** | Humano, Androide, Mutante — o Mutante escolhe as duas mutações na própria ficha |
+| **Classes** | as 4 do Cap. 3 e as 12 especializações, uma subpasta por classe |
 | **Tabelas** | T2-1 rolável, uma por coluna |
-| **Regras** | as seis tabelas de atributo, onde anotar, e os limites |
+| **Regras** | as seis tabelas de atributo, os subatributos do Cap. 4, e as 20 mutações por extenso |
 
 ## As porcentagens
 

@@ -57,3 +57,12 @@ export function ondeAnotar(atributo) {
     ? `<strong>${NOME[atributo]}</strong>`
     : `<strong>${NOME[atributo]}</strong> <em>(o campo ${rotulo} da ficha)</em>`;
 }
+
+/** A mesma coisa em TEXTO PURO — para onde o HTML sai escapado (dropdowns). */
+export function ondeAnotarTexto(atributo) {
+  const campo = CAMPO_NA_FICHA[atributo];
+  const rotulo = ROTULO_DA_FICHA[campo];
+  return rotulo === NOME[atributo]
+    ? NOME[atributo]
+    : `${NOME[atributo]} (o campo ${rotulo} da ficha)`;
+}

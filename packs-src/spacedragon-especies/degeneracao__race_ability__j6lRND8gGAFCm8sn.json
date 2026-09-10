@@ -1,0 +1,149 @@
+{
+  "folder": "putLQYz2gENoarVj",
+  "name": "Degeneração",
+  "type": "race_ability",
+  "_id": "j6lRND8gGAFCm8sn",
+  "img": "systems/olddragon2e/assets/icons/diamond.svg",
+  "system": {
+    "description": "<p>A contrapartida. Escolha <strong>uma</strong> mutação da coluna de degenerações.</p><p>⚠️ <strong>Tem de ser um número diferente do aprimoramento.</strong> É a trava do livro: sem ela sairia <em>Recuperação Acelerada</em> com <em>Recuperação Lenta</em>, que se anulam. Quem rola nos dados rerrola até os dois dados darem números distintos; quem escolhe, simplesmente não repete o número.</p>",
+    "xp": null,
+    "jp": {
+      "jpc": false,
+      "jpd": false,
+      "jps": false
+    },
+    "bonus_damage": 0,
+    "bonus_damage_condition": "none",
+    "bonus_damage_condition_2": "none",
+    "rogue_talent": "none",
+    "rogue_talent_2": "none",
+    "daily_uses": 0,
+    "natural_armor": 0,
+    "load_modifier": 0,
+    "max_load_override": 0,
+    "armor_weight_modifier": 0,
+    "variable_construction": {
+      "choices_count": 1,
+      "available_options": [
+        {
+          "key": "01-recuperacao-lenta",
+          "name": "1. Recuperação Lenta",
+          "description": "Personagens com esta mutação recuperam 1PV por nível a cada 2 dias de descanso."
+        },
+        {
+          "key": "02-cognicao-retardada",
+          "name": "2. Cognição Retardada",
+          "description": "O personagem com esta mutação recebe uma penalidade de 30% de XP."
+        },
+        {
+          "key": "03-mente-simplificada",
+          "name": "3. Mente Simplificada",
+          "description": "O personagem tem uma penalidade de -2 em JPM, e não pode ter Intelecto superior a 10."
+        },
+        {
+          "key": "04-sistema-imunologico-vulneravel",
+          "name": "4. Sistema Imunológico Vulnerável",
+          "description": "Confere uma penalidade de -2 em qualquer JPF para resistir a doenças, infecções e outros males que não envolvam ferimentos ou traumas físicos."
+        },
+        {
+          "key": "05-baixa-expectativa-de-vida",
+          "name": "5. Baixa Expectativa de Vida",
+          "description": "A expectativa de vida do personagem é de 40 a 50 anos, e a maturidade acontece aos 10. Ao atingir o 10° nível de classe e a cada dois níveis subsequentes deve-se escolher um atributo e diminuí-lo em 1 ponto."
+        },
+        {
+          "key": "06-funcoes-vitais-debilitadas",
+          "name": "6. Funções Vitais Debilitadas",
+          "description": "O DV da classe do personagem torna-se uma categoria menor. O d4 torna-se d2, o d6 torna-se d4, o d8 torna-se d6 e o d10 torna-se d8."
+        },
+        {
+          "key": "07-visao",
+          "name": "7. Sentido Diminuído — Visão",
+          "description": "Olhos pequenos ou com ausência de íris. Incapaz de enxergar bem com muita luz e ao longe, e recebe −1 para usar armas à distância. Gatunos recebem −1 em jogadas de percepção envolvendo a visão."
+        },
+        {
+          "key": "07-audicao",
+          "name": "7. Sentido Diminuído — Audição",
+          "description": "Orelhas pouco desenvolvidas ou parcialmente cobertas. −1 em jogadas de proteção de reflexos, e escuta sons com apenas metade da capacidade de um humano. Gatunos recebem −1 em jogadas de percepção envolvendo a audição."
+        },
+        {
+          "key": "07-olfato",
+          "name": "7. Sentido Diminuído — Olfato",
+          "description": "Narinas parcialmente tampadas. Capacidade olfativa duas vezes menor que a de um humano; prende a respiração por segundos iguais a Constituição × 5. Gatunos recebem −1 em jogadas de percepção envolvendo o olfato."
+        },
+        {
+          "key": "07-tato",
+          "name": "7. Sentido Diminuído — Tato",
+          "description": "Pele com cor ou textura diferenciada. Baixa sensibilidade tátil: −2 no atributo Força, e sofre sempre +2 pontos de dano de qualquer tipo."
+        },
+        {
+          "key": "07-paladar",
+          "name": "7. Sentido Diminuído — Paladar",
+          "description": "Língua com coloração diferente. Precisa do dobro do alimento que um humano precisaria, e o corpo é suscetível a doenças e venenos: as jogadas de proteção para resistir falham automaticamente e o dano por doença ou veneno é dobrado."
+        },
+        {
+          "key": "07-sexto-sentido",
+          "name": "7. Sentido Diminuído — Sexto Sentido",
+          "description": "Falta de noção precisa de perigo. −2 em qualquer JPR e no coeficiente de proteção."
+        },
+        {
+          "key": "08-forca-3",
+          "name": "8. Atributo Diminuído — Força -3",
+          "description": "Corpo franzino. -3 em Força."
+        },
+        {
+          "key": "08-destreza-3",
+          "name": "8. Atributo Diminuído — Destreza -3",
+          "description": "Corpo pesado e coordenação motora prejudicada. -3 em Destreza."
+        },
+        {
+          "key": "08-constituicao-3",
+          "name": "8. Atributo Diminuído — Constituição -3",
+          "description": "Aparência doentia. -3 em Constituição."
+        },
+        {
+          "key": "08-intelecto-3",
+          "name": "8. Atributo Diminuído — Intelecto -3",
+          "description": "Massa encefálica diminuída. -3 em Intelecto (o campo Sabedoria da ficha)."
+        },
+        {
+          "key": "08-ciencia-3",
+          "name": "8. Atributo Diminuído — Ciência -3",
+          "description": "Comportamento animalesco. -3 em Ciência (o campo Inteligência da ficha)."
+        },
+        {
+          "key": "08-comunicacao-3",
+          "name": "8. Atributo Diminuído — Comunicação -3",
+          "description": "Introspecção inata. -3 em Comunicação (o campo Carisma da ficha)."
+        },
+        {
+          "key": "09-dissonancia-mental",
+          "name": "9. Dissonância Mental",
+          "description": "O personagem tem uma dupla personalidade, seguindo as regras do poder mental Criar dupla personalidade no capítulo 9. Ambas as personalidades são tratadas como personagens separados de nível 1."
+        },
+        {
+          "key": "10-involucao",
+          "name": "10. Involução",
+          "description": "Escolha um entre testes de atributo, jogadas de proteção ou rolagens de ataque. Você sempre rolará 2d20 para o tipo de rolagem escolhida e ficará com o pior resultado."
+        }
+      ]
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 1,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!j6lRND8gGAFCm8sn"
+}

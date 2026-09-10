@@ -1,0 +1,149 @@
+{
+  "folder": "putLQYz2gENoarVj",
+  "name": "Aprimoramento",
+  "type": "race_ability",
+  "_id": "BybtAtgOu47yVh88",
+  "img": "systems/olddragon2e/assets/icons/diamond.svg",
+  "system": {
+    "description": "<p>A metade boa do <strong>balanço genético</strong>. Escolha <strong>uma</strong> mutação da coluna de aprimoramentos da <strong>T2-1</strong> no seletor acima — ou role 1d10 e pegue a de número correspondente.</p><p>As duas que mandam rolar 1d6 numa subtabela (<em>Sentido Ampliado</em> e <em>Atributo Ampliado</em>) já vêm abertas nas seis variantes, então a escolha é uma só.</p><p>O texto completo de cada mutação — genótipo, fenótipo e funcionamento — está no journal <strong>Mutações do Homo novus</strong>.</p>",
+    "xp": null,
+    "jp": {
+      "jpc": false,
+      "jpd": false,
+      "jps": false
+    },
+    "bonus_damage": 0,
+    "bonus_damage_condition": "none",
+    "bonus_damage_condition_2": "none",
+    "rogue_talent": "none",
+    "rogue_talent_2": "none",
+    "daily_uses": 0,
+    "natural_armor": 0,
+    "load_modifier": 0,
+    "max_load_override": 0,
+    "armor_weight_modifier": 0,
+    "variable_construction": {
+      "choices_count": 1,
+      "available_options": [
+        {
+          "key": "01-recuperacao-acelerada",
+          "name": "1. Recuperação Acelerada",
+          "description": "Personagens com esta mutação recuperam 2PV por nível por dia de descanso."
+        },
+        {
+          "key": "02-cognicao-acelerada",
+          "name": "2. Cognição Acelerada",
+          "description": "O personagem com esta mutação recebe um bônus de 30% de XP."
+        },
+        {
+          "key": "03-mente-avancada",
+          "name": "3. Mente Avançada",
+          "description": "O personagem tem resistência mental de 5%, e um bônus de +2 em JPM."
+        },
+        {
+          "key": "04-sistema-imunologico-evoluido",
+          "name": "4. Sistema Imunológico Evoluído",
+          "description": "Garante um bônus de +2 em qualquer JPF para resistir a doenças, infecções e outros males que não envolvam ferimentos ou traumas físicos."
+        },
+        {
+          "key": "05-longevidade",
+          "name": "5. Longevidade",
+          "description": "A expectativa de vida do personagem é de 100 a 120 anos, e a maturidade acontece aos 30. Ao atingir o 10° nível de classe e a cada dois níveis subsequentes poderá escolher um atributo e aumentá-lo em 1 ponto."
+        },
+        {
+          "key": "06-funcoes-vitais-superiores",
+          "name": "6. Funções Vitais Superiores",
+          "description": "O DV da classe do personagem torna-se uma categoria maior. O d4 é substituído por d6, o d6 por d8, o d8 por d10 e o d10 por d12."
+        },
+        {
+          "key": "07-visao",
+          "name": "7. Sentido Ampliado — Visão",
+          "description": "Olhos proeminentes ou de coloração diferenciada. Enxerga no escuro e à distância, e recebe +1 para usar armas à distância. Gatunos recebem +1 em jogadas de percepção envolvendo a visão."
+        },
+        {
+          "key": "07-audicao",
+          "name": "7. Sentido Ampliado — Audição",
+          "description": "Orelhas proeminentes ou pontudas. +1 em jogadas de proteção de reflexos, e escuta sons com o dobro da capacidade de um humano. Gatunos recebem +1 em jogadas de percepção envolvendo a audição."
+        },
+        {
+          "key": "07-olfato",
+          "name": "7. Sentido Ampliado — Olfato",
+          "description": "Nariz aquilino ou ausência de narina. Capacidade olfativa duas vezes maior que a de um humano; prende a respiração por turnos iguais a Constituição × 20. Gatunos recebem +1 em jogadas de percepção envolvendo o olfato."
+        },
+        {
+          "key": "07-tato",
+          "name": "7. Sentido Ampliado — Tato",
+          "description": "Pele com cor ou textura diferenciada. Reconhece qualquer tipo de material pelo toque e ignora 2 pontos de dano de qualquer tipo, podendo zerá-lo."
+        },
+        {
+          "key": "07-paladar",
+          "name": "7. Sentido Ampliado — Paladar",
+          "description": "Língua longa ou bifurcada. Precisa de apenas metade do alimento que um humano precisaria, e o corpo é imune a doenças e venenos."
+        },
+        {
+          "key": "07-sexto-sentido",
+          "name": "7. Sentido Ampliado — Sexto Sentido",
+          "description": "Percepção rápida e quase premonitiva do perigo. +2 em qualquer Jogada de Proteção de Reflexos (JPR) e no coeficiente de proteção."
+        },
+        {
+          "key": "08-forca-3",
+          "name": "8. Atributo Ampliado — Força +3",
+          "description": "Corpo musculoso. +3 em Força."
+        },
+        {
+          "key": "08-destreza-3",
+          "name": "8. Atributo Ampliado — Destreza +3",
+          "description": "Corpo esguio e boa coordenação motora. +3 em Destreza."
+        },
+        {
+          "key": "08-constituicao-3",
+          "name": "8. Atributo Ampliado — Constituição +3",
+          "description": "Aparência saudável. +3 em Constituição."
+        },
+        {
+          "key": "08-intelecto-3",
+          "name": "8. Atributo Ampliado — Intelecto +3",
+          "description": "Massa encefálica proeminente. +3 em Intelecto (o campo Sabedoria da ficha)."
+        },
+        {
+          "key": "08-ciencia-3",
+          "name": "8. Atributo Ampliado — Ciência +3",
+          "description": "Facilmente distraído e absorto em pensamentos. +3 em Ciência (o campo Inteligência da ficha)."
+        },
+        {
+          "key": "08-comunicacao-3",
+          "name": "8. Atributo Ampliado — Comunicação +3",
+          "description": "Aptidão para socialização. +3 em Comunicação (o campo Carisma da ficha)."
+        },
+        {
+          "key": "09-poderes-mentais",
+          "name": "9. Poderes Mentais",
+          "description": "Escolha um poder mental de 1ª grandeza. O personagem pode realizá-lo uma vez por dia sem penalidades. Este uso é algo adicional, além do alcance mental diário do personagem caso ele seja um mentálico. Ele pode tentar realizá-lo mais vezes por dia com um teste de Realizar poder mental se o valor do atributo conferir uma porcentagem para isso. Uma falha nessa jogada, contudo, causa 1d6 pontos de dano mental ao mutante e impede que ele faça novas tentativas naquele dia."
+        },
+        {
+          "key": "10-superpoderes",
+          "name": "10. Superpoderes",
+          "description": "Escolha uma magia arcana ou divina de 1º círculo da lista do Old Dragon – o personagem pode conjurar essa magia uma vez por dia. O mestre tem a palavra final sobre quaisquer detalhes da magia que precisarem ser adaptados. O Old Dragon é um RPG de fantasia clássica e está disponível gratuitamente no site da Redbox Editora."
+        }
+      ]
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!BybtAtgOu47yVh88"
+}

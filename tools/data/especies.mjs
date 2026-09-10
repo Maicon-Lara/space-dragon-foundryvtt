@@ -6,6 +6,7 @@
 // onde-anotar.mjs.
 
 import { ondeAnotar } from "./onde-anotar.mjs";
+import { opcoesDe } from "./mutacoes.mjs";
 
 /** Nota de rodapé comum: o que a ficha do OD2 não consegue aplicar sozinha. */
 const AJUSTE_MANUAL =
@@ -100,15 +101,28 @@ export const especies = [
       "degeneração. Não há um sem o outro.</p>",
     habilidades: [
       {
-        nome: "Balanço Genético",
+        nome: "Aprimoramento",
         desc:
-          "<p>Role <strong>2d10</strong> na tabela <strong>T2-1</strong>: um dado na coluna de " +
-          "<strong>aprimoramentos</strong>, o outro na de <strong>degenerações</strong>.</p>" +
-          "<p><strong>Resultados iguais são rerrolados</strong> até saírem diferentes — sem isso " +
-          "sairia, por exemplo, <em>Recuperação acelerada</em> com <em>Recuperação lenta</em>, que se " +
-          "anulam.</p>" +
-          "<p>Use a tabela rolável <strong>T2-1: Mutações</strong> do compêndio de Tabelas, e arraste " +
-          "as duas mutações sorteadas do compêndio <strong>Mutações</strong> para a ficha.</p>",
+          "<p>A metade boa do <strong>balanço genético</strong>. Escolha <strong>uma</strong> " +
+          "mutação da coluna de aprimoramentos da <strong>T2-1</strong> no seletor acima — ou role " +
+          "1d10 e pegue a de número correspondente.</p>" +
+          "<p>As duas que mandam rolar 1d6 numa subtabela (<em>Sentido Ampliado</em> e " +
+          "<em>Atributo Ampliado</em>) já vêm abertas nas seis variantes, então a escolha é uma só.</p>" +
+          "<p>O texto completo de cada mutação — genótipo, fenótipo e funcionamento — está no " +
+          "journal <strong>Mutações do Homo novus</strong>.</p>",
+        variable_construction: { choices_count: 1, available_options: opcoesDe("aprimoramento") },
+      },
+      {
+        nome: "Degeneração",
+        desc:
+          "<p>A contrapartida. Escolha <strong>uma</strong> mutação da coluna de degenerações.</p>" +
+          "<p>⚠️ <strong>Tem de ser um número diferente do aprimoramento.</strong> É a trava do livro: " +
+          "sem ela sairia <em>Recuperação Acelerada</em> com <em>Recuperação Lenta</em>, que se anulam. " +
+          "Quem rola nos dados rerrola até os dois dados darem números distintos; quem escolhe, " +
+          "simplesmente não repete o número.</p>" +
+          "<p class='nota-casa'><em>A ficha não valida isso — os dois seletores são independentes. " +
+          "Confira o número antes de fechar.</em></p>",
+        variable_construction: { choices_count: 1, available_options: opcoesDe("degeneracao") },
       },
       {
         nome: "Herança Humana",

@@ -1,0 +1,135 @@
+{
+  "folder": null,
+  "name": "Space Dragon — Mutações do Homo novus",
+  "_id": "Ni46euRxkkB01AJ5",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Como se escolhe",
+      "type": "text",
+      "_id": "1Zul6nkeWkjfiSE7",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>O balanço genético</h2>\n<p>Todo aprimoramento vem com uma degeneração. Não há um sem o outro.</p>\n\n<p><strong>Rolando:</strong> role <strong>2d10</strong> na <strong>T2-1</strong>, um dado\nna coluna de aprimoramentos e outro na de degenerações. As duas tabelas roláveis\nestão no compêndio <strong>Tabelas</strong>.</p>\n\n<p><strong>Escolhendo:</strong> o item de raça <strong>Mutante</strong> traz dois\nseletores na ficha, <em>Aprimoramento</em> e <em>Degeneração</em>, com as vinte\nmutações já listadas. As quatro que mandariam rolar 1d6 numa subtabela aparecem\nabertas nas seis variantes, então a escolha é uma só.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ <strong>Os dois números têm de ser diferentes.</strong> É a trava do livro:\nsem ela sairia <em>Recuperação Acelerada</em> com <em>Recuperação Lenta</em>, que\nse anulam. Quem rola rerrola os dois dados até darem números distintos.</p>\n\n<p>O Mutante <strong>não recebe</strong> o +2 num atributo, o −2 em outro nem o\nincremento a cada 4 níveis do Humano. As mutações ocupam esse lugar.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!Ni46euRxkkB01AJ5.1Zul6nkeWkjfiSE7"
+    },
+    {
+      "sort": 200000,
+      "name": "Aprimoramentos",
+      "type": "text",
+      "_id": "Tm4XkeGoIs5s4JeA",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\"><h2>T2-1 — coluna de aprimoramentos</h2>\n<h3>1. Recuperação Acelerada</h3><p><em>Genótipo:</em> O organismo do personagem é mais eficiente em recuperar-se de ferimentos e traumas.</p><p><em>Fenótipo:</em> Feridas fecham-se mais rapidamente.</p><p><strong>Funcionamento:</strong> Personagens com esta mutação recuperam 2PV por nível por dia de descanso.</p>\n<h3>2. Cognição Acelerada</h3><p><em>Genótipo:</em> O aprendizado do mutante ocorre mais rapidamente do que o normal.</p><p><em>Fenótipo:</em> Facilidade de entendimento e memorização.</p><p><strong>Funcionamento:</strong> O personagem com esta mutação recebe um bônus de 30% de XP.</p>\n<h3>3. Mente Avançada</h3><p><em>Genótipo:</em> O cérebro do mutante é mais desenvolvido do que o normal.</p><p><em>Fenótipo:</em> Massa encefálica proeminente.</p><p><strong>Funcionamento:</strong> O personagem tem resistência mental de 5%, e um bônus de +2 em JPM.</p>\n<h3>4. Sistema Imunológico Evoluído</h3><p><em>Genótipo:</em> Os anticorpos do personagem combatem agentes nocivos com muita eficácia.</p><p><em>Fenótipo:</em> Saúde inabalável.</p><p><strong>Funcionamento:</strong> Garante um bônus de +2 em qualquer JPF para resistir a doenças, infecções e outros males que não envolvam ferimentos ou traumas físicos.</p>\n<h3>5. Longevidade</h3><p><em>Genótipo:</em> O organismo do mutante envelhece mais devagar.</p><p><em>Fenótipo:</em> Envelhecimento tardio.</p><p><strong>Funcionamento:</strong> A expectativa de vida do personagem é de 100 a 120 anos, e a maturidade acontece aos 30. Ao atingir o 10° nível de classe e a cada dois níveis subsequentes poderá escolher um atributo e aumentá-lo em 1 ponto.</p>\n<h3>6. Funções Vitais Superiores</h3><p><em>Genótipo:</em> As funções vitais do personagem se dão em ritmo mais acelerado que o normal.</p><p><em>Fenótipo:</em> Aspecto saudável.</p><p><strong>Funcionamento:</strong> O DV da classe do personagem torna-se uma categoria maior. O d4 é substituído por d6, o d6 por d8, o d8 por d10 e o d10 por d12.</p>\n<h3>7. Sentido Ampliado</h3><p><em>Genótipo:</em> Um dos sentidos do mutante se destaca dos demais.</p><p><em>Fenótipo:</em> Vários — veja a subtabela.</p><p><strong>Funcionamento:</strong> Role 1d6 e compare o resultado com a tabela a seguir.</p><p><strong>T2-3: Sentido Ampliado</strong> — role 1d6:</p><table><thead><tr><th>1d6</th><th>Sentido</th><th>Efeito</th></tr></thead><tbody><tr><td>1</td><td><strong>Visão</strong></td><td>Olhos proeminentes ou de coloração diferenciada. Enxerga no escuro e à distância, e recebe +1 para usar armas à distância. Gatunos recebem +1 em jogadas de percepção envolvendo a visão.</td></tr><tr><td>2</td><td><strong>Audição</strong></td><td>Orelhas proeminentes ou pontudas. +1 em jogadas de proteção de reflexos, e escuta sons com o dobro da capacidade de um humano. Gatunos recebem +1 em jogadas de percepção envolvendo a audição.</td></tr><tr><td>3</td><td><strong>Olfato</strong></td><td>Nariz aquilino ou ausência de narina. Capacidade olfativa duas vezes maior que a de um humano; prende a respiração por turnos iguais a Constituição × 20. Gatunos recebem +1 em jogadas de percepção envolvendo o olfato.</td></tr><tr><td>4</td><td><strong>Tato</strong></td><td>Pele com cor ou textura diferenciada. Reconhece qualquer tipo de material pelo toque e ignora 2 pontos de dano de qualquer tipo, podendo zerá-lo.</td></tr><tr><td>5</td><td><strong>Paladar</strong></td><td>Língua longa ou bifurcada. Precisa de apenas metade do alimento que um humano precisaria, e o corpo é imune a doenças e venenos.</td></tr><tr><td>6</td><td><strong>Sexto Sentido</strong></td><td>Percepção rápida e quase premonitiva do perigo. +2 em qualquer Jogada de Proteção de Reflexos (JPR) e no coeficiente de proteção.</td></tr></tbody></table>\n<h3>8. Atributo Ampliado</h3><p><em>Genótipo:</em> Um dos atributos do personagem se destaca dos demais.</p><p><em>Fenótipo:</em> Vários — veja a subtabela.</p><p><strong>Funcionamento:</strong> Role 1d6 e compare o resultado com a tabela a seguir:</p><p><strong>T2-2: Atributo Ampliado</strong> — role 1d6:</p><table><thead><tr><th>1d6</th><th>Atributo</th><th>Efeito</th></tr></thead><tbody><tr><td>1</td><td><strong>Força</strong> +3</td><td>Corpo musculoso</td></tr><tr><td>2</td><td><strong>Destreza</strong> +3</td><td>Corpo esguio e boa coordenação motora</td></tr><tr><td>3</td><td><strong>Constituição</strong> +3</td><td>Aparência saudável</td></tr><tr><td>4</td><td><strong>Intelecto</strong> +3<br><em style=\"opacity:.7\">campo Sabedoria da ficha</em></td><td>Massa encefálica proeminente</td></tr><tr><td>5</td><td><strong>Ciência</strong> +3<br><em style=\"opacity:.7\">campo Inteligência da ficha</em></td><td>Facilmente distraído e absorto em pensamentos</td></tr><tr><td>6</td><td><strong>Comunicação</strong> +3<br><em style=\"opacity:.7\">campo Carisma da ficha</em></td><td>Aptidão para socialização</td></tr></tbody></table>\n<h3>9. Poderes Mentais</h3><p><em>Genótipo:</em> O cérebro do mutante desenvolveu a capacidade inata de realizar um poder mental.</p><p><em>Fenótipo:</em> Loucura aparente.</p><p><strong>Funcionamento:</strong> Escolha um poder mental de 1ª grandeza. O personagem pode realizá-lo uma vez por dia sem penalidades. Este uso é algo adicional, além do alcance mental diário do personagem caso ele seja um mentálico. Ele pode tentar realizá-lo mais vezes por dia com um teste de Realizar poder mental se o valor do atributo conferir uma porcentagem para isso. Uma falha nessa jogada, contudo, causa 1d6 pontos de dano mental ao mutante e impede que ele faça novas tentativas naquele dia.</p>\n<h3>10. Superpoderes</h3><p><em>Genótipo:</em> O mutante é capaz de feitos incríveis e inexplicados pela ciência.</p><p><em>Fenótipo:</em> Variável</p><p><strong>Funcionamento:</strong> Escolha uma magia arcana ou divina de 1º círculo da lista do Old Dragon – o personagem pode conjurar essa magia uma vez por dia. O mestre tem a palavra final sobre quaisquer detalhes da magia que precisarem ser adaptados. O Old Dragon é um RPG de fantasia clássica e está disponível gratuitamente no site da Redbox Editora.</p></div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!Ni46euRxkkB01AJ5.Tm4XkeGoIs5s4JeA"
+    },
+    {
+      "sort": 300000,
+      "name": "Degenerações",
+      "type": "text",
+      "_id": "ZzmtMpGupwSev0DG",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\"><h2>T2-1 — coluna de degenerações</h2>\n<h3>1. Recuperação Lenta</h3><p><em>Genótipo:</em> O organismo do mutante é mais lento em recuperar-se de ferimentos e traumas.</p><p><em>Fenótipo:</em> Feridas fecham-se mais lentamente.</p><p><strong>Funcionamento:</strong> Personagens com esta mutação recuperam 1PV por nível a cada 2 dias de descanso.</p>\n<h3>2. Cognição Retardada</h3><p><em>Genótipo:</em> O aprendizado do mutante se dá mais lentamente que normal.</p><p><em>Fenótipo:</em> Dificuldade de entendimento e memorização.</p><p><strong>Funcionamento:</strong> O personagem com esta mutação recebe uma penalidade de 30% de XP.</p>\n<h3>3. Mente Simplificada</h3><p><em>Genótipo:</em> O cérebro do mutante é menos desenvolvido do que o normal.</p><p><em>Fenótipo:</em> Massa encefálica reduzida.</p><p><strong>Funcionamento:</strong> O personagem tem uma penalidade de -2 em JPM, e não pode ter Intelecto superior a 10.</p>\n<h3>4. Sistema Imunológico Vulnerável</h3><p><em>Genótipo:</em> Os anticorpos do personagem não conseguem combater agentes nocivos com eficácia.</p><p><em>Fenótipo:</em> Vulnerabilidade a doenças.</p><p><strong>Funcionamento:</strong> Confere uma penalidade de -2 em qualquer JPF para resistir a doenças, infecções e outros males que não envolvam ferimentos ou traumas físicos.</p>\n<h3>5. Baixa Expectativa de Vida</h3><p><em>Genótipo:</em> O organismo do mutante envelhece mais rapidamente.</p><p><em>Fenótipo:</em> Envelhecimento precoce.</p><p><strong>Funcionamento:</strong> A expectativa de vida do personagem é de 40 a 50 anos, e a maturidade acontece aos 10. Ao atingir o 10° nível de classe e a cada dois níveis subsequentes deve-se escolher um atributo e diminuí-lo em 1 ponto.</p>\n<h3>6. Funções Vitais Debilitadas</h3><p><em>Genótipo:</em> As funções vitais do personagem se dão em ritmo mais lento que o normal.</p><p><em>Fenótipo:</em> Aspecto doentio.</p><p><strong>Funcionamento:</strong> O DV da classe do personagem torna-se uma categoria menor. O d4 torna-se d2, o d6 torna-se d4, o d8 torna-se d6 e o d10 torna-se d8.</p>\n<h3>7. Sentido Diminuído</h3><p><em>Genótipo:</em> Um dos sentidos do mutante é deficiente.</p><p><em>Fenótipo:</em> Vários — veja a subtabela.</p><p><strong>Funcionamento:</strong> Role 1d6 e compare o resultado com a tabela</p><p><strong>T2-5: Sentido Diminuído</strong> — role 1d6:</p><table><thead><tr><th>1d6</th><th>Sentido</th><th>Efeito</th></tr></thead><tbody><tr><td>1</td><td><strong>Visão</strong></td><td>Olhos pequenos ou com ausência de íris. Incapaz de enxergar bem com muita luz e ao longe, e recebe −1 para usar armas à distância. Gatunos recebem −1 em jogadas de percepção envolvendo a visão.</td></tr><tr><td>2</td><td><strong>Audição</strong></td><td>Orelhas pouco desenvolvidas ou parcialmente cobertas. −1 em jogadas de proteção de reflexos, e escuta sons com apenas metade da capacidade de um humano. Gatunos recebem −1 em jogadas de percepção envolvendo a audição.</td></tr><tr><td>3</td><td><strong>Olfato</strong></td><td>Narinas parcialmente tampadas. Capacidade olfativa duas vezes menor que a de um humano; prende a respiração por segundos iguais a Constituição × 5. Gatunos recebem −1 em jogadas de percepção envolvendo o olfato.</td></tr><tr><td>4</td><td><strong>Tato</strong></td><td>Pele com cor ou textura diferenciada. Baixa sensibilidade tátil: −2 no atributo Força, e sofre sempre +2 pontos de dano de qualquer tipo.</td></tr><tr><td>5</td><td><strong>Paladar</strong></td><td>Língua com coloração diferente. Precisa do dobro do alimento que um humano precisaria, e o corpo é suscetível a doenças e venenos: as jogadas de proteção para resistir falham automaticamente e o dano por doença ou veneno é dobrado.</td></tr><tr><td>6</td><td><strong>Sexto Sentido</strong></td><td>Falta de noção precisa de perigo. −2 em qualquer JPR e no coeficiente de proteção.</td></tr></tbody></table>\n<h3>8. Atributo Diminuído</h3><p><em>Genótipo:</em> Um dos atributos do personagem é deficiente.</p><p><em>Fenótipo:</em> Vários — veja a subtabela.</p><p><strong>Funcionamento:</strong> Role 1d6 e compare o resultado com a tabela a seguir:</p><p><strong>T2-4: Atributo Diminuído</strong> — role 1d6:</p><table><thead><tr><th>1d6</th><th>Atributo</th><th>Efeito</th></tr></thead><tbody><tr><td>1</td><td><strong>Força</strong> -3</td><td>Corpo franzino</td></tr><tr><td>2</td><td><strong>Destreza</strong> -3</td><td>Corpo pesado e coordenação motora prejudicada</td></tr><tr><td>3</td><td><strong>Constituição</strong> -3</td><td>Aparência doentia</td></tr><tr><td>4</td><td><strong>Intelecto</strong> -3<br><em style=\"opacity:.7\">campo Sabedoria da ficha</em></td><td>Massa encefálica diminuída</td></tr><tr><td>5</td><td><strong>Ciência</strong> -3<br><em style=\"opacity:.7\">campo Inteligência da ficha</em></td><td>Comportamento animalesco</td></tr><tr><td>6</td><td><strong>Comunicação</strong> -3<br><em style=\"opacity:.7\">campo Carisma da ficha</em></td><td>Introspecção inata</td></tr></tbody></table>\n<h3>9. Dissonância Mental</h3><p><em>Genótipo:</em> O personagem tem uma instabilidade mental, representada por uma dupla personalidade.</p><p><em>Fenótipo:</em> Personalidades conflitantes.</p><p><strong>Funcionamento:</strong> O personagem tem uma dupla personalidade, seguindo as regras do poder mental Criar dupla personalidade no capítulo 9. Ambas as personalidades são tratadas como personagens separados de nível 1.</p>\n<h3>10. Involução</h3><p><em>Genótipo:</em> Algumas capacidades mentais e motoras do mutante apresentam lentidão.</p><p><em>Fenótipo:</em> Falta de cognição para certas tarefas.</p><p><strong>Funcionamento:</strong> Escolha um entre testes de atributo, jogadas de proteção ou rolagens de ataque. Você sempre rolará 2d20 para o tipo de rolagem escolhida e ficará com o pior resultado.</p></div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!Ni46euRxkkB01AJ5.ZzmtMpGupwSev0DG"
+    }
+  ],
+  "flags": {},
+  "sort": 3000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!Ni46euRxkkB01AJ5"
+}

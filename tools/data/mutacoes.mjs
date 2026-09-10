@@ -119,13 +119,13 @@ export const PARES = [
     aprimoramento: {
       nome: "Sentido Ampliado",
       genotipo: "Um dos sentidos do mutante se destaca dos demais.",
-      fenotipo: "Vários (veja na tabela",
+      fenotipo: "Vários — veja a subtabela.",
       funcionamento: "Role 1d6 e compare o resultado com a tabela a seguir.",
     },
     degeneracao: {
       nome: "Sentido Diminuído",
       genotipo: "Um dos sentidos do mutante é deficiente.",
-      fenotipo: "Vários (veja na tabela",
+      fenotipo: "Vários — veja a subtabela.",
       funcionamento: "Role 1d6 e compare o resultado com a tabela",
     },
   },
@@ -134,13 +134,13 @@ export const PARES = [
     aprimoramento: {
       nome: "Atributo Ampliado",
       genotipo: "Um dos atributos do personagem se destaca dos demais.",
-      fenotipo: "Vários (ver na tabela",
+      fenotipo: "Vários — veja a subtabela.",
       funcionamento: "Role 1d6 e compare o resultado com a tabela a seguir:",
     },
     degeneracao: {
       nome: "Atributo Diminuído",
       genotipo: "Um dos atributos do personagem é deficiente.",
-      fenotipo: "Vários (veja na tabela",
+      fenotipo: "Vários — veja a subtabela.",
       funcionamento: "Role 1d6 e compare o resultado com a tabela a seguir:",
     },
   },
@@ -262,4 +262,65 @@ export async function sortearMutacoes() {
     },
     tentativas,
   };
+}
+
+// ── O SELETOR DA FICHA ──────────────────────────────────────────────────────
+//
+// O OD2 tem `variable_construction` na race_ability: declare `choices_count` e
+// `available_options`, e a aba Raça da ficha desenha um dropdown, mostra a
+// descrição da opção escolhida e ainda oferece "Personalizado". A escolha fica
+// gravada em `actor.system.variable_construction_selections`.
+//
+// DUAS RENDERIZAÇÕES, UMA FONTE. Os mesmos PARES viram (a) as vinte habilidades
+// soltas do compêndio, com Genótipo/Fenótipo/Funcionamento em HTML, e (b) as
+// opções do dropdown. O sistema passa a descrição da opção por
+// `escapeExpression` — HTML sairia como texto literal na tela —, então aqui só
+// entra TEXTO PURO.
+//
+// AS QUATRO COM SUBTABELA JÁ VÊM ABERTAS nas seis variantes. Assim o jogador
+// escolhe "8. Atributo Ampliado — Constituição +3" de uma vez, em vez de rolar
+// 1d10 e depois 1d6. Quem preferir rolar continua achando pelo número.
+
+import { NOME, ondeAnotarTexto } from "./onde-anotar.mjs";
+
+const slug = (s) =>
+  s.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+   .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+const SUB_DO_LADO = {
+  aprimoramento: { "Atributo Ampliado": T2_2, "Sentido Ampliado": T2_3 },
+  degeneracao: { "Atributo Diminuído": T2_4, "Sentido Diminuído": T2_5 },
+};
+
+/** As opções do dropdown para um lado do balanço genético. */
+export function opcoesDe(lado) {
+  const out = [];
+  for (const p of PARES) {
+    const m = p[lado];
+    const n = String(p.indice).padStart(2, "0");
+    const sub = SUB_DO_LADO[lado][m.nome];
+
+    if (!sub) {
+      out.push({
+        key: `${n}-${slug(m.nome)}`,
+        name: `${p.indice}. ${m.nome}`,
+        description: m.funcionamento,
+      });
+      continue;
+    }
+    for (const l of sub) {
+      const rotulo = l.atributo
+        ? `${NOME[l.atributo]} ${l.ajuste > 0 ? "+" : ""}${l.ajuste}`
+        : l.sentido;
+      const detalhe = l.atributo
+        ? `${l.fenotipo}. ${l.ajuste > 0 ? "+" : ""}${l.ajuste} em ${ondeAnotarTexto(l.atributo)}.`
+        : `${l.fenotipo}. ${l.funcionamento}`;
+      out.push({
+        key: `${n}-${slug(rotulo)}`,
+        name: `${p.indice}. ${m.nome} — ${rotulo}`,
+        description: detalhe,
+      });
+    }
+  }
+  return out;
 }

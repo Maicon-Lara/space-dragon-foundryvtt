@@ -21,9 +21,9 @@ import {
 import { especies } from "./data/especies.mjs";
 import { classes } from "./data/classes.mjs";
 import { especializacoes } from "./data/especializacoes.mjs";
-import { PARES, T2_2, T2_3, T2_4, T2_5 } from "./data/mutacoes.mjs";
+import { PARES } from "./data/mutacoes.mjs";
 import { regras } from "./data/regras.mjs";
-import { NOME, CAMPO_NA_FICHA } from "./data/onde-anotar.mjs";
+import { mutacoesJournal } from "./data/mutacoes-journal.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -32,7 +32,6 @@ const OUT = path.join(ROOT, "spacedragon-module", "packs");
 
 const P_CLASSES = "spacedragon-classes";
 const P_ESPECIES = "spacedragon-especies";
-const P_MUTACOES = "spacedragon-mutacoes";
 const P_TABELAS = "spacedragon-tabelas";
 const P_JOURNAL = "spacedragon-journal";
 
@@ -40,8 +39,6 @@ const P_JOURNAL = "spacedragon-journal";
 const PALETA = {
   "Espécies": "#2f5d7c",
   "Classes": "#5a3f7c",
-  "Aprimoramentos": "#2f6b46",
-  "Degenerações": "#7c3a2f",
 };
 
 // ── Espécies ────────────────────────────────────────────────────────────────
@@ -110,75 +107,6 @@ function montaClasses() {
   return docs;
 }
 
-// ── Mutações ────────────────────────────────────────────────────────────────
-//
-// Cada mutação vira uma `race_ability`: é o tipo do OD2 que o jogador solta
-// DENTRO do item de raça que já está na ficha, que é como o Mutante as recebe.
-//
-// A forma de três campos do livro (Genótipo, Fenótipo, Funcionamento) fica
-// preservada na descrição — ela separa o que o corpo fez do que aparece do que
-// a mesa rola, e achatar isso num parágrafo só perderia a distinção.
-function corpoDaMutacao(m, subtabela) {
-  let html =
-    `<p><em>Genótipo:</em> ${m.genotipo}</p>` +
-    `<p><em>Fenótipo:</em> ${m.fenotipo}</p>` +
-    `<p><strong>Funcionamento:</strong> ${m.funcionamento}</p>`;
-
-  if (subtabela) {
-    const linhas = subtabela.linhas.map((l) =>
-      l.atributo
-        // Os DOIS nomes: a subtabela do livro diz "Intelecto", e quem mexe na
-        // ficha do OD2 precisa saber que isso é Sabedoria. É a razão de o
-        // módulo existir.
-        ? `<tr><td>${l.d6}</td><td><strong>${NOME[l.atributo]}</strong> ${l.ajuste > 0 ? "+" : ""}${l.ajuste}` +
-          // Só quando o campo da ficha tem OUTRO nome. Repetir "campo Força"
-          // seria ruído que esconde as três linhas em que a dica importa.
-          (ROTULO_FICHA[CAMPO_NA_FICHA[l.atributo]] !== NOME[l.atributo]
-            ? `<br><em style="opacity:.7">campo ${ROTULO_FICHA[CAMPO_NA_FICHA[l.atributo]]} da ficha</em>` : "") +
-          `</td><td>${l.fenotipo}</td></tr>`
-        : `<tr><td>${l.d6}</td><td><strong>${l.sentido}</strong></td><td>${l.fenotipo}. ${l.funcionamento}</td></tr>`
-    ).join("");
-    html +=
-      `<p><strong>${subtabela.nome}</strong> — role 1d6:</p>` +
-      `<table><thead><tr><th>1d6</th><th>${subtabela.col2}</th><th>Efeito</th></tr></thead>` +
-      `<tbody>${linhas}</tbody></table>`;
-  }
-  return html;
-}
-
-const ROTULO_FICHA = {
-  forca: "Força", destreza: "Destreza", constituicao: "Constituição",
-  inteligencia: "Inteligência", sabedoria: "Sabedoria", carisma: "Carisma",
-};
-
-const SUBTABELAS = {
-  "Atributo Ampliado": { nome: "T2-2: Atributo Ampliado", col2: "Atributo", linhas: T2_2 },
-  "Atributo Diminuído": { nome: "T2-4: Atributo Diminuído", col2: "Atributo", linhas: T2_4 },
-  "Sentido Ampliado": { nome: "T2-3: Sentido Ampliado", col2: "Sentido", linhas: T2_3 },
-  "Sentido Diminuído": { nome: "T2-5: Sentido Diminuído", col2: "Sentido", linhas: T2_5 },
-};
-
-function montaMutacoes() {
-  const docs = [];
-  const pApr = folderDoc("Aprimoramentos", "Item", "sd-mut-apr");
-  const pDeg = folderDoc("Degenerações", "Item", "sd-mut-deg");
-  docs.push(pApr, pDeg);
-
-  for (const p of PARES) {
-    for (const [lado, pasta] of [["aprimoramento", pApr], ["degeneracao", pDeg]]) {
-      const m = p[lado];
-      docs.push({
-        ...raceAbilityDoc(
-          { nome: m.nome, desc: corpoDaMutacao(m, SUBTABELAS[m.nome]) },
-          pasta._id, `sd-mut:${lado}`, p.indice
-        ),
-        sort: p.indice * 100,
-      });
-    }
-  }
-  return docs;
-}
-
 // ── T2-1 como tabela rolável ────────────────────────────────────────────────
 //
 // Duas tabelas de 1d10, e não uma de 2d10: o livro manda rolar um dado em CADA
@@ -231,12 +159,9 @@ async function main() {
   pintaPastas(esp, PALETA);
   await compila(P_ESPECIES, esp);
 
-  let mut = aninhaPastas(montaMutacoes());
-  pintaPastas(mut, PALETA);
-  await compila(P_MUTACOES, mut);
-
   await compila(P_TABELAS, montaTabelas());
-  await compila(P_JOURNAL, regras.map((e, i) => journalDoc(e, (i + 1) * 1000)));
+  const journais = [...regras, mutacoesJournal];
+  await compila(P_JOURNAL, journais.map((e, i) => journalDoc(e, (i + 1) * 1000)));
 
   console.log("Concluído.");
 }
