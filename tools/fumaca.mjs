@@ -335,3 +335,59 @@ if (problemas10.length) {
   process.exit(1);
 }
 console.log("  ✔ grandezas: a grade vai à 10ª, e os poderes de 10ª saíram do 1º círculo");
+
+// ── A ordem de ação sobe, e a rodada tem duração ───────────────────────────
+//
+// Age primeiro o MENOR resultado, que é o contrário da iniciativa do Old
+// Dragon 2 e o contrário do que qualquer um espera ao ler o código. Um `sort`
+// invertido por descuido passaria despercebido: a lista continuaria ordenada,
+// só que ao contrário.
+const { abrirOrdem } = await import("../spacedragon-module/module/ordem.js");
+
+// Dados fixos: 1d4 sempre 3, 1d12 sempre 3 — os dados nao decidem o teste, as
+// tres formas da T7-2 decidem.
+globalThis.Roll = class {
+  constructor(f) { this.formula = f; }
+  async evaluate() { this.total = 3; return this; }
+};
+
+const cartoes = [];
+globalThis.ChatMessage = { getSpeaker: () => ({}), create: async (m) => cartoes.push(m) };
+
+globalThis.foundry.applications.api = {
+  DialogV2: {
+    async wait({ buttons }) {
+      // Simula a mesa preenchendo tres linhas, uma de cada tipo da T7-2.
+      const form = {
+        nome0: "Faca",      modo0: "ataque",    valor0: "1d4",
+        nome1: "Aparato",   modo1: "aparato",   valor1: "7",
+        nome2: "Corrida",   modo2: "movimento", valor2: "4",
+        nome3: "", nome4: "", nome5: "",
+      };
+      return buttons.find((b) => b.action === "ok").callback(null, { form: { __dados: form } });
+    },
+  },
+};
+globalThis.FormDataExtended = class {
+  constructor(f) { this.object = f.__dados; }
+};
+
+const res = await abrirOrdem(6);
+const probOrdem = [];
+if (!res) probOrdem.push("a janela não devolveu nada");
+else {
+  const nomes = res.combatentes.map((c) => c.nome);
+  // Faca: 1d4 deu 3. Aparato: NT 7. Corrida: 10 - 4 = 6.
+  // Crescente: Faca (3), Corrida (6), Aparato (7).
+  if (nomes.join(" < ") !== "Faca < Corrida < Aparato") {
+    probOrdem.push(`ordem saiu "${nomes.join(" < ")}", esperava "Faca < Corrida < Aparato"`);
+  }
+  if (res.duracao !== 14) probOrdem.push(`rodada durou ${res.duracao}s, esperava 14 (o maior, 7, vezes 2)`);
+  if (!cartoes.length) probOrdem.push("nenhum cartão foi para o chat");
+}
+
+if (probOrdem.length) {
+  for (const p of probOrdem) console.error(`  ✘ ${p}`);
+  process.exit(1);
+}
+console.log(`  ✔ ordem de ação: crescente (${res.combatentes.map((c) => `${c.nome} ${c.n}`).join(", ")}), rodada de ${res.duracao}s`);

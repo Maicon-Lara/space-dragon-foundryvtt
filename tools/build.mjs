@@ -32,6 +32,7 @@ import { equipamentoJournal } from "./data/equipamento-journal.mjs";
 import { PODERES } from "./data/poderes.mjs";
 import { APARATOS, CATEGORIAS_POR_CLASSE } from "./data/aparatos.mjs";
 import { aparatosJournal } from "./data/aparatos-journal.mjs";
+import { combateJournal } from "./data/combate-journal.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -497,6 +498,24 @@ function montaMacros() {
   }, pasta._id, 10));
 
   docs.push(macroDoc({
+    nome: "Ordem de Ação",
+    comando: "game.spacedragon.ordem();",
+    img: "icons/svg/clockwork.svg",
+  }, pasta._id, 30));
+
+  docs.push(macroDoc({
+    nome: "T7-4: Acerto Crítico",
+    comando: "game.spacedragon.acertoCritico();",
+    img: "icons/svg/target.svg",
+  }, pasta._id, 40));
+
+  docs.push(macroDoc({
+    nome: "T7-5: Falha Crítica",
+    comando: "game.spacedragon.falhaCritica();",
+    img: "icons/svg/downgrade.svg",
+  }, pasta._id, 50));
+
+  docs.push(macroDoc({
     nome: "Dano Crítico (Cosmonauta)",
     comando: "game.spacedragon.critico();",
     img: "icons/svg/explosion.svg",
@@ -540,7 +559,7 @@ async function main() {
   await compila(P_ESPECIES, esp);
 
   await compila(P_TABELAS, montaTabelas());
-  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal];
+  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal, combateJournal];
   let ap = aninhaPastas(montaAparatos());
   pintaPastas(ap, PALETA);
   await compila(P_APARATOS, ap);

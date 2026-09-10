@@ -156,3 +156,25 @@
   text-align: center;
   font-variant-numeric: tabular-nums;
 }
+
+/* ── Janela e cartão da Ordem de Ação ─────────────────────────────────────── */
+
+.sd-ordem .sd-ordem-linha {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 5rem;
+  gap: 0.3rem;
+  margin-bottom: 0.25rem;
+}
+
+.sd-teste .sd-ordem-item {
+  display: grid;
+  grid-template-columns: 2rem minmax(6rem, 1fr) 2.5rem 1fr;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.12rem 0;
+}
+
+.sd-teste .sd-pos {
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}

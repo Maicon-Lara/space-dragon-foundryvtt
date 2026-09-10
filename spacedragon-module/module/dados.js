@@ -791,3 +791,59 @@ export const COLUNA = {
     -19
   ]
 };
+
+/** T7-4: acertos críticos, em 1d6. */
+export const CRITICOS = [
+  {
+    "d6": 1,
+    "efeito": "Acerto em área vital, dano ×2."
+  },
+  {
+    "d6": 2,
+    "efeito": "Ferimento: dano ×2 e a movimentação do alvo cai à metade."
+  },
+  {
+    "d6": 3,
+    "efeito": "Ferimento: dano ×2 e −2 nos ataques desferidos pelo alvo."
+  },
+  {
+    "d6": 4,
+    "efeito": "Vestes avariadas: dano ×2 e −2 no CP."
+  },
+  {
+    "d6": 5,
+    "efeito": "Ataque extra contra inimigo ao alcance da arma."
+  },
+  {
+    "d6": 6,
+    "efeito": "Morte."
+  }
+];
+
+/** T7-5: falhas críticas, em 1d6. */
+export const FALHAS = [
+  {
+    "d6": 1,
+    "efeito": "Derruba a arma."
+  },
+  {
+    "d6": 2,
+    "efeito": "Desequilíbrio: −1 no CP."
+  },
+  {
+    "d6": 3,
+    "efeito": "Arma temporariamente danificada."
+  },
+  {
+    "d6": 4,
+    "efeito": "Arma permanentemente danificada."
+  },
+  {
+    "d6": 5,
+    "efeito": "Atinge um aliado próximo ao alvo."
+  },
+  {
+    "d6": 6,
+    "efeito": "Queda: −1 no CP, e uma ação de movimento para se levantar."
+  }
+];

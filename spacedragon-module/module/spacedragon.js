@@ -27,6 +27,8 @@ import { aplicarModificadores, compararEscalas } from "./atributos.js";
 import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
 import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
+import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
+import { CRITICOS, FALHAS } from "./dados.js";
 
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
@@ -83,6 +85,9 @@ Hooks.once("ready", () => {
     teste: abrirTeste, rolar, preparar, TESTES,
     pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
     compararEscalas, diagnostico, danosMortais,
+    ordem: abrirOrdem,
+    acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),
+    falhaCritica: () => rolarCriticoTabela("T7-5: Falha Crítica", FALHAS),
   };
 
   console.log(`${ID} | ${TESTES.length} testes prontos, nível até o ${NIVEL_MAXIMO}º`);

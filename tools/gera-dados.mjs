@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import { TABELAS, FAIXAS, ROTULOS } from "./data/atributos.mjs";
 import { CIENTISTA, COSMONAUTA, GATUNO, MENTALICO, TALENTOSGATUNO } from "./data/progressao.mjs";
 import { TESTES } from "./data/testes.mjs";
+import { T7_4, T7_5 } from "./data/combate.mjs";
 import { CAMPO_NA_FICHA, NOME } from "./data/onde-anotar.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
@@ -127,5 +128,11 @@ export const COLUNA_DERIVADA = ${j(derivadas)};
  * onde a morte é sempre em −10 fixo.
  */
 export const COLUNA = ${j(OUTRAS)};
+
+/** T7-4: acertos críticos, em 1d6. */
+export const CRITICOS = ${j(T7_4)};
+
+/** T7-5: falhas críticas, em 1d6. */
+export const FALHAS = ${j(T7_5)};
 `);
 console.log(`  ✔ module/dados.js: ${TESTES.length} testes, ${Object.keys(prog).length} progressões`);

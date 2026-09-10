@@ -1,0 +1,27 @@
+{
+  "folder": "gFZHaYQqhiOIzTb7",
+  "name": "T7-4: Acerto Crítico",
+  "type": "script",
+  "_id": "vdZ8S4HwE3r7xnCH",
+  "img": "icons/svg/target.svg",
+  "scope": "global",
+  "command": "game.spacedragon.acertoCritico();",
+  "author": "swspacedragonbld",
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 40,
+  "_key": "!macros!vdZ8S4HwE3r7xnCH"
+}

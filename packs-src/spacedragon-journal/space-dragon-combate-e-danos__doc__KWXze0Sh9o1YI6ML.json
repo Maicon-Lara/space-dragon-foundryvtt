@@ -1,0 +1,172 @@
+{
+  "folder": null,
+  "name": "Space Dragon — Combate e Danos",
+  "_id": "KWXze0Sh9o1YI6ML",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Ordem de ação",
+      "type": "text",
+      "_id": "TioGMXwCwms46kzV",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Não é iniciativa</h2>\n<p class=\"spacedragon-aviso\">⚠️ <strong>Esta é a maior diferença do Space Dragon para o Old Dragon 2 em\ncombate.</strong> Não se rola 1d20 nem se soma Destreza para ver quem vai\nprimeiro. O número sai da <strong>ação declarada</strong>:</p>\n\n<table><thead><tr><th>ação</th><th>valor</th></tr></thead><tbody><tr><td>Atacar à distância, corpo a corpo ou em área</td><td>Rolagem do dado de dano da arma</td></tr><tr><td>Usar aparato tecnológico ou poder mental</td><td>Nível tecnológico ou grandeza mental</td></tr><tr><td>Movimentação dupla e outras ações</td><td>10 − modificador de Destreza</td></tr></tbody></table>\n\n<p><strong>Age primeiro o MENOR resultado.</strong> A faca age antes do rifle de\nplasma, porque o dado dela é menor.</p>\n\n<p><strong>A rodada dura o maior resultado × 2 segundos.</strong> Não é um tempo\nfixo: uma rodada de escaramuça com facas é mais curta que uma de bombardeio.</p>\n\n<h2>Surpresa</h2>\n<p>Quem é surpreendido <strong>não age no primeiro turno</strong> e ainda leva\n<strong>−5 no CP</strong> até o fim daquela rodada.</p>\n\n<table><thead><tr><th>situação</th><th>modificador</th></tr></thead><tbody><tr><td>Outro grupo em silêncio</td><td>-1</td></tr><tr><td>Outro grupo camuflado</td><td>-2</td></tr><tr><td>Outro grupo furtivo</td><td>-3</td></tr><tr><td>Baixa luminosidade ou visibilidade</td><td>-2</td></tr><tr><td>Grupo atento</td><td>+3</td></tr><tr><td>Grupo relaxado</td><td>-1</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!KWXze0Sh9o1YI6ML.TioGMXwCwms46kzV"
+    },
+    {
+      "sort": 200000,
+      "name": "Atacando",
+      "type": "text",
+      "_id": "cBgSv4sv3SbSGuTE",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>O ataque acerta com igual ou maior</h2>\n<p>Role <strong>1d20</strong> e some o bônus de ataque. Se igualar ou superar o\n<strong>CP</strong> do alvo, acertou.</p>\n\n<ul>\n<li><strong>À distância</strong> — o bônus vem da <strong>Destreza</strong>.</li>\n<li><strong>Corpo a corpo</strong> — o bônus vem da <strong>Força</strong>, e o\nmodificador de Força <strong>também soma ao dano</strong>.</li>\n</ul>\n\n<p>Dá para bater com a coronha de uma arma de fogo: o dano vira\n<strong>1d4</strong>, e esse 1d4 substitui o dado da arma <em>inclusive na ordem\nde ação</em>. Desarmado, o dano e a ordem de ação são o modificador de Força,\ncom mínimo de 1.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ Quem cai abaixo de 0 PV por golpe <strong>não cortante</strong> ou por\nataque desarmado fica <strong>inconsciente, não morrendo</strong>.</p>\n\n<h2>Área e arremesso</h2>\n<p>Rolagem normal de ataque à distância contra um CP de <strong>10 + 1 para cada\n3 metros</strong> de distância. Uma granada a 15 metros é dificuldade 15.</p>\n\n<p>Errando, a <strong>diferença</strong> entre o resultado e o CP é quantos\nmetros o objeto caiu longe do alvo. A direção sai de 1d8.</p>\n\n<h2>Modificadores</h2>\n<h3>Situacionais</h3><table><thead><tr><th>situação</th><th>mod.</th></tr></thead><tbody><tr><td><strong>Alvo cego ou atordoado</strong><br><em>Defensor sem condições de se defender com eficiência.</em></td><td>+5</td></tr><tr><td><strong>Alvo indefeso</strong><br><em>Só não acerta em caso de falha crítica.</em></td><td>+20</td></tr><tr><td><strong>Alvo caído</strong><br><em>Caído mas consciente e tentando se defender.</em></td><td>+1</td></tr><tr><td><strong>Atacando de nível superior</strong><br><em>Em escadas, rampas, rochas.</em></td><td>+2</td></tr><tr><td><strong>Pelas costas do alvo</strong><br><em>Apenas gatunos recebem este bônus.</em></td><td>+2</td></tr><tr><td><strong>Atacando enquanto pilota ou monta</strong><br><em>Quando dá para soltar os controles por um instante, ou montado num animal.</em></td><td>−3</td></tr><tr><td><strong>Atacando com duas armas</strong><br><em>−4 para a arma principal, que precisa ser média, e −6 para a secundária.</em></td><td>−4 e −6</td></tr></tbody></table>\n<h3>Distância</h3><table><thead><tr><th>situação</th><th>mod.</th></tr></thead><tbody><tr><td><strong>Tiro à queima-roupa</strong><br><em>Arma de fogo contra alvo a até 3 metros. Se o oponente estiver desarmado, é acerto crítico.</em></td><td>+2</td></tr><tr><td><strong>Distância média</strong><br><em>Alcance mínimo da arma multiplicado por 2.</em></td><td>−2</td></tr><tr><td><strong>Longa distância</strong><br><em>Alcance mínimo da arma multiplicado por 3.</em></td><td>−4</td></tr></tbody></table>\n<h3>Alvos por tamanho</h3><table><thead><tr><th>situação</th><th>mod.</th></tr></thead><tbody><tr><td><strong>Moeda, alvo de até 2 cm</strong><br><em>Ataques nos olhos, e só contra alvos sem capacete.</em></td><td>−20</td></tr><tr><td><strong>Maçã, alvo de até 10 cm</strong><br><em>Ataques no coração, e só contra alvos sem vestes de proteção.</em></td><td>−15</td></tr><tr><td><strong>Melancia, alvo de até 20 cm</strong><br><em>Ataques na cabeça, e só contra alvos sem capacete.</em></td><td>−10</td></tr></tbody></table>\n<h3>Modificador de dano</h3><table><thead><tr><th>situação</th><th>mod.</th></tr></thead><tbody><tr><td><strong>Ataque em carga</strong><br><em>Move-se em linha reta até o alvo. Dá +2 no dano corpo a corpo, ao custo de −2 no CP até o próximo turno.</em></td><td>+2 no dano</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!KWXze0Sh9o1YI6ML.cBgSv4sv3SbSGuTE"
+    },
+    {
+      "sort": 300000,
+      "name": "Críticos",
+      "type": "text",
+      "_id": "OeaoS1v7dm4IORGS",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>O 20 e o 1 naturais</h2>\n<p>Um <strong>20 natural</strong> acerta sempre e <strong>dobra o dano</strong> —\nou mais, se o atacante for <strong>cosmonauta</strong>, que tem o multiplicador\npróprio na tabela da classe. Opcionalmente, role 1d6 na T7-4 para um efeito\nextra.</p>\n\n<p>Um <strong>1 natural</strong> é falha crítica, com 1d6 na T7-5.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ Um acerto crítico <strong>sempre causa ao menos 1 de dano</strong>, mesmo\ncom todas as reduções.</p>\n\n<h2>T7-4: Acertos Críticos</h2>\n<table><thead><tr><th>1d6</th><th>resultado</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>Acerto em área vital, dano ×2.</td></tr><tr><td><strong>2</strong></td><td>Ferimento: dano ×2 e a movimentação do alvo cai à metade.</td></tr><tr><td><strong>3</strong></td><td>Ferimento: dano ×2 e −2 nos ataques desferidos pelo alvo.</td></tr><tr><td><strong>4</strong></td><td>Vestes avariadas: dano ×2 e −2 no CP.</td></tr><tr><td><strong>5</strong></td><td>Ataque extra contra inimigo ao alcance da arma.</td></tr><tr><td><strong>6</strong></td><td>Morte.</td></tr></tbody></table>\n\n<h2>T7-5: Falhas Críticas</h2>\n<table><thead><tr><th>1d6</th><th>resultado</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>Derruba a arma.</td></tr><tr><td><strong>2</strong></td><td>Desequilíbrio: −1 no CP.</td></tr><tr><td><strong>3</strong></td><td>Arma temporariamente danificada.</td></tr><tr><td><strong>4</strong></td><td>Arma permanentemente danificada.</td></tr><tr><td><strong>5</strong></td><td>Atinge um aliado próximo ao alvo.</td></tr><tr><td><strong>6</strong></td><td>Queda: −1 no CP, e uma ação de movimento para se levantar.</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!KWXze0Sh9o1YI6ML.OeaoS1v7dm4IORGS"
+    },
+    {
+      "sort": 400000,
+      "name": "Dano, cura e morte",
+      "type": "text",
+      "_id": "BpIGdMaIOSEatv4X",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Dano</h2>\n<p>O dano <strong>nunca é negativo</strong>, mas pode ser zerado por penalidades.\n<strong>Redução de dano</strong> desconta um valor fixo de cada acerto sofrido:\nquem tem RD 3 e leva 8 sofre 5.</p>\n\n<h2>Os três estados</h2>\n<ul>\n<li><strong>Acima de 0</strong> — ferido, e a gravidade cresce conforme se\naproxima do zero.</li>\n<li><strong>Em 0</strong> — <strong>inconsciente, porém estável</strong>. Ainda\nnão está morrendo.</li>\n<li><strong>Abaixo de 0</strong> — a caminho da morte.</li>\n</ul>\n\n<h2>Estabilizar</h2>\n<p>Com PV negativos, o personagem faz uma <strong>JPF</strong> a cada rodada, a\npartir da seguinte àquela em que foi atingido. <strong>Falhar custa 1d4 PV</strong>;\npassar o deixa <strong>estável</strong>, ainda em PV negativos mas fora de perigo\nimediato.</p>\n\n<p>Outro personagem pode gastar uma ação e fazer um <strong>teste de\nCiência</strong> para estabilizá-lo. Sucesso equivale a ter passado na JPF; e\nmesmo <strong>falhando, o socorrista dá +4 na próxima rolagem</strong>.</p>\n\n<p class=\"spacedragon-aviso\">⚠️ <strong>Androide só pode ser socorrido por um cientista.</strong></p>\n\n<h2>Morte</h2>\n<p>A morte vem no número de PV negativos que a <strong>Constituição</strong>\nindica, entre <strong>−5 e −19</strong>. Não há jogada contra: chegou ali,\nmorreu.</p>\n\n<h2>Recuperar</h2>\n<ul>\n<li><strong>Um dia de repouso total</strong> — 1 PV por nível. Mutações mudam\nessa taxa.</li>\n<li><strong>Tratamento médico</strong> — 1d4+1 PV por dia, se quem cuida passar\nnum teste de Ciência.</li>\n<li><strong>Androides não se recuperam sozinhos.</strong> Dependem de reparos\nfeitos por cientistas.</li>\n</ul>\n\n<p>Alguns poderes mentais devolvem <strong>PV psicológicos</strong>, que se\nperdem de novo depois de um tempo.</p>\n\n<p>A única forma de trazer um morto de volta é <strong>clonando</strong>, com o\nfeito científico apropriado. A Constituição do morto dá a chance de o\nprocedimento falhar. O clone é geneticamente idêntico, mas\n<strong>não necessariamente tem a mesma personalidade</strong> — para isso é\npreciso um poder mental que implante as memórias.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!KWXze0Sh9o1YI6ML.BpIGdMaIOSEatv4X"
+    }
+  ],
+  "flags": {},
+  "sort": 7000,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!KWXze0Sh9o1YI6ML"
+}
