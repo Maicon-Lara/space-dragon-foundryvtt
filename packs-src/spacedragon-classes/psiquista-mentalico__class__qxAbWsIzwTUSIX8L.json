@@ -10,9 +10,9 @@
     "hp": 4,
     "high_level_hp_bonus": null,
     "equipment_restrictions": {
-      "weapons": "Sem restrições.",
-      "armors": "Sem restrições.",
-      "magic_items": "Sem restrições."
+      "weapons": "Apenas pistolas.",
+      "armors": "Apenas vestes leves. Com outras, não consegue usar poderes mentais.",
+      "magic_items": "Apenas aparatos utilitários."
     },
     "restrictions": {
       "alignments": [],

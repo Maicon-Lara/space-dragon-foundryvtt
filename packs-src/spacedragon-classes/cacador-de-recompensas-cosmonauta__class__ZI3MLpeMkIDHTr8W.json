@@ -7,12 +7,12 @@
   "system": {
     "flavor": "<p><em>Cosmonauta de Afiliação <strong>rebelde</strong>.</em></p>",
     "description": "<p>Especialização escolhida no <strong>5º nível</strong>. A partir dali o personagem sobe nela, e não mais na classe-base — mas mantém tudo o que Cosmonauta já lhe deu.</p><p><em>Especialização de Cosmonauta, para quem tem Afiliação <strong>rebelde</strong>.</em></p><p>ao atingir o 5° nível o caçador de recompensas passa a ser capaz de utilizar aparatos tecnológicos ofensivos e operar máquinas com uma rolagem bem-sucedida usando a porcentagem de desarmar e subjugar, modificado pela porcentagem de aptidão tecnológica do atributo Ciência. O personagem para de progredir em desarmar e subjugar com esses fins, e a nova progressão passa a aumentar para a nova aplicação.</p><p>A partir do 10° nível o caçador de recompensas pode optar por tentar realizar um ataque extra em seu turno com uma rolagem de desarmar, usando a porcentagem do 5° nível. Essa rolagem deve ser feita logo após o primeiro ataque, e um sucesso indica que o personagem poderá realizar mais dois ataques com a BA do segundo ataque conforme a tabela T3-3, mas uma 44 falha impede o caçador de recompensas de realizar qualquer outra ação naquele turno. O ataque extra pode ser substituído por uma tentativa de desarme ou submissão de acordo com as regras dessas ações.</p><p>No 20° nível, o caçador de recompensas poderá usar qualquer aparato tecnológico como um cientista do mesmo nível, e sempre poderá realizar 3 ataques em seu turno, com o ataque extra tendo a base de ataque do segundo e podendo ser substituído por uma tentativa de desarme ou submissão normalmente.</p><p>A classe de combate e de pilotagem. Ganha <strong>ataques múltiplos</strong> conforme sobe, e é a única com <strong>dano crítico</strong> na progressão.</p><p><strong>T3-3: Cosmonauta</strong></p><table><thead><tr><th>nível</th><th>XP</th><th>DV</th><th>BA</th><th>JP</th><th>pilotar naves</th><th>desarmar e subjugar</th><th>dano crítico</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>1</td><td>+1</td><td>16</td><td>80%</td><td>20%</td><td>x2</td></tr><tr><td>2</td><td>2.000</td><td>2</td><td>+2</td><td>16</td><td>81%</td><td>25%</td><td>x2</td></tr><tr><td>3</td><td>4.000</td><td>3</td><td>+3</td><td>16</td><td>82%</td><td>30%</td><td>x2</td></tr><tr><td>4</td><td>8.000</td><td>4</td><td>+4</td><td>15</td><td>83%</td><td>35%</td><td>x2</td></tr><tr><td>5</td><td>16.000</td><td>5</td><td>+5</td><td>15</td><td>84%</td><td>40%</td><td>x2</td></tr><tr><td>6</td><td>32.000</td><td>6</td><td>+6</td><td>15</td><td>85%</td><td>45%</td><td>x3</td></tr><tr><td>7</td><td>64.000</td><td>7</td><td>+7/+1</td><td>14</td><td>86%</td><td>50%</td><td>x3</td></tr><tr><td>8</td><td>128.000</td><td>8</td><td>+8/+2</td><td>14</td><td>87%</td><td>55%</td><td>x3</td></tr><tr><td>9</td><td>256.000</td><td>9</td><td>+9/+3</td><td>14</td><td>88%</td><td>60%</td><td>x3</td></tr><tr><td>10</td><td>304.000</td><td>+2 PV</td><td>+10/+4</td><td>13</td><td>89%</td><td>65%</td><td>x3</td></tr><tr><td>11</td><td>408.000</td><td>+2 PV</td><td>+10/+4</td><td>13</td><td>90%</td><td>70%</td><td>x3</td></tr><tr><td>12</td><td>516.000</td><td>+4 PV</td><td>+11/+5</td><td>13</td><td>91%</td><td>72%</td><td>x4</td></tr><tr><td>13</td><td>632.000</td><td>+4 PV</td><td>+11/+5</td><td>12</td><td>92%</td><td>74%</td><td>x4</td></tr><tr><td>14</td><td>704.000</td><td>+5 PV</td><td>+12/+6</td><td>12</td><td>93%</td><td>76%</td><td>x4</td></tr><tr><td>15</td><td>808.000</td><td>+5 PV</td><td>+12/+6</td><td>12</td><td>94%</td><td>78%</td><td>x4</td></tr><tr><td>16</td><td>916.000</td><td>+6 PV</td><td>+13/+7</td><td>11</td><td>95%</td><td>80%</td><td>x4</td></tr><tr><td>17</td><td>1.032.000</td><td>+6 PV</td><td>+13/+7</td><td>11</td><td>96%</td><td>82%</td><td>x4</td></tr><tr><td>18</td><td>1.064.000</td><td>+7 PV</td><td>+14/+8</td><td>11</td><td>97%</td><td>84%</td><td>x5</td></tr><tr><td>19</td><td>1.128.000</td><td>+7 PV</td><td>+14/+8</td><td>10</td><td>98%</td><td>86%</td><td>x5</td></tr><tr><td>20</td><td>1.256.000</td><td>+8 PV</td><td>+15/+9</td><td>10</td><td>99%</td><td>88%</td><td>x5</td></tr></tbody></table><p><strong>Especializações</strong> — uma por Afiliação:</p><ul><li><strong>Emissário</strong> — leal</li><li><strong>Mercenário</strong> — neutro</li><li><strong>Caçador de Recompensas</strong> — rebelde</li></ul>",
-    "hp": 8,
+    "hp": 10,
     "high_level_hp_bonus": null,
     "equipment_restrictions": {
-      "weapons": "Sem restrições.",
-      "armors": "Sem restrições.",
-      "magic_items": "Sem restrições."
+      "weapons": "Proficiente em qualquer tipo de arma.",
+      "armors": "Qualquer tipo de vestes e escudos de energia.",
+      "magic_items": "Aparatos defensivos e utilitários."
     },
     "restrictions": {
       "alignments": [],
@@ -120,10 +120,10 @@
       }
     },
     "class_abilities": [
-      "Compendium.spacedragon.spacedragon-classes.Item.C8IaXAk5k8YVfGu7",
       "Compendium.spacedragon.spacedragon-classes.Item.B5Z4VDi0gfHYsSFL",
       "Compendium.spacedragon.spacedragon-classes.Item.gQEz4Lqa8mZUdCtc",
       "Compendium.spacedragon.spacedragon-classes.Item.C325h4DeiPnlVV2L",
+      "Compendium.spacedragon.spacedragon-classes.Item.C8IaXAk5k8YVfGu7",
       "Compendium.spacedragon.spacedragon-classes.Item.uXvQTQivdKye03Mw"
     ]
   },

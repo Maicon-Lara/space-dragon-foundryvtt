@@ -35,8 +35,41 @@ globalThis.Hooks = {
   on: (nome, fn) => ganchos.push({ nome, fn }),
   once: (_nome, fn) => fn(),
 };
-globalThis.CONFIG = { olddragon2e: { levels: niveisIniciais }, sounds: {} };
-globalThis.game = { i18n: { localize: (s) => s } };
+// O modelo de dados do personagem, com os getters que o sistema define. É
+// neste protótipo que o módulo troca a tabela de modificadores.
+class FichaOD2 {
+  get mod_forca() { return od2(this.forca); }
+  get mod_destreza() { return od2(this.destreza); }
+  get mod_constituicao() { return od2(this.constituicao); }
+  get mod_inteligencia() { return od2(this.inteligencia); }
+  get mod_sabedoria() { return od2(this.sabedoria); }
+  get mod_carisma() { return od2(this.carisma); }
+}
+function od2(v) {
+  if (v < 2) return -4;
+  if (v < 4) return -3;
+  if (v < 6) return -2;
+  if (v < 9) return -1;
+  if (v < 13) return 0;
+  if (v < 15) return 1;
+  if (v < 17) return 2;
+  if (v < 19) return 3;
+  return 4;
+}
+globalThis.CONFIG = {
+  olddragon2e: { levels: niveisIniciais },
+  sounds: {},
+  Actor: { dataModels: { character: FichaOD2 } },
+};
+const opcoes = new Map();
+globalThis.game = {
+  i18n: { localize: (s) => s },
+  settings: {
+    register: (mod, chave, cfg) => opcoes.set(`${mod}.${chave}`, cfg.default),
+    get: (mod, chave) => opcoes.get(`${mod}.${chave}`),
+    set: (mod, chave, v) => opcoes.set(`${mod}.${chave}`, v),
+  },
+};
 globalThis.ui = { notifications: { warn: () => {}, error: () => {} }, windows: {} };
 globalThis.foundry = { applications: { api: {} } };
 globalThis.Roll = class { async evaluate() { this.total = 1; return this; } };
@@ -151,3 +184,40 @@ if (problemas.length) {
   process.exit(1);
 }
 console.log(`  ✔ injeção: ${botoes.length} botões no poder certo (${chaves.join(", ")}), alvos ${alvos.join(" ")}`);
+
+// ── A tabela de modificadores virou a do Space Dragon? ──────────────────────
+//
+// Os valores abaixo saem das T1-1 a T1-6 do Aprimorado, lidos à mão. O contraste
+// com o Old Dragon 2 é o ponto: Constituição 9 dá 0 lá e -1 aqui, e Destreza 29
+// nem existe na escala de lá.
+const ficha = Object.assign(new CONFIG.Actor.dataModels.character(), {
+  forca: 9, destreza: 29, constituicao: 9, inteligencia: 17, sabedoria: 1, carisma: 13,
+});
+
+const ESPERADO = {
+  mod_forca: -1,          // T1-1, faixa 8-9
+  mod_destreza: 9,        // T1-2, faixa 28-29 — fora da escala do OD2
+  mod_constituicao: -1,   // T1-3, faixa 8-9. O OD2 daria 0
+  mod_inteligencia: 15,   // T1-5 aptidão tecnológica, faixa 16-17, em %
+  mod_sabedoria: -5,      // T1-4 proteção mental, valor 1
+  mod_carisma: 5,         // T1-6 ajuste de reação, faixa 12-13, em %
+};
+
+const erros = [];
+for (const [campo, valor] of Object.entries(ESPERADO)) {
+  if (ficha[campo] !== valor) erros.push(`${campo} deu ${ficha[campo]}, esperava ${valor}`);
+}
+
+// E desligar a opção tem de devolver o sistema ao que ele era.
+const { aplicarModificadores } = await import("../spacedragon-module/module/atributos.js");
+aplicarModificadores(false);
+if (ficha.mod_constituicao !== 0) {
+  erros.push(`desligar não restaurou o OD2: Constituição 9 deu ${ficha.mod_constituicao}, esperava 0`);
+}
+aplicarModificadores(true);
+
+if (erros.length) {
+  for (const e of erros) console.error(`  ✘ ${e}`);
+  process.exit(1);
+}
+console.log("  ✔ modificadores: escala do Space Dragon aplicada, e reversível");

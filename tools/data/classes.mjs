@@ -76,7 +76,15 @@ const espec = (leal, neutro, rebelde) =>
 export const classes = [
   {
     nome: "Cientista",
-    dv: 4,
+    // Do quadro de restrições do livro. Os rótulos da ficha do OD2 —
+    // Armas, Armaduras, Itens Mágicos — viram Armas, Vestes e Aparatos
+    // Tecnológicos pelo lang do módulo.
+    equipment_restrictions: {
+      armors: "Qualquer tipo de vestes, escudos de energia e aparatos defensivos.",
+      weapons: "Apenas armas de fogo de energia. Jamais de projéteis ou marciais.",
+      magic_items: "Qualquer aparato tecnológico.",
+    },
+    dv: 8,
     levels: levelsOD2(CIENTISTA),
     flavor: "<p>O que entende a máquina, e por isso a desmonta.</p>",
     descricao:
@@ -104,7 +112,15 @@ export const classes = [
 
   {
     nome: "Cosmonauta",
-    dv: 8,
+    // Do quadro de restrições do livro. Os rótulos da ficha do OD2 —
+    // Armas, Armaduras, Itens Mágicos — viram Armas, Vestes e Aparatos
+    // Tecnológicos pelo lang do módulo.
+    equipment_restrictions: {
+      armors: "Qualquer tipo de vestes e escudos de energia.",
+      weapons: "Proficiente em qualquer tipo de arma.",
+      magic_items: "Aparatos defensivos e utilitários.",
+    },
+    dv: 10,
     levels: levelsOD2(COSMONAUTA),
     flavor: "<p>O piloto, o soldado, quem encara o vácuo de frente.</p>",
     descricao:
@@ -136,6 +152,14 @@ export const classes = [
 
   {
     nome: "Gatuno",
+    // Do quadro de restrições do livro. Os rótulos da ficha do OD2 —
+    // Armas, Armaduras, Itens Mágicos — viram Armas, Vestes e Aparatos
+    // Tecnológicos pelo lang do módulo.
+    equipment_restrictions: {
+      armors: "Apenas vestes leves ou médias, e sem escudos. Usar outras vestes ou um escudo impede de exercer os talentos de classe.",
+      weapons: "Apenas armas que possam ser empunhadas com uma das mãos.",
+      magic_items: "Apenas aparatos utilitários.",
+    },
     dv: 6,
     levels: levelsOD2(GATUNO),
     flavor: "<p>Quem entra sem ser visto e sai sem ser lembrado.</p>",
@@ -158,6 +182,14 @@ export const classes = [
 
   {
     nome: "Mentálico",
+    // Do quadro de restrições do livro. Os rótulos da ficha do OD2 —
+    // Armas, Armaduras, Itens Mágicos — viram Armas, Vestes e Aparatos
+    // Tecnológicos pelo lang do módulo.
+    equipment_restrictions: {
+      armors: "Apenas vestes leves. Com outras, não consegue usar poderes mentais.",
+      weapons: "Apenas pistolas.",
+      magic_items: "Apenas aparatos utilitários.",
+    },
     dv: 4,
     levels: levelsOD2(MENTALICO),
     flavor: "<p>A mente como ferramenta, e como arma.</p>",

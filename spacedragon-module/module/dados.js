@@ -96,6 +96,28 @@ export const SIGLA = {
 /** Colunas de progressão de classe, indexadas por nível − 1. */
 export const PROGRESSAO = {
   "CIENTISTA": {
+    "dv": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "+1 PV",
+      "+1 PV",
+      "+2 PV",
+      "+2 PV",
+      "+3 PV",
+      "+3 PV",
+      "+4 PV",
+      "+4 PV",
+      "+5 PV",
+      "+5 PV",
+      "+6 PV"
+    ],
     "operarMaquinas": [
       "80%",
       "81%",
@@ -120,6 +142,50 @@ export const PROGRESSAO = {
     ]
   },
   "COSMONAUTA": {
+    "dv": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "+2 PV",
+      "+2 PV",
+      "+4 PV",
+      "+4 PV",
+      "+5 PV",
+      "+5 PV",
+      "+6 PV",
+      "+6 PV",
+      "+7 PV",
+      "+7 PV",
+      "+8 PV"
+    ],
+    "danoCritico": [
+      "x2",
+      "x2",
+      "x2",
+      "x2",
+      "x2",
+      "x3",
+      "x3",
+      "x3",
+      "x3",
+      "x3",
+      "x3",
+      "x4",
+      "x4",
+      "x4",
+      "x4",
+      "x4",
+      "x4",
+      "x5",
+      "x5",
+      "x5"
+    ],
     "pilotarNaves": [
       "80%",
       "81%",
@@ -163,6 +229,54 @@ export const PROGRESSAO = {
       "84%",
       "86%",
       "88%"
+    ]
+  },
+  "GATUNO": {
+    "dv": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "+1 PV",
+      "+1 PV",
+      "+2 PV",
+      "+2 PV",
+      "+2 PV",
+      "+3 PV",
+      "+3 PV",
+      "+3 PV",
+      "+4 PV",
+      "+4 PV",
+      "+4 PV"
+    ]
+  },
+  "MENTALICO": {
+    "dv": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "+1 PV",
+      "+1 PV",
+      "+1 PV",
+      "+1 PV",
+      "+1 PV",
+      "+2 PV",
+      "+2 PV",
+      "–",
+      "–",
+      "–",
+      "–"
     ]
   },
   "TALENTOSGATUNO": {
@@ -538,3 +652,115 @@ export const TESTES = [
     "nota": "A chance de a clonagem do personagem dar certo. Sai da Constituição, e vale para qualquer classe."
   }
 ];
+
+/**
+ * A coluna que vira o "modificador" de cada atributo na ficha.
+ *
+ * A ficha do Old Dragon 2 tem uma caixa derivada por atributo, e a ficha
+ * oficial do Space Dragon também. Estas são as colunas que casam uma a uma.
+ * As duas últimas são PORCENTAGEM, não modificador de d20.
+ */
+export const COLUNA_DERIVADA = {
+  "forca": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "destreza": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "constituicao": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "intelecto": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "ciencia": [
+    -25,
+    -20,
+    -15,
+    -10,
+    -5,
+    0,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45
+  ],
+  "comunicacao": [
+    -25,
+    -20,
+    -15,
+    -10,
+    -5,
+    0,
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45
+  ]
+};

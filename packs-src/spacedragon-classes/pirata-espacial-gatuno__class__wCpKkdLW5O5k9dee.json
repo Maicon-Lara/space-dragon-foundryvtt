@@ -10,9 +10,9 @@
     "hp": 6,
     "high_level_hp_bonus": null,
     "equipment_restrictions": {
-      "weapons": "Sem restrições.",
-      "armors": "Sem restrições.",
-      "magic_items": "Sem restrições."
+      "weapons": "Apenas armas que possam ser empunhadas com uma das mãos.",
+      "armors": "Apenas vestes leves ou médias, e sem escudos. Usar outras vestes ou um escudo impede de exercer os talentos de classe.",
+      "magic_items": "Apenas aparatos utilitários."
     },
     "restrictions": {
       "alignments": [],

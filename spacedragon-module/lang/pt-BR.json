@@ -1,36 +1,32 @@
 {
   "olddragon2e.inteligencia": "Ciência",
   "olddragon2e.inteligencia_short": "CIE",
-  "olddragon2e.mod_inteligencia": "M. CIE",
+  "olddragon2e.mod_inteligencia": "APT. TEC",
   "olddragon2e.tooltips.roll_inteligencia": "Rolar Ciência",
-
   "olddragon2e.sabedoria": "Intelecto",
   "olddragon2e.sabedoria_short": "INT",
-  "olddragon2e.mod_sabedoria": "M. INT",
+  "olddragon2e.mod_sabedoria": "PROT. M.",
   "olddragon2e.tooltips.roll_sabedoria": "Rolar Intelecto",
-
   "olddragon2e.carisma": "Comunicação",
   "olddragon2e.carisma_short": "COM",
-  "olddragon2e.mod_carisma": "M. COM",
+  "olddragon2e.mod_carisma": "REAÇÃO",
   "olddragon2e.tooltips.roll_carisma": "Rolar Comunicação",
-
   "olddragon2e.ac_short": "CP",
   "olddragon2e.ac_long": "CP | Coeficiente de Proteção",
-
   "olddragon2e.jpd": "Jogada de Proteção de Reflexos",
   "olddragon2e.jpd_short": "JPR",
   "olddragon2e.jpc": "Jogada de Proteção Física",
   "olddragon2e.jpc_short": "JPF",
   "olddragon2e.jps": "Jogada de Proteção Mental",
   "olddragon2e.jps_short": "JPM",
-
   "olddragon2e.levels.16": "16º",
   "olddragon2e.levels.17": "17º",
   "olddragon2e.levels.18": "18º",
   "olddragon2e.levels.19": "19º",
   "olddragon2e.levels.20": "20º",
-
   "spacedragon.painel.titulo": "Testes de porcentagem",
   "spacedragon.painel.vazio": "Nenhum teste de porcentagem para esta classe.",
-  "spacedragon.painel.rolar": "Rolar 1d100 — passa com menor ou igual"
+  "spacedragon.painel.rolar": "Rolar 1d100 — passa com menor ou igual",
+  "olddragon2e.class_ability.equipment_restrictions.armors": "Vestes",
+  "olddragon2e.class_ability.equipment_restrictions.magic_items": "Aparatos Tecnológicos"
 }

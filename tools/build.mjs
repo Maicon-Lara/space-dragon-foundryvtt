@@ -157,8 +157,17 @@ function montaClasses() {
     const sub = folderDoc(`Classes — ${cls.nome}`, "Item", `sd-classe:${cls.nome}`);
     docs.push(sub);
 
-    const habs = (cls.habilidades ?? []).map((h, j) =>
-      classAbilityDoc(h, sub._id, `sd-class-ab:${cls.nome}`, j));
+    // ORDENADAS POR NÍVEL. O template do OD2 percorre `class_abilities` na
+    // ordem do array, sem ordenar, então a ficha do Cosmonauta abria com
+    // "Ataques Múltiplos" (7º) antes de "Pilotar Naves" (1º) — a ordem em que
+    // eu declarei, não a ordem em que se ganha.
+    //
+    // O desempate é a posição de declaração, para que duas habilidades do
+    // mesmo nível saiam na ordem do livro.
+    const habs = (cls.habilidades ?? [])
+      .map((h, ordem) => ({ ...h, ordem }))
+      .sort((a, b) => (a.level ?? 1) - (b.level ?? 1) || a.ordem - b.ordem)
+      .map((h, j) => classAbilityDoc(h, sub._id, `sd-class-ab:${cls.nome}`, j));
     docs.push(...habs);
     const uuidsBase = habs.map((h) => itemUuid(P_CLASSES, h._id));
 
@@ -273,6 +282,18 @@ function montaMacros() {
     comando: "game.spacedragon.teste();",
     img: "icons/svg/d20-highlight.svg",
   }, pasta._id, 0));
+
+  docs.push(macroDoc({
+    nome: "Pontos de Vida do nível",
+    comando: "game.spacedragon.pv();",
+    img: "icons/svg/heal.svg",
+  }, pasta._id, 10));
+
+  docs.push(macroDoc({
+    nome: "Dano Crítico (Cosmonauta)",
+    comando: "game.spacedragon.critico();",
+    img: "icons/svg/explosion.svg",
+  }, pasta._id, 20));
 
   TESTES.forEach((t, i) => {
     docs.push(macroDoc({

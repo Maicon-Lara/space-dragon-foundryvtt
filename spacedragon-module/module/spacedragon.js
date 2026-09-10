@@ -22,7 +22,9 @@
  */
 
 import { abrirTeste, rolar, preparar, TESTES } from "./testes.js";
-import { ligarPainel } from "./painel.js";
+import { ligarPainel, diagnostico } from "./painel.js";
+import { aplicarModificadores, compararEscalas } from "./atributos.js";
+import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
 
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
@@ -43,14 +45,41 @@ function estendeNiveis() {
   for (let n = 16; n <= NIVEL_MAXIMO; n += 1) cfg[n] ??= `olddragon2e.levels.${n}`;
 }
 
+Hooks.once("init", () => {
+  // Uma OPÇÃO, e não um fato consumado: trocar a tabela de modificadores muda
+  // ataque, proteção, PV e jogadas de proteção de todo personagem do mundo.
+  // Quem instalar o módulo só pelos compêndios pode não querer isso.
+  game.settings.register(ID, "modificadores", {
+    name: "Modificadores de atributo do Space Dragon",
+    hint:
+      "A ficha passa a usar a escala do Space Dragon — faixa neutra 10–11 e teto " +
+      "no 29 — em vez da do Old Dragon 2. Afeta ataque, proteção, PV e JP. " +
+      "Desligue para manter o cálculo original do sistema.",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: (v) => {
+      aplicarModificadores(v);
+      // As fichas abertas continuam mostrando o número velho até redesenhar.
+      for (const app of Object.values(ui.windows)) app.render?.(false);
+    },
+  });
+});
+
 Hooks.once("ready", () => {
   estendeNiveis();
+  aplicarModificadores(game.settings.get(ID, "modificadores"));
   ligarPainel();
 
   // A API que as macros do compêndio chamam. Fica aqui, e não dentro da macro,
   // para que atualizar o módulo atualize a regra: uma macro já arrastada para
   // a barra continua valendo, porque ela só chama isto.
-  game.spacedragon = { teste: abrirTeste, rolar, preparar, TESTES };
+  game.spacedragon = {
+    teste: abrirTeste, rolar, preparar, TESTES,
+    pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
+    compararEscalas, diagnostico,
+  };
 
   console.log(`${ID} | ${TESTES.length} testes prontos, nível até o ${NIVEL_MAXIMO}º`);
 });

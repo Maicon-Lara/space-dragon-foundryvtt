@@ -25,6 +25,17 @@ const PROGRESSOES = { CIENTISTA, COSMONAUTA, GATUNO, MENTALICO, TALENTOSGATUNO }
 function enxuga() {
   const prog = {};
   const attr = {};
+
+  // Colunas que o cliente usa fora dos testes: o dado de vida por nível e o
+  // multiplicador de crítico do Cosmonauta.
+  const EXTRA = {
+    CIENTISTA: ["dv"], COSMONAUTA: ["dv", "danoCritico"],
+    GATUNO: ["dv"], MENTALICO: ["dv"],
+  };
+  for (const [tabela, colunas] of Object.entries(EXTRA)) {
+    prog[tabela] ??= {};
+    for (const c of colunas) prog[tabela][c] = PROGRESSOES[tabela].map((l) => l[c]);
+  }
   for (const t of TESTES) {
     for (const f of [t.base, t.ajuste]) {
       if (!f) continue;
@@ -41,6 +52,19 @@ function enxuga() {
 }
 
 const { prog, attr } = enxuga();
+
+// A caixa derivada de cada atributo, na ordem das quinze faixas.
+const DERIVADA = {
+  forca: "ataque",              // ajuste de ataque e dano corpo a corpo
+  destreza: "ataque",           // ajuste de ataque à distância e proteção
+  constituicao: "pv",           // ajuste de pontos de vida e proteção
+  intelecto: "protecaoMental",
+  ciencia: "aptidao",           // porcentagem
+  comunicacao: "reacao",        // porcentagem
+};
+const derivadas = Object.fromEntries(
+  Object.entries(DERIVADA).map(([a, c]) => [a, TABELAS[a].map((l) => l[c])])
+);
 
 // O cabeçalho que o Aprimorado dá a cada coluna usada num teste.
 const ROTULO_COLUNA = {
@@ -82,5 +106,14 @@ export const ATRIBUTO = ${j(attr)};
 export const ROTULO_COLUNA = ${j(rotulos)};
 
 export const TESTES = ${j(TESTES)};
+
+/**
+ * A coluna que vira o "modificador" de cada atributo na ficha.
+ *
+ * A ficha do Old Dragon 2 tem uma caixa derivada por atributo, e a ficha
+ * oficial do Space Dragon também. Estas são as colunas que casam uma a uma.
+ * As duas últimas são PORCENTAGEM, não modificador de d20.
+ */
+export const COLUNA_DERIVADA = ${j(derivadas)};
 `);
 console.log(`  ✔ module/dados.js: ${TESTES.length} testes, ${Object.keys(prog).length} progressões`);
