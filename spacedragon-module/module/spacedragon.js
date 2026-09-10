@@ -29,6 +29,7 @@ import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
 import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
 import { registrarTema, ligarTema } from "./tema.js";
+import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
 const ID = "spacedragon";
@@ -82,6 +83,7 @@ Hooks.once("ready", () => {
   ligarPainel();
   ligarCabecalho();
   ligarGrandezas();
+  ligarMental();
 
   // A API que as macros do compêndio chamam. Fica aqui, e não dentro da macro,
   // para que atualizar o módulo atualize a regra: uma macro já arrastada para
@@ -91,6 +93,7 @@ Hooks.once("ready", () => {
     pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
     compararEscalas, diagnostico, danosMortais,
     ordem: abrirOrdem,
+    alcance: orcamento, gastarAlcance: gastar, descansar,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),
     falhaCritica: () => rolarCriticoTabela("T7-5: Falha Crítica", FALHAS),
     acertoCriticoNave: () => rolarCriticoTabela("T10-6: Acerto Crítico de Espaçonave", CRITICOS_NAVE),

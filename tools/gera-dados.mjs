@@ -32,7 +32,10 @@ function enxuga() {
   // multiplicador de crítico do Cosmonauta.
   const EXTRA = {
     CIENTISTA: ["dv"], COSMONAUTA: ["dv", "danoCritico"],
-    GATUNO: ["dv"], MENTALICO: ["dv"],
+    GATUNO: ["dv"],
+    // O Mentálico precisa das duas colunas dele no cliente: o alcance é o
+    // orçamento diário, e a grandeza limite corta o que ele pode tentar.
+    MENTALICO: ["dv", "alcanceMental", "grandezaMental"],
   };
   for (const [tabela, colunas] of Object.entries(EXTRA)) {
     prog[tabela] ??= {};
@@ -69,7 +72,10 @@ const derivadas = Object.fromEntries(
 );
 
 // Colunas de atributo que a ficha usa fora das caixas derivadas.
-const OUTRAS = { "constituicao.mortais": TABELAS.constituicao.map((l) => l.mortais) };
+const OUTRAS = {
+  "constituicao.mortais": TABELAS.constituicao.map((l) => l.mortais),
+  "intelecto.alcanceAdicional": TABELAS.intelecto.map((l) => l.alcanceAdicional),
+};
 
 // O cabeçalho que o Aprimorado dá a cada coluna usada num teste.
 const ROTULO_COLUNA = {

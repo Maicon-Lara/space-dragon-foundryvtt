@@ -504,3 +504,66 @@ if (ordem.join(" ") !== esperadaOrdem.join(" ")) {
   process.exit(1);
 }
 console.log("  ✔ habilidades: ordenadas por nível, desempatando pela ordem do livro");
+
+// ── O orçamento de alcance mental ──────────────────────────────────────────
+//
+// Os valores saem da T3-6 e da T1-4 do Aprimorado, lidos à mão. O caso que
+// importa é a GRANDEZA LIMITE: a coluna traz um traço nos níveis em que ela não
+// sobe, e o traço NÃO pode zerar o limite — ele fica no último valor preenchido.
+const mental = await import("../spacedragon-module/module/mental.js");
+
+const mentalico = (nivel, intelecto, gasto = 0) => ({
+  type: "character",
+  system: { class: { name: "Mentálico" }, level: nivel, sabedoria: intelecto },
+  getFlag: () => gasto,
+});
+
+const CASOS_MENTAL = [
+  // nível, Intelecto, gasto → total, restante, limite
+  [1, 10, 0, 1, 1, 1, "1º nível: 1% da T3-6, Intelecto 10-11 não soma, 1ª Grandeza"],
+  [4, 10, 0, 6, 6, 2, "4º nível: 6%. A grandeza subiu no 3º e o 4º traz traço — fica na 2ª"],
+  [10, 16, 12, 39, 27, 5, "10º nível: 36% + 3% do Intelecto 16-17. Gastou 12, restam 27. 5ª Grandeza"],
+  [20, 29, 0, 159, 159, 10, "20º nível: 150% + 9% do topo do Intelecto. 10ª Grandeza"],
+];
+
+const probMental = [];
+for (const [nivel, intel, gasto, total, restante, limite, porque] of CASOS_MENTAL) {
+  const o = mental.orcamento(mentalico(nivel, intel, gasto));
+  if (o.total !== total) probMental.push(`nível ${nivel}: total ${o.total}%, esperava ${total}% — ${porque}`);
+  if (o.restante !== restante) probMental.push(`nível ${nivel}: restante ${o.restante}%, esperava ${restante}%`);
+  if (o.limite !== limite) probMental.push(`nível ${nivel}: limite ${o.limite}ª, esperava ${limite}ª — ${porque}`);
+}
+
+// A injeção: o painel entra, a Grandeza dentro do limite ganha custo e a de
+// fora apaga em vez de virar botão.
+const ABA = `
+<div class="character-tab-spells">
+  <div class="spell">
+    <div class="circle">3º Grandeza</div>
+    <ol class="item-list"><li class="item" data-item-id="a"></li></ol>
+    <div class="circle">9º Grandeza</div>
+    <ol class="item-list"><li class="item" data-item-id="b"></li></ol>
+  </div>
+</div>`;
+const abaDom = monta(ABA);
+const atorMental = {
+  ...mentalico(10, 16, 0),
+  name: "Cobaia",
+  items: { find: () => null, filter: () => [] },
+};
+for (const g of ganchos.filter((x) => x.nome === "renderOD2CharacterSheet")) g.fn({ actor: atorMental }, abaDom);
+
+if (!abaDom.querySelector(".spacedragon-mental")) probMental.push("o painel não foi injetado");
+const custos = abaDom.querySelectorAll(".sd-custo").map((n) => n.textContent.trim());
+if (custos[0] !== "custa 3%") probMental.push(`a 3ª Grandeza diz "${custos[0]}", esperava "custa 3%"`);
+if (!/acima/.test(custos[1] ?? "")) probMental.push(`a 9ª Grandeza devia estar acima do limite de um mentálico de 10º`);
+if (abaDom.querySelectorAll(".sd-usar").length !== 1) {
+  probMental.push(`${abaDom.querySelectorAll(".sd-usar").length} botões de usar, esperava 1 — só a Grandeza dentro do limite`);
+}
+if (!abaDom.querySelectorAll(".sd-apagado").length) probMental.push("o poder acima do limite não apagou");
+
+if (probMental.length) {
+  for (const p of probMental) console.error(`  ✘ ${p}`);
+  process.exit(1);
+}
+console.log(`  ✔ alcance mental: ${CASOS_MENTAL.length} orçamentos conferem, e só a Grandeza dentro do limite vira botão`);

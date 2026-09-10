@@ -178,3 +178,91 @@
   opacity: 0.6;
   font-variant-numeric: tabular-nums;
 }
+
+/* ── Alcance mental na aba de Poderes ─────────────────────────────────────
+ *
+ * O orçamento é o número que a mesa procura, então ele é o maior elemento do
+ * painel. O resto — de onde vem, quanto sobrou, qual o limite — é apoio. */
+
+.spacedragon-mental {
+  margin: 0 0 0.6rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  border-radius: 3px;
+  background: rgba(128, 128, 128, 0.06);
+}
+
+.spacedragon-mental .sd-mental-cabeca {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.spacedragon-mental .sd-mental-total {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.spacedragon-mental .sd-mental-fonte {
+  flex: 1;
+  font-size: var(--font-size-11, 0.72rem);
+  opacity: 0.75;
+}
+
+.spacedragon-mental .sd-descansar {
+  cursor: pointer;
+  font-size: var(--font-size-11, 0.72rem);
+  white-space: nowrap;
+  text-decoration: underline dotted;
+}
+
+/* A barra é texto: funciona em qualquer tema e não depende de imagem. */
+.spacedragon-mental .sd-mental-barra {
+  margin: 0.25rem 0;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.spacedragon-mental .sd-mental-rodape {
+  display: flex;
+  gap: 1rem;
+  font-size: var(--font-size-12, 0.78rem);
+}
+
+.spacedragon-mental .sd-explica {
+  margin: 0.35rem 0 0;
+  font-size: var(--font-size-11, 0.72rem);
+  opacity: 0.75;
+}
+
+.character-tab-spells .circle .sd-custo {
+  float: right;
+  font-weight: 400;
+  font-size: var(--font-size-11, 0.72rem);
+  opacity: 0.85;
+}
+
+.character-tab-spells .circle .sd-custo-acima {
+  font-style: italic;
+}
+
+/* A Grandeza acima do limite continua legível — o mentálico precisa saber o
+ * que o espera —, mas não parece disponível. */
+.character-tab-spells .circle.sd-acima {
+  opacity: 0.55;
+}
+
+.character-tab-spells .item.sd-apagado {
+  opacity: 0.45;
+}
+
+.character-tab-spells .item .sd-usar {
+  cursor: pointer;
+  margin-left: 0.4rem;
+  font-size: var(--font-size-11, 0.72rem);
+  white-space: nowrap;
+  text-decoration: underline dotted;
+}

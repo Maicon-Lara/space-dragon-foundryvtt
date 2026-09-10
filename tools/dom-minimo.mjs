@@ -155,9 +155,31 @@ class No {
     return this.querySelectorAll(seletor)[0] ?? null;
   }
 
+  /** O nome da tag em CAIXA ALTA, como no DOM de verdade. */
+  get tagName() {
+    return this.tag.toUpperCase();
+  }
+
+  /** O irmão seguinte. O painel de alcance mental usa para achar o <ol> de
+   *  poderes que vem logo depois do cabeçalho da Grandeza. */
+  get nextElementSibling() {
+    if (!this.pai) return null;
+    const i = this.pai.filhos.indexOf(this);
+    return this.pai.filhos[i + 1] ?? null;
+  }
+
   insertAdjacentHTML(posicao, html) {
-    if (posicao !== "beforeend") throw new Error(`posição não suportada: ${posicao}`);
-    for (const no of analisa(html)) this.anexa(no);
+    const novos = analisa(html);
+    if (posicao === "beforeend") {
+      for (const no of novos) this.anexa(no);
+      return;
+    }
+    if (posicao === "afterbegin") {
+      for (const no of novos) no.pai = this;
+      this.filhos = [...novos, ...this.filhos];
+      return;
+    }
+    throw new Error(`posição não suportada: ${posicao}`);
   }
 }
 

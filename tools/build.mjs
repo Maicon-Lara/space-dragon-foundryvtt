@@ -544,6 +544,12 @@ function montaMacros() {
   }, pasta._id, 10));
 
   docs.push(macroDoc({
+    nome: "Dia novo (alcance mental)",
+    comando: "game.spacedragon.descansar();",
+    img: "icons/svg/sun.svg",
+  }, pasta._id, 25));
+
+  docs.push(macroDoc({
     nome: "Ordem de Ação",
     comando: "game.spacedragon.ordem();",
     img: "icons/svg/clockwork.svg",
