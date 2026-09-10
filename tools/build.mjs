@@ -20,6 +20,7 @@ import {
 } from "./lib.mjs";
 import { especies } from "./data/especies.mjs";
 import { classes } from "./data/classes.mjs";
+import { especializacoes } from "./data/especializacoes.mjs";
 import { PARES, T2_2, T2_3, T2_4, T2_5 } from "./data/mutacoes.mjs";
 import { regras } from "./data/regras.mjs";
 import { NOME_SD, NOME_OD2 } from "./data/conversao.mjs";
@@ -71,8 +72,28 @@ function montaClasses() {
     const habs = (cls.habilidades ?? []).map((h, j) =>
       classAbilityDoc(h, pasta._id, `sd-class-ab:${cls.nome}`, j));
     docs.push(...habs);
+    // As especializações da classe entram como habilidades dela: a escolha
+    // acontece no 5º nível e CONGELA uma coluna da progressão-base, então elas
+    // pertencem à classe em vez de substituí-la.
+    const specs = especializacoes
+      .filter((e) => e.classe === cls.nome)
+      .map((e, j) => classAbilityDoc({
+        nome: `${e.nome} (${e.afiliacao})`,
+        level: 5,
+        desc:
+          `<p><em>Especialização de ${e.classe}, para quem tem Afiliação ` +
+          `<strong>${e.afiliacao}</strong>.</em></p>` +
+          `<p><strong>A partir do 5º nível.</strong> ${e.n5}</p>` +
+          (e.n20 ? `<p><strong>No 20º nível.</strong> ${e.n20}</p>` : "") +
+          `<p class='nota-casa'><em>O degrau de 20º nível aparece aqui na descrição ` +
+          `porque a ficha do Old Dragon 2 só tem campos para 3º, 6º e 10º.</em></p>`,
+        level10: e.n10 || "",
+      }, pasta._id, `sd-espec:${cls.nome}`, 100 + j));
+    docs.push(...specs);
+
+    const todas = [...habs, ...specs];
     docs.push({
-      ...classDoc(cls, pasta._id, habs.map((h) => itemUuid(P_CLASSES, h._id))),
+      ...classDoc(cls, pasta._id, todas.map((h) => itemUuid(P_CLASSES, h._id))),
       sort: (i + 1) * 1000,
     });
   });
