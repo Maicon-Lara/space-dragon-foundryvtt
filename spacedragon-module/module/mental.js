@@ -28,6 +28,7 @@
  * orçamento.
  */
 
+import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { PROGRESSAO, COLUNA, FAIXAS, CAMPO_NA_FICHA } from "./dados.js";
 
 const ID = "spacedragon";
@@ -173,6 +174,9 @@ function injeta(app, elemento) {
     const raiz = elemento?.querySelectorAll ? elemento : elemento?.[0];
     const ator = app?.actor ?? app?.document;
     if (!raiz?.querySelectorAll || ator?.type !== "character") return;
+    // Trocar para a ficha do Old Dragon 2 no seletor do ator devolve o sistema
+    // puro: o módulo não desenha nada em cima dela.
+    if (!ehFichaSD(app)) return;
     if (classeBase(ator) !== "Mentálico") return;
 
     const aba = raiz.querySelector(".character-tab-spells");
@@ -229,9 +233,6 @@ function injeta(app, elemento) {
 }
 
 export function ligarMental() {
-  Hooks.on("renderOD2CharacterSheet", injeta);
-  Hooks.on("renderActorSheet", (app, el) => {
-    if (app?.constructor?.name !== "OD2CharacterSheet") injeta(app, el);
-  });
+  ligarNaFicha(injeta);
   console.log(`${ID} | alcance mental ligado à aba de Poderes`);
 }

@@ -36,6 +36,7 @@
  * ele mudar, o seletor não acha nada e a ficha segue inteira.
  */
 
+import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { FAIXAS, CAMPO_NA_FICHA, COLUNA } from "./dados.js";
 
 const ID = "spacedragon";
@@ -117,6 +118,9 @@ function troca(app, elemento) {
     const raiz = elemento?.querySelectorAll ? elemento : elemento?.[0];
     const ator = app?.actor ?? app?.document;
     if (!raiz?.querySelector || ator?.type !== "character") return;
+    // Trocar para a ficha do Old Dragon 2 no seletor do ator devolve o sistema
+    // puro: o módulo não desenha nada em cima dela.
+    if (!ehFichaSD(app)) return;
 
     poeDanosMortais(raiz, ator);
     poeCreditos(raiz, ator);
@@ -126,9 +130,6 @@ function troca(app, elemento) {
 }
 
 export function ligarCabecalho() {
-  Hooks.on("renderOD2CharacterSheet", troca);
-  Hooks.on("renderActorSheet", (app, el) => {
-    if (app?.constructor?.name !== "OD2CharacterSheet") troca(app, el);
-  });
+  ligarNaFicha(troca);
   console.log(`${ID} | Danos Mortais no PV, e a Economia virou Créditos`);
 }

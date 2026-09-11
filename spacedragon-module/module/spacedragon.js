@@ -29,6 +29,7 @@ import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
 import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
 import { registrarTema, ligarTema } from "./tema.js";
+import { registrarFicha } from "./ficha.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -53,6 +54,10 @@ function estendeNiveis() {
 
 Hooks.once("init", () => {
   registrarTema();
+
+  // No `init`, e não no `ready`: o Foundry monta o registro de fichas antes do
+  // ready, e o sistema — que carrega antes do módulo — já pôs a dele lá.
+  registrarFicha();
 
   // Uma OPÇÃO, e não um fato consumado: trocar a tabela de modificadores muda
   // ataque, proteção, PV e jogadas de proteção de todo personagem do mundo.

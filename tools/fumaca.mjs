@@ -58,10 +58,28 @@ function od2(v) {
   if (v < 19) return 3;
   return 4;
 }
+// A ficha do sistema, que o módulo procura no registro do Foundry para
+// estender. O nome da classe importa: é por ele que ela é achada.
+class OD2CharacterSheet {
+  static get defaultOptions() { return { classes: ["olddragon2e", "sheet", "character"] }; }
+}
+const fichasRegistradas = [];
 globalThis.CONFIG = {
   olddragon2e: { levels: niveisIniciais },
   sounds: {},
-  Actor: { dataModels: { character: FichaOD2 } },
+  Actor: {
+    dataModels: { character: FichaOD2 },
+    sheetClasses: { character: { "olddragon2e.OD2CharacterSheet": { cls: OD2CharacterSheet } } },
+  },
+};
+globalThis.foundry = {
+  applications: { api: {} },
+  utils: { mergeObject: (a, b) => ({ ...a, ...b }) },
+  documents: {
+    collections: {
+      Actors: { registerSheet: (id, cls, cfg) => fichasRegistradas.push({ id, cls, cfg }) },
+    },
+  },
 };
 const opcoes = new Map();
 globalThis.game = {
@@ -73,7 +91,6 @@ globalThis.game = {
   },
 };
 globalThis.ui = { notifications: { warn: () => {}, error: () => {} }, windows: {} };
-globalThis.foundry = { applications: { api: {} } };
 globalThis.Roll = class { async evaluate() { this.total = 1; return this; } };
 globalThis.ChatMessage = { getSpeaker: () => ({}), create: async () => {} };
 globalThis.FormDataExtended = class { constructor() { this.object = {}; } };
@@ -91,6 +108,17 @@ globalThis.document = {
 };
 
 await import("../spacedragon-module/module/spacedragon.js");
+
+// Os painéis só desenham na ficha do módulo — trocar para a do Old Dragon 2
+// devolve o sistema puro. Os testes abaixo precisam, portanto, de um app que
+// SEJA a ficha do módulo.
+const FichaSD = fichasRegistradas.find((f) => f.id === "spacedragon")?.cls;
+const appSD = (ator) => {
+  if (!FichaSD) throw new Error("a ficha Space Dragon não foi registrada");
+  const app = new FichaSD();
+  app.actor = ator;
+  return app;
+};
 
 // ── O que o `ready` tinha de ter feito ──────────────────────────────────────
 const falhas = [];
@@ -161,7 +189,7 @@ const ator = {
 };
 
 const render = ganchos.find((g) => g.nome === "renderOD2CharacterSheet");
-render.fn({ actor: ator }, raiz);
+render.fn(appSD(ator), raiz);
 
 const botoes = raiz.querySelectorAll(".sd-rolar");
 const chaves = botoes.map((b) => b.dataset.teste);
@@ -180,7 +208,7 @@ if (intruso?.querySelector(".spacedragon-testes")) {
   problemas.push("injetou num poder que não tem teste nenhum");
 }
 // Rodar duas vezes não pode duplicar.
-render.fn({ actor: ator }, raiz);
+render.fn(appSD(ator), raiz);
 if (raiz.querySelectorAll(".sd-rolar").length !== botoes.length) {
   problemas.push("renderizar duas vezes duplicou os botões");
 }
@@ -276,7 +304,7 @@ const atorCab = {
 };
 
 const trocaCab = ganchos.filter((g) => g.nome === "renderOD2CharacterSheet");
-for (const g of trocaCab) g.fn({ actor: atorCab }, cab);
+for (const g of trocaCab) g.fn(appSD(atorCab), cab);
 
 const falhasCab = [];
 
@@ -301,7 +329,7 @@ if (cab.querySelectorAll(".sp").length || cab.querySelectorAll(".cp").length) {
 }
 
 // Rodar de novo não pode duplicar nem desfazer.
-for (const g of trocaCab) g.fn({ actor: atorCab }, cab);
+for (const g of trocaCab) g.fn(appSD(atorCab), cab);
 if (cab.querySelectorAll(".spacedragon-mortais").length !== 1) falhasCab.push("renderizar duas vezes duplicou os Danos Mortais");
 if (cab.querySelectorAll(".sd-creditos").length !== 1) falhasCab.push("renderizar duas vezes duplicou os Créditos");
 
@@ -567,7 +595,7 @@ const atorMental = {
   name: "Cobaia",
   items: { find: () => null, filter: () => [] },
 };
-for (const g of ganchos.filter((x) => x.nome === "renderOD2CharacterSheet")) g.fn({ actor: atorMental }, abaDom);
+for (const g of ganchos.filter((x) => x.nome === "renderOD2CharacterSheet")) g.fn(appSD(atorMental), abaDom);
 
 if (!abaDom.querySelector(".spacedragon-mental")) probMental.push("o painel não foi injetado");
 const custos = abaDom.querySelectorAll(".sd-custo").map((n) => n.textContent.trim());
@@ -583,3 +611,54 @@ if (probMental.length) {
   process.exit(1);
 }
 console.log(`  ✔ alcance mental: ${CASOS_MENTAL.length} orçamentos conferem, e só a Grandeza dentro do limite vira botão`);
+
+// ── A ficha Space Dragon aparece no seletor, e a do sistema fica intocada? ──
+//
+// Todo ator tem um botão "Sheet" no cabeçalho da janela. Registrar ali faz a
+// escolha ser POR PERSONAGEM, e trocar de volta para a do Old Dragon 2 tem de
+// devolver o sistema PURO — se o módulo continuar desenhando em cima dela, a
+// opção não serve para nada.
+const probFicha = [];
+
+const registro = fichasRegistradas.find((f) => f.id === "spacedragon");
+if (!registro) probFicha.push("a ficha Space Dragon não foi registrada");
+else {
+  if (registro.cfg?.label !== "Ficha Space Dragon") probFicha.push(`rótulo "${registro.cfg?.label}"`);
+  if (!registro.cfg?.types?.includes("character")) probFicha.push("não foi registrada para personagem");
+  if (!registro.cfg?.makeDefault) probFicha.push("não virou a ficha padrão");
+  const classes = registro.cls.defaultOptions?.classes ?? [];
+  if (!classes.includes("spacedragon-ficha")) probFicha.push(`classes ${classes.join(" ")} sem a marca do módulo`);
+  // Herda a ficha do sistema, e por isso herda o template: o módulo não mantém
+  // cópia de template nenhum.
+  if (!(registro.cls.prototype instanceof OD2CharacterSheet)) {
+    probFicha.push("a ficha do módulo não estende a do sistema");
+  }
+}
+
+// Com a ficha do sistema escolhida, nada é desenhado.
+const abaSistema = monta(FICHA);
+const atorSistema = {
+  type: "character",
+  name: "Cobaia",
+  system: { class: { name: "Sabotador — Gatuno" }, level: 7, destreza: 16, inteligencia: 14 },
+};
+const appSistema = new OD2CharacterSheet();
+appSistema.actor = atorSistema;
+for (const g of ganchos.filter((x) => x.nome === "renderOD2CharacterSheet")) g.fn(appSistema, abaSistema);
+if (abaSistema.querySelectorAll(".sd-rolar").length) {
+  probFicha.push("o módulo desenhou em cima da ficha do Old Dragon 2");
+}
+
+// Com a ficha do módulo, desenha.
+const abaModulo = monta(FICHA);
+const appModulo = new registro.cls();
+appModulo.actor = atorSistema;
+for (const g of ganchos.filter((x) => x.nome === "renderOD2CharacterSheet")) g.fn(appModulo, abaModulo);
+const botoesFicha = abaModulo.querySelectorAll(".sd-rolar").length;
+if (botoesFicha !== 5) probFicha.push(`${botoesFicha} botões na ficha do módulo, esperava 5`);
+
+if (probFicha.length) {
+  for (const p of probFicha) console.error(`  ✘ ${p}`);
+  process.exit(1);
+}
+console.log('  ✔ ficha: "Ficha Space Dragon" registrada como padrão, e a do sistema fica intocada');

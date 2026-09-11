@@ -36,6 +36,7 @@
  * automático. Shift-clique abre o diálogo, que tem o campo de situação.
  */
 
+import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { CAMPO_NA_FICHA, NOME_ATRIBUTO, SIGLA, TESTES } from "./dados.js";
 import { preparar, rolar } from "./testes.js";
 
@@ -125,6 +126,9 @@ function injeta(app, elemento) {
     const raiz = elemento?.querySelectorAll ? elemento : elemento?.[0];
     const ator = app?.actor ?? app?.document;
     if (!raiz?.querySelectorAll || ator?.type !== "character") return;
+    // Trocar para a ficha do Old Dragon 2 no seletor do ator devolve o sistema
+    // puro: o módulo não desenha nada em cima dela.
+    if (!ehFichaSD(app)) return;
     if (!ator.system?.class) return;
 
     // Idempotente: o Foundry pode renderizar a mesma ficha várias vezes.
@@ -198,10 +202,7 @@ export function diagnostico() {
 export function ligarPainel() {
   // Os dois ganchos disparam neste sistema. Usamos o específico e caímos no
   // genérico se ele sumir numa versão futura — sem desenhar duas vezes.
-  Hooks.on("renderOD2CharacterSheet", injeta);
-  Hooks.on("renderActorSheet", (app, el) => {
-    if (app?.constructor?.name !== "OD2CharacterSheet") injeta(app, el);
-  });
+  ligarNaFicha(injeta);
 
   console.log(`${ID} | testes ligados às habilidades de classe na ficha`);
 }
