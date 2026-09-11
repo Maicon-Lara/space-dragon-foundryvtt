@@ -87,7 +87,9 @@ export const PODERES = [
     texto: "Todos os inimigos, com até 5 dados de vida, ao alcance do poder mental devem fazer uma JPM para não ficarem aterrorizados. Personagens sob o efeito deste poder mental têm uma penalidade de -2 em todas as suas rolagens e uma chance, de 5% por nível do mentálico, de largar objetos que estejam segurando.",
   },
   {
-    nome: "Canalizar Ondas De Rádio",
+    nome: "Canalizar Ondas de Rádio",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Canalizar Ondas De Rádio",
     grandeza: 2,
     alcance: "Pessoal",
     duracao: "Indefinida",
@@ -150,7 +152,9 @@ export const PODERES = [
     texto: "O mentálico pode fazer uma única sugestão subliminar ao alvo, que deve fazer uma JPM para resistir aos efeitos. A sugestão deve consistir em uma frase de um único verbo. O indivíduo sentirá um impulso inexplicável de realizá-la a cada 1d8 horas até o fim do efeito, mas não estará consciente dele. Sugestões potencialmente letais para o alvo quebram o efeito imediatamente.",
   },
   {
-    nome: "Telepatia Em Grupo",
+    nome: "Telepatia em Grupo",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Telepatia Em Grupo",
     grandeza: 2,
     alcance: "1 Km/nível",
     duracao: "15 segundos/nível",
@@ -220,7 +224,9 @@ export const PODERES = [
     texto: "Este poder mental permite que o mentálico leia e compreenda uma memória que o alvo tenha em sua mente no presente momento, como se ele tivesse ciência dos acontecimentos, mas não os tivesse vivenciado pessoalmente. A leitura levará tanto tempo quanto necessário para analisar toda a memória ou terminará ao comando do mentálico. Alvos hostis podem realizar uma JPM para resistir à leitura.",
   },
   {
-    nome: "Palavra De Comando",
+    nome: "Palavra de Comando",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Palavra De Comando",
     grandeza: 3,
     alcance: "Visual",
     duracao: "Instantâneo",
@@ -318,7 +324,9 @@ export const PODERES = [
     texto: "Este poder mental faz com que um ser vivo – não humano e não microbiano – desista de atacar o mentálico e seus aliados. Para isso, é utilizada a tabela T3-2 de desativação de robôs, onde uma sucata representa uma criatura de 1DV e um androide equivale a uma criatura de 8DV, que é o limite de funcionamento deste poder mental. É feita uma rolagem idêntica à desativação de robôs dos cientistas, que caso seja bem-sucedida, faz com que a criatura recue. Um “A” na tabela indica que a criatura é automaticamente afastada, e um “D” significa que ela fugirá a todo custo. Criaturas cuja quantidade de DV esteja assinalada como “N” não são afetadas. Ao contrário dos robôs, entretanto, este poder mental consegue afastar uma única criatura.",
   },
   {
-    nome: "Amputar Ou Restaurar Emoção",
+    nome: "Amputar ou Restaurar Emoção",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Amputar Ou Restaurar Emoção",
     grandeza: 5,
     alcance: "Visual",
     duracao: "Permanente",
@@ -374,7 +382,9 @@ export const PODERES = [
     texto: "O mentálico é capaz de ligar um de seus cinco sentidos a outra pessoa. Enquanto a ligação estiver ativa o mentálico poderá alternar livremente entre seu próprio sentido e o do alvo, compartilhando os estímulos sensoriais recebidos por ele. No momento da ligação o mentálico deve manter contato visual com o alvo, que pode resistir com uma JPM. Se a distância entre o mentálico e o alvo for maior que o alcance de 1 Km por nível o efeito termina imediatamente.",
   },
   {
-    nome: "Mudança De Atributos",
+    nome: "Mudança de Atributos",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Mudança De Atributos",
     grandeza: 5,
     alcance: "Visual",
     duracao: "Variável (ver abaixo)",
@@ -528,7 +538,9 @@ export const PODERES = [
     texto: "O mentálico pode transformar uma criatura irracional em um ser sapiente com este poder mental. O atributo Intelecto da criatura é imediatamente elevado a 10, e ela passa a ser capaz de raciocinar de maneira similar a um humano, embora não desenvolva quaisquer capacidades comunicativas ou científicas. É possível utilizar qualquer poder mental originalmente efetivo em humanos em uma criatura que tenha inteligência criada com este poder mental. Se utilizado em seres microbianos a inteligência se refletirá em toda a colônia de micro-organismos.",
   },
   {
-    nome: "Interagir Com Memória",
+    nome: "Interagir com Memória",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Interagir Com Memória",
     grandeza: 7,
     alcance: "Toque",
     duracao: "Variável (ver texto)",

@@ -1,5 +1,5 @@
 {
-  "name": "Monstro De Lava",
+  "name": "Monstro de Lava",
   "type": "monster",
   "_id": "D5sGglGDrpxKx1yq",
   "img": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
@@ -24,7 +24,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Monstro De Lava",
+    "name": "Monstro de Lava",
     "displayName": 20,
     "actorLink": false,
     "appendNumber": true,

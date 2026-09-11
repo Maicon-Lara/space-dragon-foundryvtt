@@ -1,5 +1,5 @@
 {
-  "name": "Monstro Do Pântano",
+  "name": "Monstro do Pântano",
   "type": "monster",
   "_id": "HdulJbllBclRw5EW",
   "img": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
@@ -24,7 +24,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Monstro Do Pântano",
+    "name": "Monstro do Pântano",
     "displayName": 20,
     "actorLink": false,
     "appendNumber": true,

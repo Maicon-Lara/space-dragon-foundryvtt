@@ -1,5 +1,5 @@
 {
-  "name": "Monstro De Gelo",
+  "name": "Monstro de Gelo",
   "type": "monster",
   "_id": "RndrOff02V8Nebxs",
   "img": "systems/olddragon2e/assets/concepts/humanoide-grande.webp",
@@ -24,7 +24,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Monstro De Gelo",
+    "name": "Monstro de Gelo",
     "displayName": 20,
     "actorLink": false,
     "appendNumber": true,

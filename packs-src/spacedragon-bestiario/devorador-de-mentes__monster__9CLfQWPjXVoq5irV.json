@@ -1,5 +1,5 @@
 {
-  "name": "Devorador De Mentes",
+  "name": "Devorador de Mentes",
   "type": "monster",
   "_id": "9CLfQWPjXVoq5irV",
   "img": "systems/olddragon2e/assets/concepts/humanoide-pequeno.webp",
@@ -24,7 +24,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Devorador De Mentes",
+    "name": "Devorador de Mentes",
     "displayName": 20,
     "actorLink": false,
     "appendNumber": true,

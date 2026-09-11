@@ -229,7 +229,9 @@ export const CRIATURAS = [
     texto: "Crocossauros são répteis de tamanho descomunal que habitam áreas pantanosas e rios, onde se camuflam e esperam passar despercebidos de suas presas até o momento do ataque. Para tanto costumam submergir nas águas, deixando apenas as narinas e os olhos para fora. Uma vítima que é mordida por um crocossauro corre sério risco de ser arrastada para a água e nunca mais ser vista. Agarrar em uma mordida bem- sucedida o crocossauro pode tentar agarrar uma vítima de tamanho humano, ou menor, com a boca com um teste resistido de Força. Caso a criatura saia vitoriosa, a vítima estará presa e o crocossauro tentará um giro mortal em seu próximo turno, que pede uma JPF para que os ossos da vítima não quebrem, causando 2d10+4 pontos de dano. A vítima pode tentar soltar-se em seu turno com um novo teste resistido de Força, sofrendo 1d6 pontos de dano, caso consiga livrar-se da mordida.",
   },
   {
-    nome: "Devorador De Mentes",
+    nome: "Devorador de Mentes",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Devorador De Mentes",
     cientifico: "Mentis glutonius",
     tipo: "humanoide pequeno rebelde",
     atributos: { FOR: 5, DES: 10, CON: 4, INT: 16, CIE: 14, COM: 12 },
@@ -327,7 +329,9 @@ export const CRIATURAS = [
     texto: "Geleias espaciais surgem quando uma grande quantidade de bolhas verdes (uma massa microbiana) se juntam, formando uma grande colônia de micro-organismos. As geleias espaciais têm cheiro de matéria em decomposição e a coloração verde, característica das bolhas verdes, mas são muito mais mortais, pois são imunes a qualquer dano físico, sendo afetadas apenas por feixes de energia. Envolver ao contrário das bolhas verdes, só é necessário uma geleia espacial para envolver completamente uma vítima, que deve fazer uma JPR para evitar ser envolvida, ou testes de Força para se desvencilhar quando já envolta. São necessários três testes bem-sucedidos e consecutivos de Força para que o personagem escape da geleia espacial, um a cada nova rodada. Durante esse período o personagem estará sufocando, correndo o risco de cair inconsciente antes que possa escapar.",
   },
   {
-    nome: "Gigante De Pedra",
+    nome: "Gigante de Pedra",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Gigante De Pedra",
     cientifico: "Giganto petricus",
     tipo: "humanoide imenso rebelde",
     atributos: { FOR: 22, DES: 14, CON: 18, INT: 8, CIE: 6, COM: 4 },
@@ -441,7 +445,9 @@ export const CRIATURAS = [
     moral: "70%",
   },
   {
-    nome: "Lagarto Do Deserto",
+    nome: "Lagarto do Deserto",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Lagarto Do Deserto",
     cientifico: "Aridus reptus",
     tipo: "quadrúpede grande neutro",
     atributos: { FOR: 14, DES: 12, CON: 14, INT: 4, CIE: 0, COM: 2 },
@@ -473,7 +479,9 @@ export const CRIATURAS = [
     texto: "Lobos sônicos são quase idênticos à sua contraparte comum, com a exceção de que são capazes de emitir um uivo atordoante, que usam para desorientar suas presas. São muito astutos e costumam caçar em grupo, pois entendem que não seriam uma grande ameaça sozinhos. Uivo sônico o uivo do lobo sônico pode deixar uma pessoa atordoada, conferindo-lhe uma penalidade de -2 em todos os testes que fizer, se ela falhar em uma JPM. A quantidade de lobos uivando não interfere nas jogadas. Envolver em um ataque bem-sucedido com a língua, cujo alcance é de 15 metros, o lagarto do deserto pode envolver uma vítima que falhe em uma JPR. Uma vítima presa sofre 1d4 pontos de dano por turno por esmagamento, e corre o risco de ser engolida. Um teste resistido de Força pode ser feito para se soltar.",
   },
   {
-    nome: "Lula Da Areia",
+    nome: "Lula da Areia",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Lula Da Areia",
     cientifico: "Moluscus arena",
     tipo: "cefalópode imenso neutro",
     atributos: { FOR: 20, DES: 14, CON: 14, INT: 4, CIE: 0, COM: 0 },
@@ -568,7 +576,9 @@ export const CRIATURAS = [
     texto: "Metalópodes são máquinas de guerra robóticas de tamanho enorme que lembram vagamente aranhas metálicas. Têm quatro longas pernas que se conectam a seus corpos quase perfeitamente esféricos, do qual se projeta um canhão protônico, sua única arma. Em tempos passados foram frequentemente usados em guerras como batedores. Acerebral embora sejam robôs os metalópodes não podem ser desativados por um disruptor positrônico, pois não têm cérebros.",
   },
   {
-    nome: "Monstro De Energia",
+    nome: "Monstro de Energia",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Monstro De Energia",
     tipo: "amórfico médio rebelde",
     atributos: { FOR: 0, DES: 18, CON: 0, INT: 6, CIE: 4, COM: 2 },
     cp: "14",
@@ -584,7 +594,9 @@ export const CRIATURAS = [
     texto: "Monstros de energia são aberrações sem explicação científica plausível, mas perigosas a todos que encontrarem uma. Possuem corpos vagamente humanoides formados de energia elétrica e luminosa, causam dano ao simples toque em matéria sólida. De acordo com a teoria mentálica, estas criaturas são o resultado da fusão de um espírito mental com energia residual de um lugar, embora ainda não tenha sido possível provar essa tese. Incorpóreo por serem incorpóreos os monstros de energia são imunes a quaisquer ataques físicos, e também vencem automaticamente qualquer jogada de proteção que precisarem fazer.",
   },
   {
-    nome: "Monstro De Gelo",
+    nome: "Monstro de Gelo",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Monstro De Gelo",
     tipo: "humanoide grande rebelde",
     atributos: { FOR: 18, DES: 12, CON: 14, INT: 4, CIE: 0, COM: 4 },
     cp: "15 (CORPO DE GELO +4)",
@@ -598,7 +610,9 @@ export const CRIATURAS = [
     moral: "70%",
   },
   {
-    nome: "Monstro Do Pântano",
+    nome: "Monstro do Pântano",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Monstro Do Pântano",
     tipo: "humanoide grande rebelde",
     atributos: { FOR: 18, DES: 12, CON: 18, INT: 6, CIE: 0, COM: 4 },
     cp: "14 (COBERTURA DE MUSGO +3)",
@@ -613,7 +627,9 @@ export const CRIATURAS = [
     texto: "Monstros do pântano, integrantes do grupo de seres inexplicáveis cientificamente, são criaturas humanoides inteiramente feitas de lama, lodo e material orgânico em decomposição encontrado em pântanos. Relatos de aparições são raros, mas muitos desaparecimentos em regiões pantanosas são atribuídos à ação de uma destas criaturas. Pouco se sabe sobre seus hábitos, mas especula-se que vivam sob a água, camuflando-se na lama.",
   },
   {
-    nome: "Monstro De Lava",
+    nome: "Monstro de Lava",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Monstro De Lava",
     tipo: "humanoide grande rebelde",
     atributos: { FOR: 20, DES: 12, CON: 16, INT: 4, CIE: 0, COM: 4 },
     cp: "15 (CORPO DE LAVA +4)",
@@ -832,7 +848,9 @@ export const CRIATURAS = [
     texto: "Tiranossauros são enormes alienossauros bípedes, carnívoros e muito agressivos. Suas bocarras os permitem tanto arrancar enormes pedaços de presas grandes, quanto engolir presas pequenas sem nem ao menos mastigá-las. Seus membros superiores são atrofiados, então a única forma de ataque dos tiranossauros além de mordidas é usar suas caudas como chicotes. Engolir em uma rolagem crítica de ataque com mordida o tiranossauro pode engolir uma vitima, se esta não passar em uma JPR. Uma vítima engolida viva respirará com dificuldade e não poderá mover-se no estômago do tiranossauro.",
   },
   {
-    nome: "Tigre Dentes-De-Sabre",
+    nome: "Tigre Dentes-de-Sabre",
+    // O id é semeado pelo nome antigo: consertar a caixa não pode trocar o UUID.
+    seedNome: "Tigre Dentes-De-Sabre",
     cientifico: "Tigris densabris",
     tipo: "quadrúpede grande rebelde",
     atributos: { FOR: 18, DES: 18, CON: 18, INT: 4, CIE: 0, COM: 2 },

@@ -1,5 +1,5 @@
 {
-  "name": "Lagarto Do Deserto",
+  "name": "Lagarto do Deserto",
   "type": "monster",
   "_id": "IoiKKjX1NQlCwD1A",
   "img": "systems/olddragon2e/assets/concepts/besta-grande.webp",
@@ -24,7 +24,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Lagarto Do Deserto",
+    "name": "Lagarto do Deserto",
     "displayName": 20,
     "actorLink": false,
     "appendNumber": true,

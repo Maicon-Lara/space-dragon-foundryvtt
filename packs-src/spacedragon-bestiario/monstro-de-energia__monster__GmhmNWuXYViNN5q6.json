@@ -1,5 +1,5 @@
 {
-  "name": "Monstro De Energia",
+  "name": "Monstro de Energia",
   "type": "monster",
   "_id": "GmhmNWuXYViNN5q6",
   "img": "systems/olddragon2e/assets/concepts/gosma-medio.webp",
@@ -24,7 +24,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Monstro De Energia",
+    "name": "Monstro de Energia",
     "displayName": 20,
     "actorLink": false,
     "appendNumber": true,

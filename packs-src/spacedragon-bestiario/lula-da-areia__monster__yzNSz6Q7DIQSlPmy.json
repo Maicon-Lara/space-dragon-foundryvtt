@@ -1,5 +1,5 @@
 {
-  "name": "Lula Da Areia",
+  "name": "Lula da Areia",
   "type": "monster",
   "_id": "yzNSz6Q7DIQSlPmy",
   "img": "systems/olddragon2e/assets/concepts/besta-imenso.webp",
@@ -24,7 +24,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Lula Da Areia",
+    "name": "Lula da Areia",
     "displayName": 20,
     "actorLink": false,
     "appendNumber": true,

@@ -1,5 +1,5 @@
 {
-  "name": "Tigre Dentes-De-Sabre",
+  "name": "Tigre Dentes-de-Sabre",
   "type": "monster",
   "_id": "TrZltCd1WfUESCKY",
   "img": "systems/olddragon2e/assets/concepts/besta-grande.webp",
@@ -24,7 +24,7 @@
     }
   },
   "prototypeToken": {
-    "name": "Tigre Dentes-De-Sabre",
+    "name": "Tigre Dentes-de-Sabre",
     "displayName": 20,
     "actorLink": false,
     "appendNumber": true,

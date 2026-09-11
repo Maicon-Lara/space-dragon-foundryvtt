@@ -563,7 +563,11 @@ export function journalDoc(entry, sort) {
 
 // Item do tipo spell (magia).
 export function spellDoc(spell, folderId, seedPrefix, sort) {
-  const id = makeId(`spell:${seedPrefix}:${spell.nome}`);
+  // `seedNome` preserva o UUID quando só o RÓTULO muda. Foi preciso ao
+  // consertar a caixa dos nomes — "Medidor De Radiação" virou "Medidor de
+  // Radiação" —, e sem isto 45 itens teriam trocado de id, quebrando a
+  // referência de quem já os tinha arrastado para uma ficha.
+  const id = makeId(`spell:${seedPrefix}:${spell.seedNome ?? spell.nome}`);
   const traditions = { arcane: "null", divine: "null", necromancer: "null", illusionist: "null" };
   traditions[spell.school] = String(spell.circle);
   return {
@@ -690,7 +694,11 @@ export function armorDoc(it, folderId, seedPrefix, sort) {
 
 // Item do tipo misc (equipamento geral / consumível).
 export function miscDoc(it, folderId, seedPrefix, sort) {
-  const id = makeId(`misc:${seedPrefix}:${it.nome}`);
+  // `seedNome` preserva o UUID quando só o RÓTULO muda. Foi preciso ao
+  // consertar a caixa dos nomes — "Medidor De Radiação" virou "Medidor de
+  // Radiação" —, e sem isto 45 itens teriam trocado de id, quebrando a
+  // referência de quem já os tinha arrastado para uma ficha.
+  const id = makeId(`misc:${seedPrefix}:${it.seedNome ?? it.nome}`);
   return {
     folder: folderId,
     name: it.nome,
@@ -948,7 +956,11 @@ function movimentoDe(mov) {
 const QUADRADOS = { miudo: 1, pequeno: 1, medio: 1, grande: 2, imenso: 3, colossal: 4 };
 
 export function monsterDoc(c, folderId, seedPrefix, sort) {
-  const id = makeId(`monster:${seedPrefix}:${c.nome}`);
+  // `seedNome` preserva o UUID quando só o RÓTULO muda. Foi preciso ao
+  // consertar a caixa dos nomes — "Medidor De Radiação" virou "Medidor de
+  // Radiação" —, e sem isto 45 itens teriam trocado de id, quebrando a
+  // referência de quem já os tinha arrastado para uma ficha.
+  const id = makeId(`monster:${seedPrefix}:${c.seedNome ?? c.nome}`);
   const conceito = conceitoDe(c.tipo);
   const tamanho = tamanhoDe(c.tipo);
   const img = `systems/olddragon2e/assets/concepts/${

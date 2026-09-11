@@ -416,6 +416,7 @@ function montaPoderes() {
     porGrandeza.get(g).forEach((p, i) => {
       docs.push(spellDoc({
         nome: p.nome,
+        seedNome: p.seedNome,
         // A tradição é `arcane` por falta de uma quinta: o Space Dragon não tem
         // arcano nem divino. O lang do módulo troca o rótulo.
         school: "arcane",
@@ -466,6 +467,9 @@ function montaAparatos() {
   APARATOS.forEach((a, i) => {
     docs.push(miscDoc({
       nome: a.nome,
+      // Repassado: o id é semeado por ele, e sem isto consertar a caixa do nome
+      // trocaria o UUID de 30 aparatos.
+      seedNome: a.seedNome,
       desc: corpoAparato(a),
       cost: a.custo,
     }, a.feito ? pFeitos._id : pAparatos._id, a.feito ? "sd-feito" : "sd-aparato", i * 10));
