@@ -81,9 +81,11 @@ export function registrarFicha() {
   foundry.documents.collections.Actors.registerSheet(ID, SDCharacterSheet, {
     types: ["character"],
     label: "Ficha Space Dragon",
-    // Padrão para quem não escolheu nada — que é a maioria. Quem quiser o Old
-    // Dragon 2 puro troca no botão "Sheet" do ator.
-    makeDefault: true,
+    // NÃO é padrão. Num mundo que também tenha o módulo Star Wars, a maioria
+    // dos personagens não é do Space Dragon — e tornar-se padrão silenciosamente
+    // trocaria a ficha de todos eles. Quem é do Space Dragon escolhe no botão
+    // "Sheet" do ator, e os personagens convertidos já vêm com ela marcada.
+    makeDefault: false,
   });
 
   Registrada = SDCharacterSheet;
@@ -114,4 +116,24 @@ export function ligarNaFicha(desenha) {
     if (app?.constructor?.name === "OD2CharacterSheet") return;
     desenha(app, el);
   });
+}
+
+/**
+ * Este ATOR usa a ficha Space Dragon?
+ *
+ * ── POR QUE NÃO BASTA `ator.sheet` ──────────────────────────────────────────
+ *
+ * Porque isto é chamado de dentro de um getter de dado derivado, e tocar em
+ * `ator.sheet` ali instancia a ficha no meio do cálculo dela. A escolha está
+ * gravada numa flag do próprio Foundry, e ler a flag não instancia nada.
+ *
+ * Flag ausente significa "use o padrão do mundo", e o padrão é o do sistema:
+ * a ficha do módulo é registrada com `makeDefault: false` justamente para que
+ * um mundo misto não vire Space Dragon inteiro sem ninguém pedir.
+ */
+export function atorUsaFichaSD(ator) {
+  if (!Registrada) return true;
+  const escolhida = ator?.flags?.core?.sheetClass;
+  if (!escolhida) return false;
+  return escolhida === `${ID}.${Registrada.name}`;
 }

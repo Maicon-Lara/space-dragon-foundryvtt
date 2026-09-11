@@ -14,8 +14,9 @@
  *   3. A ficha do OD2 para no 15º nível e o Space Dragon vai ao 20º.
  *
  * A nomenclatura — Ciência no lugar de Inteligência, CP no lugar de CA, JPR/
- * JPF/JPM no lugar de JPD/JPC/JPS — não precisa de código: sai do
- * `lang/pt-BR.json` do módulo, que o Foundry mescla por cima do sistema.
+ * JPF/JPM no lugar de JPD/JPC/JPS — é trocada NA FICHA, e não no idioma: o
+ * `lang` é global, e num mundo que também tenha o módulo Star Wars o Jedi
+ * passaria a ver os rótulos do Space Dragon. Ver module/rotulos.js.
  *
  * Nada aqui toca em `system.*`. O módulo não inventa campo no sistema de outra
  * pessoa.
@@ -30,6 +31,7 @@ import { ligarGrandezas } from "./poderes.js";
 import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
 import { registrarTema, ligarTema } from "./tema.js";
 import { registrarFicha } from "./ficha.js";
+import { ligarRotulos } from "./rotulos.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -89,6 +91,9 @@ Hooks.once("ready", () => {
   ligarCabecalho();
   ligarGrandezas();
   ligarMental();
+  // Por último: a aba de Poderes precisa estar desenhada para os rótulos de
+  // Grandeza serem trocados.
+  ligarRotulos();
 
   // A API que as macros do compêndio chamam. Fica aqui, e não dentro da macro,
   // para que atualizar o módulo atualize a regra: uma macro já arrastada para

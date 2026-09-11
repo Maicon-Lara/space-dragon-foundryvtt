@@ -80,6 +80,21 @@ class No {
   }
 
   get dataset() {
+    const dono = this;
+    const d = new Proxy({}, {
+      get(_a, k) {
+        if (typeof k !== "string") return undefined;
+        return dono.atributos["data-" + k.replace(/[A-Z]/g, (c) => "-" + c.toLowerCase())];
+      },
+      set(_a, k, v) {
+        dono.atributos["data-" + String(k).replace(/[A-Z]/g, (c) => "-" + c.toLowerCase())] = String(v);
+        return true;
+      },
+    });
+    return d;
+  }
+
+  get _datasetAntigo() {
     const d = {};
     for (const [k, v] of Object.entries(this.atributos)) {
       if (!k.startsWith("data-")) continue;
@@ -158,6 +173,47 @@ class No {
   /** O nome da tag em CAIXA ALTA, como no DOM de verdade. */
   get tagName() {
     return this.tag.toUpperCase();
+  }
+
+  /**
+   * Os filhos como nós, com os pedaços de TEXTO representados também.
+   *
+   * O DOM de verdade guarda texto como nó irmão dos elementos; aqui o texto
+   * mora num campo do pai. Para o código que percorre `childNodes` funcionar —
+   * e ele precisa, senão escrever num rótulo apaga os filhos — o texto é
+   * embrulhado num nó de mentira com `nodeType` 3.
+   */
+  get childNodes() {
+    const dono = this;
+    const doTexto = dono.texto
+      ? [{
+          nodeType: 3,
+          get textContent() { return dono.texto; },
+          set textContent(v) { dono.texto = v; },
+          remove() { dono.texto = ""; },
+        }]
+      : [];
+    return [...doTexto, ...this.filhos];
+  }
+
+  /** Acrescenta texto no fim, como o append do DOM. */
+  append(...partes) {
+    for (const p of partes) {
+      if (typeof p === "string") this.texto += p;
+      else this.anexa(p);
+    }
+  }
+
+  setAttribute(nome, valor) {
+    this.atributos[nome] = String(valor);
+  }
+
+  getAttribute(nome) {
+    return this.atributos[nome] ?? null;
+  }
+
+  get parentElement() {
+    return this.pai;
   }
 
   /** O irmão seguinte. O painel de alcance mental usa para achar o <ol> de

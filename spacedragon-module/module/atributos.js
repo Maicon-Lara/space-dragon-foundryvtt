@@ -47,6 +47,7 @@
  */
 
 import { FAIXAS, CAMPO_NA_FICHA, COLUNA_DERIVADA } from "./dados.js";
+import { atorUsaFichaSD } from "./ficha.js";
 
 const ID = "spacedragon";
 
@@ -65,6 +66,10 @@ function getters() {
     const coluna = COLUNA_DERIVADA[atributo];
     if (!coluna) continue;
     saida[`mod_${campo}`] = function () {
+      // A escala do Space Dragon vale para QUEM É do Space Dragon. Num mundo
+      // que também tenha o módulo Star Wars, o Jedi ao lado continua na escala
+      // do Old Dragon 2 — e é por isso que o getter original é guardado.
+      if (!atorUsaFichaSD(this.parent)) return originais[`mod_${campo}`]?.get?.call(this) ?? 0;
       return Number(coluna[faixaDe(this[campo])] ?? 0);
     };
   }
@@ -86,13 +91,15 @@ export function aplicarModificadores(ligado) {
   }
 
   if (ligado) {
-    const novos = getters();
+    // Os originais primeiro: os novos getters CHAMAM eles para quem não é do
+    // Space Dragon, então precisam existir antes de serem instalados.
     if (!originais) {
       originais = {};
-      for (const nome of Object.keys(novos)) {
-        originais[nome] = Object.getOwnPropertyDescriptor(proto, nome);
+      for (const campo of Object.values(CAMPO_NA_FICHA)) {
+        originais[`mod_${campo}`] = Object.getOwnPropertyDescriptor(proto, `mod_${campo}`);
       }
     }
+    const novos = getters();
     for (const [nome, fn] of Object.entries(novos)) {
       Object.defineProperty(proto, nome, { get: fn, configurable: true });
     }

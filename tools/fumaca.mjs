@@ -234,8 +234,14 @@ console.log(`  ✔ injeção: ${botoes.length} botões no poder certo (${chaves.
 // Os valores abaixo saem das T1-1 a T1-6 do Aprimorado, lidos à mão. O contraste
 // com o Old Dragon 2 é o ponto: Constituição 9 dá 0 lá e -1 aqui, e Destreza 29
 // nem existe na escala de lá.
-const ficha = Object.assign(new CONFIG.Actor.dataModels.character(), {
-  forca: 9, destreza: 29, constituicao: 9, inteligencia: 17, sabedoria: 1, carisma: 13,
+// `parent` é o ator, e é nele que mora a escolha de ficha. Sem a flag, o
+// personagem usa a ficha do sistema e DEVE continuar na escala do Old Dragon 2.
+const atributos = { forca: 9, destreza: 29, constituicao: 9, inteligencia: 17, sabedoria: 1, carisma: 13 };
+const ficha = Object.assign(new CONFIG.Actor.dataModels.character(), atributos, {
+  parent: { flags: { core: { sheetClass: "spacedragon.SDCharacterSheet" } } },
+});
+const fichaOD2 = Object.assign(new CONFIG.Actor.dataModels.character(), atributos, {
+  parent: { flags: {} },
 });
 
 const ESPERADO = {
@@ -252,6 +258,16 @@ for (const [campo, valor] of Object.entries(ESPERADO)) {
   if (ficha[campo] !== valor) erros.push(`${campo} deu ${ficha[campo]}, esperava ${valor}`);
 }
 
+// ⚠️ O personagem que NÃO é do Space Dragon fica na escala do Old Dragon 2,
+// mesmo com a emenda instalada. É isto que permite os dois módulos no mesmo
+// mundo: o Jedi ao lado não é contaminado.
+if (fichaOD2.mod_constituicao !== 0) {
+  erros.push(`sem a ficha do módulo, Constituição 9 deu ${fichaOD2.mod_constituicao} — devia ser 0, a escala do OD2`);
+}
+if (fichaOD2.mod_destreza !== 4) {
+  erros.push(`sem a ficha do módulo, Destreza 29 deu ${fichaOD2.mod_destreza} — devia ser 4, o teto do OD2`);
+}
+
 // E desligar a opção tem de devolver o sistema ao que ele era.
 const { aplicarModificadores } = await import("../spacedragon-module/module/atributos.js");
 aplicarModificadores(false);
@@ -264,7 +280,7 @@ if (erros.length) {
   for (const e of erros) console.error(`  ✘ ${e}`);
   process.exit(1);
 }
-console.log("  ✔ modificadores: escala do Space Dragon aplicada, e reversível");
+console.log("  ✔ modificadores: escala do Space Dragon só em quem usa a ficha dele, e reversível");
 
 // ── Danos Mortais no PV, e a Economia virou Créditos? ─────────────────────
 //
@@ -625,7 +641,10 @@ if (!registro) probFicha.push("a ficha Space Dragon não foi registrada");
 else {
   if (registro.cfg?.label !== "Ficha Space Dragon") probFicha.push(`rótulo "${registro.cfg?.label}"`);
   if (!registro.cfg?.types?.includes("character")) probFicha.push("não foi registrada para personagem");
-  if (!registro.cfg?.makeDefault) probFicha.push("não virou a ficha padrão");
+  // ⚠️ NÃO pode ser padrão. Num mundo que também tenha o módulo Star Wars, a
+  // maioria dos personagens não é do Space Dragon, e virar padrão trocaria a
+  // ficha de todos eles em silêncio.
+  if (registro.cfg?.makeDefault) probFicha.push("virou a ficha padrão, e não devia num mundo misto");
   const classes = registro.cls.defaultOptions?.classes ?? [];
   if (!classes.includes("spacedragon-ficha")) probFicha.push(`classes ${classes.join(" ")} sem a marca do módulo`);
   // Herda a ficha do sistema, e por isso herda o template: o módulo não mantém
@@ -661,4 +680,4 @@ if (probFicha.length) {
   for (const p of probFicha) console.error(`  ✘ ${p}`);
   process.exit(1);
 }
-console.log('  ✔ ficha: "Ficha Space Dragon" registrada como padrão, e a do sistema fica intocada');
+console.log('  ✔ ficha: "Ficha Space Dragon" no seletor, sem virar padrão, e a do sistema fica intocada');

@@ -266,7 +266,14 @@ function converte(ator, idx, relatorio) {
       details: { ...(sis.details ?? {}), alignment: alinhamento },
       variable_construction_selections: escolhas,
     },
-    flags: { ...(ator.flags ?? {}), spacedragon: { convertidoDe: `${especieOrig} / ${classeOrig}` } },
+    flags: {
+      ...(ator.flags ?? {}),
+      // A ficha do módulo NÃO é padrão — num mundo misto isso trocaria a ficha
+      // de todo mundo. Quem foi convertido já vem com ela marcada, e chega do
+      // outro lado com os rótulos, a escala e os painéis do Space Dragon.
+      core: { ...(ator.flags?.core ?? {}), sheetClass: "spacedragon.SDCharacterSheet" },
+      spacedragon: { convertidoDe: `${especieOrig} / ${classeOrig}` },
+    },
   };
 }
 
