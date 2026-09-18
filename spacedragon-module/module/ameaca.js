@@ -183,7 +183,14 @@ export function registrarFichaAmeaca() {
     // Não é padrão: um mundo com o Star Dragon tem monstros de Old Dragon 2.
     makeDefault: false,
   });
-  Hooks.on("renderSDMonsterSheet", rotular);
+  // O gancho é o da classe CONCRETA do sistema, e não o da subclasse: no v13,
+  // ficha appv1 garantidamente dispara `renderOD2MonsterSheet` (é o mesmo que
+  // a ficha de personagem usa, `renderOD2CharacterSheet`), e o nome montado a
+  // partir de uma subclasse de módulo não é garantido. Sem os rótulos, a
+  // ficha nova ficava idêntica à do sistema na tela.
+  Hooks.on("renderOD2MonsterSheet", (app, el) => {
+    if (app instanceof SDMonsterSheet) rotular(app, el);
+  });
   Registrada = SDMonsterSheet;
   console.log(`${ID} | ficha de ameaça Space Dragon registrada`);
   return SDMonsterSheet;

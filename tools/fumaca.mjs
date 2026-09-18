@@ -986,3 +986,38 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   }
   console.log("  ✔ ameaça: ficha registrada sem virar padrão; JP 1d20 ≥ JP sem modificador, Moral d% ≤ %, 0% foge e 100% fica");
 }
+
+// ── Os rótulos da Ficha de Ameaça saem pelo gancho do SISTEMA ──────────────
+// No v13, a ficha appv1 garantidamente dispara render + o nome da classe
+// concreta do sistema (renderOD2MonsterSheet); o da subclasse do módulo não
+// é garantido, e sem rótulos a ficha nova parecia a do sistema.
+{
+  const probRot = [];
+  const reg = fichasRegistradas.find((f) => f.cfg?.label === "Ficha de Ameaça Space Dragon");
+  const gancho = ganchos.find((g) => g.nome === "renderOD2MonsterSheet");
+  if (!gancho) probRot.push("ninguém se registrou em renderOD2MonsterSheet");
+  else {
+    const html = `<div class="stats">
+      <div class="stat"><label class="font-bold">CA</label><input name="system.ca" value="14"></div>
+      <div class="stat"><a class="font-bold jp-roll"><i class="fa-thin fa-dice-d20"></i>JP</a></div>
+      <div class="stat"><a class="font-bold mo-roll"><i class="fa-thin fa-dice-d6"></i>MO</a></div>
+    </div>`;
+    const raizAm = monta(html);
+    const app = new reg.cls();
+    app.actor = { type: "monster", name: "Aranha" };
+    gancho.fn(app, raizAm);
+    const rotulo = raizAm.querySelector(".stats .stat label")?.textContent.trim();
+    const moral = raizAm.querySelector(".mo-roll")?.textContent.trim();
+    if (rotulo !== "CP") probRot.push(`o rótulo da defesa ficou "${rotulo}", esperava CP`);
+    if (moral !== "Moral") probRot.push(`o botão de Moral ficou "${moral}"`);
+    // A ficha do sistema, sem o módulo, não é tocada.
+    const raizOD2 = monta(html);
+    gancho.fn({ actor: { type: "monster" } }, raizOD2);
+    if (raizOD2.querySelector(".stats .stat label")?.textContent.trim() !== "CA") probRot.push("a ficha de monstro do sistema foi relabelada");
+  }
+  if (probRot.length) {
+    for (const x of probRot) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ ameaça: os rótulos saem pelo gancho da ficha do sistema, e só na Ficha de Ameaça");
+}
