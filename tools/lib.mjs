@@ -1027,7 +1027,10 @@ export function monsterDoc(c, folderId, seedPrefix, sort) {
     items: [],
     effects: [],
     folder: folderId,
-    flags: {},
+    // As criaturas deste módulo já abrem na Ficha de Ameaça Space Dragon, que
+    // rola a JP e a Moral pelo livro (module/ameaca.js). A ficha não é padrão
+    // do mundo — um monstro de Old Dragon 2 ao lado continua na do sistema.
+    flags: { core: { sheetClass: "spacedragon.SDMonsterSheet" } },
     _stats: stats(),
     sort,
     ownership: { default: 0 },

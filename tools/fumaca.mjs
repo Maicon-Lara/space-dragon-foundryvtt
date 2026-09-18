@@ -71,13 +71,20 @@ function od2(v) {
 class OD2CharacterSheet {
   static get defaultOptions() { return { classes: ["olddragon2e", "sheet", "character"] }; }
 }
+// A ficha de monstro do sistema, que a Ficha de Ameaça estende.
+class OD2MonsterSheet {
+  static get defaultOptions() { return { classes: ["olddragon2e", "sheet", "monster"] }; }
+}
 const fichasRegistradas = [];
 globalThis.CONFIG = {
   olddragon2e: { levels: niveisIniciais },
   sounds: {},
   Actor: {
     dataModels: { character: FichaOD2 },
-    sheetClasses: { character: { "olddragon2e.OD2CharacterSheet": { cls: OD2CharacterSheet } } },
+    sheetClasses: {
+      character: { "olddragon2e.OD2CharacterSheet": { cls: OD2CharacterSheet } },
+      monster: { "olddragon2e.OD2MonsterSheet": { cls: OD2MonsterSheet } },
+    },
   },
 };
 globalThis.foundry = {
@@ -936,4 +943,46 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
     process.exit(1);
   }
   console.log(`  ✔ JP: 1d20 + mod ≥ JP da classe (JPR ${cosmo.jpd_total} no d20 com JP 16 e DES ${modDes >= 0 ? "+" : ""}${modDes}), e o OD2 ao lado fica com a conta dele`);
+}
+
+// ── A Ficha de Ameaça: JP e Moral pela regra do livro ──────────────────────
+//
+// O bestiário grava "15 (+2 CONTRA VENENO)" e "70%", e o sistema fazia
+// Number(...) disso: NaN, e toda JP e Moral saía falha. Pelo livro (11.6), a
+// JP do alienígena é vencida com 1d20 ≥ JP, sem modificador; a Moral é d% ≤
+// Moral. O caso é a Aranha Gigante.
+{
+  const { rolarJPAmeaca, rolarMoral, lerJP } = await import("../spacedragon-module/module/ameaca.js");
+  const probAm = [];
+  const reg = fichasRegistradas.find((f) => f.cfg?.label === "Ficha de Ameaça Space Dragon");
+  if (!reg) probAm.push("a Ficha de Ameaça não foi registrada");
+  else {
+    if (reg.cfg.types?.join() !== "monster") probAm.push(`a Ficha de Ameaça devia ser para monster, é para ${reg.cfg.types}`);
+    if (reg.cfg.makeDefault) probAm.push("a Ficha de Ameaça não pode virar padrão do mundo");
+  }
+  const lido = lerJP("15 (+2 CONTRA VENENO)");
+  if (lido.valor !== 15 || lido.nota !== "+2 CONTRA VENENO") probAm.push(`lerJP leu ${JSON.stringify(lido)}`);
+
+  const RollOriginal = globalThis.Roll;
+  let dado = 0;
+  globalThis.Roll = class {
+    constructor(f) { this.formula = f; }
+    async evaluate() { const m = Number(this.formula.replace(/^1d\d+\s*\+?\s*/, "")) || 0; this.total = dado + m; return this; }
+  };
+  globalThis.CONFIG.sounds = { dice: "" };
+  const aranha = { name: "Aranha Gigante", system: { jp: "15 (+2 CONTRA VENENO)", mo: "70%" } };
+  dado = 15; if (!(await rolarJPAmeaca(aranha)).passou) probAm.push("JP: 15 no d20 contra 15 devia passar (igual ou maior)");
+  dado = 14; if ((await rolarJPAmeaca(aranha)).passou) probAm.push("JP: 14 contra 15 devia falhar");
+  dado = 13; if (!(await rolarJPAmeaca(aranha, 2)).passou) probAm.push("JP: 13 + 2 (o veneno) contra 15 devia passar");
+  dado = 70; if (!(await rolarMoral(aranha)).fica) probAm.push("Moral: 70 contra 70% devia ficar");
+  dado = 71; if ((await rolarMoral(aranha)).fica) probAm.push("Moral: 71 contra 70% devia fugir");
+  dado = 1; if ((await rolarMoral({ name: "X", system: { mo: "0%" } })).fica) probAm.push("Moral 0% sempre foge");
+  dado = 100; if (!(await rolarMoral({ name: "X", system: { mo: "100%" } })).fica) probAm.push("Moral 100% nunca desiste");
+  globalThis.Roll = RollOriginal;
+
+  if (probAm.length) {
+    for (const x of probAm) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ ameaça: ficha registrada sem virar padrão; JP 1d20 ≥ JP sem modificador, Moral d% ≤ %, 0% foge e 100% fica");
 }

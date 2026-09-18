@@ -44,7 +44,11 @@
   "items": [],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
-  "flags": {},
+  "flags": {
+    "core": {
+      "sheetClass": "spacedragon.SDMonsterSheet"
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

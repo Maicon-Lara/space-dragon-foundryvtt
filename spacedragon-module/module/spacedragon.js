@@ -34,6 +34,7 @@ import { registrarFicha } from "./ficha.js";
 import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
 import { aplicarJP, rolarJP } from "./jp.js";
+import { registrarFichaAmeaca, rolarJPAmeaca, rolarMoral } from "./ameaca.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -62,6 +63,7 @@ Hooks.once("init", () => {
   // No `init`, e não no `ready`: o Foundry monta o registro de fichas antes do
   // ready, e o sistema — que carrega antes do módulo — já pôs a dele lá.
   registrarFicha();
+  registrarFichaAmeaca();
 
   // Uma OPÇÃO, e não um fato consumado: trocar a tabela de modificadores muda
   // ataque, proteção, PV e jogadas de proteção de todo personagem do mundo.
@@ -110,6 +112,7 @@ Hooks.once("ready", () => {
     teste: abrirTeste, rolar, preparar, TESTES,
     pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
     compararEscalas, diagnostico, danosMortais, bonusDeCP, jp: rolarJP,
+    jpAmeaca: rolarJPAmeaca, moral: rolarMoral,
     ordem: abrirOrdem,
     alcance: orcamento, gastarAlcance: gastar, descansar,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),
