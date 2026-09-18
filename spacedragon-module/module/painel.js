@@ -39,7 +39,7 @@
 import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { CAMPO_NA_FICHA, NOME_ATRIBUTO, SIGLA, TESTES } from "./dados.js";
 import { preparar, rolar } from "./testes.js";
-import { habilidadeDe } from "./chassi.js";
+import { habilidadeDe, progressaoDe } from "./chassi.js";
 
 const ID = "spacedragon";
 const MARCA = "spacedragon-testes";
@@ -56,8 +56,8 @@ function valoresDe(ator) {
 const sinal = (n) => (n > 0 ? `+${n}` : `${n}`);
 const escapa = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 
-function linha(teste, nivel, valores) {
-  const { base, ajuste, alvo } = preparar(teste.chave, { nivel, valores });
+function linha(teste, nivel, valores, progressao = null) {
+  const { base, ajuste, alvo } = preparar(teste.chave, { nivel, valores, progressao });
   const d6 = teste.dado === "1d6";
 
   // De onde saiu o número. Sem isto a linha é caixa-preta, e ninguém percebe
@@ -87,11 +87,11 @@ function linha(teste, nivel, valores) {
   );
 }
 
-function bloco(lista, nivel, valores) {
+function bloco(lista, nivel, valores, progressao = null) {
   const temSegredo = lista.some((t) => t.segredo);
   return (
     `<div class="${MARCA}">` +
-    `<ul class="sd-testes">${lista.map((t) => linha(t, nivel, valores)).join("")}</ul>` +
+    `<ul class="sd-testes">${lista.map((t) => linha(t, nivel, valores, progressao)).join("")}</ul>` +
     `<p class="sd-rodape">1d100, passa com <strong>menor ou igual</strong>. ` +
     `Shift-clique soma modificador de situação.` +
     (temSegredo ? " 🤫 vai sussurrado ao Mestre, como o livro manda." : "") +
@@ -137,6 +137,8 @@ function injeta(app, elemento) {
 
     const nivel = Number(ator.system?.level) || 1;
     const valores = valoresDe(ator);
+    // A tabela da especialização, se o item de classe trouxer (ver chassi.js).
+    const progressao = progressaoDe(ator);
     let postos = 0;
 
     for (const li of raiz.querySelectorAll(".class-abilities .item")) {
@@ -149,7 +151,7 @@ function injeta(app, elemento) {
       const lista = TESTES.filter((t) => t.habilidade === doLivro);
       if (!lista.length) continue;
 
-      li.insertAdjacentHTML("beforeend", bloco(lista, nivel, valores));
+      li.insertAdjacentHTML("beforeend", bloco(lista, nivel, valores, progressao));
       postos += lista.length;
     }
 
@@ -164,7 +166,7 @@ function injeta(app, elemento) {
         if (ev.shiftKey) return game.spacedragon.teste(chave, ator);
         return rolar(
           chave,
-          { nivel: Number(ator.system?.level) || 1, valores: valoresDe(ator), situacional: 0 },
+          { nivel: Number(ator.system?.level) || 1, valores: valoresDe(ator), situacional: 0, progressao: progressaoDe(ator) },
           { ator, publico: !teste?.segredo }
         );
       });

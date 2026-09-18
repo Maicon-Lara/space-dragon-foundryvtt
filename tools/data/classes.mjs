@@ -16,9 +16,9 @@
 //
 // ── AS ESPECIALIZAÇÕES SEGUEM A AFILIAÇÃO ───────────────────────────────────
 //
-// Doze especializações, três por classe, uma para cada Afiliação — leal,
-// neutro, rebelde. É o padrão do livro, e é o que liga a Afiliação (Cap. 4.6) à
-// escolha mecânica.
+// Treze especializações, uma para cada Afiliação — leal, neutro, rebelde —, e o
+// Gatuno neutro escolhe entre duas: Sabotador ou Assassino. É o padrão do
+// livro, e é o que liga a Afiliação (Cap. 4.6) à escolha mecânica.
 
 import { CIENTISTA, COSMONAUTA, GATUNO, MENTALICO, TALENTOSGATUNO } from "./progressao.mjs";
 
@@ -65,11 +65,11 @@ const SO_NA_TABELA = (o) =>
   `<p class='nota-casa'><em>${o} não tem campo na ficha do Old Dragon 2 — ` +
   `consulte a tabela acima.</em></p>`;
 
-/** As três especializações de uma classe, uma por Afiliação. */
+/** As especializações de uma classe, por Afiliação. `neutro` pode ser uma lista. */
 const espec = (leal, neutro, rebelde) =>
   "<p><strong>Especializações</strong> — uma por Afiliação:</p><ul>" +
   `<li><strong>${leal}</strong> — leal</li>` +
-  `<li><strong>${neutro}</strong> — neutro</li>` +
+  `<li>${[].concat(neutro).map((n) => `<strong>${n}</strong>`).join(" ou ")} — neutro</li>` +
   `<li><strong>${rebelde}</strong> — rebelde</li></ul>` +
   "<p class='nota-casa'><em>A Afiliação do personagem decide qual delas ele pode seguir.</em></p>";
 
@@ -157,7 +157,7 @@ export const classes = [
               "Força — cada um pela sua coluna na tabela do atributo.</p>" },
       { nome: "Dano Crítico", level: 1,
         desc: "<p>O multiplicador de dano num acerto crítico: <strong>×2</strong> do 1º ao 5º nível, " +
-              "<strong>×3</strong> do 6º ao 11º, <strong>×4</strong> do 12º em diante.</p>" },
+              "<strong>×3</strong> do 6º ao 11º, <strong>×4</strong> do 12º ao 17º, <strong>×5</strong> do 18º em diante.</p>" },
     ],
   },
 
@@ -179,7 +179,7 @@ export const classes = [
       tabelaHTML("T3-4: Gatuno", GATUNO, R) +
       tabelaHTML("T3-5: Talentos de Gatuno", TALENTOSGATUNO, R) +
       SO_NA_TABELA("Os seis talentos") +
-      espec("Espião", "Sabotador", "Pirata Espacial"),
+      espec("Espião", ["Sabotador", "Assassino"], "Pirata Espacial"),
     habilidades: [
       { nome: "Talentos de Gatuno", level: 1,
         desc: "<p>Seis talentos, cada um com progressão própria em porcentagem: <strong>Sabotagem</strong>, " +

@@ -32,6 +32,8 @@
  * Dragon, que é Old Dragon 2 — não é confundida com o Cosmonauta.
  */
 
+import { PROGRESSAO } from "./dados.js";
+
 export const CHASSIS = ["Cientista", "Cosmonauta", "Gatuno", "Mentálico"];
 
 /** "Hipercientista — Mentálico" → "Mentálico"; a flag, se houver, manda. */
@@ -52,4 +54,38 @@ export function chassiDe(ator) {
 export function habilidadeDe(ator, nome) {
   const item = ator?.items?.find?.((i) => i.type === "class_ability" && i.name === nome);
   return item?.flags?.spacedragon?.habilidade ?? nome;
+}
+
+/**
+ * ── A PROGRESSÃO DA ESPECIALIZAÇÃO ──────────────────────────────────────────
+ *
+ * A especialização troca colunas da tabela da classe a partir do 5º nível: o
+ * Sabotador soma à Sabotagem a diferença entre Escalar e 100%, o Mercenário
+ * congela Pilotar e sobe o crítico, o Consular pula para a 4ª Grandeza. O
+ * motor lia sempre a tabela do livro, e a especialização só existia no texto
+ * — o jogador tinha de somar o bônus à mão, como modificador de situação.
+ *
+ * O item de classe pode trazer a própria tabela, nível a nível:
+ *
+ *     flags.spacedragon.progressao = {
+ *       fonte: "Sabotador",
+ *       colunas: { sabotagem: { "5": "51% / 1d8", … }, escalar: { … } },
+ *       ajuste:  { sabotagem: 2 },   // multiplica o ajuste POSITIVO do atributo
+ *     }
+ *
+ * As colunas têm os nomes das do livro (dados.js › PROGRESSAO). Nível que a
+ * especialização não declara — o 1º ao 4º — cai na tabela do livro.
+ */
+export function progressaoDe(ator) {
+  const cls = ator?.system?.class ?? ator?.items?.find?.((i) => i.type === "class");
+  const p = cls?.flags?.spacedragon?.progressao;
+  return p?.colunas ? p : null;
+}
+
+/** A célula da coluna no nível: a da especialização, se ela declarar; senão a do livro. */
+export function celulaDe(progressao, tabela, coluna, nivel) {
+  const propria = progressao?.colunas?.[coluna]?.[String(nivel)];
+  if (propria !== undefined && propria !== null && propria !== "") return propria;
+  const col = PROGRESSAO[tabela]?.[coluna] ?? [];
+  return col[Math.min(Math.max(nivel, 1), col.length) - 1];
 }

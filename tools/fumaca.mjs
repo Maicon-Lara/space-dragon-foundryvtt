@@ -1067,6 +1067,84 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   console.log("  ✔ ameaça: painel de atributos, RM, RD e nome científico, só na Ficha de Ameaça");
 }
 
+// ── A tabela da especialização entra na conta ──────────────────────────────
+// O Sabotador rolava a Sabotagem do Operativo: 35% no 5º, sem os +16% (100%
+// menos os 84% de Escalar). O item de classe traz a própria tabela em
+// flags.spacedragon.progressao, e o motor cai na do livro onde ela não fala.
+// Os números são os da tabela do cofre SW-SUP, que é a fonte do suplemento.
+{
+  const probEsp = [];
+  const { preparar: prep } = await import("../spacedragon-module/module/testes.js");
+  const { progressaoDe } = await import("../spacedragon-module/module/chassi.js");
+  const vit = await import("../spacedragon-module/module/vitalidade.js");
+  const { COLUNA_DERIVADA: CD } = await import("../spacedragon-module/module/dados.js");
+  const comEsp = (chassi, progressao, extra = {}) => ({
+    type: "character",
+    system: { class: { name: "X", flags: { spacedragon: { chassi, progressao } } }, ...extra },
+    getFlag: () => 0,
+  });
+  const sabotador = { fonte: "Sabotador", colunas: { sabotagem: { "5": "51% / 1d8", "10": "71% / 1d6" }, furtar: { "10": "40%" } } };
+  if (progressaoDe(comEsp("Gatuno", sabotador))?.fonte !== "Sabotador") probEsp.push("progressaoDe não leu a flag do item de classe");
+
+  const v10 = { ciencia: 10, destreza: 10 };
+  const s5 = prep("sabotagem", { nivel: 5, valores: v10, progressao: sabotador });
+  if (s5.alvo !== 51) probEsp.push(`Sabotador 5º: Sabotagem ${s5.alvo}%, esperava 51% (35% + 16%)`);
+  if (!/Sabotador/.test(s5.base.texto)) probEsp.push(`o cartão não diz de onde veio: "${s5.base.texto}"`);
+  if (prep("sabotagem", { nivel: 5, valores: v10 }).alvo !== 35) probEsp.push("sem especialização a Sabotagem do 5º devia ser 35%");
+  if (prep("sabotagem", { nivel: 3, valores: v10, progressao: sabotador }).alvo !== 25) probEsp.push("antes do 5º vale a tabela do livro (25% no 3º)");
+  if (prep("furtar", { nivel: 10, valores: v10, progressao: sabotador }).alvo !== 40) probEsp.push("Furtar do Sabotador devia estar congelado em 40% no 10º");
+  if (prep("escalar", { nivel: 10, valores: v10, progressao: sabotador }).alvo !== 89) probEsp.push("coluna que a especialização não declara devia vir do livro (Escalar 89% no 10º)");
+
+  // O Espião conta o Crédito Tecnológico dobrado — o bônus, não a penalidade.
+  const espiao = { fonte: "Espião", colunas: { sabotagem: { "5": "40% / 1d8" } }, ajuste: { sabotagem: 2 } };
+  const semEsp = prep("sabotagem", { nivel: 5, valores: { ciencia: 17 } });
+  const comE = prep("sabotagem", { nivel: 5, valores: { ciencia: 17 }, progressao: espiao });
+  if (comE.ajuste.valor !== semEsp.ajuste.valor * 2 || comE.alvo !== 40 + semEsp.ajuste.valor * 2) {
+    probEsp.push(`Espião com Ciência 17: alvo ${comE.alvo}, esperava 40 + 2×${semEsp.ajuste.valor}`);
+  }
+  const ruim = prep("sabotagem", { nivel: 5, valores: { ciencia: 3 } }).ajuste.valor;
+  if (ruim < 0 && prep("sabotagem", { nivel: 5, valores: { ciencia: 3 }, progressao: espiao }).ajuste.valor !== ruim) {
+    probEsp.push("a penalidade de Ciência baixa não pode dobrar");
+  }
+
+  // Consular: 17% e 4ª Grandeza já no 5º; o Mentálico teria 9% e 3ª.
+  const consular = { fonte: "Consular", colunas: { alcanceMental: { "5": "17%" }, grandezaMental: { "5": "4ª" } } };
+  const oc = mental.orcamento(comEsp("Mentálico", consular, { level: 5, sabedoria: 10 }));
+  if (oc.daClasse !== 17 || oc.limite !== 4) probEsp.push(`Consular 5º: ${oc.daClasse}% e ${oc.limite}ª, esperava 17% e 4ª`);
+  // Um traço na coluna da especialização não zera o limite.
+  const sentinela = { fonte: "Sentinela", colunas: { grandezaMental: { "19": "10ª", "20": "—" } } };
+  if (mental.orcamento(comEsp("Mentálico", sentinela, { level: 20, sabedoria: 10 })).limite !== 10) probEsp.push("o traço da Sentinela no 20º zerou a Grandeza");
+
+  // Mercenário: um multiplicador acima já no 5º. Emissário: congela no ×2.
+  const merc = { fonte: "Mercenário", colunas: { danoCritico: { "5": "×3" } } };
+  const emis = { fonte: "Emissário", colunas: { danoCritico: { "12": "×2" } } };
+  if (vit.multiplicadorCritico(comEsp("Cosmonauta", merc, { level: 5 })) !== 3) probEsp.push("Mercenário 5º devia critar ×3");
+  if (vit.multiplicadorCritico(comEsp("Cosmonauta", emis, { level: 12 })) !== 2) probEsp.push("Emissário 12º devia ficar no ×2");
+  if (vit.multiplicadorCritico(comEsp("Cosmonauta", null, { level: 12 })) !== 4) probEsp.push("Cosmonauta 12º sem especialização devia critar ×4");
+
+  // PV depois do 9º: o fixo da tabela MAIS a Constituição, no mínimo 1 (Cap. 5).
+  const pv = async (chassi, progressao, nivel, con) => {
+    const ator = comEsp(chassi, progressao, { level: nivel, constituicao: con, hp: { max: 50, value: 50 } });
+    ator.system.class.system = { hp: 8 };
+    ator.update = async () => {};
+    return (await vit.rolarPV(ator)).ganho;
+  };
+  const mod16 = Number(CD.constituicao[8]);
+  const g12 = await pv("Cientista", null, 12, 16);
+  if (g12 !== 2 + mod16) probEsp.push(`Cientista 12º com Constituição 16: +${g12} PV, esperava ${2 + mod16} (+2 da tabela ${mod16 >= 0 ? "+" : ""}${mod16})`);
+  const mod4 = Number(CD.constituicao[2]);
+  if (2 + mod4 < 1 && (await pv("Cientista", null, 12, 4)) !== 1) probEsp.push("Constituição ruim depois do 9º devia dar o mínimo de 1 PV");
+  if ((await pv("Mentálico", null, 17, 16)) !== 0) probEsp.push("o Mentálico no 17º não ganha PV nenhum");
+  const artifice = { fonte: "Artífice", colunas: { dv: { "17": "+2 PV" } } };
+  if ((await pv("Mentálico", artifice, 17, 10)) !== 2) probEsp.push("o Artífice volta a ganhar +2 PV no 17º");
+
+  if (probEsp.length) {
+    for (const x of probEsp) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ especialização: Sabotador 51% no 5º, Espião com CT dobrado, Consular 17%/4ª, Mercenário ×3, PV fixo com Constituição");
+}
+
 // ── A opção "Fichas Space Dragon como padrão" ──────────────────────────────
 // Ligada (o padrão), o ator SEM ficha marcada é do Space Dragon — é a mesa
 // de Space Dragon, onde ninguém marca ator por ator. Com a ficha do sistema

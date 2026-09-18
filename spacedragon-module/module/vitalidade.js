@@ -27,7 +27,7 @@
  */
 
 import { PROGRESSAO, FAIXAS, CAMPO_NA_FICHA, COLUNA_DERIVADA } from "./dados.js";
-import { chassiDe } from "./chassi.js";
+import { chassiDe, celulaDe, progressaoDe } from "./chassi.js";
 
 const ID = "spacedragon";
 
@@ -56,9 +56,11 @@ const CHAVE = { Cientista: "CIENTISTA", Cosmonauta: "COSMONAUTA", Gatuno: "GATUN
  * passa a dar um número fixo. O Mentálico chega a "–", que é nada.
  */
 function celulaDV(ator, nivel) {
-  const col = PROGRESSAO[CHAVE[classeBase(ator)]]?.dv;
-  if (!col) return null;
-  return col[Math.min(Math.max(nivel, 1), col.length) - 1] ?? null;
+  const tabela = CHAVE[classeBase(ator)];
+  if (!PROGRESSAO[tabela]?.dv) return null;
+  // O Artífice volta a ganhar +2 PV do 17º em diante, onde o Mentálico não
+  // ganha nada: a especialização, quando traz a tabela, manda.
+  return celulaDe(progressaoDe(ator), tabela, "dv", nivel) ?? null;
 }
 
 /** O dado de vida da classe, de `class.system.hp`. */
@@ -86,9 +88,11 @@ export async function rolarPV(ator = null, { nivel = null } = {}) {
 
   const fixo = String(cel ?? "").match(/\+(\d+)\s*PV/i);
   if (fixo) {
-    // A classe parou de dar dados: o número da tabela é o ganho, e o livro não
-    // manda somar Constituição de novo aqui.
-    ganho = Number(fixo[1]);
+    // A classe parou de dar dados: o número da tabela é o ganho do nível, e a
+    // Constituição continua valendo. Cap. 5: "Seu modificador de Constituição
+    // também influi na quantidade de pontos de vida ganhos, e a regra de 1 PV
+    // no mínimo permanece." Esta linha ignorava o modificador até a 1.12.0.
+    ganho = Number(fixo[1]) + con;
     como = `${cel} da tabela, no ${n}º nível`;
   } else if (!cel || cel === "–" || cel === "-") {
     ganho = 0;
@@ -102,9 +106,13 @@ export async function rolarPV(ator = null, { nivel = null } = {}) {
     como = `1d${dado} deu ${roll.total}`;
   }
 
+  // A Constituição entra em todo ganho, rolado ou fixo; só não entra quando a
+  // tabela não dá PV nenhum (o Mentálico do 17º em diante).
+  const usouCon = !!cel && cel !== "–" && cel !== "-";
+
   // O livro garante o mínimo de 1 PV por nível a partir do 2º: uma
   // Constituição ruim não pode tirar vida de quem subiu de nível.
-  if (n > 1 && ganho < 1 && !fixo && cel) {
+  if (n > 1 && ganho < 1 && usouCon) {
     como += ` — elevado ao mínimo de 1`;
     ganho = 1;
   }
@@ -120,7 +128,7 @@ export async function rolarPV(ator = null, { nivel = null } = {}) {
       `<div class="sd-teste">` +
       `<p class="result"><strong class="success">+${ganho} PV</strong> — total ${depois}</p>` +
       `<ul class="sd-parcelas"><li>${como}</li>` +
-      (fixo || !cel ? "" : `<li>${sinal} <em>ajuste de Constituição (T1-3)</em></li>`) +
+      (!usouCon ? "" : `<li>${sinal} <em>ajuste de Constituição (T1-3)</em></li>`) +
       `</ul></div>`,
     speaker: ChatMessage.getSpeaker({ actor: ator }),
     ...(roll ? { rolls: [roll], sound: CONFIG.sounds.dice } : {}),
@@ -133,9 +141,9 @@ export async function rolarPV(ator = null, { nivel = null } = {}) {
 export function multiplicadorCritico(ator, nivel = null) {
   if (classeBase(ator) !== "Cosmonauta") return null;
   const n = Number(nivel ?? ator.system?.level) || 1;
-  const col = PROGRESSAO.COSMONAUTA?.danoCritico;
-  if (!col) return null;
-  const cel = col[Math.min(Math.max(n, 1), col.length) - 1];
+  if (!PROGRESSAO.COSMONAUTA?.danoCritico) return null;
+  // O Mercenário sobe um multiplicador, o Emissário congela no ×2.
+  const cel = celulaDe(progressaoDe(ator), "COSMONAUTA", "danoCritico", n);
   return Number(String(cel ?? "").replace(/[^\d]/g, "")) || null;
 }
 

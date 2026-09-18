@@ -32,7 +32,7 @@ import {
   FAIXAS, CAMPO_NA_FICHA, NOME_ATRIBUTO, SIGLA,
   PROGRESSAO, ATRIBUTO, ROTULO_COLUNA, TESTES,
 } from "./dados.js";
-import { chassiDe } from "./chassi.js";
+import { chassiDe, celulaDe, progressaoDe } from "./chassi.js";
 
 // Reexportado de propósito: quem quer a regra importa daqui, não do arquivo
 // gerado. Sem esta linha, `import { TESTES } from "./testes.js"` é SyntaxError
@@ -121,12 +121,14 @@ function classeDe(ator) {
 
 // ── O cálculo ───────────────────────────────────────────────────────────────
 /** A parcela que vem da tabela: da progressão pelo nível, ou do atributo. */
-function baseDe(teste, { nivel, valores }) {
+function baseDe(teste, { nivel, valores, progressao = null }) {
   const f = teste.base;
   if (f.tabela) {
-    const col = PROGRESSAO[f.tabela]?.[f.coluna] ?? [];
-    const cel = col[Math.min(Math.max(nivel, 1), col.length) - 1];
-    return { valor: numero(cel), texto: `nível ${nivel}`, cru: cel };
+    // A especialização, quando declara a coluna, manda (ver chassi.js).
+    const cel = celulaDe(progressao, f.tabela, f.coluna, nivel);
+    const daEspec = cel !== undefined && progressao?.colunas?.[f.coluna]?.[String(nivel)] === cel;
+    const texto = daEspec ? `nível ${nivel}, ${progressao.fonte ?? "especialização"}` : `nível ${nivel}`;
+    return { valor: numero(cel), texto, cru: cel };
   }
   const v = valores[f.atributo];
   const cel = ATRIBUTO[f.atributo]?.[f.coluna]?.[faixaDe(v)];
@@ -134,25 +136,34 @@ function baseDe(teste, { nivel, valores }) {
 }
 
 /** A parcela do atributo que ajusta a porcentagem da tabela. */
-function ajusteDe(teste, { valores }) {
+function ajusteDe(teste, { valores, progressao = null }) {
   if (!teste.ajuste) return null;
   const { atributo, coluna } = teste.ajuste;
   const v = valores[atributo];
   if (!Number.isFinite(v)) return null;
-  return {
-    valor: numero(ATRIBUTO[atributo]?.[coluna]?.[faixaDe(v)]),
-    atributo,
-    valorAtributo: v,
-    rotulo: ROTULO_COLUNA[`${atributo}.${coluna}`] ?? coluna,
-  };
+  let valor = numero(ATRIBUTO[atributo]?.[coluna]?.[faixaDe(v)]);
+  let rotulo = ROTULO_COLUNA[`${atributo}.${coluna}`] ?? coluna;
+  // O Espião conta o Crédito Tecnológico dobrado na Sabotagem, "se houver":
+  // multiplica o bônus, nunca a penalidade.
+  const mult = Number(progressao?.ajuste?.[teste.base?.coluna]) || 1;
+  if (mult !== 1 && valor > 0) {
+    valor *= mult;
+    rotulo += ` ×${mult} (${progressao.fonte ?? "especialização"})`;
+  }
+  return { valor, atributo, valorAtributo: v, rotulo };
 }
 
-/** Tudo o que o teste precisa saber antes de rolar. */
-export function preparar(chave, { nivel, valores, situacional = 0 }) {
+/**
+ * Tudo o que o teste precisa saber antes de rolar.
+ *
+ * `progressao` é a tabela da especialização do ator (chassi.js ›
+ * progressaoDe); sem ela vale a tabela do livro, como sempre.
+ */
+export function preparar(chave, { nivel, valores, situacional = 0, progressao = null }) {
   const teste = porChave(chave);
   if (!teste) throw new Error(`Teste desconhecido: ${chave}`);
-  const base = baseDe(teste, { nivel, valores });
-  const ajuste = ajusteDe(teste, { valores });
+  const base = baseDe(teste, { nivel, valores, progressao });
+  const ajuste = ajusteDe(teste, { valores, progressao });
   const alvo = base.valor + (ajuste?.valor ?? 0) + situacional;
   return { teste, base, ajuste, situacional, alvo };
 }
@@ -299,6 +310,13 @@ export async function abrirTeste(chave = null, alvo = null) {
            `<input type="number" name="attr_${a}" value="${v}" min="1" max="29"></div>`;
   }).join("");
 
+  // A tabela da especialização entra sozinha (ver chassi.js). Sem ela, o
+  // bônus de uma especialização que o módulo não conhece vai na situação.
+  const prog = progressaoDe(ator);
+  const espec = prog
+    ? `<p class="sd-explica">Usa a tabela de <strong>${prog.fonte ?? "especialização"}</strong> a partir do 5º nível.</p>`
+    : `<p class="sd-explica">Bônus de especialização que não esteja no item de classe entra como modificador de situação.</p>`;
+
   const quem = ator
     ? `Lido da ficha de <strong>${ator.name}</strong>`
     : "Nenhum token selecionado";
@@ -311,8 +329,7 @@ export async function abrirTeste(chave = null, alvo = null) {
   <div class="form-group"><label>Nível</label><input type="number" name="nivel" value="${nivel}" min="1" max="20"></div>
   ${campos}
   <div class="form-group"><label>Modificador de situação</label><input type="number" name="situacional" value="0"></div>
-  <p class="sd-explica">Bônus de especialização — sabotador, espião, assassino — entram como
-  modificador de situação. O módulo não os aplica sozinho.</p>
+${espec}
 </form>`;
 
   const r = await pergunta({
@@ -338,7 +355,7 @@ export async function abrirTeste(chave = null, alvo = null) {
 
   return rolar(
     escolhido.chave,
-    { nivel: Number(r.nivel) || 1, valores, situacional: Number(r.situacional) || 0 },
+    { nivel: Number(r.nivel) || 1, valores, situacional: Number(r.situacional) || 0, progressao: progressaoDe(ator) },
     { ator, publico: !escolhido.segredo }
   );
 }

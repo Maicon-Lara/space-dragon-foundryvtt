@@ -1,4 +1,5 @@
-// As 12 especializações do Capítulo 3 — três por classe, uma por Afiliação.
+// As 13 especializações do Capítulo 3 — uma por Afiliação, e o Gatuno neutro
+// escolhe entre duas: Sabotador ou Assassino.
 //
 // ── COMO ELAS FUNCIONAM, E POR QUE NÃO SÃO CLASSES IRMÃS ────────────────────
 //
@@ -35,15 +36,15 @@ export const especializacoes = [
     nome: "Inventor",
     classe: "Cientista",
     afiliacao: "neutro",
-    n5: "o personagem que seguir a carreira de inventor tem o acesso ao 4° nível tecnológico no 5° nível na classe, e progride a cada dois níveis subsequentes, atingindo o",
-    n10: "10° nível tecnológico no 17° nível de cientista. Seu desconto tecnológico, entretanto, passa a ser adicionado ao custo de qualquer aparato ou feito científico. No 10° nível esse prejuízo tecnológico dobra, mas o inventor é capaz de combinar até três aparatos diferentes em um, com uma rolagem bemsucedida de operar máquinas. As regras para combinação de aparatos serão tratadas no capítulo 8. No",
+    n5: "o personagem que seguir a carreira de inventor tem o acesso ao 4° nível tecnológico no 5° nível na classe, e progride a cada dois níveis subsequentes, atingindo o 10° nível tecnológico no 17° nível de cientista. Seu desconto tecnológico, entretanto, passa a ser adicionado ao custo de qualquer aparato ou feito científico. No",
+    n10: "10° nível esse prejuízo tecnológico dobra, mas o inventor é capaz de combinar até três aparatos diferentes em um, com uma rolagem bem-sucedida de operar máquinas. As regras para combinação de aparatos serão tratadas no capítulo 8. No",
     n20: "20° nível seu prejuízo tecnológico faz com que qualquer aparato ou feito custe duas vezes mais, mas ele se torna capaz de criar qualquer tipo de máquina e realizar todo tipo de experiência. As regras para novos aparatos e feitos devem ser discutidas com o mestre de jogo.",
   },
   {
     nome: "Niilógico",
     classe: "Cientista",
     afiliacao: "rebelde",
-    n5: "o cientista que seguir esta especialização começa a questionar a busca científica pelo conhecimento a partir do 5° nível, quando passa a ser capaz de realizar sabotagens como um gatuno com um terço de seus níveis de cientista. 39 No",
+    n5: "o cientista que seguir esta especialização começa a questionar a busca científica pelo conhecimento a partir do 5° nível, quando passa a ser capaz de realizar sabotagens como um gatuno com um terço de seus níveis de cientista. No",
     n10: "10° nível o niilógico convence-se de que o conhecimento verdadeiro jamais será obtido pelos humanos, e passa a repudiar os avanços tecnológicos convencionais. Ele para de progredir em sua capacidade de operar máquinas e seu desconto tecnológico é ignorado, mas pode optar por reprogramar robôs ao invés de desativá-los. Um “D” na tabela T3-2 significa que o robô é automaticamente reprogramado para obedecer ao cientista indefinidamente, e um “A” simboliza que o robô será controlável por 24 horas. Os demais robôs não são afetados. No",
     n20: "20° nível os niilógicos reconhecem que a sabedoria absoluta está diluída nas mentes de todos os seres do universo, inclusive daqueles que já morreram. Eles tornam-se capazes de manifestar poderes mentais de 1ª grandeza, com alcance mental diário igual ao bônus do atributo Intelecto. Caso o valor do atributo do personagem não confira bônus, seu alcance mental diário é de 1%.",
   },
@@ -68,7 +69,7 @@ export const especializacoes = [
     classe: "Cosmonauta",
     afiliacao: "rebelde",
     n5: "ao atingir o 5° nível o caçador de recompensas passa a ser capaz de utilizar aparatos tecnológicos ofensivos e operar máquinas com uma rolagem bem-sucedida usando a porcentagem de desarmar e subjugar, modificado pela porcentagem de aptidão tecnológica do atributo Ciência. O personagem para de progredir em desarmar e subjugar com esses fins, e a nova progressão passa a aumentar para a nova aplicação. A partir do",
-    n10: "10° nível o caçador de recompensas pode optar por tentar realizar um ataque extra em seu turno com uma rolagem de desarmar, usando a porcentagem do 5° nível. Essa rolagem deve ser feita logo após o primeiro ataque, e um sucesso indica que o personagem poderá realizar mais dois ataques com a BA do segundo ataque conforme a tabela T3-3, mas uma 44 falha impede o caçador de recompensas de realizar qualquer outra ação naquele turno. O ataque extra pode ser substituído por uma tentativa de desarme ou submissão de acordo com as regras dessas ações. No",
+    n10: "10° nível o caçador de recompensas pode optar por tentar realizar um ataque extra em seu turno com uma rolagem de desarmar, usando a porcentagem do 5° nível. Essa rolagem deve ser feita logo após o primeiro ataque, e um sucesso indica que o personagem poderá realizar mais dois ataques com a BA do segundo ataque conforme a tabela T3-3, mas uma falha impede o caçador de recompensas de realizar qualquer outra ação naquele turno. O ataque extra pode ser substituído por uma tentativa de desarme ou submissão de acordo com as regras dessas ações. No",
     n20: "20° nível, o caçador de recompensas poderá usar qualquer aparato tecnológico como um cientista do mesmo nível, e sempre poderá realizar 3 ataques em seu turno, com o ataque extra tendo a base de ataque do segundo e podendo ser substituído por uma tentativa de desarme ou submissão normalmente.",
   },
   {
@@ -76,7 +77,7 @@ export const especializacoes = [
     classe: "Gatuno",
     afiliacao: "leal",
     n5: "um gatuno que seja leal a alguma organização ou governo pode tornar-se um espião a partir do 5° nível. Seu talento de sabotagem passa a ter uma porcentagem igual e a progredir de forma idêntica ao de furtividade. Além disso, o bônus por aptidão tecnológica do atributo Ciência é dobrado, se houver. O espião também pode usar a progressão de seu talento de furtar para se fazer passar por outra pessoa com uma rolagem bem-sucedida, aplicando o ajuste de reação do seu atributo Comunicação. A partir do",
-    n10: "10° nível o espião pode usar sua porcentagem de escalar como probabilidade de possuir alguma informação relevante ao que estiver investigando, seja através de contatos ou registros. Também passa a poder utilizar aparatos tecnológicos defensivos como um cientista. 49 No",
+    n10: "10° nível o espião pode usar sua porcentagem de escalar como probabilidade de possuir alguma informação relevante ao que estiver investigando, seja através de contatos ou registros. Também passa a poder utilizar aparatos tecnológicos defensivos como um cientista. No",
     n20: "20° nível o espião atinge praticamente a perfeição, com seus talentos de furtividade, sabotagem e furtar igualando sua porcentagem de 99% de escalar superfícies.",
   },
   {
@@ -85,7 +86,18 @@ export const especializacoes = [
     afiliacao: "neutro",
     n5: "sabotadores começam a especializar-se no 5° nível, quando passam a ser capazes de localizar e sabotar máquinas com mais eficiência, mas param de progredir em sua capacidade de furtar e ataque furtivo. Esse bônus de eficiência é igual à diferença entre sua capacidade de escalar superfícies e 100%. Por exemplo, um sabotador que atingiu o 5° nível teria um bônus de +16% em sua probabilidade de sabotagem, visto que sua probabilidade de escalar superfícies nesse nível é de 84%. Esse bônus não é cumulativo, e deve ser somado à probabilidade de sabotagem a cada novo nível, resultando em uma nova porcentagem. Ao atingir o",
     n10: "10° nível os sabotadores param de progredir em qualquer talento exceto o de sabotagem, mas são capazes de criar armadilhas utilizando máquinas sabotadas. A dificuldade para desarmar essa armadilha será inversamente proporcional à porcentagem de sabotar máquinas do criador de acordo com seu nível. Um sabotador de 10° nível, portanto, pode criar uma armadilha com apenas 27% de chance de desarme, visto que sua probabilidade de sabotar máquinas é de 73%, contando seu bônus de especialização, mas sem considerar qualquer bônus de atributo. Detalhes do funcionamento da armadilha devem ser discutidos com o mestre de jogo. No",
-    n20: "20° nível o sabotador é capaz de sabotar máquinas com 99% de chance e criar armadilhas com apenas 1% de probabilidade de desarme. Assassino (neutro): gatunos neutros podem passar a trabalhar cometendo assassínios por encomenda a partir do 5° nível. Eles param de progredir nos talentos de escalar e sabotagem, mas seu ataque furtivo recebe um bônus de 1 ponto, tornando-se x3 nesse nível, x4 ao atingir o 6° nível e assim por diante. No 10° nível ele para de progredir em furtar, mas a partir desse momento qualquer ataque bem-sucedido realizado pelo gatuno tem 20% de chance de ser considerado um ataque furtivo, exceto aqueles que já seguiriam essa regra. Ele também se torna capaz de desenvolver venenos, cujos efeitos devem ser discutidos com o mestre. No 20° nível todos os ataques realizados pelo assassino são considerados ataques furtivos, e um acerto crítico seu pede que o alvo realize uma JPF para não morrer, de acordo com a regra de dano massivo (ver capítulo 7).",
+    n20: "20° nível o sabotador é capaz de sabotar máquinas com 99% de chance e criar armadilhas com apenas 1% de probabilidade de desarme.",
+  },
+  {
+    // O Gatuno neutro escolhe entre DUAS: Sabotador ou Assassino ("Já um de
+    // afiliação neutra pode tornar-se um sabotador ou assassino", Cap. 3). Até
+    // a 1.12.0 o Assassino vinha colado no 20º nível do Sabotador.
+    nome: "Assassino",
+    classe: "Gatuno",
+    afiliacao: "neutro",
+    n5: "gatunos neutros podem passar a trabalhar cometendo assassínios por encomenda a partir do 5° nível. Eles param de progredir nos talentos de escalar e sabotagem, mas seu ataque furtivo recebe um bônus de 1 ponto, tornando-se x3 nesse nível, x4 ao atingir o 6° nível e assim por diante. No",
+    n10: "10° nível ele para de progredir em furtar, mas a partir desse momento qualquer ataque bem-sucedido realizado pelo gatuno tem 20% de chance de ser considerado um ataque furtivo, exceto aqueles que já seguiriam essa regra. Ele também se torna capaz de desenvolver venenos, cujos efeitos devem ser discutidos com o mestre. No",
+    n20: "20° nível todos os ataques realizados pelo assassino são considerados ataques furtivos, e um acerto crítico seu pede que o alvo realize uma JPF para não morrer, de acordo com a regra de dano massivo (ver capítulo 7).",
   },
   {
     nome: "Pirata Espacial",
@@ -107,7 +119,7 @@ export const especializacoes = [
     nome: "Radiestésico",
     classe: "Mentálico",
     afiliacao: "neutro",
-    n5: "os radiestésicos são mentálicos que canalizam a energia do ambiente ao seu redor para si, e a utilizam em poderes mentais. No 5° nível os radiestésicos podem canalizar o poder mental de todos os seres vivos inteligentes amigáveis ou neutros ao seu redor (até 20 metros) uma única vez ao dia. Esse poder mental extra corresponde à soma do alcance mental bônus do atributo Intelecto de cada um dos indivíduos. Esse bônus, entretanto, não pode ultrapassar a faixa de 1/4 do alcance mental do radiestésico e fica disponível ao personagem até que ele adormeça ou fique inconsciente. O personagem também não mais poderá adicionar seu próprio alcance mental bônus ao seu alcance diário, e sua JP para de progredir, já que a mente do personagem se mistura cada vez mais com o ambiente ao seu redor. 55 Atingindo o",
+    n5: "os radiestésicos são mentálicos que canalizam a energia do ambiente ao seu redor para si, e a utilizam em poderes mentais. No 5° nível os radiestésicos podem canalizar o poder mental de todos os seres vivos inteligentes amigáveis ou neutros ao seu redor (até 20 metros) uma única vez ao dia. Esse poder mental extra corresponde à soma do alcance mental bônus do atributo Intelecto de cada um dos indivíduos. Esse bônus, entretanto, não pode ultrapassar a faixa de 1/4 do alcance mental do radiestésico e fica disponível ao personagem até que ele adormeça ou fique inconsciente. O personagem também não mais poderá adicionar seu próprio alcance mental bônus ao seu alcance diário, e sua JP para de progredir, já que a mente do personagem se mistura cada vez mais com o ambiente ao seu redor. Atingindo o",
     n10: "10° nível o radiestésico pode passar a canalizar até 1/3 de seu alcance diário do ambiente ao seu redor a até 40 metros, mas sua base de ataque para de progredir. O personagem passa a ser um canalizador de energia, e quaisquer descargas elétricas ou similares têm 30% de chance de serem atraídas até ele, incluindo raios e disparos de armas. Ele também passa a interferir em ondas eletromagnéticas involuntariamente. No",
     n20: "20° nível o radiestésico poderá canalizar o poder mental de todos ao seu redor a até 100 metros, e com o limite do bônus subindo para metade de seu alcance mental diário, efetivamente ultrapassando os 200%. Nesse estágio, entretanto, o radiestésico tem 80% de chance de ser afetado por qualquer descarga de energia ocorrida no alcance de sua área de absorção. O personagem também interfere em ondas eletromagnéticas a seu bel-prazer.",
   },

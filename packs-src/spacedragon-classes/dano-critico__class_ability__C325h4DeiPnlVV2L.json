@@ -5,7 +5,7 @@
   "_id": "C325h4DeiPnlVV2L",
   "img": "systems/olddragon2e/assets/icons/melee.svg",
   "system": {
-    "description": "<p>O multiplicador de dano num acerto crítico: <strong>×2</strong> do 1º ao 5º nível, <strong>×3</strong> do 6º ao 11º, <strong>×4</strong> do 12º em diante.</p>",
+    "description": "<p>O multiplicador de dano num acerto crítico: <strong>×2</strong> do 1º ao 5º nível, <strong>×3</strong> do 6º ao 11º, <strong>×4</strong> do 12º ao 17º, <strong>×5</strong> do 18º em diante.</p>",
     "level": 1,
     "level3": "",
     "level6": "",

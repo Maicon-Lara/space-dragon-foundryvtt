@@ -1,0 +1,50 @@
+{
+  "folder": "h4n2O6LyayXZpi8m",
+  "name": "Assassino",
+  "type": "class_ability",
+  "_id": "HFl5OQcJgncGmIE1",
+  "img": "systems/olddragon2e/assets/icons/piercing.svg",
+  "system": {
+    "description": "<p><em>Especialização de Gatuno, para quem tem Afiliação <strong>neutro</strong>.</em></p><p>gatunos neutros podem passar a trabalhar cometendo assassínios por encomenda a partir do 5° nível. Eles param de progredir nos talentos de escalar e sabotagem, mas seu ataque furtivo recebe um bônus de 1 ponto, tornando-se x3 nesse nível, x4 ao atingir o 6° nível e assim por diante.</p><p data-degrau=\"10\">No 10° nível ele para de progredir em furtar, mas a partir desse momento qualquer ataque bem-sucedido realizado pelo gatuno tem 20% de chance de ser considerado um ataque furtivo, exceto aqueles que já seguiriam essa regra. Ele também se torna capaz de desenvolver venenos, cujos efeitos devem ser discutidos com o mestre.</p><p data-degrau=\"20\">No 20° nível todos os ataques realizados pelo assassino são considerados ataques furtivos, e um acerto crítico seu pede que o alvo realize uma JPF para não morrer, de acordo com a regra de dano massivo (ver capítulo 7).</p>",
+    "level": 5,
+    "level3": "",
+    "level6": "",
+    "level10": "",
+    "rogue_talents": [],
+    "daily_uses": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0
+    }
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 102,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!HFl5OQcJgncGmIE1"
+}

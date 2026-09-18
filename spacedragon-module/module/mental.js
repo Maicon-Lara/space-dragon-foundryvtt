@@ -30,7 +30,7 @@
 
 import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { PROGRESSAO, COLUNA, FAIXAS, CAMPO_NA_FICHA } from "./dados.js";
-import { chassiDe } from "./chassi.js";
+import { chassiDe, celulaDe, progressaoDe } from "./chassi.js";
 
 const ID = "spacedragon";
 const MARCA = "spacedragon-mental";
@@ -60,17 +60,19 @@ const numero = (s) => Number(String(s ?? "").replace("%", "").replace(/[^\d-]/g,
  */
 export function orcamento(ator) {
   const nivel = Math.min(Math.max(Number(ator.system?.level) || 1, 1), 20);
-  const daClasse = numero(PROGRESSAO.MENTALICO?.alcanceMental?.[nivel - 1]);
+  // O Consular sobe mais rápido, o Artífice mais devagar: a especialização,
+  // quando traz a tabela dela, manda (ver chassi.js).
+  const prog = progressaoDe(ator);
+  const daClasse = numero(celulaDe(prog, "MENTALICO", "alcanceMental", nivel));
 
   const intelecto = Number(ator.system?.[CAMPO_NA_FICHA.intelecto]) || 0;
   const doIntelecto = Number(COLUNA["intelecto.alcanceAdicional"]?.[faixaDe(intelecto)] ?? 0);
 
   // A coluna traz "1ª", "2ª" ou um traço nos níveis em que não sobe. O limite
   // é o ÚLTIMO valor preenchido até o nível atual — o traço não zera nada.
-  const col = PROGRESSAO.MENTALICO?.grandezaMental ?? [];
   let limite = 1;
   for (let i = 0; i < nivel; i += 1) {
-    const n = parseInt(col[i], 10);
+    const n = parseInt(celulaDe(prog, "MENTALICO", "grandezaMental", i + 1), 10);
     if (Number.isFinite(n)) limite = n;
   }
 
