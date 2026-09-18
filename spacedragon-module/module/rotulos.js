@@ -99,8 +99,13 @@ function troca(app, elemento) {
     for (const [campo, r] of Object.entries(JP)) {
       for (const link of raiz.querySelectorAll(`.jp-roll[data-jp="${campo}"]`)) {
         texto(link, r.curto);
-        link.setAttribute("title", `Rolar ${r.longo}`);
+        link.setAttribute("title", `Rolar ${r.longo}: 1d20 + modificador, igual ou maior que a JP da classe. Shift: modificador de situação`);
         link.dataset.jpLabel = r.curto;
+      }
+      // O número grande é o mínimo no d20 (JP da classe − modificador), e não
+      // a soma do sistema. Ver jp.js.
+      for (const total of raiz.querySelectorAll(`input[name="system.${campo}_total"]`)) {
+        total.setAttribute("title", `${r.curto}: tire este número ou mais no d20 — é a JP da classe menos o modificador`);
       }
     }
 

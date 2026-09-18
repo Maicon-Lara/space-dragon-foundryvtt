@@ -33,6 +33,7 @@ import { registrarTema, ligarTema } from "./tema.js";
 import { registrarFicha } from "./ficha.js";
 import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
+import { aplicarJP, rolarJP } from "./jp.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -90,6 +91,8 @@ Hooks.once("ready", () => {
   // O bônus de CP por nível (T4-1) é regra do livro, não opção: vale sempre
   // para quem usa a ficha do Space Dragon.
   aplicarCP();
+  // A JP também é regra do livro: 1d20 + mod ≥ JP, e não d20 ≤ JP + mod.
+  aplicarJP();
   ordenarHabilidades(true);
   ligarPainel();
   ligarCabecalho();
@@ -106,7 +109,7 @@ Hooks.once("ready", () => {
   game.spacedragon = {
     teste: abrirTeste, rolar, preparar, TESTES,
     pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
-    compararEscalas, diagnostico, danosMortais, bonusDeCP,
+    compararEscalas, diagnostico, danosMortais, bonusDeCP, jp: rolarJP,
     ordem: abrirOrdem,
     alcance: orcamento, gastarAlcance: gastar, descansar,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),

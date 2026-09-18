@@ -129,7 +129,7 @@ precisa <strong>igualar ou superar</strong> o valor da tabela da classe.</p>
 <p>Situações que não caem em nenhum dos três ficam a critério do Mestre, que
 define a rolagem e os modificadores.</p>
 
-${naFicha("o OD2 tem <strong>três</strong> valores de JP (JPD, JPC, JPS), um por atributo. O Space Dragon tem um só. Preencha os três campos com o mesmo número da tabela da classe.")}
+${naFicha("o sistema compara ao contrário — passa com d20 <strong>menor ou igual</strong> a JP + modificador. Com a <strong>Ficha Space Dragon</strong>, a rolagem segue o livro (1d20 + modificador, igual ou maior que a JP da classe), e o número grande de cada JP mostra o <strong>mínimo no d20</strong>: a JP da classe menos o modificador. Shift-clique pede o modificador de situação.")}
 `,
     },
     {

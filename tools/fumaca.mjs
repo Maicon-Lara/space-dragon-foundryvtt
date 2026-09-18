@@ -48,6 +48,12 @@ class FichaOD2 {
   get mod_carisma() { return od2(this.carisma); }
   // Como o sistema: 10 + armadura equipada + Destreza (sem escudo nem extra).
   get ac_total() { return 10 + (this._armadura ?? 0) + this.mod_destreza; }
+  // Como o sistema: JP da classe + bônus de espécie + modificador, e o
+  // sistema passa com d20 MENOR OU IGUAL a isso.
+  get jp() { return this._jp ?? 0; }
+  get jpd_total() { return this.jp + (this.jpd_race_bonus ?? 0) + this.mod_destreza; }
+  get jpc_total() { return this.jp + (this.jpc_race_bonus ?? 0) + this.mod_constituicao; }
+  get jps_total() { return this.jp + (this.jps_race_bonus ?? 0) + this.mod_sabedoria; }
 }
 function od2(v) {
   if (v < 2) return -4;
@@ -887,4 +893,47 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
     process.exit(1);
   }
   console.log(`  ✔ poder mental: conhecido sem rolar, desconhecido rola ${alvo}% e gasta mesmo falhando, aprende na 2ª, e o lançar do sistema segue o livro`);
+}
+
+// ── A JP pela regra do livro: 1d20 + mod ≥ JP da classe ────────────────────
+//
+// O sistema faz o contrário (d20 ≤ JP + mod). Cosmonauta de 1º, JP 16,
+// Destreza 13: pelo livro passa com 16 − mod ou mais no d20. O número grande
+// da ficha mostra esse mínimo; o personagem de OD2 ao lado continua com a
+// conta do sistema.
+{
+  const { rolarJP } = await import("../spacedragon-module/module/jp.js");
+  const probJP = [];
+  const cosmo = Object.assign(new CONFIG.Actor.dataModels.character(), {
+    parent: { flags: { core: { sheetClass: "spacedragon.SDCharacterSheet" } } },
+    destreza: 13, constituicao: 10, sabedoria: 10, _jp: 16,
+  });
+  const vizinho = Object.assign(new CONFIG.Actor.dataModels.character(), {
+    parent: { flags: {} }, destreza: 13, constituicao: 10, sabedoria: 10, _jp: 16,
+  });
+  const modDes = cosmo.mod_destreza;
+  if (cosmo.jpd_total !== 16 - modDes) probJP.push(`JPR na ficha do módulo deu ${cosmo.jpd_total}, esperava ${16 - modDes} (16 − ${modDes})`);
+  if (vizinho.jpd_total !== 16 + vizinho.mod_destreza) probJP.push(`o personagem de OD2 perdeu a conta do sistema: ${vizinho.jpd_total}`);
+
+  const RollOriginal = globalThis.Roll;
+  let d20 = 0;
+  globalThis.Roll = class {
+    constructor(f) { this.formula = f; }
+    async evaluate() { const m = Number(this.formula.replace(/^1d20\s*\+\s*/, "")) || 0; this.total = d20 + m; return this; }
+  };
+  globalThis.CONFIG.sounds = { dice: "" };
+  const ator = { system: cosmo, name: "Cobaia" };
+  d20 = 16 - modDes;
+  if (!(await rolarJP(ator, "jpd")).passou) probJP.push(`d20 ${d20} + ${modDes} = 16 contra JP 16 devia passar (igual ou maior)`);
+  d20 = 15 - modDes;
+  if ((await rolarJP(ator, "jpd")).passou) probJP.push(`d20 ${d20} + ${modDes} = 15 contra JP 16 devia falhar`);
+  d20 = 14 - modDes;
+  if (!(await rolarJP(ator, "jpd", 2)).passou) probJP.push("com +2 de situação, 14 + 2 = 16 devia passar");
+  globalThis.Roll = RollOriginal;
+
+  if (probJP.length) {
+    for (const x of probJP) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log(`  ✔ JP: 1d20 + mod ≥ JP da classe (JPR ${cosmo.jpd_total} no d20 com JP 16 e DES ${modDes >= 0 ? "+" : ""}${modDes}), e o OD2 ao lado fica com a conta dele`);
 }

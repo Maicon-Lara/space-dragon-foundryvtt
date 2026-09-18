@@ -93,6 +93,23 @@ export function registrarFicha() {
       if (!item) return null;
       return import("./poder-mental.js").then(({ realizarPoder }) => realizarPoder(this.actor, item));
     }
+
+    /**
+     * A JP pela regra do livro: 1d20 + modificador ≥ JP da classe. O sistema
+     * compara ao contrário (d20 ≤ JP + mod). Ver jp.js. Shift abre o
+     * modificador de situação.
+     */
+    _onJPRoll(event) {
+      event.preventDefault?.();
+      const qual = event.currentTarget?.dataset?.jp;
+      const shift = !!event.shiftKey;
+      return import("./jp.js").then(async ({ rolarJP, perguntarSituacao, JPS }) => {
+        if (!JPS[qual]) return null;
+        const sit = shift ? await perguntarSituacao(JPS[qual].rotulo) : 0;
+        if (sit === null) return null;
+        return rolarJP(this.actor, qual, sit);
+      });
+    }
   }
 
   foundry.documents.collections.Actors.registerSheet(ID, SDCharacterSheet, {
