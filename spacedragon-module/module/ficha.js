@@ -33,6 +33,8 @@
  * exatamente o que acontecia antes disto existir.
  */
 
+import { chassiDe } from "./chassi.js";
+
 const ID = "spacedragon";
 export const MARCA_FICHA = "spacedragon-ficha";
 
@@ -75,6 +77,21 @@ export function registrarFicha() {
         // O resto vem da ficha do sistema, inclusive o template.
         classes: [...super.defaultOptions.classes, MARCA_FICHA],
       });
+    }
+
+    /**
+     * O botão de lançar da aba de Poderes, para quem tem o chassi do
+     * Mentálico, segue o Cap. 9 do livro e não a magia vanciana do sistema
+     * (ver poder-mental.js). Para os demais, o sistema como sempre.
+     */
+    _onSpellCast(event, options = {}) {
+      if (chassiDe(this.actor) !== "Mentálico") return super._onSpellCast(event, options);
+      // Antes de qualquer await: é um <a>, e o padrão do navegador não espera.
+      event.preventDefault?.();
+      const id = event.currentTarget?.closest?.(".item")?.dataset?.itemId;
+      const item = this.actor.items.get(id);
+      if (!item) return null;
+      return import("./poder-mental.js").then(({ realizarPoder }) => realizarPoder(this.actor, item));
     }
   }
 

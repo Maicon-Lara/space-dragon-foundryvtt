@@ -799,3 +799,92 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   }
   console.log("  ✔ degraus: acima do nível somem (lista com <code>Nº</code> e parágrafo com data-degrau), e voltam quando o nível sobe");
 }
+
+// ── Poder mental pela regra do livro, e não magia vanciana ─────────────────
+//
+// Cap. 9.3–9.4: conhecido realiza livremente; desconhecido rola 1d100 ≤
+// "realizar e aprender" do Intelecto ANTES, e desconta a Grandeza mesmo se
+// falhar; realizou um desconhecido, pode rolar de novo para aprender. Nunca
+// passa do limite nem do alcance. O botão de lançar do sistema cai nisto
+// para quem tem o chassi do Mentálico.
+{
+  const { realizarPoder } = await import("../spacedragon-module/module/poder-mental.js");
+  const probPM = [];
+  let fila = [];
+  const RollOriginal = globalThis.Roll;
+  globalThis.Roll = class {
+    constructor(f) { this.formula = f; }
+    async evaluate() { this.total = fila.shift(); if (this.total === undefined) throw new Error(`rolagem não prevista: ${this.formula}`); return this; }
+  };
+  globalThis.CONFIG.sounds = { dice: "" };
+
+  const novoMentalico = (gasto = 0) => {
+    const flags = { alcanceGasto: gasto };
+    return {
+      type: "character", name: "Cobaia", id: "a1",
+      system: { class: { name: "Mentálico" }, level: 10, sabedoria: 16 },
+      getFlag: (_m, k) => flags[k],
+      setFlag: async (_m, k, v) => { flags[k] = v; },
+      flags,
+    };
+  };
+  const poder = (circle, sabe) => {
+    const f = { memorized: sabe };
+    return {
+      _id: "p1", name: `Poder de ${circle}ª`, system: { circle: String(circle) },
+      getFlag: () => f,
+      update: async (u) => { if ("flags.olddragon2e.spell.memorized" in u) f.memorized = u["flags.olddragon2e.spell.memorized"]; },
+      _f: f,
+    };
+  };
+  const alvo = api.preparar("realizar-poder", { nivel: 10, valores: { intelecto: 16 } }).alvo;
+  const sim = async () => true;
+
+  // Conhecido: não rola, desconta 3.
+  let a = novoMentalico();
+  fila = [];
+  let r = await realizarPoder(a, poder(3, true), { perguntar: sim });
+  if (!r?.realizou || a.flags.alcanceGasto !== 3) probPM.push(`conhecido de 3ª devia realizar sem rolar e gastar 3%, gastou ${a.flags.alcanceGasto}`);
+
+  // Desconhecido que realiza e aprende.
+  a = novoMentalico();
+  let p = poder(2, false);
+  fila = [alvo, alvo];
+  r = await realizarPoder(a, p, { perguntar: sim });
+  if (!r?.realizou || !r.aprendeu || !p._f.memorized) probPM.push("desconhecido com 1d100 = chance devia realizar e, na 2ª rolagem, aprender");
+  if (a.flags.alcanceGasto !== 2) probPM.push(`o desconhecido de 2ª devia gastar 2%, gastou ${a.flags.alcanceGasto}`);
+
+  // Desconhecido que falha: gasta mesmo assim, e não oferece aprender.
+  a = novoMentalico();
+  p = poder(2, false);
+  let perguntou = false;
+  fila = [Math.min(100, alvo + 1)];
+  r = await realizarPoder(a, p, { perguntar: async () => { perguntou = true; return true; } });
+  if (r?.realizou) probPM.push("1d100 acima da chance não devia realizar");
+  if (a.flags.alcanceGasto !== 2) probPM.push("a falha devia descontar a Grandeza mesmo assim");
+  if (perguntou) probPM.push("a falha não devia oferecer aprender");
+
+  // Acima do limite (um mentálico de 10º vai até a 5ª) e sem alcance.
+  a = novoMentalico();
+  fila = [];
+  if (await realizarPoder(a, poder(6, true))) probPM.push("6ª Grandeza num mentálico de 10º devia ser recusada");
+  a = novoMentalico(38);
+  if (await realizarPoder(a, poder(3, true))) probPM.push("com 1% restante, um poder de 3ª devia ser recusado");
+  if (a.flags.alcanceGasto !== 38) probPM.push("a recusa não pode gastar alcance");
+
+  // O botão de lançar do sistema cai na regra do livro, na ficha do módulo.
+  a = novoMentalico();
+  p = poder(1, true);
+  a.items = { get: (id) => (id === "p1" ? p : null) };
+  fila = [];
+  const appPM = appSD(a);
+  await appPM._onSpellCast({ preventDefault() {}, currentTarget: { closest: () => ({ dataset: { itemId: "p1" } }) } });
+  if (a.flags.alcanceGasto !== 1) probPM.push(`o lançar do sistema devia gastar 1% pela regra do livro, gastou ${a.flags.alcanceGasto}`);
+
+  globalThis.Roll = RollOriginal;
+  if (probPM.length) {
+    for (const x of probPM) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log(`  ✔ poder mental: conhecido sem rolar, desconhecido rola ${alvo}% e gasta mesmo falhando, aprende na 2ª, e o lançar do sistema segue o livro`);
+}

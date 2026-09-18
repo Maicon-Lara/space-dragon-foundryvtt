@@ -254,3 +254,14 @@
  * não alcançou; os degraus de 5º/10º/20º do Space Dragon moram no texto, e
  * module/degraus.js os marca. Mesma regra do sistema: não aparecem. */
 .spacedragon-ficha .sd-degrau-futuro { display: none !important; }
+
+/* ── Poderes mentais, e não magia vanciana ─────────────────────────────────
+ * O sistema dá a cada poder "memorizar", espaços e usos por dia. O Space
+ * Dragon não tem nada disso: o poder conhecido se realiza à vontade, dentro
+ * da Grandeza-limite e do alcance. A caixa de memorizar fica, e passa a
+ * significar CONHECIDO; espaços e usos somem — no cabeçalho e em cada linha,
+ * para a linha flex continuar alinhada. Ver module/poder-mental.js. */
+.spacedragon-ficha .sd-poderes-mentais .list .slots,
+.spacedragon-ficha .sd-poderes-mentais .list .daily-uses,
+.spacedragon-ficha .sd-poderes-mentais .spell-slots,
+.spacedragon-ficha .sd-poderes-mentais .spell-daily-uses { display: none !important; }

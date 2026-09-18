@@ -182,6 +182,11 @@ function injeta(app, elemento) {
 
     for (const velho of raiz.querySelectorAll(`.${MARCA}`)) velho.remove();
     aba.insertAdjacentHTML("afterbegin", painel(ator));
+    // A marca que esconde a mecânica vanciana do sistema (espaços e usos por
+    // dia) e renomeia "memorizada" para "conhecido". Ver poder-mental.js.
+    aba.classList.add("sd-poderes-mentais");
+    const cerebro = raiz.querySelector(".character-tab-spells .list .memorized i");
+    cerebro?.setAttribute?.("title", "Conhecido — realiza sem rolar");
 
     const o = orcamento(ator);
 
@@ -208,16 +213,21 @@ function injeta(app, elemento) {
         }
         li.insertAdjacentHTML(
           "beforeend",
-          `<a class="sd-usar" data-grandeza="${g}" title="Gasta ${g}% do alcance mental">usar ${g}%</a>`
+          `<a class="sd-usar" data-grandeza="${g}" data-item="${li.dataset?.itemId ?? ""}" ` +
+          `title="Realiza o poder: gasta ${g}% do alcance, e rola se for desconhecido">usar ${g}%</a>`
         );
       }
     }
 
     for (const a of raiz.querySelectorAll(`.sd-usar`)) {
-      a.addEventListener("click", (ev) => {
+      a.addEventListener("click", async (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
-        return gastar(ator, Number(ev.currentTarget.dataset.grandeza));
+        const item = ator.items?.get?.(ev.currentTarget.dataset.item);
+        // Sem o item (ficha de brinquedo, item apagado), só o orçamento.
+        if (!item) return gastar(ator, Number(ev.currentTarget.dataset.grandeza));
+        const { realizarPoder } = await import("./poder-mental.js");
+        return realizarPoder(ator, item);
       });
     }
     const dormir = raiz.querySelector(`.${MARCA} .sd-descansar`);
