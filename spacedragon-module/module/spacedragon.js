@@ -60,10 +60,20 @@ function estendeNiveis() {
 Hooks.once("init", () => {
   registrarTema();
 
-  // No `init`, e não no `ready`: o Foundry monta o registro de fichas antes do
-  // ready, e o sistema — que carrega antes do módulo — já pôs a dele lá.
-  registrarFicha();
-  registrarFichaAmeaca();
+  // As fichas são registradas no `ready` (ver lá). Aqui só a opção, que
+  // precisa existir antes de ser lida.
+  game.settings.register(ID, "fichasPadrao", {
+    name: "Fichas Space Dragon como padrão",
+    hint:
+      "Todo personagem abre na Ficha Space Dragon e todo monstro na Ficha de Ameaça, " +
+      "sem marcar ator por ator. Desligue numa mesa mista com o Star Dragon ou com " +
+      "personagens de Old Dragon 2, e escolha a ficha no botão Sheet de cada ator.",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+    requiresReload: true,
+  });
 
   // Uma OPÇÃO, e não um fato consumado: trocar a tabela de modificadores muda
   // ataque, proteção, PV e jogadas de proteção de todo personagem do mundo.
@@ -87,6 +97,13 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", () => {
+  // No `ready`, e não no `init`: no Foundry 13.351 o registro de fichas é uma
+  // fila processada depois do `init` e do `setup`. No `init` a ficha do
+  // sistema ainda não estava lá para ser estendida, e as fichas do módulo
+  // nunca eram registradas. Ver ficha.js.
+  const padrao = game.settings.get(ID, "fichasPadrao");
+  registrarFicha(padrao);
+  registrarFichaAmeaca(padrao);
   estendeNiveis();
   ligarTema();
   aplicarModificadores(game.settings.get(ID, "modificadores"));

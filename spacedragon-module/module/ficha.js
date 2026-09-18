@@ -66,7 +66,22 @@ export function ehFichaSD(app) {
   return app instanceof Registrada;
 }
 
-export function registrarFicha() {
+/**
+ * ── QUANDO REGISTRAR ────────────────────────────────────────────────────────
+ *
+ * No `ready`, e não no `init`. No Foundry 13.351, `registerSheet` põe a ficha
+ * numa FILA que só é processada depois do `init` — e depois do `setup` também.
+ * No `init`, `CONFIG.Actor.sheetClasses` ainda está vazio: `baseDaFicha()` não
+ * achava a ficha do sistema, a do módulo nunca era registrada, e o módulo
+ * caía no "vale para todo mundo" sem ninguém perceber. Conferido na mesa: no
+ * `ready` o registro está montado e a ficha nova entra na hora.
+ *
+ * `padrao` é a opção do mundo "Fichas Space Dragon como padrão".
+ */
+let Padrao = true;
+
+export function registrarFicha(padrao = true) {
+  Padrao = !!padrao;
   Base = baseDaFicha();
   if (!Base) return null;
 
@@ -115,11 +130,11 @@ export function registrarFicha() {
   foundry.documents.collections.Actors.registerSheet(ID, SDCharacterSheet, {
     types: ["character"],
     label: "Ficha Space Dragon",
-    // NÃO é padrão. Num mundo que também tenha o módulo Star Wars, a maioria
-    // dos personagens não é do Space Dragon — e tornar-se padrão silenciosamente
-    // trocaria a ficha de todos eles. Quem é do Space Dragon escolhe no botão
-    // "Sheet" do ator, e os personagens convertidos já vêm com ela marcada.
-    makeDefault: false,
+    // Padrão do mundo pela opção do módulo, que vem LIGADA: numa mesa de
+    // Space Dragon, todo personagem abre nela sem ninguém marcar ator por
+    // ator. Numa mesa mista com o Star Dragon, o GM desliga, e quem é do Space
+    // Dragon escolhe no botão "Sheet" do ator.
+    makeDefault: Padrao,
   });
 
   Registrada = SDCharacterSheet;
@@ -167,7 +182,13 @@ export function ligarNaFicha(desenha) {
  */
 export function atorUsaFichaSD(ator) {
   if (!Registrada) return true;
+  // O próprio Foundry diz qual ficha o ator vai abrir — a escolhida no botão
+  // "Sheet", ou a padrão do mundo, inclusive a que o GM configurar. Pedir a
+  // CLASSE não instancia ficha nenhuma.
+  const cls = ator?._getSheetClass?.();
+  if (cls) return cls === Registrada || cls.prototype instanceof Registrada;
+  // Sem isso (fora do Foundry, nos testes): a flag, e sem flag, o padrão.
   const escolhida = ator?.flags?.core?.sheetClass;
-  if (!escolhida) return false;
+  if (!escolhida) return Padrao;
   return escolhida === `${ID}.${Registrada.name}`;
 }

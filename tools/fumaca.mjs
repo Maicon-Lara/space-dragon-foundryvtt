@@ -31,9 +31,12 @@ const niveisIniciais = Object.fromEntries(
 // Só o que o módulo toca no caminho de carga. `Hooks.once` roda o retorno na
 // hora, que é o ponto: queremos executar o `ready` e ver o que ele faz.
 const ganchos = [];
+// `hookAtual` guarda em que gancho cada ficha foi registrada: no Foundry
+// 13.351 o registro no `init` não enxerga a ficha do sistema (ver ficha.js).
+let hookAtual = null;
 globalThis.Hooks = {
   on: (nome, fn) => ganchos.push({ nome, fn }),
-  once: (_nome, fn) => fn(),
+  once: (nome, fn) => { hookAtual = nome; try { return fn(); } finally { hookAtual = null; } },
 };
 // O modelo de dados do personagem, com os getters que o sistema define. É
 // neste protótipo que o módulo troca a tabela de modificadores.
@@ -92,7 +95,7 @@ globalThis.foundry = {
   utils: { mergeObject: (a, b) => ({ ...a, ...b }) },
   documents: {
     collections: {
-      Actors: { registerSheet: (id, cls, cfg) => fichasRegistradas.push({ id, cls, cfg }) },
+      Actors: { registerSheet: (id, cls, cfg) => fichasRegistradas.push({ id, cls, cfg, gancho: hookAtual }) },
     },
   },
 };
@@ -256,7 +259,7 @@ const ficha = Object.assign(new CONFIG.Actor.dataModels.character(), atributos, 
   parent: { flags: { core: { sheetClass: "spacedragon.SDCharacterSheet" } } },
 });
 const fichaOD2 = Object.assign(new CONFIG.Actor.dataModels.character(), atributos, {
-  parent: { flags: {} },
+  parent: { flags: { core: { sheetClass: "olddragon2e.OD2CharacterSheet" } } },
 });
 
 const ESPERADO = {
@@ -670,10 +673,11 @@ if (!registro) probFicha.push("a ficha Space Dragon não foi registrada");
 else {
   if (registro.cfg?.label !== "Ficha Space Dragon") probFicha.push(`rótulo "${registro.cfg?.label}"`);
   if (!registro.cfg?.types?.includes("character")) probFicha.push("não foi registrada para personagem");
-  // ⚠️ NÃO pode ser padrão. Num mundo que também tenha o módulo Star Wars, a
-  // maioria dos personagens não é do Space Dragon, e virar padrão trocaria a
-  // ficha de todos eles em silêncio.
-  if (registro.cfg?.makeDefault) probFicha.push("virou a ficha padrão, e não devia num mundo misto");
+  // Padrão pela opção "Fichas Space Dragon como padrão", que vem ligada: numa
+  // mesa de Space Dragon ninguém marca ator por ator. A mesa mista desliga.
+  // (Antes era sempre não-padrão — e, como no Foundry 13.351 a ficha nem
+  // chegava a ser registrada, ninguém percebia. Ver ficha.js.)
+  if (registro.cfg?.makeDefault !== opcoes.get("spacedragon.fichasPadrao")) probFicha.push("a ficha não seguiu a opção de padrão do mundo");
   const classes = registro.cls.defaultOptions?.classes ?? [];
   if (!classes.includes("spacedragon-ficha")) probFicha.push(`classes ${classes.join(" ")} sem a marca do módulo`);
   // Herda a ficha do sistema, e por isso herda o template: o módulo não mantém
@@ -709,7 +713,7 @@ if (probFicha.length) {
   for (const p of probFicha) console.error(`  ✘ ${p}`);
   process.exit(1);
 }
-console.log('  ✔ ficha: "Ficha Space Dragon" no seletor, sem virar padrão, e a do sistema fica intocada');
+console.log('  ✔ ficha: "Ficha Space Dragon" no seletor, padrão pela opção do mundo, e a do sistema fica intocada');
 
 // ── Um suplemento que renomeia as classes é reconhecido pela flag? ─────────
 //
@@ -916,7 +920,7 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
     destreza: 13, constituicao: 10, sabedoria: 10, _jp: 16,
   });
   const vizinho = Object.assign(new CONFIG.Actor.dataModels.character(), {
-    parent: { flags: {} }, destreza: 13, constituicao: 10, sabedoria: 10, _jp: 16,
+    parent: { flags: { core: { sheetClass: "olddragon2e.OD2CharacterSheet" } } }, destreza: 13, constituicao: 10, sabedoria: 10, _jp: 16,
   });
   const modDes = cosmo.mod_destreza;
   if (cosmo.jpd_total !== 16 - modDes) probJP.push(`JPR na ficha do módulo deu ${cosmo.jpd_total}, esperava ${16 - modDes} (16 − ${modDes})`);
@@ -958,7 +962,7 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   if (!reg) probAm.push("a Ficha de Ameaça não foi registrada");
   else {
     if (reg.cfg.types?.join() !== "monster") probAm.push(`a Ficha de Ameaça devia ser para monster, é para ${reg.cfg.types}`);
-    if (reg.cfg.makeDefault) probAm.push("a Ficha de Ameaça não pode virar padrão do mundo");
+    if (reg.cfg.makeDefault !== opcoes.get("spacedragon.fichasPadrao")) probAm.push("a Ficha de Ameaça não seguiu a opção de padrão do mundo");
   }
   const lido = lerJP("15 (+2 CONTRA VENENO)");
   if (lido.valor !== 15 || lido.nota !== "+2 CONTRA VENENO") probAm.push(`lerJP leu ${JSON.stringify(lido)}`);
@@ -984,7 +988,7 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
     for (const x of probAm) console.error(`  ✘ ${x}`);
     process.exit(1);
   }
-  console.log("  ✔ ameaça: ficha registrada sem virar padrão; JP 1d20 ≥ JP sem modificador, Moral d% ≤ %, 0% foge e 100% fica");
+  console.log("  ✔ ameaça: ficha registrada, padrão pela opção do mundo; JP 1d20 ≥ JP sem modificador, Moral d% ≤ %, 0% foge e 100% fica");
 }
 
 // ── Os rótulos da Ficha de Ameaça saem pelo gancho do SISTEMA ──────────────
@@ -1020,4 +1024,37 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
     process.exit(1);
   }
   console.log("  ✔ ameaça: os rótulos saem pelo gancho da ficha do sistema, e só na Ficha de Ameaça");
+}
+
+// ── A opção "Fichas Space Dragon como padrão" ──────────────────────────────
+// Ligada (o padrão), o ator SEM ficha marcada é do Space Dragon — é a mesa
+// de Space Dragon, onde ninguém marca ator por ator. Com a ficha do sistema
+// escolhida no botão Sheet, volta a ser OD2. E as duas fichas do módulo
+// seguem a opção ao se registrar.
+{
+  const { atorUsaFichaSD } = await import("../spacedragon-module/module/ficha.js");
+  const probPad = [];
+  if (!atorUsaFichaSD({ flags: {} })) probPad.push("com a opção ligada, o ator sem ficha marcada devia ser do Space Dragon");
+  if (atorUsaFichaSD({ flags: { core: { sheetClass: "olddragon2e.OD2CharacterSheet" } } })) probPad.push("o ator com a ficha do sistema escolhida não pode ser do Space Dragon");
+  const regPers = fichasRegistradas.find((f) => f.cfg?.label === "Ficha Space Dragon");
+  const regAm = fichasRegistradas.find((f) => f.cfg?.label === "Ficha de Ameaça Space Dragon");
+  if (!regPers?.cfg.makeDefault || !regAm?.cfg.makeDefault) probPad.push("com a opção ligada, as duas fichas deviam se registrar como padrão");
+  if (probPad.length) {
+    for (const x of probPad) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ padrão: opção ligada, ator sem ficha marcada é do Space Dragon, e a ficha do sistema escolhida devolve o OD2");
+}
+
+// ── As fichas são registradas no ready, não no init ────────────────────────
+// No Foundry 13.351 o registro de fichas é uma fila processada DEPOIS do init
+// e do setup: no init a ficha do sistema não está lá para ser estendida, e as
+// fichas do módulo nunca eram registradas — só aparecia na mesa de verdade.
+{
+  const noInit = fichasRegistradas.filter((f) => f.id === "spacedragon" && f.gancho !== "ready");
+  if (noInit.length) {
+    console.error(`  ✘ ficha registrada fora do ready: ${noInit.map((f) => `${f.cfg.label} (${f.gancho})`).join(", ")}`);
+    process.exit(1);
+  }
+  console.log("  ✔ registro: as duas fichas entram no ready, quando a fila de fichas do Foundry já foi processada");
 }

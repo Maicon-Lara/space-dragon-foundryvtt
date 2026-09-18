@@ -21,9 +21,9 @@
  *
  * ── COMO É ESCOLHIDA ────────────────────────────────────────────────────────
  *
- * Como a de personagem: no botão "Sheet" do ator, sem virar padrão — um mundo
- * com o Star Dragon tem monstros de Old Dragon 2 ao lado. As criaturas do
- * Bestiário deste módulo já vêm com ela marcada.
+ * Como a de personagem: é a padrão do mundo pela opção "Fichas Space Dragon
+ * como padrão" (ligada), e numa mesa mista o GM desliga e escolhe no botão
+ * "Sheet". As criaturas do Bestiário deste módulo já vêm com ela marcada.
  */
 
 const ID = "spacedragon";
@@ -143,7 +143,7 @@ function rotular(app, elemento) {
 
 let Registrada = null;
 
-export function registrarFichaAmeaca() {
+export function registrarFichaAmeaca(padrao = true) {
   const registro = CONFIG.Actor?.sheetClasses?.monster ?? {};
   const Base = Object.values(registro).find((e) => e?.cls?.name === "OD2MonsterSheet")?.cls;
   if (!Base) {
@@ -180,8 +180,9 @@ export function registrarFichaAmeaca() {
   foundry.documents.collections.Actors.registerSheet(ID, SDMonsterSheet, {
     types: ["monster"],
     label: "Ficha de Ameaça Space Dragon",
-    // Não é padrão: um mundo com o Star Dragon tem monstros de Old Dragon 2.
-    makeDefault: false,
+    // Padrão do mundo pela opção "Fichas Space Dragon como padrão". Numa mesa
+    // mista, o GM desliga e escolhe no botão Sheet de cada monstro.
+    makeDefault: !!padrao,
   });
   // O gancho é o da classe CONCRETA do sistema, e não o da subclasse: no v13,
   // ficha appv1 garantidamente dispara `renderOD2MonsterSheet` (é o mesmo que
