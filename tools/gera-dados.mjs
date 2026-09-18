@@ -17,6 +17,7 @@ import { TESTES } from "./data/testes.mjs";
 import { T7_4, T7_5 } from "./data/combate.mjs";
 import { T10_6_CRITICOS, T10_6_FALHAS } from "./data/naves.mjs";
 import { CAMPO_NA_FICHA, NOME } from "./data/onde-anotar.mjs";
+import { DESATIVAR_ROBOS, TIPOS_DE_ROBO, LETRAS } from "./data/robos.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const DESTINO = path.resolve(AQUI, "..", "spacedragon-module", "module", "dados.js");
@@ -75,6 +76,8 @@ const derivadas = Object.fromEntries(
 const OUTRAS = {
   "constituicao.mortais": TABELAS.constituicao.map((l) => l.mortais),
   "intelecto.alcanceAdicional": TABELAS.intelecto.map((l) => l.alcanceAdicional),
+  // T1-5: QUANTOS robôs o disruptor derruba — um dado, não um número.
+  "ciencia.robos": TABELAS.ciencia.map((l) => l.robos),
 };
 
 // O cabeçalho que o Aprimorado dá a cada coluna usada num teste.
@@ -145,5 +148,10 @@ export const FALHAS = ${j(T7_5)};
 /** T10-6: críticos e falhas de ESPAÇONAVE. Não são os mesmos da T7-4/T7-5. */
 export const CRITICOS_NAVE = ${j(T10_6_CRITICOS)};
 export const FALHAS_NAVE = ${j(T10_6_FALHAS)};
+
+// T3-2: Desativar Robôs. A linha é o nível do DISRUPTOR; 1d20 ≥ alvo.
+export const TIPOS_DE_ROBO = ${j(TIPOS_DE_ROBO)};
+export const LETRAS_ROBO = ${j(LETRAS)};
+export const DESATIVAR_ROBOS = ${j(DESATIVAR_ROBOS)};
 `);
 console.log(`  ✔ module/dados.js: ${TESTES.length} testes, ${Object.keys(prog).length} progressões`);

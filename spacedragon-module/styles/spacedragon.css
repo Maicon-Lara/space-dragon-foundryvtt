@@ -280,3 +280,7 @@
 .spacedragon-ameaca .sd-ameaca-defesa input { width: 100%; text-align: center; }
 .spacedragon-ameaca .sd-ameaca-cientifico { display: flex; flex-direction: column; }
 .spacedragon-ameaca .sd-ameaca-cientifico input { font-style: italic; }
+
+/* Desativar Robôs: o tipo que o disruptor não afeta aparece, apagado e sem
+ * botão, para o jogador ver que ele existe e que ainda não chega lá. */
+.spacedragon-testes .sd-robo-imune { opacity: 0.45; cursor: default; }

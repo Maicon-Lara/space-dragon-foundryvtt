@@ -35,6 +35,7 @@ import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
 import { aplicarJP, rolarJP } from "./jp.js";
 import { registrarFichaAmeaca, rolarJPAmeaca, rolarMoral } from "./ameaca.js";
+import { abrirDesativar, rolarDesativar } from "./robos.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -130,6 +131,7 @@ Hooks.once("ready", () => {
     pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
     compararEscalas, diagnostico, danosMortais, bonusDeCP, jp: rolarJP,
     jpAmeaca: rolarJPAmeaca, moral: rolarMoral,
+    desativarRobos: abrirDesativar, rolarDesativar,
     ordem: abrirOrdem,
     alcance: orcamento, gastarAlcance: gastar, descansar,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),

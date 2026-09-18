@@ -40,6 +40,7 @@ import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { CAMPO_NA_FICHA, NOME_ATRIBUTO, SIGLA, TESTES } from "./dados.js";
 import { preparar, rolar } from "./testes.js";
 import { habilidadeDe, progressaoDe } from "./chassi.js";
+import { HABILIDADE_ROBOS, blocoRobos, rolarDesativar, abrirDesativar } from "./robos.js";
 
 const ID = "spacedragon";
 const MARCA = "spacedragon-testes";
@@ -148,6 +149,15 @@ function injeta(app, elemento) {
       // "Talentos de Operativo" de um suplemento declara, por flag, que é
       // "Talentos de Gatuno" — e ganha os mesmos botões. Ver chassi.js.
       const doLivro = habilidadeDe(ator, nome);
+
+      // Desativar Robôs é 1d20 contra a T3-2, e não porcentagem: bloco
+      // próprio, uma linha por tipo de robô (ver robos.js).
+      if (doLivro === HABILIDADE_ROBOS) {
+        li.insertAdjacentHTML("beforeend", blocoRobos(ator, MARCA));
+        postos += 1;
+        continue;
+      }
+
       const lista = TESTES.filter((t) => t.habilidade === doLivro);
       if (!lista.length) continue;
 
@@ -156,6 +166,17 @@ function injeta(app, elemento) {
     }
 
     for (const a of raiz.querySelectorAll(`.${MARCA} .sd-rolar`)) {
+      if (a.dataset?.robo) {
+        a.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          const tipo = ev.currentTarget.dataset.robo;
+          return ev.shiftKey ? abrirDesativar(ator, tipo) : rolarDesativar(ator, { tipo });
+        });
+        continue;
+      }
+      // O tipo de robô que o disruptor não afeta é um <span>, sem teste.
+      if (!a.dataset?.teste) continue;
       a.addEventListener("click", (ev) => {
         ev.preventDefault();
         ev.stopPropagation(); // o <li> da habilidade abre a ficha do item

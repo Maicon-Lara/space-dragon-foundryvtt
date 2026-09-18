@@ -1145,6 +1145,63 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   console.log("  ✔ especialização: Sabotador 51% no 5º, Espião com CT dobrado, Consular 17%/4ª, Mercenário ×3, PV fixo com Constituição");
 }
 
+// ── Desativar Robôs na ficha ───────────────────────────────────────────────
+// 1d20 ≥ T3-2, linha = nível do disruptor (o do personagem). Um botão por tipo
+// de robô, como os talentos; N apagado e sem botão; A e D sem d20. Quantos
+// caem é o dado da coluna de robôs da Ciência (T1-5): Ciência 16 → 1d6.
+{
+  const probR = [];
+  const rob = await import("../spacedragon-module/module/robos.js");
+  const FICHA_R = `<div class="class-abilities"><ol class="item-list">
+    <li class="item" data-item-id="rrr"><div class="ability"><span><strong>Desativar Robôs</strong>:</span></div></li>
+  </ol></div>`;
+  const raizR = monta(FICHA_R);
+  const tecnico = {
+    type: "character", name: "Técnico",
+    system: { class: { name: "Técnico", flags: { spacedragon: { chassi: "Cientista" } } }, level: 1, inteligencia: 16 },
+  };
+  render.fn(appSD(tecnico), raizR);
+  const linhasR = raizR.querySelectorAll(".sd-robos .sd-teste-linha");
+  const alvosR = raizR.querySelectorAll(".sd-robos .sd-alvo").map((n) => n.textContent.trim());
+  if (linhasR.length !== 8) probR.push(`${linhasR.length} linhas, esperava os 8 tipos da T3-2`);
+  // Disruptor de 1º: sucata 13, protótipo 17, repetidor 19, o resto N.
+  if (alvosR.join(" ") !== "13+ 17+ 19+ — — — — —") probR.push(`alvos no 1º: ${alvosR.join(" ")}`);
+  const botoesR = raizR.querySelectorAll(".sd-robos .sd-rolar").filter((n) => n.getAttribute("data-robo"));
+  if (botoesR.length !== 3) probR.push(`${botoesR.length} botões no 1º, esperava 3 (os N ficam sem botão)`);
+  if (!/1d6/.test(raizR.querySelector(".sd-robos .sd-rodape")?.textContent ?? "")) probR.push("o rodapé não mostra 1d6 de robôs para Ciência 16");
+
+  // A rolagem: d20 = 13 passa na sucata (13+), 12 falha; a quantidade é 1d6.
+  const cartoesR = [];
+  const RollAntes = globalThis.Roll;
+  const ChatAntes = globalThis.ChatMessage;
+  let d20 = 13;
+  globalThis.Roll = class { constructor(f) { this.f = f; } async evaluate() { this.total = this.f === "1d20" ? d20 : 4; return this; } };
+  globalThis.ChatMessage = { getSpeaker: () => ({}), create: async (m) => cartoesR.push(m) };
+  const ok = await rob.rolarDesativar(tecnico, { tipo: "sucata" });
+  d20 = 12;
+  const falha = await rob.rolarDesativar(tecnico, { tipo: "sucata" });
+  const imune = await rob.rolarDesativar(tecnico, { tipo: "androide" });
+  const auto = await rob.rolarDesativar(tecnico, { tipo: "sucata", nivel: 7 });
+  const destroi = await rob.rolarDesativar(tecnico, { tipo: "sucata", nivel: 10 });
+  if (!ok.passou || falha.passou) probR.push("13 devia passar e 12 falhar contra 13+ na sucata");
+  if (imune.passou || cartoesR[2].rolls.length) probR.push("androide no 1º é N: não rola nada e não afeta");
+  if (!auto.passou || cartoesR[3].rolls.length !== 1) probR.push("sucata com disruptor de 7º é A: sem d20, só o 1d6 da quantidade");
+  if (!/Destruído/.test(cartoesR[4].content)) probR.push("sucata com disruptor de 10º é D: destruída");
+  if (!/<strong>4<\/strong> robô/.test(cartoesR[0].content)) probR.push("o sucesso não rolou a quantidade pela Ciência");
+  // O Slicer reprograma a partir do 10º.
+  const slicer = { ...tecnico, system: { ...tecnico.system, class: { name: "Slicer — Técnico" }, level: 10 } };
+  await rob.rolarDesativar(slicer, { tipo: "sucata" });
+  if (!/reprograma/.test(cartoesR[5].content)) probR.push("o Slicer de 10º devia ver o aviso de reprogramar");
+  globalThis.Roll = RollAntes;
+  globalThis.ChatMessage = ChatAntes;
+
+  if (probR.length) {
+    for (const x of probR) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ desativar robôs: 8 tipos na ficha, 1d20 ≥ T3-2 pelo nível, A/D sem d20, N sem botão, 1d6 de robôs com Ciência 16");
+}
+
 // ── A opção "Fichas Space Dragon como padrão" ──────────────────────────────
 // Ligada (o padrão), o ator SEM ficha marcada é do Space Dragon — é a mesa
 // de Space Dragon, onde ninguém marca ator por ator. Com a ficha do sistema
