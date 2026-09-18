@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "ordeiro",
     "habitat": "FLORESTAS",
-    "description": "<p><em>Formicus acidus</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 10 · <strong>INT</strong> 6 · <strong>CIE</strong> 0 · <strong>COM</strong> 6</p><p>As formigácidas são similares às formigas comuns, mas são centenas de vezes maiores e capazes de expelir ácido de seus abdomens. Atacam em conjunto contra inimigos muito maiores que elas. Suas pinças também são poderosas, capazes de sustentar um peso muito maior do que a própria formigácida, e cortam facilmente suas vítimas. Jato ácido o jato tem alcance de 5 metros e afetará a todos que estiverem em sua trajetória, sejam aliados ou inimigos.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Formicus acidus</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 10 · <strong>INT</strong> 6 · <strong>CIE</strong> 0 · <strong>COM</strong> 6</p></div><p>As formigácidas são similares às formigas comuns, mas são centenas de vezes maiores e capazes de expelir ácido de seus abdomens. Atacam em conjunto contra inimigos muito maiores que elas. Suas pinças também são poderosas, capazes de sustentar um peso muito maior do que a própria formigácida, e cortam facilmente suas vítimas. Jato ácido o jato tem alcance de 5 metros e afetará a todos que estiverem em sua trajetória, sejam aliados ou inimigos.</p>",
     "described_attacks": "1 PINÇA +2 (1D4+2) 1 JATO ÁCIDO +1 (1D4 ÁCIDO)",
     "encounters": "GRUPO 1D10 FORMIGUEIRO 3D10",
     "xp": "100 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "EgbWdzfru3cy06TB",
+      "name": "Pinça +2 (1D4+2)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 2,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Pinça",
+        "damage_description": "1D4+2",
+        "damage": "1d4+2"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!T5Zo0AtAoJLmvZNA.EgbWdzfru3cy06TB"
+    },
+    {
+      "_id": "rRaxTy1Erhrjth59",
+      "name": "Jato ácido +1 (1D4 ÁCIDO)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 1,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Jato ácido",
+        "damage_description": "1D4 ÁCIDO",
+        "damage": "1d4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!T5Zo0AtAoJLmvZNA.rRaxTy1Erhrjth59"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Formicus acidus",
+        "atributos": {
+          "FOR": 14,
+          "DES": 12,
+          "CON": 10,
+          "INT": 6,
+          "CIE": 0,
+          "COM": 6
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

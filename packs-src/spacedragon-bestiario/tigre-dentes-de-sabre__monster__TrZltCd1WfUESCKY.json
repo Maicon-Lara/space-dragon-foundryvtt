@@ -9,7 +9,7 @@
     "size": "grande",
     "alignment": "caotico",
     "habitat": "PLANÍCIES",
-    "description": "<p><em>Tigris densabris</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 18 · <strong>CON</strong> 18 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p>Tigres dentes-de-sabre são enormes felinos semelhantes a tigres comuns, mas que possuem pelagem descolorida e duas enormes presas que se projetam para fora de suas bocarras. São caçadores astutos e costumam agir sozinhos, embora vivam em grupos familiares. As fêmeas, em geral, são responsáveis pela caça, enquanto os machos dedicam-se à defesa da prole. Dilaceração em um acerto crítico de ataque com mordida o tigre dentes-de-sabre pode dilacerar a carne da vítima com suas presas, forçando-a a fazer uma JPF para não perder o membro onde a mordida foi feita.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Tigris densabris</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 18 · <strong>CON</strong> 18 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p></div><p>Tigres dentes-de-sabre são enormes felinos semelhantes a tigres comuns, mas que possuem pelagem descolorida e duas enormes presas que se projetam para fora de suas bocarras. São caçadores astutos e costumam agir sozinhos, embora vivam em grupos familiares. As fêmeas, em geral, são responsáveis pela caça, enquanto os machos dedicam-se à defesa da prole. Dilaceração em um acerto crítico de ataque com mordida o tigre dentes-de-sabre pode dilacerar a carne da vítima com suas presas, forçando-a a fazer uma JPF para não perder o membro onde a mordida foi feita.</p>",
     "described_attacks": "1 MORDIDA +6 (1D8+4 + DILACERAÇÃO) 2 GARRAS +3 (1D6+1)",
     "encounters": "ERRANTE 1D2 BANDO 1D6",
     "xp": "735 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "OFoBXNqgE4QiYFgH",
+      "name": "Mordida +6 (1D8+4 + DILACERAÇÃO)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 6,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Mordida",
+        "damage_description": "1D8+4 + DILACERAÇÃO",
+        "damage": "1d8+4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!TrZltCd1WfUESCKY.OFoBXNqgE4QiYFgH"
+    },
+    {
+      "_id": "WGEHjJqpGWEbEOdc",
+      "name": "2 × Garras +3 (1D6+1)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 2,
+        "ba": 3,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Garras",
+        "damage_description": "1D6+1",
+        "damage": "1d6+1"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!TrZltCd1WfUESCKY.WGEHjJqpGWEbEOdc"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Tigris densabris",
+        "atributos": {
+          "FOR": 18,
+          "DES": 18,
+          "CON": 18,
+          "INT": 4,
+          "CIE": 0,
+          "COM": 2
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

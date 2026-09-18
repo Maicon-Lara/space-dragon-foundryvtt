@@ -265,3 +265,18 @@
 .spacedragon-ficha .sd-poderes-mentais .list .daily-uses,
 .spacedragon-ficha .sd-poderes-mentais .spell-slots,
 .spacedragon-ficha .sd-poderes-mentais .spell-daily-uses { display: none !important; }
+
+/* Ficha de Ameaça: o painel do bloco do livro (atributos, RM, RD) na barra
+ * lateral e o nome científico no cabeçalho. Ver module/ameaca.js. O mesmo
+ * dado vem escrito no topo da descrição, para quem abrir a criatura na ficha
+ * do sistema; aqui ele é escondido, para não aparecer duas vezes. */
+.spacedragon-ameaca .sd-bloco-extra { display: none; }
+.spacedragon-ameaca .sd-ameaca-painel { display: flex; flex-direction: column; gap: 4px; }
+.spacedragon-ameaca .sd-ameaca-atributos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.spacedragon-ameaca .sd-ameaca-defesas { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.spacedragon-ameaca .sd-ameaca-atributo,
+.spacedragon-ameaca .sd-ameaca-defesa { display: flex; flex-direction: column; align-items: center; }
+.spacedragon-ameaca .sd-ameaca-atributo input,
+.spacedragon-ameaca .sd-ameaca-defesa input { width: 100%; text-align: center; }
+.spacedragon-ameaca .sd-ameaca-cientifico { display: flex; flex-direction: column; }
+.spacedragon-ameaca .sd-ameaca-cientifico input { font-style: italic; }

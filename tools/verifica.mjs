@@ -106,4 +106,51 @@ for (const [nome, comeca] of [["Gatuno (Nível 5)", "Sabotagem"], ["Mentálico (
 }
 console.log(`\n${BLOCOS.length + 3 - falhasB}/${BLOCOS.length + 3} blocos do bestiário conferem.`);
 
-if (falhas || falhasB) process.exit(1);
+// ── Os ataques do bloco viram botões ───────────────────────────────────────
+//
+// Cada linha foi lida no bloco da criatura: vezes, nome, BA e o dado que o
+// botão de dano rola. As formas esquisitas do livro estão todas aqui.
+const { ataquesDoBloco, monsterDoc } = await import("./lib.mjs");
+const ATAQUES = [
+  ["Tiranossauro", 0, { vezes: 1, nome: "Mordida", ba: 16, dano: "3d8+6" }],
+  ["Tiranossauro", 1, { vezes: 1, nome: "Ataque com cauda", ba: 10, dano: "2d6+2" }],
+  ["Aranha Gigante", 1, { vezes: 1, nome: "Ferroada", ba: 3, dano: "1d8+3" }],
+  ["Encrustáceo", 0, { vezes: 2, nome: "Garras", ba: 4, dano: "1d6+2" }],
+  ["Cosmonauta (Nível 1)", 1, { vezes: 1, nome: "Espada de energia", ba: 3, dano: "1d8+2" }],
+  ["Eletricobra", 0, { vezes: 1, nome: "Mordida", ba: 4, dano: "1d6+1d4" }],
+  ["Shoggoth", 0, { vezes: 1, nome: "Pancada por metro", ba: 2, dano: "1d4" }],
+  ["Vampiro Energético", 0, { vezes: 1, nome: "Toque", ba: 4, dano: "" }],
+  ["Medusa Elétrica", 0, { vezes: 1, nome: "Tentáculo", ba: 0, dano: "1d4" }],
+];
+let falhasA = 0;
+for (const [nome, i, esperado] of ATAQUES) {
+  const obtido = ataquesDoBloco(criatura(nome)?.ataques)[i] ?? {};
+  const ok = Object.entries(esperado).every(([k, v]) => obtido[k] === v);
+  if (!ok) falhasA += 1;
+  console.log(`  ${ok ? "✔" : "✘"} ${nome.padEnd(22)} ataque ${i + 1}${ok ? "" : ` — ${JSON.stringify(obtido)}`}`);
+}
+// Ação especial, sem bônus e sem dado, fica no texto e não vira botão.
+for (const nome of ["Bolha Verde", "Devorador de Mentes", "Geleia Espacial", "Planta Carnívora"]) {
+  const n = ataquesDoBloco(criatura(nome)?.ataques).length;
+  if (n) falhasA += 1;
+  console.log(`  ${n ? "✘" : "✔"} ${nome.padEnd(22)} sem ataque rolável${n ? ` — leu ${n}` : ""}`);
+}
+// O documento: itens embutidos com a chave de item de ator, e o painel nos flags.
+{
+  const doc = monsterDoc(criatura("Tiranossauro"), null, "bestiario", 0);
+  const probs = [];
+  if (doc.items.length !== 2) probs.push(`${doc.items.length} itens, esperava 2`);
+  for (const it of doc.items) {
+    if (it.type !== "monster_attack") probs.push(`item do tipo ${it.type}`);
+    if (it._key !== `!actors.items!${doc._id}.${it._id}`) probs.push(`chave ${it._key}`);
+  }
+  if (new Set(doc.items.map((i) => i._id)).size !== doc.items.length) probs.push("ids de ataque repetidos");
+  const am = doc.flags?.spacedragon?.ameaca;
+  if (am?.atributos?.FOR !== criatura("Tiranossauro").atributos.FOR) probs.push("atributos fora dos flags");
+  if (!doc.system.description.includes('class="sd-bloco-extra"')) probs.push("o topo da descrição não está marcado para a Ficha de Ameaça esconder");
+  if (probs.length) falhasA += 1;
+  console.log(`  ${probs.length ? "✘" : "✔"} documento do Tiranossauro${probs.length ? ` — ${probs.join("; ")}` : ": 2 ataques embutidos, atributos nos flags"}`);
+}
+console.log(`\n${ATAQUES.length + 5 - falhasA}/${ATAQUES.length + 5} conferências de ataque passam.`);
+
+if (falhas || falhasB || falhasA) process.exit(1);

@@ -9,7 +9,7 @@
     "size": "pequeno",
     "alignment": "ordeiro",
     "habitat": "FLORESTAS",
-    "description": "<p><em>Apius gigantus</em></p><p><strong>FOR</strong> 10 · <strong>DES</strong> 16 · <strong>CON</strong> 6 · <strong>INT</strong> 2 · <strong>CIE</strong> 2 · <strong>COM</strong> 4</p><p>Zangões gigantes, apesar do nome, são insetos do tamanho de uma mão humana. Possuem listras amarelas e pretas pelo corpo e um ferrão na extremidade do abdômen. São extremamente organizados e defenderão suas colmeias a qualquer custo. Contudo seus ataques são suicidas, visto que o ferrão fica preso no corpo da vítima, e o zangão morre imediatamente. Veneno a ferroada de um zangão gigante obriga a vítima a fazer uma JPF. Uma falha significa que a quantidade total de PV da vítima é reduzida 1d4 pontos. Essa redução é cumulativa, e a vítima gradualmente recuperará sua quantidade total de PV no mesmo ritmo que recupera pontos de dano sofridos. Um alvo que chegue a 0 PV deste modo morre instantaneamente.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Apius gigantus</em></p><p><strong>FOR</strong> 10 · <strong>DES</strong> 16 · <strong>CON</strong> 6 · <strong>INT</strong> 2 · <strong>CIE</strong> 2 · <strong>COM</strong> 4</p></div><p>Zangões gigantes, apesar do nome, são insetos do tamanho de uma mão humana. Possuem listras amarelas e pretas pelo corpo e um ferrão na extremidade do abdômen. São extremamente organizados e defenderão suas colmeias a qualquer custo. Contudo seus ataques são suicidas, visto que o ferrão fica preso no corpo da vítima, e o zangão morre imediatamente. Veneno a ferroada de um zangão gigante obriga a vítima a fazer uma JPF. Uma falha significa que a quantidade total de PV da vítima é reduzida 1d4 pontos. Essa redução é cumulativa, e a vítima gradualmente recuperará sua quantidade total de PV no mesmo ritmo que recupera pontos de dano sofridos. Um alvo que chegue a 0 PV deste modo morre instantaneamente.</p>",
     "described_attacks": "1 FERRÃO +2 (1D4 VENENO, VER TEXTO)",
     "encounters": "ERRANTE 2D6 COLMEIA 5D6",
     "xp": "37 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "JXSpAAKsDVJv3Mgs",
+      "name": "Ferrão +2 (1D4 VENENO, VER TEXTO)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 2,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Ferrão",
+        "damage_description": "1D4 VENENO, VER TEXTO",
+        "damage": "1d4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!zpyrLQ3h7WIiAtTf.JXSpAAKsDVJv3Mgs"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Apius gigantus",
+        "atributos": {
+          "FOR": 10,
+          "DES": 16,
+          "CON": 6,
+          "INT": 2,
+          "CIE": 2,
+          "COM": 4
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

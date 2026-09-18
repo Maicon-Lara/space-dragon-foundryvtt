@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "caotico",
     "habitat": "RUÍNAS",
-    "description": "<p><em>Vampiris energis</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 16 · <strong>CON</strong> 18 · <strong>INT</strong> 5 · <strong>CIE</strong> 2 · <strong>COM</strong> 5</p><p>Vampiros energéticos são criaturas humanoides capazes de sugar a energia vital de outros seres vivos através do toque. Têm o tamanho aproximado de um humano, pele cinzenta e olhos negros, além de uma aparência doentia e frágil. Especula-se que os vampiros energéticos originalmente eram mutantes humanos que ao se isolarem da linha evolutiva principal acabaram por tornarem-se uma espécie completamente diferente. Dreno de energia ao toque do vampiro energético o personagem sofre um dreno de 1d4 DV, que são revertidos para a criatura. Ao drenar os DV de um personagem o mestre deve rolar a mesma quantidade de dados para determinar o acréscimo aos DV do vampiro energético.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Vampiris energis</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 16 · <strong>CON</strong> 18 · <strong>INT</strong> 5 · <strong>CIE</strong> 2 · <strong>COM</strong> 5</p></div><p>Vampiros energéticos são criaturas humanoides capazes de sugar a energia vital de outros seres vivos através do toque. Têm o tamanho aproximado de um humano, pele cinzenta e olhos negros, além de uma aparência doentia e frágil. Especula-se que os vampiros energéticos originalmente eram mutantes humanos que ao se isolarem da linha evolutiva principal acabaram por tornarem-se uma espécie completamente diferente. Dreno de energia ao toque do vampiro energético o personagem sofre um dreno de 1d4 DV, que são revertidos para a criatura. Ao drenar os DV de um personagem o mestre deve rolar a mesma quantidade de dados para determinar o acréscimo aos DV do vampiro energético.</p>",
     "described_attacks": "1 TOQUE +4 (DRENO DE ENERGIA)",
     "encounters": "ERRANTE 1D4 COVIL 2D6",
     "xp": "280 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "Zhe870ono0MA3Flq",
+      "name": "Toque +4 (DRENO DE ENERGIA)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 4,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Toque",
+        "damage_description": "DRENO DE ENERGIA",
+        "damage": ""
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!VrMslBWGMc9gXY0n.Zhe870ono0MA3Flq"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Vampiris energis",
+        "atributos": {
+          "FOR": 14,
+          "DES": 16,
+          "CON": 18,
+          "INT": 5,
+          "CIE": 2,
+          "COM": 5
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

@@ -9,7 +9,7 @@
     "size": "pequeno",
     "alignment": "caotico",
     "habitat": "QUALQUER",
-    "description": "<p><em>Mentis glutonius</em></p><p><strong>FOR</strong> 5 · <strong>DES</strong> 10 · <strong>CON</strong> 4 · <strong>INT</strong> 16 · <strong>CIE</strong> 14 · <strong>COM</strong> 12</p><p>Devoradores de mentes assemelham- se a seres humanos em miniatura, do tamanho aproximado de uma criança, porém têm a pele cinza, cabeça ovaloide e olhos completamente negros. Eles nunca se locomovem com as pernas, movendo- se através de levitação causada por seus poderes mentais inerentes. Possuem tecnologia tão avançada quanto à humana ou ainda superior, mas são solitários por natureza, sendo incrivelmente raro encontrar mais de um membro da espécie ao mesmo tempo. Poderes mentais devoradores de mentes podem utilizar poderes mentais até a 3ª grandeza, com alcance mental diário de 10%. Eles não precisam realizar jogadas percentuais para realizar poderes desconhecidos, visto que sabem naturalmente utilizar todos eles. DRAGÃO | Draco mithicos Os dragões, répteis de imensa estatura, comumente capazes de voar e ex- pelir fogo de suas bocas, fazem parte do folclore humano desde a gênese da espécie. Considerados lendas por alguns e realidade por outros, a sociedade humana em geral se divide na crença ou não, na existência desses seres. Embora evidências concretas de sua existência nunca tenham sido des- cobertas, foram traçados perfis científico-biológicos de nove subespécies dracônicas, divididas entre dragões telúricos e jovianos, embora os dados sejam apenas especulativos e incompletos. Supostamente os telúricos são incapazes de voo, enquanto os jovianos o são. Os nomes de cada espécie especulativa derivam de registros ancestrais das crenças de um império humano primitivo, cujas divindades possuí- am características significativamente similares às dos dragões folclóricos. Esses registros também mencionam a associação das divindades com corpos celestes, o que remete à junção de religião e astronáutica que se especula ter havido antes da conquista espacial, e a um provável culto aos dragões como deuses. Também supõe-se que os dragões seriam capazes de utilizar poderes men- tais, principalmente de comunicação telepática. Essa especulação acaba por fazer com que os crentes em sua existência associem a ordem dos mentá- licos a esses répteis míticos, como possível explicação da hiperciência por trás de seus poderes mentais. As características comuns a todos os dragões lendários estão compiladas na tabela T11-10 e informações específicas de cada subespécie são dadas nos respectivos tópicos.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Mentis glutonius</em></p><p><strong>FOR</strong> 5 · <strong>DES</strong> 10 · <strong>CON</strong> 4 · <strong>INT</strong> 16 · <strong>CIE</strong> 14 · <strong>COM</strong> 12</p></div><p>Devoradores de mentes assemelham- se a seres humanos em miniatura, do tamanho aproximado de uma criança, porém têm a pele cinza, cabeça ovaloide e olhos completamente negros. Eles nunca se locomovem com as pernas, movendo- se através de levitação causada por seus poderes mentais inerentes. Possuem tecnologia tão avançada quanto à humana ou ainda superior, mas são solitários por natureza, sendo incrivelmente raro encontrar mais de um membro da espécie ao mesmo tempo. Poderes mentais devoradores de mentes podem utilizar poderes mentais até a 3ª grandeza, com alcance mental diário de 10%. Eles não precisam realizar jogadas percentuais para realizar poderes desconhecidos, visto que sabem naturalmente utilizar todos eles. DRAGÃO | Draco mithicos Os dragões, répteis de imensa estatura, comumente capazes de voar e ex- pelir fogo de suas bocas, fazem parte do folclore humano desde a gênese da espécie. Considerados lendas por alguns e realidade por outros, a sociedade humana em geral se divide na crença ou não, na existência desses seres. Embora evidências concretas de sua existência nunca tenham sido des- cobertas, foram traçados perfis científico-biológicos de nove subespécies dracônicas, divididas entre dragões telúricos e jovianos, embora os dados sejam apenas especulativos e incompletos. Supostamente os telúricos são incapazes de voo, enquanto os jovianos o são. Os nomes de cada espécie especulativa derivam de registros ancestrais das crenças de um império humano primitivo, cujas divindades possuí- am características significativamente similares às dos dragões folclóricos. Esses registros também mencionam a associação das divindades com corpos celestes, o que remete à junção de religião e astronáutica que se especula ter havido antes da conquista espacial, e a um provável culto aos dragões como deuses. Também supõe-se que os dragões seriam capazes de utilizar poderes men- tais, principalmente de comunicação telepática. Essa especulação acaba por fazer com que os crentes em sua existência associem a ordem dos mentá- licos a esses répteis míticos, como possível explicação da hiperciência por trás de seus poderes mentais. As características comuns a todos os dragões lendários estão compiladas na tabela T11-10 e informações específicas de cada subespécie são dadas nos respectivos tópicos.</p>",
     "described_attacks": "PODERES MENTAIS (VER TEXTO)",
     "encounters": "1",
     "xp": "D 175 XP",
@@ -47,6 +47,21 @@
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Mentis glutonius",
+        "atributos": {
+          "FOR": 5,
+          "DES": 10,
+          "CON": 4,
+          "INT": 16,
+          "CIE": 14,
+          "COM": 12
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

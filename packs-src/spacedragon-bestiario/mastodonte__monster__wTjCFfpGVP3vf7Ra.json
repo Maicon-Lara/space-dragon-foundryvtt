@@ -9,7 +9,7 @@
     "size": "imenso",
     "alignment": "neutro",
     "habitat": "PLANÍCIES",
-    "description": "<p><em>Mamutis gigantus</em></p><p><strong>FOR</strong> 26 · <strong>DES</strong> 14 · <strong>CON</strong> 20 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p><p>Mastodontes são enormes mamíferos aparentados a elefantes, mas cobertos de pelos grossos. Suas enormes presas frontais são afiadas e mortais quando usadas para um ataque. São herbívoros e vivem em manadas pelas planícies, sempre migrando para onde haja pasto e plantas rasteiras. Quando a manada é ameaçada todos os membros disparam contra os inimigos, atropelando todos em seu caminho. Arremesso uma vítima atingida por um ataque com as presas do mastodonte é arremessada a 1d6 metros de distância, se não passar em uma JPR. Atropelar um mastodonte em corrida pode atropelar todos em sua frente que não passarem em uma JPR. O atropelamento causa o mesmo dano do ataque com presas.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Mamutis gigantus</em></p><p><strong>FOR</strong> 26 · <strong>DES</strong> 14 · <strong>CON</strong> 20 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p></div><p>Mastodontes são enormes mamíferos aparentados a elefantes, mas cobertos de pelos grossos. Suas enormes presas frontais são afiadas e mortais quando usadas para um ataque. São herbívoros e vivem em manadas pelas planícies, sempre migrando para onde haja pasto e plantas rasteiras. Quando a manada é ameaçada todos os membros disparam contra os inimigos, atropelando todos em seu caminho. Arremesso uma vítima atingida por um ataque com as presas do mastodonte é arremessada a 1d6 metros de distância, se não passar em uma JPR. Atropelar um mastodonte em corrida pode atropelar todos em sua frente que não passarem em uma JPR. O atropelamento causa o mesmo dano do ataque com presas.</p>",
     "described_attacks": "1 ATAQUE COM PRESAS +14 (2D8+8+ARREMESSO) ATROPELAR (VER TEXTO)",
     "encounters": "ERRANTE 1D2 MANADA 2D6",
     "xp": "2.075 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "2TXAr3jkvJCdkOsd",
+      "name": "Ataque com presas +14 (2D8+8+ARREMESSO)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 14,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Ataque com presas",
+        "damage_description": "2D8+8+ARREMESSO",
+        "damage": "2d8+8"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!wTjCFfpGVP3vf7Ra.2TXAr3jkvJCdkOsd"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Mamutis gigantus",
+        "atributos": {
+          "FOR": 26,
+          "DES": 14,
+          "CON": 20,
+          "INT": 4,
+          "CIE": 0,
+          "COM": 4
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

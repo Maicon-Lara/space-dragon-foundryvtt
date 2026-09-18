@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "neutro",
     "habitat": "QUALQUER",
-    "description": "<p><strong>FOR</strong> 14 · <strong>DES</strong> 14 · <strong>CON</strong> 12 · <strong>INT</strong> 10 · <strong>CIE</strong> 10 · <strong>COM</strong> 10</p><p>Pilotagem 84% de chance de pilotar qualquer veículo ou espaçonave. Desarmar 50% de chance de desarmar qualquer inimigo. Subjugar 50% de chance de subjugar um inimigo desarmado.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 14 · <strong>DES</strong> 14 · <strong>CON</strong> 12 · <strong>INT</strong> 10 · <strong>CIE</strong> 10 · <strong>COM</strong> 10</p></div><p>Pilotagem 84% de chance de pilotar qualquer veículo ou espaçonave. Desarmar 50% de chance de desarmar qualquer inimigo. Subjugar 50% de chance de subjugar um inimigo desarmado.</p>",
     "described_attacks": "1 RIFLE LASER +7 (1D8) 1 ESPADA DE ENERGIA+7 (1D8+2)",
     "encounters": "1D6",
     "xp": "D,U 1.600 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "HthzLBnYq6ZN2Wjx",
+      "name": "Rifle laser +7 (1D8)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 7,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Rifle laser",
+        "damage_description": "1D8",
+        "damage": "1d8"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!ND6tYk7rov8TdS13.HthzLBnYq6ZN2Wjx"
+    },
+    {
+      "_id": "QB9t9l4BeFVxVRsY",
+      "name": "Espada de energia +7 (1D8+2)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 7,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Espada de energia",
+        "damage_description": "1D8+2",
+        "damage": "1d8+2"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!ND6tYk7rov8TdS13.QB9t9l4BeFVxVRsY"
+    }
+  ],
   "effects": [],
   "folder": "S8agGTOipbrT4SKh",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "",
+        "atributos": {
+          "FOR": 14,
+          "DES": 14,
+          "CON": 12,
+          "INT": 10,
+          "CIE": 10,
+          "COM": 10
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

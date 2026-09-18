@@ -1026,6 +1026,47 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   console.log("  ✔ ameaça: os rótulos saem pelo gancho da ficha do sistema, e só na Ficha de Ameaça");
 }
 
+// ── O painel do bloco do livro na Ficha de Ameaça ──────────────────────────
+// Atributos, RM, RD e nome científico, em campos com `name` de flag para o
+// formulário da própria ficha salvar. Só na Ficha de Ameaça, e uma vez só.
+{
+  const probPainel = [];
+  const reg = fichasRegistradas.find((f) => f.cfg?.label === "Ficha de Ameaça Space Dragon");
+  const gancho = ganchos.find((g) => g.nome === "renderOD2MonsterSheet");
+  const html = `<div class="basic-info"><div class="name"><input name="name" value="Tiranossauro"></div></div>
+    <div class="stats"><div class="stat"><label class="font-bold">CA</label></div></div>`;
+  const raizP = monta(html);
+  const app = new reg.cls();
+  app.actor = {
+    type: "monster", name: "Tiranossauro",
+    flags: { spacedragon: { ameaca: {
+      cientifico: "Tyrannosaurus spatialis",
+      atributos: { FOR: 24, DES: 10, CON: 20, INT: 3, CIE: null, COM: 4 },
+      rm: "", rd: "6/FÍSICO",
+    } } },
+  };
+  gancho.fn(app, raizP);
+  gancho.fn(app, raizP);
+  const campos = raizP.querySelectorAll(".sd-ameaca-painel input");
+  const porNome = Object.fromEntries(campos.map((c) => [c.getAttribute("name"), c.getAttribute("value")]));
+  if (raizP.querySelectorAll(".sd-ameaca-painel").length !== 1) probPainel.push("o painel entrou mais de uma vez");
+  if (campos.length !== 8) probPainel.push(`${campos.length} campos no painel, esperava 8 (6 atributos, RM, RD)`);
+  if (porNome["flags.spacedragon.ameaca.atributos.FOR"] !== "24") probPainel.push(`FOR = ${porNome["flags.spacedragon.ameaca.atributos.FOR"]}`);
+  if (porNome["flags.spacedragon.ameaca.atributos.CIE"] !== "") probPainel.push("atributo sem valor devia ficar vazio");
+  if (porNome["flags.spacedragon.ameaca.rd"] !== "6/FÍSICO") probPainel.push(`RD = ${porNome["flags.spacedragon.ameaca.rd"]}`);
+  const cient = raizP.querySelector(".basic-info .sd-ameaca-cientifico input");
+  if (cient?.getAttribute("value") !== "Tyrannosaurus spatialis") probPainel.push("o nome científico não entrou no cabeçalho");
+  // A ficha do sistema não ganha painel.
+  const raizOD2 = monta(html);
+  gancho.fn({ actor: { type: "monster", flags: {} } }, raizOD2);
+  if (raizOD2.querySelector(".sd-ameaca-painel")) probPainel.push("a ficha de monstro do sistema ganhou o painel");
+  if (probPainel.length) {
+    for (const x of probPainel) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ ameaça: painel de atributos, RM, RD e nome científico, só na Ficha de Ameaça");
+}
+
 // ── A opção "Fichas Space Dragon como padrão" ──────────────────────────────
 // Ligada (o padrão), o ator SEM ficha marcada é do Space Dragon — é a mesa
 // de Space Dragon, onde ninguém marca ator por ator. Com a ficha do sistema

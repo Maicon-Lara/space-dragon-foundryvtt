@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "neutro",
     "habitat": "RUÍNAS",
-    "description": "<p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 16 · <strong>INT</strong> 10 · <strong>CIE</strong> 12 · <strong>COM</strong> 8</p><p>Humanoides robóticos representam o último estágio de desenvolvimento tecnológico em relação ao cérebro positrônico antes que ele fosse aperfeiçoado para o modelo atual. Sua inteligência ainda é primitiva se comparada à humana, mas significativamente desenvolvida em comparação a animais e certos alienígenas. Podem comunicar-se através de frases simples, são capazes de aprender comandos e executá-los. Desativação humanoides robóticos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 16 · <strong>INT</strong> 10 · <strong>CIE</strong> 12 · <strong>COM</strong> 8</p></div><p>Humanoides robóticos representam o último estágio de desenvolvimento tecnológico em relação ao cérebro positrônico antes que ele fosse aperfeiçoado para o modelo atual. Sua inteligência ainda é primitiva se comparada à humana, mas significativamente desenvolvida em comparação a animais e certos alienígenas. Podem comunicar-se através de frases simples, são capazes de aprender comandos e executá-los. Desativação humanoides robóticos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
     "described_attacks": "1 PANCADA +8 (1D8+4) 1 RAIO LASER +4 (1D6)",
     "encounters": "ERRANTE 1D2 GRUPO 1D4",
     "xp": "ODU 1.075 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "wMrfc6zPJZ6FvYfU",
+      "name": "Pancada +8 (1D8+4)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 8,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Pancada",
+        "damage_description": "1D8+4",
+        "damage": "1d8+4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!Ob2GjGv4o4H3mwAn.wMrfc6zPJZ6FvYfU"
+    },
+    {
+      "_id": "kA1FomO9PJyG6JqF",
+      "name": "Raio laser +4 (1D6)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 4,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Raio laser",
+        "damage_description": "1D6",
+        "damage": "1d6"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!Ob2GjGv4o4H3mwAn.kA1FomO9PJyG6JqF"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "",
+        "atributos": {
+          "FOR": 14,
+          "DES": 12,
+          "CON": 16,
+          "INT": 10,
+          "CIE": 12,
+          "COM": 8
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

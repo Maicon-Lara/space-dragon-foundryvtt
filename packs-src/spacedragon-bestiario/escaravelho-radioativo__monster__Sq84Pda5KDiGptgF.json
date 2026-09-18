@@ -9,7 +9,7 @@
     "size": "grande",
     "alignment": "neutro",
     "habitat": "RUÍNAS",
-    "description": "<p><em>Scarabus uranius</em></p><p><strong>FOR</strong> 12 · <strong>DES</strong> 10 · <strong>CON</strong> 14 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Escaravelhos radioativos são besouros marrons maiores que seres humanos e emitem um brilho verde devido a sua radioatividade. Em geral, habitam as ruínas de antigas estações humanas, onde acabam sendo contaminados por vazamentos radioativos. Atacarão usando suas pinças, com as quais cortam suas vítimas ao meio antes de devorá-las. Radioatividade qualquer personagem que sofra um ataque bem-sucedido de um escaravelho radioativo tem 15% de chance de sofrer também uma contaminação radioativa. Mesmo que um personagem não seja atingido pela criatura a simples proximidade também confere uma chance de 5% de contaminação.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Scarabus uranius</em></p><p><strong>FOR</strong> 12 · <strong>DES</strong> 10 · <strong>CON</strong> 14 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>Escaravelhos radioativos são besouros marrons maiores que seres humanos e emitem um brilho verde devido a sua radioatividade. Em geral, habitam as ruínas de antigas estações humanas, onde acabam sendo contaminados por vazamentos radioativos. Atacarão usando suas pinças, com as quais cortam suas vítimas ao meio antes de devorá-las. Radioatividade qualquer personagem que sofra um ataque bem-sucedido de um escaravelho radioativo tem 15% de chance de sofrer também uma contaminação radioativa. Mesmo que um personagem não seja atingido pela criatura a simples proximidade também confere uma chance de 5% de contaminação.</p>",
     "described_attacks": "1 PINÇA +6 (1D6+4+RADIOATIVIDADE)",
     "encounters": "GRUPO 1D4 INFESTAÇÃO 2D6",
     "xp": "405 XP",
@@ -42,12 +42,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "8uJ49ZlXCMMALXdL",
+      "name": "Pinça +6 (1D6+4+RADIOATIVIDADE)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 6,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Pinça",
+        "damage_description": "1D6+4+RADIOATIVIDADE",
+        "damage": "1d6+4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!Sq84Pda5KDiGptgF.8uJ49ZlXCMMALXdL"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Scarabus uranius",
+        "atributos": {
+          "FOR": 12,
+          "DES": 10,
+          "CON": 14,
+          "INT": 2,
+          "CIE": 0,
+          "COM": 0
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

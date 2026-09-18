@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "neutro",
     "habitat": "RUÍNAS",
-    "description": "<p><strong>FOR</strong> 5 · <strong>DES</strong> 3 · <strong>CON</strong> 4 · <strong>INT</strong> 3 · <strong>CIE</strong> 2 · <strong>COM</strong> 0</p><p>Sucata robótica é um termo para qualquer tipo de robô humanoide que esteja deteriorado ou danificado a ponto de ser praticamente impossível definir seu nível de desenvolvimento tecnológico ou função. As sucatas são totalmente imprevisíveis e instáveis, podendo iniciar ou parar um ataque ou outra ação a qualquer momento. Desativação sucatas robóticas podem ser desativadas por cientistas através de um disruptor positrônico.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 5 · <strong>DES</strong> 3 · <strong>CON</strong> 4 · <strong>INT</strong> 3 · <strong>CIE</strong> 2 · <strong>COM</strong> 0</p></div><p>Sucata robótica é um termo para qualquer tipo de robô humanoide que esteja deteriorado ou danificado a ponto de ser praticamente impossível definir seu nível de desenvolvimento tecnológico ou função. As sucatas são totalmente imprevisíveis e instáveis, podendo iniciar ou parar um ataque ou outra ação a qualquer momento. Desativação sucatas robóticas podem ser desativadas por cientistas através de um disruptor positrônico.</p>",
     "described_attacks": "1 PANCADA +1 (1D4+1)",
     "encounters": "ERRANTE 2D6 GRUPO 5D6",
     "xp": "25 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "E8PVf4wYkWqtMt7L",
+      "name": "Pancada +1 (1D4+1)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 1,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Pancada",
+        "damage_description": "1D4+1",
+        "damage": "1d4+1"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!BQY45YBf5ydZouJZ.E8PVf4wYkWqtMt7L"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "",
+        "atributos": {
+          "FOR": 5,
+          "DES": 3,
+          "CON": 4,
+          "INT": 3,
+          "CIE": 2,
+          "COM": 0
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

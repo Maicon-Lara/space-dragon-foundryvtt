@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "neutro",
     "habitat": "FLORESTAS E RUÍNAS",
-    "description": "<p><em>Simio sapiens</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 14 · <strong>CON</strong> 14 · <strong>INT</strong> 11 · <strong>CIE</strong> 5 · <strong>COM</strong> 12</p><p><strong>Resistência mental</strong> 5%</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Simio sapiens</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 14 · <strong>CON</strong> 14 · <strong>INT</strong> 11 · <strong>CIE</strong> 5 · <strong>COM</strong> 12</p><p><strong>Resistência mental</strong> 5%</p></div>",
     "described_attacks": "1 ESPADA DE LÂMINA +6 (1D8+4) 1 ZARABATANA +3 (1D4 + VENENO)",
     "encounters": "ERRANTE 1D6 GRUPO 3D6",
     "xp": "U 450 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "LLnecRGoFq5FqcGj",
+      "name": "Espada de lâmina +6 (1D8+4)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 6,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Espada de lâmina",
+        "damage_description": "1D8+4",
+        "damage": "1d8+4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!n1MxUWCr0LzWOtvu.LLnecRGoFq5FqcGj"
+    },
+    {
+      "_id": "JjeJKEY7Z4cAZnD1",
+      "name": "Zarabatana +3 (1D4 + VENENO)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 3,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Zarabatana",
+        "damage_description": "1D4 + VENENO",
+        "damage": "1d4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!n1MxUWCr0LzWOtvu.JjeJKEY7Z4cAZnD1"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Simio sapiens",
+        "atributos": {
+          "FOR": 18,
+          "DES": 14,
+          "CON": 14,
+          "INT": 11,
+          "CIE": 5,
+          "COM": 12
+        },
+        "rm": "5%",
+        "rd": ""
+      }
     }
   },
   "_stats": {

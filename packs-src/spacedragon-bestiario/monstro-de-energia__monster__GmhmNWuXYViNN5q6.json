@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "caotico",
     "habitat": "RUÍNAS",
-    "description": "<p><strong>FOR</strong> 0 · <strong>DES</strong> 18 · <strong>CON</strong> 0 · <strong>INT</strong> 6 · <strong>CIE</strong> 4 · <strong>COM</strong> 2</p><p><strong>Redução de dano</strong> IMUNE A</p><p>Monstros de energia são aberrações sem explicação científica plausível, mas perigosas a todos que encontrarem uma. Possuem corpos vagamente humanoides formados de energia elétrica e luminosa, causam dano ao simples toque em matéria sólida. De acordo com a teoria mentálica, estas criaturas são o resultado da fusão de um espírito mental com energia residual de um lugar, embora ainda não tenha sido possível provar essa tese. Incorpóreo por serem incorpóreos os monstros de energia são imunes a quaisquer ataques físicos, e também vencem automaticamente qualquer jogada de proteção que precisarem fazer.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 0 · <strong>DES</strong> 18 · <strong>CON</strong> 0 · <strong>INT</strong> 6 · <strong>CIE</strong> 4 · <strong>COM</strong> 2</p><p><strong>Redução de dano</strong> IMUNE A</p></div><p>Monstros de energia são aberrações sem explicação científica plausível, mas perigosas a todos que encontrarem uma. Possuem corpos vagamente humanoides formados de energia elétrica e luminosa, causam dano ao simples toque em matéria sólida. De acordo com a teoria mentálica, estas criaturas são o resultado da fusão de um espírito mental com energia residual de um lugar, embora ainda não tenha sido possível provar essa tese. Incorpóreo por serem incorpóreos os monstros de energia são imunes a quaisquer ataques físicos, e também vencem automaticamente qualquer jogada de proteção que precisarem fazer.</p>",
     "described_attacks": "1 TOQUE +4 (1D6+2 ELÉTRICO)",
     "encounters": "1",
     "xp": "450 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "aQuVDMU0UByBSQ1n",
+      "name": "Toque +4 (1D6+2 ELÉTRICO)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 4,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Toque",
+        "damage_description": "1D6+2 ELÉTRICO",
+        "damage": "1d6+2"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!GmhmNWuXYViNN5q6.aQuVDMU0UByBSQ1n"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "",
+        "atributos": {
+          "FOR": 0,
+          "DES": 18,
+          "CON": 0,
+          "INT": 6,
+          "CIE": 4,
+          "COM": 2
+        },
+        "rm": "",
+        "rd": "IMUNE A"
+      }
     }
   },
   "_stats": {

@@ -9,7 +9,7 @@
     "size": "grande",
     "alignment": "neutro",
     "habitat": "TERRENOS ROCHOSOS",
-    "description": "<p><em>Crustaceo mineralis</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 10 · <strong>CON</strong> 14 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p><strong>Redução de dano</strong> 4/ÁCIDO</p><p>Os encrustáceos à primeira vista não passam de grandes rochas calcárias, mas elas na verdade são apenas a concha dos crustáceos semelhantes a lagostas que vivem dentro delas. Embora sejam uma camuflagem eficaz, seu propósito é fornecer proteção contra ataques. Em um combate, os encrustáceos atacarão com ambas as enormes garras, que podem dilacerar carne facilmente. Defesa rochosa um encrustáceo pode esconder- se em sua concha, ficando virtualmente invulnerável a quaisquer ataques, exceto a dano ácido ou forças extremamente brutais.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Crustaceo mineralis</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 10 · <strong>CON</strong> 14 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p><strong>Redução de dano</strong> 4/ÁCIDO</p></div><p>Os encrustáceos à primeira vista não passam de grandes rochas calcárias, mas elas na verdade são apenas a concha dos crustáceos semelhantes a lagostas que vivem dentro delas. Embora sejam uma camuflagem eficaz, seu propósito é fornecer proteção contra ataques. Em um combate, os encrustáceos atacarão com ambas as enormes garras, que podem dilacerar carne facilmente. Defesa rochosa um encrustáceo pode esconder- se em sua concha, ficando virtualmente invulnerável a quaisquer ataques, exceto a dano ácido ou forças extremamente brutais.</p>",
     "described_attacks": "2 GARRAS +4 (1D6+2)",
     "encounters": "GRUPO 1D4 COLÔNIA 2D6",
     "xp": "405 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "OdU3hPdC9sPWJCmV",
+      "name": "2 × Garras +4 (1D6+2)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 2,
+        "ba": 4,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Garras",
+        "damage_description": "1D6+2",
+        "damage": "1d6+2"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!7Uh1GLIhGwZtNTKm.OdU3hPdC9sPWJCmV"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Crustaceo mineralis",
+        "atributos": {
+          "FOR": 14,
+          "DES": 10,
+          "CON": 14,
+          "INT": 5,
+          "CIE": 0,
+          "COM": 0
+        },
+        "rm": "",
+        "rd": "4/ÁCIDO"
+      }
     }
   },
   "_stats": {

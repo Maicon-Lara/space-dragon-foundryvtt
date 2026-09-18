@@ -9,7 +9,7 @@
     "size": "imenso",
     "alignment": "caotico",
     "habitat": "PLANÍCIES",
-    "description": "<p><em>Rhino saurus</em></p><p><strong>FOR</strong> 25 · <strong>DES</strong> 16 · <strong>CON</strong> 20 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p>Rinoceratops são alienossauros quadrúpedes, pesados e que possuem couraças grossas. Têm um poderoso chifre sobre seus focinhos, o qual utilizam para o ataque. Vivem em planícies, e não raramente, entram em conflito com mastodontes que vivam no mesmo lugar, disputando o território. Arremesso uma vítima que é atingida por um ataque com o chifre do rinoceratops é arremessada a 1d6 metros de distância, se não passar em uma JPR.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Rhino saurus</em></p><p><strong>FOR</strong> 25 · <strong>DES</strong> 16 · <strong>CON</strong> 20 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p></div><p>Rinoceratops são alienossauros quadrúpedes, pesados e que possuem couraças grossas. Têm um poderoso chifre sobre seus focinhos, o qual utilizam para o ataque. Vivem em planícies, e não raramente, entram em conflito com mastodontes que vivam no mesmo lugar, disputando o território. Arremesso uma vítima que é atingida por um ataque com o chifre do rinoceratops é arremessada a 1d6 metros de distância, se não passar em uma JPR.</p>",
     "described_attacks": "1 CHIFRADA +15 (2D10+8 + ARREMESSO) 1 CABEÇADA +8 (1D10+6)",
     "encounters": "ERRANTE 1D2 MANADA 1D6",
     "xp": "1.390 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "A0cFFb2j1o36N97Z",
+      "name": "Chifrada +15 (2D10+8 + ARREMESSO)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 15,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Chifrada",
+        "damage_description": "2D10+8 + ARREMESSO",
+        "damage": "2d10+8"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!WFkgZ4UszVIparSZ.A0cFFb2j1o36N97Z"
+    },
+    {
+      "_id": "l83iTe31p0BgKYSO",
+      "name": "Cabeçada +8 (1D10+6)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 8,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Cabeçada",
+        "damage_description": "1D10+6",
+        "damage": "1d10+6"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!WFkgZ4UszVIparSZ.l83iTe31p0BgKYSO"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Rhino saurus",
+        "atributos": {
+          "FOR": 25,
+          "DES": 16,
+          "CON": 20,
+          "INT": 2,
+          "CIE": 0,
+          "COM": 2
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

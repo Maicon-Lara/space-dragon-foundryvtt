@@ -9,7 +9,7 @@
     "size": "pequeno",
     "alignment": "neutro",
     "habitat": "QUALQUER",
-    "description": "<p><em>Verdis sapiens</em></p><p><strong>FOR</strong> 8 · <strong>DES</strong> 14 · <strong>CON</strong> 9 · <strong>INT</strong> 16 · <strong>CIE</strong> 16 · <strong>COM</strong> 14</p><p><strong>Resistência mental</strong> 15%</p><p>Os homenzinhos verdes são uma raça humanoide sapiente com a qual a humanidade tem tido contato desde tempos imemoriais. Registros ancestrais fazem relação desses pequenos seres do tamanho de um bebê humano e os dragões marcianos, possivelmente o planeta de origem. Possuem ciência avançada, sendo capazes de viagem espacial e de experimentos científicos, embora não se tenha conhecimento de estações espaciais ou dos planetas onde vivem. Resistência mental os cérebros dos homenzinhos verdes são 85% iguais aos dos humanos, o que lhes confere 15% de resistência contra poderes mentais.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Verdis sapiens</em></p><p><strong>FOR</strong> 8 · <strong>DES</strong> 14 · <strong>CON</strong> 9 · <strong>INT</strong> 16 · <strong>CIE</strong> 16 · <strong>COM</strong> 14</p><p><strong>Resistência mental</strong> 15%</p></div><p>Os homenzinhos verdes são uma raça humanoide sapiente com a qual a humanidade tem tido contato desde tempos imemoriais. Registros ancestrais fazem relação desses pequenos seres do tamanho de um bebê humano e os dragões marcianos, possivelmente o planeta de origem. Possuem ciência avançada, sendo capazes de viagem espacial e de experimentos científicos, embora não se tenha conhecimento de estações espaciais ou dos planetas onde vivem. Resistência mental os cérebros dos homenzinhos verdes são 85% iguais aos dos humanos, o que lhes confere 15% de resistência contra poderes mentais.</p>",
     "described_attacks": "1 MINI PISTOLA LASER +2  (1D4)",
     "encounters": "GRUPO 1D10 NAVE 3D10",
     "xp": "ODU 37 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "2EHg1O1RsiD5ksBB",
+      "name": "Mini pistola laser +2 (1D4)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 2,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Mini pistola laser",
+        "damage_description": "1D4",
+        "damage": "1d4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!UONb9uvWHIsBGr8z.2EHg1O1RsiD5ksBB"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Verdis sapiens",
+        "atributos": {
+          "FOR": 8,
+          "DES": 14,
+          "CON": 9,
+          "INT": 16,
+          "CIE": 16,
+          "COM": 14
+        },
+        "rm": "15%",
+        "rd": ""
+      }
     }
   },
   "_stats": {

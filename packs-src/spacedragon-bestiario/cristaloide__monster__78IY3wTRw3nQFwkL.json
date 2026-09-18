@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "neutro",
     "habitat": "TERRENOS ROCHOSOS",
-    "description": "<p><em>Minerio humanoidis</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 7 · <strong>CON</strong> 16 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p><strong>Redução de dano</strong> 6/FÍSICO</p><p>Cristaloides são formas de vida vagamente humanoides cujo corpo é formado de cristais, mas sem detalhes específicos como rostos definidos, mãos ou dedos. Por serem formados de cristais comumente são encontrados em terrenos rochosos, em especial montanhas ou cavernas. Essa característica também faz com que feixes de laser ou outras formas de energia sejam refletidas em seus corpos, podendo inclusive reverter-se contra os atiradores. Reflexão em uma falha crítica com uma arma de energia contra um cristaloide ele poderá redirecionar intencionalmente o feixe contra um inimigo qualquer em seu campo de visão. O novo alvo deverá fazer uma JPR para desviar-se.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Minerio humanoidis</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 7 · <strong>CON</strong> 16 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p><strong>Redução de dano</strong> 6/FÍSICO</p></div><p>Cristaloides são formas de vida vagamente humanoides cujo corpo é formado de cristais, mas sem detalhes específicos como rostos definidos, mãos ou dedos. Por serem formados de cristais comumente são encontrados em terrenos rochosos, em especial montanhas ou cavernas. Essa característica também faz com que feixes de laser ou outras formas de energia sejam refletidas em seus corpos, podendo inclusive reverter-se contra os atiradores. Reflexão em uma falha crítica com uma arma de energia contra um cristaloide ele poderá redirecionar intencionalmente o feixe contra um inimigo qualquer em seu campo de visão. O novo alvo deverá fazer uma JPR para desviar-se.</p>",
     "described_attacks": "1 PANCADA +7 (1D10+6)",
     "encounters": "ERRANTE 1D2 GRUPO 1D6",
     "xp": "945 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "wJXzqjD3K0TUukQB",
+      "name": "Pancada +7 (1D10+6)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 7,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Pancada",
+        "damage_description": "1D10+6",
+        "damage": "1d10+6"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!78IY3wTRw3nQFwkL.wJXzqjD3K0TUukQB"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Minerio humanoidis",
+        "atributos": {
+          "FOR": 18,
+          "DES": 7,
+          "CON": 16,
+          "INT": 5,
+          "CIE": 0,
+          "COM": 2
+        },
+        "rm": "",
+        "rd": "6/FÍSICO"
+      }
     }
   },
   "_stats": {

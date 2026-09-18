@@ -955,6 +955,49 @@ function movimentoDe(mov) {
 
 const QUADRADOS = { miudo: 1, pequeno: 1, medio: 1, grande: 2, imenso: 3, colossal: 4 };
 
+/**
+ * Os ataques do bloco do livro, como itens "ataque de monstro" do sistema.
+ *
+ * O livro escreve "1 MORDIDA +2 (2D6+2) 1 FERROADA +3 (1D8+3 + VENENO)": vezes,
+ * nome, bônus de ataque e, entre parênteses, o dano e o que vem junto. O
+ * sistema tem um item para isso (`monster_attack`: vezes, nome, BA, dano),
+ * com botão de ataque e de dano — as criaturas vinham só com o texto, sem
+ * nada para rolar.
+ *
+ * Vira item o que tem bônus de ataque ou dado. "ENVOLVER (VER TEXTO)" e "PODERES
+ * MENTAIS (VER TEXTO)" são ações especiais, sem rolagem de ataque, e ficam no
+ * texto do bloco, que continua na ficha. Formas que o livro usa e que o
+ * leitor aceita:
+ *
+ *   "ESPADA DE ENERGIA+3 (1D8+2)"      sem espaço antes do bônus
+ *   "PANCADA +2 POR METRO (1D4/M)"     texto entre o bônus e o dano
+ *   "MORDIDA +4 (1D6+1D4 ELÉTRICO)"    dois dados somados
+ *   "TOQUE +4 (DRENO DE ENERGIA)"      ataque sem dado: vira item sem fórmula
+ */
+export function ataquesDoBloco(texto) {
+  const t = String(texto ?? "").replace(/\s*\|\s*/g, " ");
+  // O nome começa numa letra: sem o `\s*` da frente, o segundo ataque de uma
+  // linha começava no espaço e levava o "1" para dentro do nome.
+  const RE = /\s*(?:(\d+)\s+)?([^\s\d+\-()|][^+\-()|]*?)\s*(?:([+-]\s?\d+)([^()]*?))?\s*\(([^)]*)\)/g;
+  const saida = [];
+  for (const m of t.matchAll(RE)) {
+    const [, vezes, nome, bonus, meio = "", dentro] = m;
+    const dado = dentro.match(/^\s*(\d+d\d+(?:\s*[+-]\s*\d+(?:d\d+)?)*)/i)?.[1];
+    // Sem bônus e sem dado é ação especial.
+    if (!bonus && !dado) continue;
+    const descricao = `${nome.trim()}${meio.trim() ? ` ${meio.trim()}` : ""}`;
+    saida.push({
+      vezes: Number(vezes) || 1,
+      nome: descricao.charAt(0) + descricao.slice(1).toLowerCase(),
+      // O "1 TENTÁCULO (1D4)" da Medusa Elétrica vem sem bônus no livro: +0.
+      ba: bonus ? Number(bonus.replace(/\s/g, "")) : 0,
+      dano: dado ? dado.replace(/\s/g, "").toLowerCase() : "",
+      danoDescricao: dentro.trim(),
+    });
+  }
+  return saida;
+}
+
 export function monsterDoc(c, folderId, seedPrefix, sort) {
   // `seedNome` preserva o UUID quando só o RÓTULO muda. Foi preciso ao
   // consertar a caixa dos nomes — "Medidor De Radiação" virou "Medidor de
@@ -980,11 +1023,52 @@ export function monsterDoc(c, folderId, seedPrefix, sort) {
   if (c.rm) extras.push(`<strong>Resistência mental</strong> ${c.rm}`);
   if (c.rd) extras.push(`<strong>Redução de dano</strong> ${c.rd}`);
 
-  const desc =
+  // A Ficha de Ameaça mostra esses dados num painel editável (flags abaixo) e
+  // esconde este bloco, que fica para quem abrir a criatura na ficha do
+  // sistema.
+  const topo =
     (c.cientifico ? `<p><em>${c.cientifico}</em></p>` : "") +
     (linhaAt ? `<p>${linhaAt}</p>` : "") +
-    (extras.length ? `<p>${extras.join(" · ")}</p>` : "") +
+    (extras.length ? `<p>${extras.join(" · ")}</p>` : "");
+  const desc =
+    (topo ? `<div class="sd-bloco-extra">${topo}</div>` : "") +
     (c.texto ? `<p>${c.texto}</p>` : "");
+
+  const ameaca = {
+    cientifico: c.cientifico ?? "",
+    atributos: Object.fromEntries(
+      ["FOR", "DES", "CON", "INT", "CIE", "COM"].map((k) => [k, at[k] ?? null])
+    ),
+    rm: c.rm ?? "",
+    rd: c.rd ?? "",
+  };
+
+  const items = ataquesDoBloco(c.ataques).map((a, i) => {
+    const itemId = makeId(`monster:${seedPrefix}:${c.seedNome ?? c.nome}:ataque:${i}`);
+    const bonus = a.ba >= 0 ? `+${a.ba}` : `${a.ba}`;
+    return {
+      _id: itemId,
+      name: `${a.vezes > 1 ? `${a.vezes} × ` : ""}${a.nome} ${bonus}${a.danoDescricao ? ` (${a.danoDescricao})` : ""}`,
+      type: "monster_attack",
+      img: "icons/svg/sword.svg",
+      system: {
+        times: a.vezes,
+        ba: a.ba,
+        damage_bonus: 0,
+        weapon: false,
+        description: a.nome,
+        damage_description: a.danoDescricao,
+        damage: a.dano,
+      },
+      effects: [],
+      folder: null,
+      sort: (i + 1) * 100000,
+      ownership: { default: 0 },
+      flags: {},
+      _stats: stats(),
+      _key: `!actors.items!${id}.${itemId}`,
+    };
+  });
 
   const system = {
     odo_id: slug(c.nome),
@@ -1024,13 +1108,20 @@ export function monsterDoc(c, folderId, seedPrefix, sort) {
       displayBars: 40,
       bar1: { attribute: "hp" },
     },
-    items: [],
+    // Os ataques do bloco, com botão de ataque e de dano. O texto do bloco
+    // continua em `described_attacks`, com as ações especiais.
+    items,
     effects: [],
     folder: folderId,
     // As criaturas deste módulo já abrem na Ficha de Ameaça Space Dragon, que
     // rola a JP e a Moral pelo livro (module/ameaca.js). A ficha não é padrão
     // do mundo — um monstro de Old Dragon 2 ao lado continua na do sistema.
-    flags: { core: { sheetClass: "spacedragon.SDMonsterSheet" } },
+    // `ameaca` guarda o que a ficha de monstro do sistema não tem campo para
+    // guardar: atributos, RM, RD e nome científico.
+    flags: {
+      core: { sheetClass: "spacedragon.SDMonsterSheet" },
+      spacedragon: { ameaca },
+    },
     _stats: stats(),
     sort,
     ownership: { default: 0 },

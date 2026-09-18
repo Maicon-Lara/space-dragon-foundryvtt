@@ -9,7 +9,7 @@
     "size": "imenso",
     "alignment": "neutro",
     "habitat": "DESERTOS",
-    "description": "<p><em>Moluscus arena</em></p><p><strong>FOR</strong> 20 · <strong>DES</strong> 14 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>As lulas da areia são reminiscentes de oceanos desertificados que se adaptaram à vida sob a areia. Costumam ficar enterradas até que vítimas desavisadas passem por perto, quando atacarão com seus tentáculos e tentarão engoli-las. Há diversos relatos de pessoas que foram arrastadas para baixo da areia por essas criaturas e nunca mais foram vistas. Agarrar em um ataque bem-sucedido com um tentáculo, a lula da areia pode prender uma vítima, que falhe em uma JPR. Uma vítima envolta por um tentáculo pode tentar um teste resistido de Força para soltar-se, ou corre o risco de ser arrastada para baixo da areia.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Moluscus arena</em></p><p><strong>FOR</strong> 20 · <strong>DES</strong> 14 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>As lulas da areia são reminiscentes de oceanos desertificados que se adaptaram à vida sob a areia. Costumam ficar enterradas até que vítimas desavisadas passem por perto, quando atacarão com seus tentáculos e tentarão engoli-las. Há diversos relatos de pessoas que foram arrastadas para baixo da areia por essas criaturas e nunca mais foram vistas. Agarrar em um ataque bem-sucedido com um tentáculo, a lula da areia pode prender uma vítima, que falhe em uma JPR. Uma vítima envolta por um tentáculo pode tentar um teste resistido de Força para soltar-se, ou corre o risco de ser arrastada para baixo da areia.</p>",
     "described_attacks": "2 TENTÁCULOS +8 (1D6+6+AGARRAR)",
     "encounters": "1",
     "xp": "1.390 XP",
@@ -41,12 +41,62 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "kJ5phuvsHmoq2oIY",
+      "name": "2 × Tentáculos +8 (1D6+6+AGARRAR)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 2,
+        "ba": 8,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Tentáculos",
+        "damage_description": "1D6+6+AGARRAR",
+        "damage": "1d6+6"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!yzNSz6Q7DIQSlPmy.kJ5phuvsHmoq2oIY"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Moluscus arena",
+        "atributos": {
+          "FOR": 20,
+          "DES": 14,
+          "CON": 14,
+          "INT": 4,
+          "CIE": 0,
+          "COM": 0
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

@@ -9,7 +9,7 @@
     "size": "pequeno",
     "alignment": "neutro",
     "habitat": "RUÍNAS",
-    "description": "<p><em>Blobus errantis</em></p><p><strong>FOR</strong> 5 · <strong>DES</strong> 7 · <strong>CON</strong> 2 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Bolhas verdes são massas microbianas gelatinosas que se desenvolvem em ambientes deteriorados com matéria apodrecida. São pegajosas, possuem uma coloração verde bem característica e cheiram a comida podre. Não representam perigo direto, a não ser que envolvam uma pessoa completamente, o que pode asfixiá-la e levá-la à morte. Quando muitas bolhas verdes juntam-se é formada uma geleia espacial. Envolver bolhas verdes não atacam, apenas envolvem um alvo, que pode fazer uma JPR para esquivar-se ou um teste de Força para retirar uma bolha que já esteja presa em seu corpo. Para cada bolha envolvendo um alvo ele terá uma penalidade de -1 nesses testes, com um máximo de -10.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Blobus errantis</em></p><p><strong>FOR</strong> 5 · <strong>DES</strong> 7 · <strong>CON</strong> 2 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>Bolhas verdes são massas microbianas gelatinosas que se desenvolvem em ambientes deteriorados com matéria apodrecida. São pegajosas, possuem uma coloração verde bem característica e cheiram a comida podre. Não representam perigo direto, a não ser que envolvam uma pessoa completamente, o que pode asfixiá-la e levá-la à morte. Quando muitas bolhas verdes juntam-se é formada uma geleia espacial. Envolver bolhas verdes não atacam, apenas envolvem um alvo, que pode fazer uma JPR para esquivar-se ou um teste de Força para retirar uma bolha que já esteja presa em seu corpo. Para cada bolha envolvendo um alvo ele terá uma penalidade de -1 nesses testes, com um máximo de -10.</p>",
     "described_attacks": "ENVOLVER (ESPECIAL, VER TEXTO)",
     "encounters": "GRUPO 2D10 INFESTAÇÃO 4D10",
     "xp": "37 XP",
@@ -47,6 +47,21 @@
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Blobus errantis",
+        "atributos": {
+          "FOR": 5,
+          "DES": 7,
+          "CON": 2,
+          "INT": 2,
+          "CIE": 0,
+          "COM": 0
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

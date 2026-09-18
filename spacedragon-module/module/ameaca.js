@@ -141,6 +141,63 @@ function rotular(app, elemento) {
   }
 }
 
+/**
+ * ── O PAINEL DO BLOCO DO LIVRO ──────────────────────────────────────────────
+ *
+ * O bloco de criatura do Space Dragon tem mais do que a ficha de monstro do
+ * sistema guarda: os seis atributos, Resistência Mental, Redução de Dano e o
+ * nome científico. Moram em `flags.spacedragon.ameaca` — o módulo não inventa
+ * campo em `system.*` —, e os campos abaixo, por terem `name`, são salvos pelo
+ * próprio formulário da ficha, como qualquer outro.
+ */
+export const ATRIBUTOS_AMEACA = [
+  ["FOR", "Força"], ["DES", "Destreza"], ["CON", "Constituição"],
+  ["INT", "Intelecto"], ["CIE", "Ciência"], ["COM", "Comunicação"],
+];
+
+const esc = (v) =>
+  String(v ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+
+export function painelAmeaca(dados = {}) {
+  const at = dados.atributos ?? {};
+  const campo = (k, nome) =>
+    `<div class="sd-ameaca-atributo" title="${nome}">` +
+    `<input name="flags.${ID}.ameaca.atributos.${k}" type="number" value="${esc(at[k])}" data-dtype="Number" placeholder="—">` +
+    `<label class="text-xs font-bold">${k}</label></div>`;
+  return (
+    `<div class="sd-ameaca-painel"><hr>` +
+    `<label class="font-bold">Atributos</label>` +
+    `<div class="sd-ameaca-atributos">${ATRIBUTOS_AMEACA.map(([k, n]) => campo(k, n)).join("")}</div>` +
+    `<div class="sd-ameaca-defesas">` +
+    `<div class="sd-ameaca-defesa" title="Resistência Mental"><input name="flags.${ID}.ameaca.rm" type="text" value="${esc(dados.rm)}" data-dtype="String" placeholder="—"><label class="text-xs font-bold">RM</label></div>` +
+    `<div class="sd-ameaca-defesa" title="Redução de Dano"><input name="flags.${ID}.ameaca.rd" type="text" value="${esc(dados.rd)}" data-dtype="String" placeholder="—"><label class="text-xs font-bold">RD</label></div>` +
+    `</div></div>`
+  );
+}
+
+export function campoCientifico(dados = {}) {
+  return (
+    `<div class="sd-ameaca-cientifico">` +
+    `<input name="flags.${ID}.ameaca.cientifico" type="text" value="${esc(dados.cientifico)}" data-dtype="String" placeholder="—">` +
+    `<label class="font-bold">Nome científico</label></div>`
+  );
+}
+
+/** Põe o painel e o nome científico na ficha, uma vez por renderização. */
+function injetarPainel(app, elemento) {
+  try {
+    const raiz = elemento?.querySelectorAll ? elemento : elemento?.[0];
+    if (!raiz?.querySelector) return;
+    const dados = app.actor?.flags?.[ID]?.ameaca ?? {};
+    const stats = raiz.querySelector(".stats");
+    if (stats && !stats.querySelector(".sd-ameaca-painel")) stats.insertAdjacentHTML("beforeend", painelAmeaca(dados));
+    const info = raiz.querySelector(".basic-info");
+    if (info && !info.querySelector(".sd-ameaca-cientifico")) info.insertAdjacentHTML("beforeend", campoCientifico(dados));
+  } catch (e) {
+    console.warn(`${ID} | painel da ficha de ameaça não pôde ser montado`, e);
+  }
+}
+
 let Registrada = null;
 
 export function registrarFichaAmeaca(padrao = true) {
@@ -190,7 +247,9 @@ export function registrarFichaAmeaca(padrao = true) {
   // partir de uma subclasse de módulo não é garantido. Sem os rótulos, a
   // ficha nova ficava idêntica à do sistema na tela.
   Hooks.on("renderOD2MonsterSheet", (app, el) => {
-    if (app instanceof SDMonsterSheet) rotular(app, el);
+    if (!(app instanceof SDMonsterSheet)) return;
+    rotular(app, el);
+    injetarPainel(app, el);
   });
   Registrada = SDMonsterSheet;
   console.log(`${ID} | ficha de ameaça Space Dragon registrada`);

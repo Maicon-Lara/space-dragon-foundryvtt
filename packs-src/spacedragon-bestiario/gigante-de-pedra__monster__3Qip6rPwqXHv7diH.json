@@ -9,7 +9,7 @@
     "size": "imenso",
     "alignment": "caotico",
     "habitat": "MONTANHAS",
-    "description": "<p><em>Giganto petricus</em></p><p><strong>FOR</strong> 22 · <strong>DES</strong> 14 · <strong>CON</strong> 18 · <strong>INT</strong> 8 · <strong>CIE</strong> 6 · <strong>COM</strong> 4</p><p><strong>Redução de dano</strong> 6/ÁCIDO</p><p>Os gigantes de pedra são enormes humanoides inteiramente feitos de rocha, mas ao contrário de cristaloides e outras formas de vida rochosas, possuem detalhes faciais e corporais similares a humanos, embora não tão refinados. Raramente são vistos e lendas de povos primitivos dos planetas que habitam comumente os tinham como ídolos, personificações da força da natureza. Corpo de pedra gigantes de pedra ignoram boa parte do dano que sofrem, exceto quando a fonte de dano é ácida o suficiente para corroer seu corpo de pedra.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Giganto petricus</em></p><p><strong>FOR</strong> 22 · <strong>DES</strong> 14 · <strong>CON</strong> 18 · <strong>INT</strong> 8 · <strong>CIE</strong> 6 · <strong>COM</strong> 4</p><p><strong>Redução de dano</strong> 6/ÁCIDO</p></div><p>Os gigantes de pedra são enormes humanoides inteiramente feitos de rocha, mas ao contrário de cristaloides e outras formas de vida rochosas, possuem detalhes faciais e corporais similares a humanos, embora não tão refinados. Raramente são vistos e lendas de povos primitivos dos planetas que habitam comumente os tinham como ídolos, personificações da força da natureza. Corpo de pedra gigantes de pedra ignoram boa parte do dano que sofrem, exceto quando a fonte de dano é ácida o suficiente para corroer seu corpo de pedra.</p>",
     "described_attacks": "1 PANCADA +12 (4D6+6) 1 ROCHA ARREMESSADA +6 (3D6)",
     "encounters": "ERRANTE 1D2 GRUPO 1D4",
     "xp": "1.480 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "uHSatav8igELUPlM",
+      "name": "Pancada +12 (4D6+6)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 12,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Pancada",
+        "damage_description": "4D6+6",
+        "damage": "4d6+6"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!3Qip6rPwqXHv7diH.uHSatav8igELUPlM"
+    },
+    {
+      "_id": "JxchxreJCISK9KYS",
+      "name": "Rocha arremessada +6 (3D6)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 6,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Rocha arremessada",
+        "damage_description": "3D6",
+        "damage": "3d6"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!3Qip6rPwqXHv7diH.JxchxreJCISK9KYS"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Giganto petricus",
+        "atributos": {
+          "FOR": 22,
+          "DES": 14,
+          "CON": 18,
+          "INT": 8,
+          "CIE": 6,
+          "COM": 4
+        },
+        "rm": "",
+        "rd": "6/ÁCIDO"
+      }
     }
   },
   "_stats": {

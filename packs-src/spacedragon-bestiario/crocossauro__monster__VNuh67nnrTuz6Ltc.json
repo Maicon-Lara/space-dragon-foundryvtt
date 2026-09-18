@@ -9,7 +9,7 @@
     "size": "imenso",
     "alignment": "caotico",
     "habitat": "RIOS E PÂNTANOS",
-    "description": "<p><em>Croco saurus</em></p><p><strong>FOR</strong> 16 · <strong>DES</strong> 13 · <strong>CON</strong> 14 · <strong>INT</strong> 8 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Crocossauros são répteis de tamanho descomunal que habitam áreas pantanosas e rios, onde se camuflam e esperam passar despercebidos de suas presas até o momento do ataque. Para tanto costumam submergir nas águas, deixando apenas as narinas e os olhos para fora. Uma vítima que é mordida por um crocossauro corre sério risco de ser arrastada para a água e nunca mais ser vista. Agarrar em uma mordida bem- sucedida o crocossauro pode tentar agarrar uma vítima de tamanho humano, ou menor, com a boca com um teste resistido de Força. Caso a criatura saia vitoriosa, a vítima estará presa e o crocossauro tentará um giro mortal em seu próximo turno, que pede uma JPF para que os ossos da vítima não quebrem, causando 2d10+4 pontos de dano. A vítima pode tentar soltar-se em seu turno com um novo teste resistido de Força, sofrendo 1d6 pontos de dano, caso consiga livrar-se da mordida.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Croco saurus</em></p><p><strong>FOR</strong> 16 · <strong>DES</strong> 13 · <strong>CON</strong> 14 · <strong>INT</strong> 8 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>Crocossauros são répteis de tamanho descomunal que habitam áreas pantanosas e rios, onde se camuflam e esperam passar despercebidos de suas presas até o momento do ataque. Para tanto costumam submergir nas águas, deixando apenas as narinas e os olhos para fora. Uma vítima que é mordida por um crocossauro corre sério risco de ser arrastada para a água e nunca mais ser vista. Agarrar em uma mordida bem- sucedida o crocossauro pode tentar agarrar uma vítima de tamanho humano, ou menor, com a boca com um teste resistido de Força. Caso a criatura saia vitoriosa, a vítima estará presa e o crocossauro tentará um giro mortal em seu próximo turno, que pede uma JPF para que os ossos da vítima não quebrem, causando 2d10+4 pontos de dano. A vítima pode tentar soltar-se em seu turno com um novo teste resistido de Força, sofrendo 1d6 pontos de dano, caso consiga livrar-se da mordida.</p>",
     "described_attacks": "1 MORDIDA +6 (1D10+4+AGARRAR) 1 ATAQUE COM CAUDA +3 (1D6+1)",
     "encounters": "GRUPO 1D4 NINHO 1D8",
     "xp": "555 XP",
@@ -42,12 +42,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "ohekDC676KT5jwC6",
+      "name": "Mordida +6 (1D10+4+AGARRAR)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 6,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Mordida",
+        "damage_description": "1D10+4+AGARRAR",
+        "damage": "1d10+4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!VNuh67nnrTuz6Ltc.ohekDC676KT5jwC6"
+    },
+    {
+      "_id": "46NFPkY0iUAkKhHq",
+      "name": "Ataque com cauda +3 (1D6+1)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 3,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Ataque com cauda",
+        "damage_description": "1D6+1",
+        "damage": "1d6+1"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!VNuh67nnrTuz6Ltc.46NFPkY0iUAkKhHq"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Croco saurus",
+        "atributos": {
+          "FOR": 16,
+          "DES": 13,
+          "CON": 14,
+          "INT": 8,
+          "CIE": 0,
+          "COM": 0
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

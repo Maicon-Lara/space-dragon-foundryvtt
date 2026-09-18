@@ -9,7 +9,7 @@
     "size": "medio",
     "alignment": "neutro",
     "habitat": "SUBTERRÂNEO",
-    "description": "<p><em>Limus glutonius</em></p><p><strong>FOR</strong> 16 · <strong>DES</strong> 6 · <strong>CON</strong> 10 · <strong>INT</strong> 2 · <strong>CIE</strong> 4 · <strong>COM</strong> 0</p><p><strong>Redução de dano</strong> IMUNE A ATAQUES FÍSICOS</p><p>Geleias espaciais surgem quando uma grande quantidade de bolhas verdes (uma massa microbiana) se juntam, formando uma grande colônia de micro-organismos. As geleias espaciais têm cheiro de matéria em decomposição e a coloração verde, característica das bolhas verdes, mas são muito mais mortais, pois são imunes a qualquer dano físico, sendo afetadas apenas por feixes de energia. Envolver ao contrário das bolhas verdes, só é necessário uma geleia espacial para envolver completamente uma vítima, que deve fazer uma JPR para evitar ser envolvida, ou testes de Força para se desvencilhar quando já envolta. São necessários três testes bem-sucedidos e consecutivos de Força para que o personagem escape da geleia espacial, um a cada nova rodada. Durante esse período o personagem estará sufocando, correndo o risco de cair inconsciente antes que possa escapar.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Limus glutonius</em></p><p><strong>FOR</strong> 16 · <strong>DES</strong> 6 · <strong>CON</strong> 10 · <strong>INT</strong> 2 · <strong>CIE</strong> 4 · <strong>COM</strong> 0</p><p><strong>Redução de dano</strong> IMUNE A ATAQUES FÍSICOS</p></div><p>Geleias espaciais surgem quando uma grande quantidade de bolhas verdes (uma massa microbiana) se juntam, formando uma grande colônia de micro-organismos. As geleias espaciais têm cheiro de matéria em decomposição e a coloração verde, característica das bolhas verdes, mas são muito mais mortais, pois são imunes a qualquer dano físico, sendo afetadas apenas por feixes de energia. Envolver ao contrário das bolhas verdes, só é necessário uma geleia espacial para envolver completamente uma vítima, que deve fazer uma JPR para evitar ser envolvida, ou testes de Força para se desvencilhar quando já envolta. São necessários três testes bem-sucedidos e consecutivos de Força para que o personagem escape da geleia espacial, um a cada nova rodada. Durante esse período o personagem estará sufocando, correndo o risco de cair inconsciente antes que possa escapar.</p>",
     "described_attacks": "ENVOLVER (VER TEXTO)",
     "encounters": "1",
     "xp": "ODU 320 XP",
@@ -47,6 +47,21 @@
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Limus glutonius",
+        "atributos": {
+          "FOR": 16,
+          "DES": 6,
+          "CON": 10,
+          "INT": 2,
+          "CIE": 4,
+          "COM": 0
+        },
+        "rm": "",
+        "rd": "IMUNE A ATAQUES FÍSICOS"
+      }
     }
   },
   "_stats": {

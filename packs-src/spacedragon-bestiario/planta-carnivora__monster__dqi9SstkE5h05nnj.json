@@ -9,7 +9,7 @@
     "size": "grande",
     "alignment": "neutro",
     "habitat": "FLORESTAS",
-    "description": "<p><em>Plantae carnivorus</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 8 · <strong>CON</strong> 1 · <strong>INT</strong> 0 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p>Plantas carnívoras são enormes vegetais que prendem suas vítimas e tentam digeri-las com suas fortes enzimas gástricas. Ao contrário do que possa parecer, as plantas carnívoras não têm inteligência e reagem apenas a estímulos físicos, como o toque ou dano causado. Agarrar as plantas carnívoras reagirão ao toque e tentarão envolver a vítima, que pode fazer uma JPR para escapar. Uma vítima agarrada sofre 1d4 pontos de dano por rodada, e se for engolida sofrerá 1d6 pontos de dano ácido sem regressão a cada rodada, mas poderá fazer testes resistidos de Força para se soltar.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Plantae carnivorus</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 8 · <strong>CON</strong> 1 · <strong>INT</strong> 0 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>Plantas carnívoras são enormes vegetais que prendem suas vítimas e tentam digeri-las com suas fortes enzimas gástricas. Ao contrário do que possa parecer, as plantas carnívoras não têm inteligência e reagem apenas a estímulos físicos, como o toque ou dano causado. Agarrar as plantas carnívoras reagirão ao toque e tentarão envolver a vítima, que pode fazer uma JPR para escapar. Uma vítima agarrada sofre 1d4 pontos de dano por rodada, e se for engolida sofrerá 1d6 pontos de dano ácido sem regressão a cada rodada, mas poderá fazer testes resistidos de Força para se soltar.</p>",
     "described_attacks": "AGARRAR (VER TEXTO)",
     "encounters": "1D6",
     "xp": "ODU 37 XP",
@@ -46,6 +46,21 @@
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Plantae carnivorus",
+        "atributos": {
+          "FOR": 14,
+          "DES": 8,
+          "CON": 1,
+          "INT": 0,
+          "CIE": 0,
+          "COM": 0
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

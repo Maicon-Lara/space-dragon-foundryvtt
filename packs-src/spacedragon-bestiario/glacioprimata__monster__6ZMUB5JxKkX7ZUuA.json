@@ -9,7 +9,7 @@
     "size": "grande",
     "alignment": "neutro",
     "habitat": "GELEIRAS E MONTANHAS CONGELADAS",
-    "description": "<p><em>Primata glacialis</em></p><p><strong>FOR</strong> 20 · <strong>DES</strong> 16 · <strong>CON</strong> 16 · <strong>INT</strong> 4 · <strong>CIE</strong> 2 · <strong>COM</strong> 4</p><p>Glacioprimatas são similares a gorilas, porém muito maiores e com pelos brancos que ajudam em sua camuflagem nos ambientes congelados onde vivem, geralmente em cavernas. A falta de alimento faz com que os glacioprimatas ataquem tudo que se mexa na esperança de conseguirem comida. Não são inéditos os casos em que humanos foram raptados por glacioprimatas e mantidos em seus covis para que sejam devorados depois.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Primata glacialis</em></p><p><strong>FOR</strong> 20 · <strong>DES</strong> 16 · <strong>CON</strong> 16 · <strong>INT</strong> 4 · <strong>CIE</strong> 2 · <strong>COM</strong> 4</p></div><p>Glacioprimatas são similares a gorilas, porém muito maiores e com pelos brancos que ajudam em sua camuflagem nos ambientes congelados onde vivem, geralmente em cavernas. A falta de alimento faz com que os glacioprimatas ataquem tudo que se mexa na esperança de conseguirem comida. Não são inéditos os casos em que humanos foram raptados por glacioprimatas e mantidos em seus covis para que sejam devorados depois.</p>",
     "described_attacks": "2 PANCADAS +8 (1D10+3) 1 ROCHA ARREMESSADA +3 (1D8+3)",
     "encounters": "BANDO 1D4 FAMÍLIA 1D8",
     "xp": "875 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "KUvCePpJbm2cVYDk",
+      "name": "2 × Pancadas +8 (1D10+3)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 2,
+        "ba": 8,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Pancadas",
+        "damage_description": "1D10+3",
+        "damage": "1d10+3"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!6ZMUB5JxKkX7ZUuA.KUvCePpJbm2cVYDk"
+    },
+    {
+      "_id": "wHVHgzdCTsOYb6jN",
+      "name": "Rocha arremessada +3 (1D8+3)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 3,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Rocha arremessada",
+        "damage_description": "1D8+3",
+        "damage": "1d8+3"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!6ZMUB5JxKkX7ZUuA.wHVHgzdCTsOYb6jN"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Primata glacialis",
+        "atributos": {
+          "FOR": 20,
+          "DES": 16,
+          "CON": 16,
+          "INT": 4,
+          "CIE": 2,
+          "COM": 4
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {

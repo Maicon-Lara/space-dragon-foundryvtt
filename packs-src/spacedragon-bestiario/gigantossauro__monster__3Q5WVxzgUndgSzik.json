@@ -9,7 +9,7 @@
     "size": "colossal",
     "alignment": "neutro",
     "habitat": "PLANÍCIES",
-    "description": "<p><em>Giganto saurus</em></p><p><strong>FOR</strong> 28 · <strong>DES</strong> 12 · <strong>CON</strong> 20 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p>Gigantossauros, os maiores alienossauros já descobertos, vivem em grupos familiares em planícies, onde se alimentam da vegetação rasteira. São muito pacíficos, mas reagem ferozmente quando são ameaçados por predadores como os raptossauros ou tiranossauros. Pisão mortal em uma rolagem crítica de ataque de pisão, o alvo deverá fazer uma JPF para não morrer automaticamente de acordo com a regra de dano massivo, independentemente do dano total causado pelo ataque.</p>",
+    "description": "<div class=\"sd-bloco-extra\"><p><em>Giganto saurus</em></p><p><strong>FOR</strong> 28 · <strong>DES</strong> 12 · <strong>CON</strong> 20 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p></div><p>Gigantossauros, os maiores alienossauros já descobertos, vivem em grupos familiares em planícies, onde se alimentam da vegetação rasteira. São muito pacíficos, mas reagem ferozmente quando são ameaçados por predadores como os raptossauros ou tiranossauros. Pisão mortal em uma rolagem crítica de ataque de pisão, o alvo deverá fazer uma JPF para não morrer automaticamente de acordo com a regra de dano massivo, independentemente do dano total causado pelo ataque.</p>",
     "described_attacks": "1 PISÃO +14 (2D10+9) 1 ATAQUE COM CAUDA +10 (1D10+4)",
     "encounters": "ERRANTE 1D2 MANADA 1D6",
     "xp": "7.250 XP",
@@ -41,12 +41,96 @@
       "attribute": "hp"
     }
   },
-  "items": [],
+  "items": [
+    {
+      "_id": "Ouy6xcrxl1obqlHg",
+      "name": "Pisão +14 (2D10+9)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 14,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Pisão",
+        "damage_description": "2D10+9",
+        "damage": "2d10+9"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 100000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!3Q5WVxzgUndgSzik.Ouy6xcrxl1obqlHg"
+    },
+    {
+      "_id": "uMJDXx7k1Fhue0eP",
+      "name": "Ataque com cauda +10 (1D10+4)",
+      "type": "monster_attack",
+      "img": "icons/svg/sword.svg",
+      "system": {
+        "times": 1,
+        "ba": 10,
+        "damage_bonus": 0,
+        "weapon": false,
+        "description": "Ataque com cauda",
+        "damage_description": "1D10+4",
+        "damage": "1d10+4"
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 200000,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!actors.items!3Q5WVxzgUndgSzik.uMJDXx7k1Fhue0eP"
+    }
+  ],
   "effects": [],
   "folder": "Z1gMzlepllrHrHDz",
   "flags": {
     "core": {
       "sheetClass": "spacedragon.SDMonsterSheet"
+    },
+    "spacedragon": {
+      "ameaca": {
+        "cientifico": "Giganto saurus",
+        "atributos": {
+          "FOR": 28,
+          "DES": 12,
+          "CON": 20,
+          "INT": 2,
+          "CIE": 0,
+          "COM": 2
+        },
+        "rm": "",
+        "rd": ""
+      }
     }
   },
   "_stats": {
