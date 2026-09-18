@@ -681,3 +681,57 @@ if (probFicha.length) {
   process.exit(1);
 }
 console.log('  ✔ ficha: "Ficha Space Dragon" no seletor, sem virar padrão, e a do sistema fica intocada');
+
+// ── Um suplemento que renomeia as classes é reconhecido pela flag? ─────────
+//
+// O Star Wars para Space Dragon chama o Mentálico de "Sensível à Força" e os
+// Talentos de Gatuno de "Talentos de Operativo", sem mudar um número. A flag
+// no item diz ao módulo o que é o quê — e uma classe de OUTRO módulo que só
+// tenha o mesmo nome (o "Veterano" do Star Dragon, que é Old Dragon 2) não
+// pode ser confundida com nada.
+const { chassiDe, habilidadeDe } = await import("../spacedragon-module/module/chassi.js");
+const probChassi = [];
+
+const comClasse = (cls) => ({ system: { class: cls } });
+const CASOS_CHASSI = [
+  [{ name: "Guardião — Sensível à Força", flags: { spacedragon: { chassi: "Mentálico" } } }, "Mentálico", "a flag manda"],
+  [{ name: "Emissário — Cosmonauta" }, "Cosmonauta", "sem flag, vale o fim do nome"],
+  [{ name: "Veterano" }, "Veterano", "o Veterano do Star Dragon não vira Cosmonauta por engano"],
+];
+for (const [cls, esperado, porque] of CASOS_CHASSI) {
+  const obtido = chassiDe(comClasse(cls));
+  if (obtido !== esperado) probChassi.push(`"${cls.name}" deu "${obtido}", esperava "${esperado}" — ${porque}`);
+}
+
+// O orçamento mental de um Sensível à Força é o de um Mentálico.
+const sensivel = {
+  type: "character",
+  system: {
+    class: { name: "Sensível à Força", flags: { spacedragon: { chassi: "Mentálico" } } },
+    level: 10, sabedoria: 16,
+  },
+  getFlag: () => 0,
+};
+const oSensivel = mental.orcamento(sensivel);
+if (oSensivel.total !== 39) probChassi.push(`Sensível à Força de 10º com Intelecto 16: ${oSensivel.total}%, esperava 39% como o Mentálico`);
+
+// "Talentos de Operativo" ganha os botões de "Talentos de Gatuno".
+const operativo = {
+  type: "character",
+  name: "Cobaia",
+  system: { class: { name: "Operativo", flags: { spacedragon: { chassi: "Gatuno" } } }, level: 7, destreza: 16, inteligencia: 14 },
+  items: [{ type: "class_ability", name: "Talentos de Operativo", flags: { spacedragon: { habilidade: "Talentos de Gatuno" } } }],
+};
+if (habilidadeDe(operativo, "Talentos de Operativo") !== "Talentos de Gatuno") {
+  probChassi.push("a flag de habilidade não foi lida");
+}
+const abaOperativo = monta(FICHA.replace("Talentos de Gatuno", "Talentos de Operativo"));
+for (const g of ganchos.filter((x) => x.nome === "renderOD2CharacterSheet")) g.fn(appSD(operativo), abaOperativo);
+const botoesOperativo = abaOperativo.querySelectorAll(".sd-rolar").length;
+if (botoesOperativo !== 5) probChassi.push(`${botoesOperativo} botões em "Talentos de Operativo", esperava os 5 do Gatuno`);
+
+if (probChassi.length) {
+  for (const p of probChassi) console.error(`  ✘ ${p}`);
+  process.exit(1);
+}
+console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome igual sem flag não engana");

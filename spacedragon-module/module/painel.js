@@ -39,6 +39,7 @@
 import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { CAMPO_NA_FICHA, NOME_ATRIBUTO, SIGLA, TESTES } from "./dados.js";
 import { preparar, rolar } from "./testes.js";
+import { habilidadeDe } from "./chassi.js";
 
 const ID = "spacedragon";
 const MARCA = "spacedragon-testes";
@@ -142,7 +143,10 @@ function injeta(app, elemento) {
       const nome = nomeDaHabilidade(li);
       if (!nome) continue;
 
-      const lista = TESTES.filter((t) => t.habilidade === nome);
+      // "Talentos de Operativo" de um suplemento declara, por flag, que é
+      // "Talentos de Gatuno" — e ganha os mesmos botões. Ver chassi.js.
+      const doLivro = habilidadeDe(ator, nome);
+      const lista = TESTES.filter((t) => t.habilidade === doLivro);
       if (!lista.length) continue;
 
       li.insertAdjacentHTML("beforeend", bloco(lista, nivel, valores));

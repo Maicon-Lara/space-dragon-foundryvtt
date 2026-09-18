@@ -30,6 +30,7 @@
 
 import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { PROGRESSAO, COLUNA, FAIXAS, CAMPO_NA_FICHA } from "./dados.js";
+import { chassiDe } from "./chassi.js";
 
 const ID = "spacedragon";
 const MARCA = "spacedragon-mental";
@@ -45,11 +46,8 @@ function faixaDe(valor) {
   return FAIXAS.findIndex(([min, max]) => v >= min && v <= max);
 }
 
-/** "Hipercientista — Mentálico" → "Mentálico". */
-function classeBase(ator) {
-  const partes = (ator.system?.class?.name ?? "").split(" — ");
-  return partes[partes.length - 1].trim();
-}
+/** "Hipercientista — Mentálico" → "Mentálico", ou o que a flag declarar. */
+const classeBase = chassiDe;
 
 const numero = (s) => Number(String(s ?? "").replace("%", "").replace(/[^\d-]/g, "")) || 0;
 

@@ -27,6 +27,7 @@
  */
 
 import { PROGRESSAO, FAIXAS, CAMPO_NA_FICHA, COLUNA_DERIVADA } from "./dados.js";
+import { chassiDe } from "./chassi.js";
 
 const ID = "spacedragon";
 
@@ -43,12 +44,8 @@ function ajusteCon(ator) {
   return Number(COLUNA_DERIVADA.constituicao[faixaDe(valor)] ?? 0);
 }
 
-/** A classe-base por trás do item de classe: "Sabotador — Gatuno" → "Gatuno". */
-function classeBase(ator) {
-  const nome = ator.system?.class?.name ?? "";
-  const partes = nome.split(" — ");
-  return partes[partes.length - 1].trim();
-}
+/** A classe-base por trás do item de classe: "Sabotador — Gatuno" → "Gatuno", ou o que a flag declarar. */
+const classeBase = chassiDe;
 
 const CHAVE = { Cientista: "CIENTISTA", Cosmonauta: "COSMONAUTA", Gatuno: "GATUNO", "Mentálico": "MENTALICO" };
 

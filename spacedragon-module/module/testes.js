@@ -32,6 +32,7 @@ import {
   FAIXAS, CAMPO_NA_FICHA, NOME_ATRIBUTO, SIGLA,
   PROGRESSAO, ATRIBUTO, ROTULO_COLUNA, TESTES,
 } from "./dados.js";
+import { chassiDe } from "./chassi.js";
 
 // Reexportado de propósito: quem quer a regra importa daqui, não do arquivo
 // gerado. Sem esta linha, `import { TESTES } from "./testes.js"` é SyntaxError
@@ -106,9 +107,16 @@ function atributoDe(ator, atributo) {
   ]);
 }
 
-/** A classe escrita na ficha, se houver — só para pré-selecionar o teste. */
+/**
+ * A classe do livro por trás da ficha, se houver — só para pré-selecionar o teste.
+ *
+ * Era o nome do item, inteiro, comparado com "Cosmonauta": "Emissário —
+ * Cosmonauta" nunca casava, e quem tinha especialização abria o diálogo no
+ * primeiro teste da lista. O chassi resolve isso e a flag dos suplementos.
+ */
 function classeDe(ator) {
-  return ator?.items?.find?.((i) => i.type === "class")?.name ?? null;
+  if (!ator?.items?.find?.((i) => i.type === "class")) return null;
+  return chassiDe(ator) || null;
 }
 
 // ── O cálculo ───────────────────────────────────────────────────────────────
