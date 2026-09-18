@@ -340,7 +340,10 @@ function descricaoVeste(v) {
   } else if (v.bonus) {
     linhas.push(`Bônus de +${v.protecao} somado ao coeficiente de proteção.`);
   } else {
-    linhas.push(`Valor de proteção ${v.protecao}: é a BASE do coeficiente de proteção, não um bônus somado a 10.`);
+    linhas.push(
+      `Valor de proteção ${v.protecao}: é a BASE do coeficiente de proteção. ` +
+      `A ficha soma ${v.protecao - 10 >= 0 ? "+" : ""}${v.protecao - 10} aos 10 dela e chega a ${v.protecao}.`
+    );
   }
   if (v.movimento) linhas.push(`Reduz o movimento em ${v.movimento} metros.`);
   if (v.nota) linhas.push(v.nota);
@@ -379,11 +382,14 @@ function montaEquipamento() {
     docs.push(armorDoc({
       nome: v.nome,
       desc: descricaoVeste(v),
-      // O escudo de energia é o único que SOMA. O resto é valor absoluto, e o
-      // OD2 não tem campo para isso — o número vai na descrição, e o campo de
-      // bônus fica zerado para a ficha não somar duas vezes.
+      // O escudo de energia é o único que SOMA. O resto é valor ABSOLUTO — o
+      // livro faz CP = proteção das vestes + Destreza + bônus por nível —, e a
+      // ficha do OD2 faz 10 + armadura + Destreza. Então o bônus é proteção −
+      // 10: as Vestes médias (12) entram com +2, e a ficha chega aos 12 do
+      // livro. O bônus por nível da T4-1 é o módulo que soma (atributos.js).
+      // Os trajes que só se acrescentam à veste não têm proteção própria.
       tipo_armadura: v.bonus ? "escudo" : "",
-      bonus_ca: v.bonus ? v.protecao : 0,
+      bonus_ca: v.bonus ? v.protecao : v.protecao == null ? 0 : v.protecao - 10,
       cost: `${v.preco.toLocaleString("pt-BR")} créditos`,
       weight_in_grams: Math.round((v.peso ?? 0) * 1000),
     }, vestes._id, "sd-veste", i * 10));

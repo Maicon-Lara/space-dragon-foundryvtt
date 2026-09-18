@@ -75,4 +75,35 @@ for (const [chave, ctx, esperado, porque] of CASOS) {
 }
 
 console.log(`\n${CASOS.length - falhas}/${CASOS.length} conferem.`);
-if (falhas) process.exit(1);
+
+// ── Bestiário: os blocos que a primeira transcrição misturou ───────────────
+//
+// A Sucata Robótica tinha os ataques e o texto do Tiranossauro, e o
+// Tiranossauro e o Tentaculoide tinham sumido; o Gatuno de 5º tinha o quadro
+// do Mentálico. Valores lidos à mão no PDF, págs. 203–204 e 237–239.
+const { CRIATURAS } = await import("./data/bestiario.mjs");
+const criatura = (n) => CRIATURAS.find((c) => c.nome === n);
+const BLOCOS = [
+  ["Sucata Robótica", "ataques", "1 PANCADA +1 (1D4+1)", "pág. 237"],
+  ["Sucata Robótica", "premios", "25 XP", "pág. 237"],
+  ["Tiranossauro", "ataques", "1 MORDIDA +16 (3D8+6 + ENGOLIR) 1 ATAQUE COM CAUDA +10 (2D6+2)", "pág. 239"],
+  ["Tiranossauro", "dv", "14+4 (60/116)", "pág. 239"],
+  ["Tentaculoide", "cp", "15 (CORPO MALEÁVEL +2)", "pág. 238"],
+  ["Tentaculoide", "premios", "2.075 XP", "pág. 238"],
+];
+let falhasB = 0;
+for (const [nome, campo, esperado, onde] of BLOCOS) {
+  const obtido = criatura(nome)?.[campo];
+  const ok = obtido === esperado;
+  if (!ok) falhasB += 1;
+  console.log(`  ${ok ? "✔" : "✘"} ${nome.padEnd(16)} ${campo.padEnd(8)} ${ok ? "" : `— "${obtido}", esperado "${esperado}"`}  ${onde}`);
+}
+// O quadro de habilidades é da classe do exemplo, e não da seguinte.
+for (const [nome, comeca] of [["Gatuno (Nível 5)", "Sabotagem"], ["Mentálico (Nível 1)", "Poderes Mentais"], ["Mentálico (Nível 5)", "Poderes Mentais"]]) {
+  const ok = (criatura(nome)?.texto ?? "").startsWith(comeca);
+  if (!ok) falhasB += 1;
+  console.log(`  ${ok ? "✔" : "✘"} ${nome.padEnd(20)} texto começa com "${comeca}"  págs. 203–204`);
+}
+console.log(`\n${BLOCOS.length + 3 - falhasB}/${BLOCOS.length + 3} blocos do bestiário conferem.`);
+
+if (falhas || falhasB) process.exit(1);

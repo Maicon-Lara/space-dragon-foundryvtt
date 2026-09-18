@@ -1,0 +1,64 @@
+{
+  "name": "Tentaculoide",
+  "type": "monster",
+  "_id": "v3HR3AMA9boSMFwM",
+  "img": "systems/olddragon2e/assets/concepts/besta-colossal.webp",
+  "system": {
+    "odo_id": "tentaculoide",
+    "concept": "Besta",
+    "size": "colossal",
+    "alignment": "caotico",
+    "habitat": "SUBAQUÁTICO",
+    "description": "<p><em>Polvo gigantus</em></p><p><strong>FOR</strong> 20 · <strong>DES</strong> 16 · <strong>CON</strong> 16 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 1</p><p>Tentaculoides são polvos descomunais que vivem no fundo de oceanos. Alimentam-se de outros seres marinhos, os quais agarram com seus tentáculos e esmagam até a morte. Quando enfrentam criaturas marinhas perigosas ou outros tentaculoides também disparam um jato de um forte ácido negro que as afasta. Bases submarinas e veículos de exploração subaquáticos já foram atacados diversas vezes por tentaculoides. Agarrar em um ataque bem-sucedido com um tentáculo o tentaculoide pode agarrar o alvo que falhar em uma JPR. Enquanto presa a vítima sofre 1d6 pontos de dano por rodada, mas pode tentar se soltar com um teste resistido de Força. Jato ácido o jato ácido do tentaculoide forma uma mancha ácida de 10m² de área. Qualquer criatura ao alcance do ácido sofrerá dano sem regressão até sair da área, momento em que o efeito terminará.</p>",
+    "described_attacks": "2 TENTÁCULOS +12 (2D6+2 + AGARRAR) 1 JATO ÁCIDO (1D6 ÁCIDO, VER TEXTO)",
+    "encounters": "ERRANTE 1D2 CARDUME 1D6",
+    "xp": "2.075 XP",
+    "dv": "12+3 (51/99)",
+    "ca": "15 (CORPO MALEÁVEL +2)",
+    "jp": "12",
+    "mo": "80%",
+    "mv": "12",
+    "hp": {
+      "value": 51,
+      "max": 99
+    }
+  },
+  "prototypeToken": {
+    "name": "Tentaculoide",
+    "displayName": 20,
+    "actorLink": false,
+    "appendNumber": true,
+    "texture": {
+      "src": "systems/olddragon2e/assets/concepts/besta-colossal.webp",
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "width": 4,
+    "height": 4,
+    "disposition": -1,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "hp"
+    }
+  },
+  "items": [],
+  "effects": [],
+  "folder": "Z1gMzlepllrHrHDz",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 510,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!actors!v3HR3AMA9boSMFwM"
+}

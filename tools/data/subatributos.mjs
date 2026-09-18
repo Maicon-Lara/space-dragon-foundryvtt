@@ -79,7 +79,7 @@ ${tabelaT41}
 Destreza 13 (ajuste +1) tem CP <strong>13</strong>. Ela ainda não chegou ao 4º
 nível, então não há bônus de nível nenhum.</p></blockquote>
 
-${naFicha("a ficha tem um campo de <strong>CA</strong>, que o OD2 monta de outro jeito. Anote o CP ali, mas calcule pela fórmula acima — o bônus por nível do Space Dragon não existe no OD2.")}
+${naFicha("com a <strong>Ficha Space Dragon</strong>, o CP sai calculado pela fórmula acima: as vestes do compêndio entram com a proteção do livro, e o módulo soma o bônus por nível, que o OD2 não tem. Aparatos defensivos, mutações e poderes mentais ainda se somam à mão.")}
 `,
     },
     {

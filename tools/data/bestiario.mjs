@@ -1,6 +1,6 @@
 // Capítulo 11 — o bestiário.
 //
-// As 57 criaturas do *Livro Básico Aprimorado*, páginas 202 a 244, mais os nove
+// As 59 criaturas do *Livro Básico Aprimorado*, páginas 202 a 244, mais os nove
 // dragões, que têm regra própria.
 //
 // ── COMO ELAS CAEM NA FICHA DO OLD DRAGON 2 ─────────────────────────────────
@@ -28,7 +28,16 @@
 // legítimos: quinze criaturas têm "ENCONTROS 1", e todas saíram sem encontro na
 // primeira passada. O número de página é a PRIMEIRA linha, e só ela.
 
-/** As 57 criaturas, com o bloco como o livro o imprime. */
+// Nos Personagens de Exemplo, o livro imprime UM quadro de habilidades por
+// classe, que vale para o nível 1 e o 5 — os números vêm lado a lado, "20%
+// (Nv. 1) ou 40% (Nv. 5)". Os dois exemplos de cada classe apontam para o
+// mesmo texto, e ele fica aqui uma vez só.
+const TEXTO_GATUNO =
+  "Sabotagem 20% (Nv. 1) ou 40% (Nv. 5) de chance de sabotar máquinas e abrir portas, levando 1d8 rodadas para tal. Escalar 80% (Nv. 1) ou 84% (Nv. 5) de chance de escalar qualquer superfície. Furtividade 35% (Nv. 1) ou 55% (Nv. 5) de chance de ficar furtivo. Furtar 35% (Nv. 1) ou 55% (Nv. 5) de chance de furtar objetos. Percepção sucesso em percepção com um resultado 1-2 (Nv. 1) ou 1-3 (Nv. 5) em 1d6. Ataque furtivo: qualquer ataque feito pelo gatuno enquanto estiver furtivo causa o dano x2. Ele revela sua posição logo após atacar.";
+const TEXTO_MENTALICO =
+  "Poderes Mentais o mentálico tem 4% (Nv. 1) ou 12% (Nv. 5) de alcance mental por dia, realizando poderes mentais até a 1ª (Nv. 1) ou 3ª (Nv. 5) grandeza. Ele conhece 1d6 poderes mentais, dispensando jogadas percentuais para realizá-los.";
+
+/** As 59 criaturas, com o bloco como o livro o imprime. */
 export const CRIATURAS = [
   {
     nome: "Cientista (Nível 1)",
@@ -103,7 +112,7 @@ export const CRIATURAS = [
     premios: "U 100 XP",
     movimento: "10M",
     moral: "50%",
-    texto: "Sabotagem 20% (Nv. 1) ou 40% (Nv. 5) de chance de sabotar máquinas e abrir portas, levando 1d8 rodadas para tal. Escalar 80% (Nv. 1) ou 84% (Nv. 5) de chance de escalar qualquer superfície. Furtividade 35% (Nv. 1) ou 55% (Nv. 5) de chance de ficar furtivo. Furtar 35% (Nv. 1) ou 55% (Nv. 5) de chance de furtar objetos. Percepção sucesso em percepção com um resultado 1-2 (Nv. 1) ou 1-3 (Nv. 5) em 1d6. Ataque furtivo: qualquer ataque feito pelo gatuno enquanto estiver furtivo causa o dano x2. Ele revela sua posição logo após atacar.",
+    texto: TEXTO_GATUNO,
   },
   {
     nome: "Gatuno (Nível 5)",
@@ -118,7 +127,10 @@ export const CRIATURAS = [
     premios: "U 1.000 XP",
     movimento: "10M",
     moral: "50%",
-    texto: "Poderes Mentais o mentálico tem 4% (Nv. 1) ou 12% (Nv. 5) de alcance mental por dia, realizando poderes mentais até a 1ª (Nv. 1) ou 3ª (Nv. 5) grandeza. Ele conhece 1d6 poderes mentais, dispensando jogadas percentuais para realizá-los.",
+    // O livro imprime UM quadro de habilidades por classe, valendo para o
+    // nível 1 e o 5 ("35% (Nv. 1) ou 55% (Nv. 5)"). A primeira transcrição
+    // deu a este o quadro do Mentálico, que vem logo depois na página.
+    texto: TEXTO_GATUNO,
   },
   {
     nome: "Mentálico (Nível 1)",
@@ -133,11 +145,13 @@ export const CRIATURAS = [
     premios: "U 100 XP",
     movimento: "10M",
     moral: "50%",
+    texto: TEXTO_MENTALICO,
   },
   {
     nome: "Mentálico (Nível 5)",
     tipo: "humanoide médio de afiliação variável",
-    atributos: { FOR: 10, DES: 10, CON: 12, INT: 16, CIE: 10, COM: null },
+    // O PDF imprime "COTM 12": é a Comunicação, com uma letra a mais.
+    atributos: { FOR: 10, DES: 10, CON: 12, INT: 16, CIE: 10, COM: 12 },
     cp: "12 (VESTES LEVES)",
     jp: "13",
     dv: "5D4+5 (15)",
@@ -147,6 +161,7 @@ export const CRIATURAS = [
     premios: "U 2.000 XP",
     movimento: "10M",
     moral: "50%",
+    texto: TEXTO_MENTALICO,
   },
   {
     nome: "Aranha Gigante",
@@ -839,13 +854,32 @@ export const CRIATURAS = [
     cp: "10",
     jp: "18",
     dv: "1 (4/8)",
-    ataques: "1 MORDIDA +16 (3D8+6 + ENGOLIR) 1 ATAQUE COM CAUDA +10 (2D6+2)",
-    habitat: "FLORESTAS E PLANÍCIES",
-    encontros: "ERRANTE 1D2 NINHO 1D4",
-    premios: "2.615 XP",
-    movimento: "10M",
-    moral: "90%",
-    texto: "Tiranossauros são enormes alienossauros bípedes, carnívoros e muito agressivos. Suas bocarras os permitem tanto arrancar enormes pedaços de presas grandes, quanto engolir presas pequenas sem nem ao menos mastigá-las. Seus membros superiores são atrofiados, então a única forma de ataque dos tiranossauros além de mordidas é usar suas caudas como chicotes. Engolir em uma rolagem crítica de ataque com mordida o tiranossauro pode engolir uma vitima, se esta não passar em uma JPR. Uma vítima engolida viva respirará com dificuldade e não poderá mover-se no estômago do tiranossauro.",
+    // Do ATAQUES em diante, a primeira transcrição tinha colado o bloco do
+    // Tiranossauro (duas páginas adiante) — e o Tiranossauro e o Tentaculoide
+    // tinham sumido do compêndio. Conferido contra o PDF, págs. 237–239.
+    ataques: "1 PANCADA +1 (1D4+1)",
+    habitat: "RUÍNAS",
+    encontros: "ERRANTE 2D6 GRUPO 5D6",
+    premios: "25 XP",
+    movimento: "4M",
+    moral: "100%",
+    texto: "Sucata robótica é um termo para qualquer tipo de robô humanoide que esteja deteriorado ou danificado a ponto de ser praticamente impossível definir seu nível de desenvolvimento tecnológico ou função. As sucatas são totalmente imprevisíveis e instáveis, podendo iniciar ou parar um ataque ou outra ação a qualquer momento. Desativação sucatas robóticas podem ser desativadas por cientistas através de um disruptor positrônico.",
+  },
+  {
+    nome: "Tentaculoide",
+    cientifico: "Polvo gigantus",
+    tipo: "cefalópode colossal rebelde",
+    atributos: { FOR: 20, DES: 16, CON: 16, INT: 2, CIE: 0, COM: 1 },
+    cp: "15 (CORPO MALEÁVEL +2)",
+    jp: "12",
+    dv: "12+3 (51/99)",
+    ataques: "2 TENTÁCULOS +12 (2D6+2 + AGARRAR) 1 JATO ÁCIDO (1D6 ÁCIDO, VER TEXTO)",
+    habitat: "SUBAQUÁTICO",
+    encontros: "ERRANTE 1D2 CARDUME 1D6",
+    premios: "2.075 XP",
+    movimento: "12M",
+    moral: "80%",
+    texto: "Tentaculoides são polvos descomunais que vivem no fundo de oceanos. Alimentam-se de outros seres marinhos, os quais agarram com seus tentáculos e esmagam até a morte. Quando enfrentam criaturas marinhas perigosas ou outros tentaculoides também disparam um jato de um forte ácido negro que as afasta. Bases submarinas e veículos de exploração subaquáticos já foram atacados diversas vezes por tentaculoides. Agarrar em um ataque bem-sucedido com um tentáculo o tentaculoide pode agarrar o alvo que falhar em uma JPR. Enquanto presa a vítima sofre 1d6 pontos de dano por rodada, mas pode tentar se soltar com um teste resistido de Força. Jato ácido o jato ácido do tentaculoide forma uma mancha ácida de 10m² de área. Qualquer criatura ao alcance do ácido sofrerá dano sem regressão até sair da área, momento em que o efeito terminará.",
   },
   {
     nome: "Tigre Dentes-de-Sabre",
@@ -864,6 +898,22 @@ export const CRIATURAS = [
     movimento: "14M",
     moral: "90%",
     texto: "Tigres dentes-de-sabre são enormes felinos semelhantes a tigres comuns, mas que possuem pelagem descolorida e duas enormes presas que se projetam para fora de suas bocarras. São caçadores astutos e costumam agir sozinhos, embora vivam em grupos familiares. As fêmeas, em geral, são responsáveis pela caça, enquanto os machos dedicam-se à defesa da prole. Dilaceração em um acerto crítico de ataque com mordida o tigre dentes-de-sabre pode dilacerar a carne da vítima com suas presas, forçando-a a fazer uma JPF para não perder o membro onde a mordida foi feita.",
+  },
+  {
+    nome: "Tiranossauro",
+    cientifico: "Tirano saurus",
+    tipo: "bípede imenso rebelde",
+    atributos: { FOR: 22, DES: 14, CON: 18, INT: 2, CIE: 0, COM: 1 },
+    cp: "15 (COURAÇA GROSSA +3)",
+    jp: "11",
+    dv: "14+4 (60/116)",
+    ataques: "1 MORDIDA +16 (3D8+6 + ENGOLIR) 1 ATAQUE COM CAUDA +10 (2D6+2)",
+    habitat: "FLORESTAS E PLANÍCIES",
+    encontros: "ERRANTE 1D2 NINHO 1D4",
+    premios: "2.615 XP",
+    movimento: "10M",
+    moral: "90%",
+    texto: "Tiranossauros são enormes alienossauros bípedes, carnívoros e muito agressivos. Suas bocarras os permitem tanto arrancar enormes pedaços de presas grandes, quanto engolir presas pequenas sem nem ao menos mastigá-las. Seus membros superiores são atrofiados, então a única forma de ataque dos tiranossauros além de mordidas é usar suas caudas como chicotes. Engolir em uma rolagem crítica de ataque com mordida o tiranossauro pode engolir uma vitima, se esta não passar em uma JPR. Uma vítima engolida viva respirará com dificuldade e não poderá mover-se no estômago do tiranossauro.",
   },
   {
     nome: "Vampiro Energético",

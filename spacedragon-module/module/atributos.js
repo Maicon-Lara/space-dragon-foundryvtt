@@ -114,6 +114,53 @@ export function aplicarModificadores(ligado) {
   return false;
 }
 
+/**
+ * O bônus de CP por nível da T4-1: +1 a cada quatro níveis, +5 no 20º.
+ *
+ * NÃO é cumulativo — o valor da faixa É o bônus total —, e é por isso que a
+ * conta é uma divisão e não uma soma: 4º–7º dá 1, 8º–11º dá 2, e o 20º, que
+ * é a faixa própria dele, dá 5.
+ */
+export function bonusDeCP(nivel) {
+  return Math.min(5, Math.floor((Number(nivel) || 1) / 4));
+}
+
+/**
+ * O CP como o livro o monta.
+ *
+ * ── A CONTA DO LIVRO E A DA FICHA ───────────────────────────────────────────
+ *
+ * O livro: CP = proteção das vestes + ajuste de Destreza + bônus por nível +
+ * aparatos + mutações + poderes. A ficha do OD2 faz 10 + armadura + Destreza.
+ * As vestes do compêndio entram com proteção − 10, então a ficha já chega à
+ * parte das vestes e da Destreza. Falta o bônus por nível, que o OD2 não tem —
+ * e é ele que entra aqui, somado ao `ac_total`, que é o número que a ficha
+ * mostra.
+ *
+ * Só para quem usa a ficha do Space Dragon: o personagem de Old Dragon 2 ao
+ * lado continua com o CA do sistema dele.
+ */
+let acOriginal = null;
+
+export function aplicarCP() {
+  const proto = CONFIG.Actor?.dataModels?.character?.prototype;
+  const desc = proto && Object.getOwnPropertyDescriptor(proto, "ac_total");
+  if (!desc?.get) {
+    console.warn(`${ID} | ac_total não é getter — o bônus de CP por nível fica de fora`);
+    return false;
+  }
+  if (acOriginal) return true;
+  acOriginal = desc.get;
+  Object.defineProperty(proto, "ac_total", {
+    configurable: true,
+    get() {
+      const base = acOriginal.call(this);
+      return atorUsaFichaSD(this.parent) ? base + bonusDeCP(this.level) : base;
+    },
+  });
+  return true;
+}
+
 /** Mostra as duas escalas lado a lado, para conferir na mesa. */
 export function compararEscalas() {
   const linhas = FAIXAS.map(([min, max], i) => ({

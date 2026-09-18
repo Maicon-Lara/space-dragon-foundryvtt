@@ -46,6 +46,8 @@ class FichaOD2 {
   get mod_inteligencia() { return od2(this.inteligencia); }
   get mod_sabedoria() { return od2(this.sabedoria); }
   get mod_carisma() { return od2(this.carisma); }
+  // Como o sistema: 10 + armadura equipada + Destreza (sem escudo nem extra).
+  get ac_total() { return 10 + (this._armadura ?? 0) + this.mod_destreza; }
 }
 function od2(v) {
   if (v < 2) return -4;
@@ -276,11 +278,25 @@ if (ficha.mod_constituicao !== 0) {
 }
 aplicarModificadores(true);
 
+// ── O CP como o livro: vestes + Destreza + bônus por nível (T4-1) ──
+// Vestes médias, proteção 12, entram com +2. Destreza 29 dá +9 na escala do
+// Space Dragon. No 8º nível a T4-1 dá +2: CP = 12 + 9 + 2 = 23. O personagem
+// de Old Dragon 2 não ganha bônus de nível: 10 + 2 + 4 = 16.
+Object.assign(ficha, { _armadura: 2, level: 8 });
+Object.assign(fichaOD2, { _armadura: 2, level: 8 });
+if (ficha.ac_total !== 23) erros.push(`CP no 8º com vestes médias e Destreza 29 deu ${ficha.ac_total}, esperava 23 (12 + 9 + 2)`);
+if (fichaOD2.ac_total !== 16) erros.push(`o personagem de OD2 ganhou bônus de CP: ${fichaOD2.ac_total}, esperava 16`);
+const { bonusDeCP } = await import("../spacedragon-module/module/atributos.js");
+const T4_1 = [[1, 0], [3, 0], [4, 1], [7, 1], [8, 2], [11, 2], [12, 3], [15, 3], [16, 4], [19, 4], [20, 5]];
+for (const [nivel, bonus] of T4_1) {
+  if (bonusDeCP(nivel) !== bonus) erros.push(`T4-1: nível ${nivel} deu +${bonusDeCP(nivel)}, esperava +${bonus}`);
+}
+
 if (erros.length) {
   for (const e of erros) console.error(`  ✘ ${e}`);
   process.exit(1);
 }
-console.log("  ✔ modificadores: escala do Space Dragon só em quem usa a ficha dele, e reversível");
+console.log("  ✔ modificadores: escala do Space Dragon só em quem usa a ficha dele, e reversível; CP com o bônus da T4-1");
 
 // ── Danos Mortais no PV, e a Economia virou Créditos? ─────────────────────
 //

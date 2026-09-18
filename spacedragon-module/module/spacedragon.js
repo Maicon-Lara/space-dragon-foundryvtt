@@ -24,7 +24,7 @@
 
 import { abrirTeste, rolar, preparar, TESTES } from "./testes.js";
 import { ligarPainel, diagnostico } from "./painel.js";
-import { aplicarModificadores, compararEscalas, ordenarHabilidades } from "./atributos.js";
+import { aplicarModificadores, compararEscalas, ordenarHabilidades, aplicarCP, bonusDeCP } from "./atributos.js";
 import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
 import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
@@ -86,6 +86,9 @@ Hooks.once("ready", () => {
   estendeNiveis();
   ligarTema();
   aplicarModificadores(game.settings.get(ID, "modificadores"));
+  // O bônus de CP por nível (T4-1) é regra do livro, não opção: vale sempre
+  // para quem usa a ficha do Space Dragon.
+  aplicarCP();
   ordenarHabilidades(true);
   ligarPainel();
   ligarCabecalho();
@@ -101,7 +104,7 @@ Hooks.once("ready", () => {
   game.spacedragon = {
     teste: abrirTeste, rolar, preparar, TESTES,
     pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
-    compararEscalas, diagnostico, danosMortais,
+    compararEscalas, diagnostico, danosMortais, bonusDeCP,
     ordem: abrirOrdem,
     alcance: orcamento, gastarAlcance: gastar, descansar,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),
