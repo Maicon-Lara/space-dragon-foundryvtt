@@ -751,3 +751,51 @@ if (probChassi.length) {
   process.exit(1);
 }
 console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome igual sem flag não engana");
+
+// ── Os degraus acima do nível somem da ficha ───────────────────────────────
+//
+// O sistema já esconde a habilidade de nível acima do personagem e os blocos
+// de 3º/6º/10º. Os degraus de 5º/10º/20º do Space Dragon moram no texto, e é
+// o módulo que os esconde. Duas marcas: `data-degrau` (as especializações
+// daqui) e o item de lista que abre com `<code>10º</code>` (o Star Wars para
+// Space Dragon). O caso é a Soresu de um Guardião de 5º, que mostrava o
+// "Mestre Soresu" do 20º.
+{
+  const FICHA_DEGRAUS = `
+<div class="character-tab-class"><div class="class-abilities"><ol class="item-list">
+  <li class="item" data-item-id="soresu">
+    <div class="ability"><span class="ability-level">5</span><span><strong>Soresu (III)</strong>:</span></div>
+    <ul>
+      <li><code>5º</code> <strong>Postura Defensiva:</strong> deflete disparos.</li>
+      <li><code>10º</code> <strong>Devolver ao Remetente:</strong> redireciona.</li>
+      <li><code>20º</code> <strong>Mestre Soresu:</strong> só no crítico.</li>
+      <li>Um item comum, sem degrau, com <code>+7/+1</code> no meio.</li>
+    </ul>
+  </li>
+  <li class="item" data-item-id="emissario">
+    <div class="ability"><span class="ability-level">5</span><span><strong>Emissário</strong>:</span></div>
+    <p>O que vale desde o 5º.</p>
+    <p data-degrau="10">Atingindo o 10º nível…</p>
+    <p data-degrau="20">No 20º nível…</p>
+  </li>
+</ol></div></div>`;
+  const probDeg = [];
+  const ocultos = (nivel) => {
+    const raiz = monta(FICHA_DEGRAUS);
+    const ator = { type: "character", name: "Cobaia", system: { class: { name: "Guardião — Sensível à Força" }, level: nivel } };
+    for (const g of ganchos.filter((x) => x.nome === "renderOD2CharacterSheet")) g.fn(appSD(ator), raiz);
+    return [...raiz.querySelectorAll(".class-abilities .item li"), ...raiz.querySelectorAll(".class-abilities .item p")]
+      .filter((el) => el.classList.contains("sd-degrau-futuro"))
+      .map((el) => el.textContent.replace(/\s+/g, " ").trim().slice(0, 12));
+  };
+  const no5 = ocultos(5);
+  if (no5.length !== 4) probDeg.push(`no 5º esperava 4 degraus ocultos (10º e 20º da Soresu, 10º e 20º do Emissário), vieram ${no5.length}: ${no5.join(" | ")}`);
+  const no12 = ocultos(12);
+  if (no12.length !== 2) probDeg.push(`no 12º esperava 2 ocultos (os de 20º), vieram ${no12.length}: ${no12.join(" | ")}`);
+  if (ocultos(20).length) probDeg.push("no 20º nada devia ficar oculto");
+  if (probDeg.length) {
+    for (const p of probDeg) console.error(`  ✘ ${p}`);
+    process.exit(1);
+  }
+  console.log("  ✔ degraus: acima do nível somem (lista com <code>Nº</code> e parágrafo com data-degrau), e voltam quando o nível sobe");
+}

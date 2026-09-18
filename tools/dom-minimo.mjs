@@ -170,6 +170,11 @@ class No {
     return this.querySelectorAll(seletor)[0] ?? null;
   }
 
+  /** O primeiro filho que é ELEMENTO — o texto solto não conta, como no DOM. */
+  get firstElementChild() {
+    return this.filhos[0] ?? null;
+  }
+
   /** O nome da tag em CAIXA ALTA, como no DOM de verdade. */
   get tagName() {
     return this.tag.toUpperCase();

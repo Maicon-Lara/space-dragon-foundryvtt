@@ -156,7 +156,9 @@ function degraus(e) {
     const cabeca = conector
       ? `${conector} `
       : jaTemNivel ? "" : `No ${nivel}º nível `;
-    return `<p>${cabeca}${txt}</p>`;
+    // `data-degrau` é o que module/degraus.js lê para esconder o degrau que o
+    // personagem ainda não alcançou — o sistema não sabe do 10º e do 20º.
+    return `<p data-degrau="${nivel}">${cabeca}${txt}</p>`;
   };
 
   return (

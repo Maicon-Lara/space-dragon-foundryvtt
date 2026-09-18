@@ -32,6 +32,7 @@ import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
 import { registrarTema, ligarTema } from "./tema.js";
 import { registrarFicha } from "./ficha.js";
 import { ligarRotulos } from "./rotulos.js";
+import { ligarDegraus } from "./degraus.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -94,6 +95,7 @@ Hooks.once("ready", () => {
   ligarCabecalho();
   ligarGrandezas();
   ligarMental();
+  ligarDegraus();
   // Por último: a aba de Poderes precisa estar desenhada para os rótulos de
   // Grandeza serem trocados.
   ligarRotulos();

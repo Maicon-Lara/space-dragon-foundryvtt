@@ -248,3 +248,9 @@
   white-space: nowrap;
   text-decoration: underline dotted;
 }
+
+/* ── Degraus de habilidade acima do nível ─────────────────────────────────
+ * O sistema esconde a habilidade e os blocos de 3º/6º/10º que o personagem
+ * não alcançou; os degraus de 5º/10º/20º do Space Dragon moram no texto, e
+ * module/degraus.js os marca. Mesma regra do sistema: não aparecem. */
+.spacedragon-ficha .sd-degrau-futuro { display: none !important; }
