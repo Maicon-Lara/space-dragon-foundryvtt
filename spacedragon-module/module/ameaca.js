@@ -183,6 +183,100 @@ export function campoCientifico(dados = {}) {
   );
 }
 
+/**
+ * ── O QUE A CRIATURA CARREGA ────────────────────────────────────────────────
+ *
+ * A criatura do Space Dragon tem blaster, armadura e aparato; o monstro do Old
+ * Dragon 2 tem só o bloco. A ficha do sistema lista APENAS ataques de monstro,
+ * e é só isso: o ator guarda item de qualquer tipo sem reclamar — arrastar uma
+ * arma para a ficha já funciona hoje, e o item simplesmente não aparecia em
+ * lugar nenhum. Este bloco mostra o que está lá.
+ *
+ * "Virar ataque" copia a arma para um ataque de monstro, que é o que tem botão
+ * de rolar nesta ficha. A arma continua na lista, porque é ela que diz alcance,
+ * peso e custo.
+ */
+const TIPOS_EQUIPAMENTO = ["weapon", "armor", "shield", "misc", "container", "vehicle"];
+
+const ICONE = { weapon: "fa-sword", armor: "fa-shield-halved", shield: "fa-shield", misc: "fa-toolbox", container: "fa-box", vehicle: "fa-rocket" };
+
+export function equipamentoDe(ator) {
+  return (ator?.items?.filter?.((i) => TIPOS_EQUIPAMENTO.includes(i.type)) ?? []);
+}
+
+export function blocoEquipamento(ator) {
+  const itens = equipamentoDe(ator);
+  const linhas = itens.map((i) => {
+    const dano = i.type === "weapon" && i.system?.damage
+      ? `<span class="sd-equip-dano">${esc(i.system.damage)}</span>` : "";
+    const virar = i.type === "weapon"
+      ? `<a class="sd-equip-ataque" data-item="${esc(i.id)}" title="Copiar para os ataques desta ficha, com botão de rolar"><i class="fa-solid fa-dice-d20"></i></a>` : "";
+    return (
+      `<li class="item sd-equip-linha" data-item-id="${esc(i.id)}">` +
+      `<a class="sd-equip-abrir" data-item="${esc(i.id)}" title="Abrir ${esc(i.name)}">` +
+      `<i class="fa-thin ${ICONE[i.type] ?? "fa-box"}"></i> ${esc(i.name)}</a>${dano}` +
+      `<span class="sd-equip-controles">${virar}` +
+      `<a class="sd-equip-remover" data-item="${esc(i.id)}" title="Remover desta criatura"><i class="fa-solid fa-trash"></i></a>` +
+      `</span></li>`
+    );
+  }).join("");
+  return (
+    `<div class="sd-equipamento"><div class="list"><div class="attack">Equipamento</div></div>` +
+    (itens.length
+      ? `<ol class="item-list">${linhas}</ol>`
+      : `<p class="sd-equip-vazio"><em>Nada equipado. Arraste armas, vestes e aparatos do compêndio para esta ficha.</em></p>`) +
+    `</div>`
+  );
+}
+
+/** Os botões do bloco de equipamento. A ficha do sistema não os conhece. */
+function ligarEquipamento(raiz, ator) {
+  const item = (ev) => ator.items?.get?.(ev.currentTarget?.dataset?.item);
+  const pare = (ev) => { ev.preventDefault?.(); ev.stopPropagation?.(); };
+
+  for (const a of raiz.querySelectorAll(".sd-equip-abrir")) {
+    a.addEventListener("click", (ev) => { pare(ev); item(ev)?.sheet?.render(true); });
+  }
+  for (const a of raiz.querySelectorAll(".sd-equip-remover")) {
+    a.addEventListener("click", (ev) => {
+      pare(ev);
+      const doc = item(ev);
+      if (!doc) return;
+      (async () => {
+        // Apagar item é irreversível, e aqui é um clique ao lado do de abrir.
+        const V2 = foundry.applications?.api?.DialogV2;
+        const ok = V2?.confirm
+          ? await V2.confirm({ window: { title: "Remover equipamento" }, content: `<p>Remover <strong>${esc(doc.name)}</strong> de ${esc(ator.name)}?</p>`, rejectClose: false })
+          : true;
+        if (ok) await ator.deleteEmbeddedDocuments("Item", [doc.id]);
+      })();
+    });
+  }
+  for (const a of raiz.querySelectorAll(".sd-equip-ataque")) {
+    a.addEventListener("click", (ev) => {
+      pare(ev);
+      const arma = item(ev);
+      if (!arma) return;
+      const bonus = Number(arma.system?.bonus_damage) || 0;
+      const dano = String(arma.system?.damage ?? "");
+      ator.createEmbeddedDocuments("Item", [{
+        name: arma.name,
+        type: "monster_attack",
+        img: arma.img,
+        system: {
+          times: 1,
+          ba: Number(arma.system?.bonus_ba) || 0,
+          damage_bonus: 0,
+          weapon: true,
+          description: arma.name,
+          damage: dano,
+          damage_description: bonus ? `${dano}+${bonus}` : dano,
+        },
+      }]);
+    });
+  }
+}
+
 /** Põe o painel e o nome científico na ficha, uma vez por renderização. */
 function injetarPainel(app, elemento) {
   try {
@@ -193,6 +287,12 @@ function injetarPainel(app, elemento) {
     if (stats && !stats.querySelector(".sd-ameaca-painel")) stats.insertAdjacentHTML("beforeend", painelAmeaca(dados));
     const info = raiz.querySelector(".basic-info");
     if (info && !info.querySelector(".sd-ameaca-cientifico")) info.insertAdjacentHTML("beforeend", campoCientifico(dados));
+    // O que a criatura carrega, na aba de ataques, logo abaixo deles.
+    const aba = raiz.querySelector(".monster-tab-attacks");
+    if (aba && !aba.querySelector(".sd-equipamento")) {
+      aba.insertAdjacentHTML("beforeend", blocoEquipamento(app.actor));
+      ligarEquipamento(aba, app.actor);
+    }
   } catch (e) {
     console.warn(`${ID} | painel da ficha de ameaça não pôde ser montado`, e);
   }

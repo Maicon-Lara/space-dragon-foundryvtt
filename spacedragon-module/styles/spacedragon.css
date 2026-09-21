@@ -284,3 +284,13 @@
 /* Desativar Robôs: o tipo que o disruptor não afeta aparece, apagado e sem
  * botão, para o jogador ver que ele existe e que ainda não chega lá. */
 .spacedragon-testes .sd-robo-imune { opacity: 0.45; cursor: default; }
+
+/* Ficha de Ameaça: o que a criatura carrega. A ficha do sistema só lista
+ * ataques de monstro, mas o ator guarda item de qualquer tipo — arrastar já
+ * funcionava, e o item não aparecia em lugar nenhum. Ver module/ameaca.js. */
+.spacedragon-ameaca .sd-equipamento { margin-top: 8px; }
+.spacedragon-ameaca .sd-equip-linha { display: flex; align-items: center; gap: 6px; padding: 2px 4px; }
+.spacedragon-ameaca .sd-equip-abrir { flex: 1; }
+.spacedragon-ameaca .sd-equip-dano { opacity: 0.8; font-size: 0.9em; }
+.spacedragon-ameaca .sd-equip-controles { display: flex; gap: 6px; flex: 0 0 auto; }
+.spacedragon-ameaca .sd-equip-vazio { padding: 4px; opacity: 0.75; font-size: 0.9em; }

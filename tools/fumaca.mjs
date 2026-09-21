@@ -1202,6 +1202,69 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   console.log("  ✔ desativar robôs: 8 tipos na ficha, 1d20 ≥ T3-2 pelo nível, A/D sem d20, N sem botão, 1d6 de robôs com Ciência 16");
 }
 
+// ── O que a criatura carrega, na Ficha de Ameaça ───────────────────────────
+// A ficha do sistema só lista ataque de monstro, mas o ator guarda item de
+// qualquer tipo. O bloco mostra o que está lá, deixa abrir, remover e copiar
+// uma arma para os ataques, que é o que tem botão de rolar.
+{
+  const probEq = [];
+  const am = await import("../spacedragon-module/module/ameaca.js");
+  const reg = fichasRegistradas.find((f) => f.cfg?.label === "Ficha de Ameaça Space Dragon");
+  const gancho = ganchos.find((g) => g.nome === "renderOD2MonsterSheet");
+  const criados = [];
+  const apagados = [];
+  const abertos = [];
+  const itens = [
+    { id: "w1", type: "weapon", name: "Blaster DL-44", img: "b.webp", system: { damage: "1d8", bonus_damage: 2, bonus_ba: 1 }, sheet: { render: () => abertos.push("w1") } },
+    { id: "a1", type: "armor", name: "Armadura Beskar", img: "a.webp", system: {}, sheet: { render: () => abertos.push("a1") } },
+    { id: "m1", type: "monster_attack", name: "Mordida", system: {} },
+  ];
+  const bicho = {
+    type: "monster", name: "Mandaloriano",
+    flags: { spacedragon: { ameaca: { atributos: {} } } },
+    items: { filter: (f) => itens.filter(f), get: (id) => itens.find((i) => i.id === id) },
+    createEmbeddedDocuments: async (_t, dados) => criados.push(...dados),
+    deleteEmbeddedDocuments: async (_t, ids) => apagados.push(...ids),
+  };
+  const raizEq = monta(`<div class="basic-info"></div><div class="stats"></div><div class="monster-tab-attacks"><div class="attacks"></div></div>`);
+  const appEq = new reg.cls();
+  appEq.actor = bicho;
+  gancho.fn(appEq, raizEq);
+  gancho.fn(appEq, raizEq);
+
+  const linhas = raizEq.querySelectorAll(".sd-equipamento .sd-equip-linha");
+  if (raizEq.querySelectorAll(".sd-equipamento").length !== 1) probEq.push("o bloco entrou mais de uma vez");
+  if (linhas.length !== 2) probEq.push(`${linhas.length} linhas, esperava 2 (o ataque de monstro não entra no equipamento)`);
+  if (raizEq.querySelectorAll(".sd-equip-ataque").length !== 1) probEq.push("só a arma pode virar ataque");
+
+  raizEq.querySelector(".sd-equip-abrir")?.clique();
+  if (abertos[0] !== "w1") probEq.push("abrir não abriu a ficha do item");
+
+  raizEq.querySelector(".sd-equip-ataque")?.clique();
+  const novo = criados[0];
+  if (novo?.type !== "monster_attack" || novo?.system?.damage !== "1d8" || novo?.system?.damage_description !== "1d8+2" || novo?.system?.ba !== 1) {
+    probEq.push(`a arma virou ataque errado: ${JSON.stringify(novo)}`);
+  }
+
+  raizEq.querySelector(".sd-equip-remover")?.clique();
+  await new Promise((r) => setTimeout(r, 0));
+  if (apagados[0] !== "w1") probEq.push(`remover apagou ${apagados[0] ?? "nada"}`);
+
+  // Sem nada equipado, o bloco explica como pôr.
+  const vazio = { ...bicho, items: { filter: () => [], get: () => null } };
+  const raizV = monta(`<div class="basic-info"></div><div class="stats"></div><div class="monster-tab-attacks"></div>`);
+  const appV = new reg.cls();
+  appV.actor = vazio;
+  gancho.fn(appV, raizV);
+  if (!raizV.querySelector(".sd-equip-vazio")) probEq.push("criatura sem equipamento devia ver o convite para arrastar");
+
+  if (probEq.length) {
+    for (const x of probEq) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ ameaça: equipamento da criatura na ficha — abrir, virar ataque e remover");
+}
+
 // ── A opção "Fichas Space Dragon como padrão" ──────────────────────────────
 // Ligada (o padrão), o ator SEM ficha marcada é do Space Dragon — é a mesa
 // de Space Dragon, onde ninguém marca ator por ator. Com a ficha do sistema
