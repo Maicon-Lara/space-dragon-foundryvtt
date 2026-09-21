@@ -11,8 +11,10 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 12 · <strong>DES</strong> 12 · <strong>CON</strong> 14 · <strong>INT</strong> 10 · <strong>CIE</strong> 12 · <strong>COM</strong> 10</p></div><p>Serviçais robóticos são robôs programados para obedecer a uma pessoa ou grupo, executando todo tipo de tarefa. Seus cérebros positrônicos são desenvolvidos, embora menos capazes do que os presentes em metahumanos e androides. São capazes de fala e pensamento lógico complexo, mas estão presos à obediência programada em seus cérebros. Desativação serviçais robóticos podem ser desativados por cientistas através de um disruptor positrônico. Envolver um shoggoth que acerte três ataques consecutivos em um alvo pode tentar envolvê-lo. O alvo pode fazer uma JPR para desvencilhar- se, mas caso seja envolto sofrerá 1d6 pontos de dano por rodada até ser libertado, com a morte do shoggoth.</p>",
     "described_attacks": "1 PISTOLA LASER +6 (1D6) 1 RIFLE LASER +3 (1D8)",
-    "encounters": "ERRANTE 1D2 GRUPO 1D6",
-    "xp": "ODU 500 XP",
+    "encounters": "1D2",
+    "encounters_lair": "1D6",
+    "xp": "500 XP",
+    "treasure": "O, D, U",
     "dv": "6+2 (26/50)",
     "ca": "15 (CORPO ROBÓTICO +4)",
     "jp": "14",
@@ -120,6 +122,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 12,
           "DES": 12,

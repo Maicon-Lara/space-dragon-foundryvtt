@@ -11,7 +11,8 @@
     "habitat": "FLORESTAS E PLANÍCIES",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Rapto saurus</em></p><p><strong>FOR</strong> 12 · <strong>DES</strong> 16 · <strong>CON</strong> 10 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p></div><p>Raptossauros são pequenos alienossauros ágeis, astutos e agressivos. Correm em alta velocidade em duas pernas, sendo capazes de perseguir suas vítimas até que consigam emboscá-la. Quando atacam geralmente estão em grupo, tendo mais chance de sucesso na caçada. Os raptossauros são audazes, e suas presas variam desde pequenos insetos até outros alienossauros com dezenas de vezes seu próprio tamanho. Ataque em grupo quando atacam uma mesma presa em grupo, o raptossauro recebe +1 em suas rolagens de ataque para cada outro de sua espécie que estiver atacando, com bônus máximo de +4.</p>",
     "described_attacks": "1 MORDIDA +3 (1D6+1) 2 GARRAS +1 (1D4)",
-    "encounters": "ERRANTE 1D4 GRUPO 2D6",
+    "encounters": "1D4",
+    "encounters_lair": "2D6",
     "xp": "100 XP",
     "dv": "2 (8/16)",
     "ca": "13",
@@ -120,6 +121,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Rapto saurus",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 12,
           "DES": 16,

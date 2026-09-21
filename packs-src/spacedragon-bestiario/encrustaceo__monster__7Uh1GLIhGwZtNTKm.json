@@ -11,7 +11,8 @@
     "habitat": "TERRENOS ROCHOSOS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Crustaceo mineralis</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 10 · <strong>CON</strong> 14 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p><p><strong>Redução de dano</strong> 4/ÁCIDO</p></div><p>Os encrustáceos à primeira vista não passam de grandes rochas calcárias, mas elas na verdade são apenas a concha dos crustáceos semelhantes a lagostas que vivem dentro delas. Embora sejam uma camuflagem eficaz, seu propósito é fornecer proteção contra ataques. Em um combate, os encrustáceos atacarão com ambas as enormes garras, que podem dilacerar carne facilmente. Defesa rochosa um encrustáceo pode esconder- se em sua concha, ficando virtualmente invulnerável a quaisquer ataques, exceto a dano ácido ou forças extremamente brutais.</p>",
     "described_attacks": "2 GARRAS +4 (1D6+2)",
-    "encounters": "GRUPO 1D4 COLÔNIA 2D6",
+    "encounters": "1D4",
+    "encounters_lair": "2D6",
     "xp": "405 XP",
     "dv": "5+2 (22/42)",
     "ca": "16 (CONCHA DE ROCHA +6)",
@@ -86,6 +87,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Crustaceo mineralis",
+        "encontro": {
+          "grupo": "GRUPO",
+          "covil": "COLÔNIA"
+        },
         "atributos": {
           "FOR": 14,
           "DES": 10,

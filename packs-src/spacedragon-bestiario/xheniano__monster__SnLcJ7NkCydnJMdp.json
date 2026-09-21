@@ -11,8 +11,10 @@
     "habitat": "QUALQUER",
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 10 · <strong>INT</strong> 20 · <strong>CIE</strong> 20 · <strong>COM</strong> 12</p><p><strong>Resistência mental</strong> 90%</p></div>",
     "described_attacks": "2 GARRAS +3 (1D8+2) PODERES MENTAIS (VER TEXTO)",
-    "encounters": "ERRANTE 1D4, BASE 2D6",
-    "xp": "ODU 610 XP",
+    "encounters": "1D4",
+    "encounters_lair": "2D6",
+    "xp": "610 XP",
+    "treasure": "O, D, U",
     "dv": "6 (24/48)",
     "ca": "12 (VESTES LEVES)",
     "jp": "14",
@@ -86,6 +88,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "BASE"
+        },
         "atributos": {
           "FOR": 14,
           "DES": 12,

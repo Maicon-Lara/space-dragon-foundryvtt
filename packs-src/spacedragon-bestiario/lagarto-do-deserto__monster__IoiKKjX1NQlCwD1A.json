@@ -11,7 +11,8 @@
     "habitat": "DESERTOS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Aridus reptus</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p></div><p>Lagartos do deserto são uma espécie de iguana gigante de coloração arenosa, adequada à vida no deserto. Em geral, vivem em cavernas ou tocas escavadas no subterrâneo onde botam seus ovos, e preferem procurar alimento à noite. Durante o dia tomam banhos de sol, mas não hesitam em fugir para suas tocas ao menor sinal de perigo. Devido ao seu tamanho grande são domesticados e usados como montaria por povos do deserto, como os homens lagarto.</p>",
     "described_attacks": "1 ATAQUE COM CAUDA +8 (1D8+4) 1 ATAQUE COM LÍNGUA +5 (1D4+2 + ENVOLVER)",
-    "encounters": "ERRANTE 1D2 NINHO 2D4",
+    "encounters": "1D2",
+    "encounters_lair": "2D4",
     "xp": "635 XP",
     "dv": "7+2 (30/58)",
     "ca": "14 (COURAÇA GROSSA +3)",
@@ -120,6 +121,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Aridus reptus",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "NINHO"
+        },
         "atributos": {
           "FOR": 14,
           "DES": 12,

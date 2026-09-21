@@ -11,7 +11,8 @@
     "habitat": "FLORESTAS E PLANÍCIES",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Meganius saurus</em></p><p><strong>FOR</strong> 28 · <strong>DES</strong> 14 · <strong>CON</strong> 22 · <strong>INT</strong> 6 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p></div><p>Megassauros são alienossauros de imensa estatura e muito agressivos. Perseguirão quaisquer invasores que ameacem seus ninhos, até que consigam matá- los, ou perdê-los de vista. Seus dentes afiados os permitem dilacerar suas vítimas com uma mordida, e sua cauda terminada em escamas afiadas também é uma arma perigosa. Agarrar em uma mordida bem-sucedida o megassauro pode prender a vítima entre seus dentes, se ela falhar em uma JPR. Uma vítima presa sofre 1d8 pontos de dano a cada rodada e pode tentar um teste resistido Força para se soltar.</p>",
     "described_attacks": "1 MORDIDA +12 (2D10+5 + AGARRAR) 1 ATAQUE COM CAUDA +6 (1D8+3)",
-    "encounters": "ERRANTE 1D2 NINHO 1D6",
+    "encounters": "1D2",
+    "encounters_lair": "1D6",
     "xp": "1.975 XP",
     "dv": "12+6 (54/102)",
     "ca": "16 (COURO GROSSO +4)",
@@ -120,6 +121,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Meganius saurus",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "NINHO"
+        },
         "atributos": {
           "FOR": 28,
           "DES": 14,

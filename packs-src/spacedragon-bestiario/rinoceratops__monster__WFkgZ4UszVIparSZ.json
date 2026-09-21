@@ -11,7 +11,8 @@
     "habitat": "PLANÍCIES",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Rhino saurus</em></p><p><strong>FOR</strong> 25 · <strong>DES</strong> 16 · <strong>CON</strong> 20 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p></div><p>Rinoceratops são alienossauros quadrúpedes, pesados e que possuem couraças grossas. Têm um poderoso chifre sobre seus focinhos, o qual utilizam para o ataque. Vivem em planícies, e não raramente, entram em conflito com mastodontes que vivam no mesmo lugar, disputando o território. Arremesso uma vítima que é atingida por um ataque com o chifre do rinoceratops é arremessada a 1d6 metros de distância, se não passar em uma JPR.</p>",
     "described_attacks": "1 CHIFRADA +15 (2D10+8 + ARREMESSO) 1 CABEÇADA +8 (1D10+6)",
-    "encounters": "ERRANTE 1D2 MANADA 1D6",
+    "encounters": "1D2",
+    "encounters_lair": "1D6",
     "xp": "1.390 XP",
     "dv": "10+5 (45/85)",
     "ca": "17 (COURAÇA GROSSA +4)",
@@ -120,6 +121,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Rhino saurus",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "MANADA"
+        },
         "atributos": {
           "FOR": 25,
           "DES": 16,

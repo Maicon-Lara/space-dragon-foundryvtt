@@ -11,8 +11,10 @@
     "habitat": "QUALQUER",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Mutatio sapiens</em></p><p><strong>FOR</strong> 12 · <strong>DES</strong> 14 · <strong>CON</strong> 12 · <strong>INT</strong> 13 · <strong>CIE</strong> 14 · <strong>COM</strong> 10</p><p><strong>Resistência mental</strong> 30%</p></div><p>Os multiformas são um povo sapiente capaz de alterar sua morfologia corporal, assumindo a forma de qualquer outro ser vivo do tamanho humano ou menor. Em sua forma original são esguios e têm a cabeça alongada, além de apresentarem olhos amarelados. Quando transformados, os multiforma apresentarão quaisquer características e habilidades que a espécie emulada teria normalmente. Resistência mental os cérebros dos multiformas são 70% iguais aos dos humanos, o que lhes confere 30% de resistência contra poderes mentais. Metamorfose o multiforma pode transformar-se em qualquer criatura média ou menor por um período indefinido de tempo, emulando quaisquer características e habilidades inerentes à espécie. A metamorfose é revertida caso o multiforma morra.</p>",
     "described_attacks": "1 PANCADA +3 (1D6+1)",
-    "encounters": "GRUPO 1D4 NAVE 2D6",
-    "xp": "ODU 205 XP",
+    "encounters": "1D4",
+    "encounters_lair": "2D6",
+    "xp": "205 XP",
+    "treasure": "O, D, U",
     "dv": "3+1 (13/25)",
     "ca": "14 (VESTES MÉDIAS)",
     "jp": "16",
@@ -86,6 +88,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Mutatio sapiens",
+        "encontro": {
+          "grupo": "GRUPO",
+          "covil": "NAVE"
+        },
         "atributos": {
           "FOR": 12,
           "DES": 14,

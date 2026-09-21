@@ -11,7 +11,8 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Vampiris energis</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 16 · <strong>CON</strong> 18 · <strong>INT</strong> 5 · <strong>CIE</strong> 2 · <strong>COM</strong> 5</p></div><p>Vampiros energéticos são criaturas humanoides capazes de sugar a energia vital de outros seres vivos através do toque. Têm o tamanho aproximado de um humano, pele cinzenta e olhos negros, além de uma aparência doentia e frágil. Especula-se que os vampiros energéticos originalmente eram mutantes humanos que ao se isolarem da linha evolutiva principal acabaram por tornarem-se uma espécie completamente diferente. Dreno de energia ao toque do vampiro energético o personagem sofre um dreno de 1d4 DV, que são revertidos para a criatura. Ao drenar os DV de um personagem o mestre deve rolar a mesma quantidade de dados para determinar o acréscimo aos DV do vampiro energético.</p>",
     "described_attacks": "1 TOQUE +4 (DRENO DE ENERGIA)",
-    "encounters": "ERRANTE 1D4 COVIL 2D6",
+    "encounters": "1D4",
+    "encounters_lair": "2D6",
     "xp": "280 XP",
     "dv": "4+4 (20/36)",
     "ca": "13",
@@ -86,6 +87,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Vampiris energis",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "COVIL"
+        },
         "atributos": {
           "FOR": 14,
           "DES": 16,

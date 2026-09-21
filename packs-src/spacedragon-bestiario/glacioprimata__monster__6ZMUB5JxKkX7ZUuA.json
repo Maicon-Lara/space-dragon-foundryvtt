@@ -11,7 +11,8 @@
     "habitat": "GELEIRAS E MONTANHAS CONGELADAS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Primata glacialis</em></p><p><strong>FOR</strong> 20 · <strong>DES</strong> 16 · <strong>CON</strong> 16 · <strong>INT</strong> 4 · <strong>CIE</strong> 2 · <strong>COM</strong> 4</p></div><p>Glacioprimatas são similares a gorilas, porém muito maiores e com pelos brancos que ajudam em sua camuflagem nos ambientes congelados onde vivem, geralmente em cavernas. A falta de alimento faz com que os glacioprimatas ataquem tudo que se mexa na esperança de conseguirem comida. Não são inéditos os casos em que humanos foram raptados por glacioprimatas e mantidos em seus covis para que sejam devorados depois.</p>",
     "described_attacks": "2 PANCADAS +8 (1D10+3) 1 ROCHA ARREMESSADA +3 (1D8+3)",
-    "encounters": "BANDO 1D4 FAMÍLIA 1D8",
+    "encounters": "1D4",
+    "encounters_lair": "1D8",
     "xp": "875 XP",
     "dv": "8+3 (35/67)",
     "ca": "14 (PELAGEM GROSSA +1)",
@@ -120,6 +121,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Primata glacialis",
+        "encontro": {
+          "grupo": "BANDO",
+          "covil": "FAMÍLIA"
+        },
         "atributos": {
           "FOR": 20,
           "DES": 16,

@@ -11,7 +11,8 @@
     "habitat": "FLORESTAS E SUBTERRÂNEO",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Aracno gigantus</em></p><p><strong>FOR</strong> 15 · <strong>DES</strong> 17 · <strong>CON</strong> 12 · <strong>INT</strong> 0 · <strong>CIE</strong> 5 · <strong>COM</strong> 2</p></div><p>As aranhas gigantes são enormes aracnídeos negros que costumam fazer suas teias em florestas ou cavernas escuras, onde esperam que suas vítimas fiquem presas antes de atacá-las e devorá-las, saltando de cima das árvores ou do teto das cavernas. Suas presas secretam veneno debilitante, nocivo a qualquer ser vivo. Teia um personagem preso na teia de uma aranha gigante deve vencer um teste de Força para se soltar, ou estará completamente imobilizado. Veneno o veneno da aranha gigante causa 1d6 de dano de atributo na Constituição da vítima, que pode fazer uma JPF para anular os efeitos.</p>",
     "described_attacks": "1 MORDIDA +2 (2D6+2) 1 FERROADA +3 (1D8+3 + VENENO)",
-    "encounters": "GRUPO 1D4 NINHO 2D6",
+    "encounters": "1D4",
+    "encounters_lair": "2D6",
     "xp": "205 XP",
     "dv": "3+1 (13/25)",
     "ca": "14 (COURAÇA GROSSA +1)",
@@ -121,6 +122,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Aracno gigantus",
+        "encontro": {
+          "grupo": "GRUPO",
+          "covil": "NINHO"
+        },
         "atributos": {
           "FOR": 15,
           "DES": 17,

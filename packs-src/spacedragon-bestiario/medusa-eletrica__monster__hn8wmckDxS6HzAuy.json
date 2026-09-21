@@ -11,7 +11,8 @@
     "habitat": "SUBAQUÁTICO",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Medusa eletricus</em></p><p><strong>FOR</strong> 2 · <strong>DES</strong> 12 · <strong>CON</strong> 2 · <strong>INT</strong> 0 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>Medusas elétricas são pequenos seres amórficos sem sistema nervoso ou cérebro que flutuam pelos oceanos eletrocutando peixes com seus tentáculos para digeri-los. Embora sejam relativamente inofensivas isoladamente, um grande cardume de medusas elétricas pode ser mortal se atacar ao mesmo tempo.</p>",
     "described_attacks": "1 TENTÁCULO (1D4)",
-    "encounters": "GRUPO 2D6 CARDUME 5D6",
+    "encounters": "2D6",
+    "encounters_lair": "5D6",
     "xp": "10 XP",
     "dv": "1 PV",
     "ca": "11",
@@ -86,6 +87,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Medusa eletricus",
+        "encontro": {
+          "grupo": "GRUPO",
+          "covil": "CARDUME"
+        },
         "atributos": {
           "FOR": 2,
           "DES": 12,

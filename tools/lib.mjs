@@ -998,6 +998,46 @@ export function ataquesDoBloco(texto) {
   return saida;
 }
 
+/**
+ * "BANDO 3D6 BASE 10D6" → os dois campos de encontro da ficha, com os nomes.
+ *
+ * O livro (11.6) diz quantos aparecem juntos e quantos há no covil, e cada
+ * espécie chama o covil do seu jeito: BASE, GRUPO, TOCA, NAVE, ALDEIA. A ficha
+ * do sistema tem dois campos rotulados "Errantes" e "Covil"; tudo ia no
+ * primeiro, e o segundo número sumia atrás da largura da caixa.
+ *
+ * O NÚMERO vai no campo e a PALAVRA vai nos flags, que é o que a Ficha de
+ * Ameaça usa para rotular cada caixa com o nome que aquela criatura usa.
+ */
+export function encontrosDe(texto) {
+  const s = String(texto ?? "").trim();
+  const par = /([A-ZÀ-Ú][A-ZÀ-Ú\s]*?)\s+(\d+[Dd]\d+(?:\s*[+-]\s*\d+)?|\d+)/g;
+  const achados = [...s.matchAll(par)].map((m) => ({ nome: m[1].trim(), valor: m[2].trim() }));
+  if (achados.length < 2) return { encounters: s };
+  const [um, dois] = achados;
+  return {
+    encounters: um.valor,
+    encounters_lair: dois.valor,
+    rotulos: { grupo: um.nome, covil: dois.nome },
+  };
+}
+
+/**
+ * "OD 37 XP" → relíquias "O, D" e prêmio "37 XP".
+ *
+ * As iniciais antes do XP são as relíquias que o alienígena carrega —
+ * "O, D e U para relíquias ofensivas, defensivas e utilitárias" (11.6) —, e
+ * não parte do número. Juntas num campo só, a ficha mostrava "OD 37 XP" onde
+ * se lê o prêmio, e o campo de tesouro ficava vazio.
+ */
+export function premiosDe(texto) {
+  const s = String(texto ?? "").trim();
+  const m = s.match(/^([ODU](?:\s*,\s*[ODU]|\s*[ODU])*)\s+(.*)$/i);
+  if (!m) return { xp: s };
+  const letras = m[1].toUpperCase().replace(/[^ODU]/g, "").split("").join(", ");
+  return { xp: m[2].trim(), treasure: letras };
+}
+
 export function monsterDoc(c, folderId, seedPrefix, sort) {
   // `seedNome` preserva o UUID quando só o RÓTULO muda. Foi preciso ao
   // consertar a caixa dos nomes — "Medidor De Radiação" virou "Medidor de
@@ -1034,8 +1074,13 @@ export function monsterDoc(c, folderId, seedPrefix, sort) {
     (topo ? `<div class="sd-bloco-extra">${topo}</div>` : "") +
     (c.texto ? `<p>${c.texto}</p>` : "");
 
+  // O número vai nos campos da ficha; o nome que a espécie dá ao grupo e ao
+  // covil vai nos flags, e é com ele que a Ficha de Ameaça rotula as caixas.
+  const { rotulos: rotulosDeEncontro, ...camposDeEncontro } = encontrosDe(c.encontros);
+
   const ameaca = {
     cientifico: c.cientifico ?? "",
+    ...(rotulosDeEncontro ? { encontro: rotulosDeEncontro } : {}),
     atributos: Object.fromEntries(
       ["FOR", "DES", "CON", "INT", "CIE", "COM"].map((k) => [k, at[k] ?? null])
     ),
@@ -1078,8 +1123,8 @@ export function monsterDoc(c, folderId, seedPrefix, sort) {
     habitat: c.habitat ?? "",
     description: desc,
     described_attacks: c.ataques ?? "",
-    encounters: c.encontros ?? "",
-    xp: c.premios ?? "",
+    ...camposDeEncontro,
+    ...premiosDe(c.premios),
     dv: c.dv ?? "",
     ca: c.cp ?? "",
     jp: c.jp ?? "",

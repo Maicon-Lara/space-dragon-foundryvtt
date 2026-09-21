@@ -11,7 +11,8 @@
     "habitat": "RIOS E PÂNTANOS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Croco saurus</em></p><p><strong>FOR</strong> 16 · <strong>DES</strong> 13 · <strong>CON</strong> 14 · <strong>INT</strong> 8 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>Crocossauros são répteis de tamanho descomunal que habitam áreas pantanosas e rios, onde se camuflam e esperam passar despercebidos de suas presas até o momento do ataque. Para tanto costumam submergir nas águas, deixando apenas as narinas e os olhos para fora. Uma vítima que é mordida por um crocossauro corre sério risco de ser arrastada para a água e nunca mais ser vista. Agarrar em uma mordida bem- sucedida o crocossauro pode tentar agarrar uma vítima de tamanho humano, ou menor, com a boca com um teste resistido de Força. Caso a criatura saia vitoriosa, a vítima estará presa e o crocossauro tentará um giro mortal em seu próximo turno, que pede uma JPF para que os ossos da vítima não quebrem, causando 2d10+4 pontos de dano. A vítima pode tentar soltar-se em seu turno com um novo teste resistido de Força, sofrendo 1d6 pontos de dano, caso consiga livrar-se da mordida.</p>",
     "described_attacks": "1 MORDIDA +6 (1D10+4+AGARRAR) 1 ATAQUE COM CAUDA +3 (1D6+1)",
-    "encounters": "GRUPO 1D4 NINHO 1D8",
+    "encounters": "1D4",
+    "encounters_lair": "1D8",
     "xp": "555 XP",
     "dv": "6+2 (26/50)",
     "ca": "16 (COURAÇA GROSSA +4)",
@@ -121,6 +122,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Croco saurus",
+        "encontro": {
+          "grupo": "GRUPO",
+          "covil": "NINHO"
+        },
         "atributos": {
           "FOR": 16,
           "DES": 13,

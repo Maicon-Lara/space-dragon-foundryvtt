@@ -11,8 +11,10 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 14 · <strong>DES</strong> 14 · <strong>CON</strong> 18 · <strong>INT</strong> 12 · <strong>CIE</strong> 14 · <strong>COM</strong> 12</p><p><strong>Resistência mental</strong> 5%</p></div><p>Metahumanos representam o último estágio de desenvolvimento da robótica antes do advento dos androides. Seus cérebros positrônicos são virtualmente indistinguíveis, o que difere os dois tipos de robô é o fato de que o corpo dos metahumanos é totalmente de metal, ao contrário dos corpos sintéticos dos androides que buscam emular o corpo humano orgânico. Essa característica acabou por gerar o boato de que o termo metahumano significa literalmente “homem de metal”, e não humano artificial, que culminou no desenvolvimento da tecnologia que tornou a construção de androides possível. Resistência mental os cérebros positrônicos dos metahumanos são virtualmente idênticos aos dos Homo machina, conferindo-lhes a mesma resistência mental de 5%. Desativação metahumanos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
     "described_attacks": "1 PISTOLA LASER +10 (1D6) 1 RIFLE LASER +6 (1D8)",
-    "encounters": "ERRANTE 1D2 GRUPO 1D6",
-    "xp": "ODU 1.975 XP",
+    "encounters": "1D2",
+    "encounters_lair": "1D6",
+    "xp": "1.975 XP",
+    "treasure": "O, D, U",
     "dv": "12+4 (52/100)",
     "ca": "16 (CORPO ROBÓTICO +4)",
     "jp": "11",
@@ -120,6 +122,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 14,
           "DES": 14,

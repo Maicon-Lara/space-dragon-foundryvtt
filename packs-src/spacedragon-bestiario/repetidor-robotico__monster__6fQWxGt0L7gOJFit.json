@@ -11,8 +11,10 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 9 · <strong>DES</strong> 6 · <strong>CON</strong> 8 · <strong>INT</strong> 2 · <strong>CIE</strong> 3 · <strong>COM</strong> 2</p></div><p>Repetidores robóticos são o estágio de desenvolvimento robótico entre protótipos primitivos e autômatos funcionais. Embora não sejam tão proficientes na execução de uma tarefa específica como os autômatos, os repetidores conseguem desempenhar uma função simples como andar, abrir uma porta ou atacar. Desativação repetidores robóticos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
     "described_attacks": "1 PANCADA +2 (1D6+1)",
-    "encounters": "ERRANTE 1D6 GRUPO 2D10",
-    "xp": "U 75 XP",
+    "encounters": "1D6",
+    "encounters_lair": "2D10",
+    "xp": "75 XP",
+    "treasure": "U",
     "dv": "2 (8/16)",
     "ca": "11 (CORPO ROBÓTICO +1)",
     "jp": "18",
@@ -86,6 +88,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 9,
           "DES": 6,

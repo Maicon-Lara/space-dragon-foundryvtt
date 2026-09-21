@@ -11,8 +11,10 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 14 · <strong>DES</strong> 10 · <strong>CON</strong> 12 · <strong>INT</strong> 7 · <strong>CIE</strong> 10 · <strong>COM</strong> 3</p></div><p>Autômatos são robôs humanoides programados para uma única função, a qual cumprem repetidamente e sem parar, sem a necessidade de controle humano. Com a deterioração de seus circuitos não é incomum que autômatos executem repetidamente apenas a função de afastar intrusos através de ataques rudimentares, dificilmente perseguindo-os. Seus cérebros positrônicos são primitivos, incapazes de raciocínio complexo, reagindo apenas a estímulos. Desativação autômatos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
     "described_attacks": "1 PANCADA +2 (1D6+2)",
-    "encounters": "ERRANTE 1D2 GRUPO 1D6",
-    "xp": "O 245 XP",
+    "encounters": "1D2",
+    "encounters_lair": "1D6",
+    "xp": "245 XP",
+    "treasure": "O",
     "dv": "4+1 (17/33)",
     "ca": "14 (CORPO ROBÓTICO +4)",
     "jp": "15",
@@ -86,6 +88,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 14,
           "DES": 10,

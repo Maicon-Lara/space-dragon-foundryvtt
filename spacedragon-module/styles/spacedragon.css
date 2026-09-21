@@ -294,3 +294,22 @@
 .spacedragon-ameaca .sd-equip-dano { opacity: 0.8; font-size: 0.9em; }
 .spacedragon-ameaca .sd-equip-controles { display: flex; gap: 6px; flex: 0 0 auto; }
 .spacedragon-ameaca .sd-equip-vazio { padding: 4px; opacity: 0.75; font-size: 0.9em; }
+
+/* ── Ficha de Ameaça: caber o que o bloco do livro escreve ──────────────────
+ * O sistema dá 40x40 px fixos a CP, JP e Moral, e a criatura do Space Dragon
+ * escreve "15 (TRAJES DE COMBATE)" ali. A barra lateral fica mais larga, as
+ * caixas acompanham, e o valor inteiro vai na dica ao passar o mouse. */
+.spacedragon-ameaca .sheet-container .sidebar { min-width: 230px; }
+.spacedragon-ameaca .sheet-container .sidebar .stats { width: 100%; }
+.spacedragon-ameaca .sheet-container .sidebar .stats .stat { grid-template-columns: 4.5rem 1fr; font-size: 1rem; }
+.spacedragon-ameaca .sheet-container .sidebar .stats .stat input { width: 100%; height: 30px; font-size: 0.85rem; }
+.spacedragon-ameaca .sheet-container .sidebar .encounter input,
+.spacedragon-ameaca .sheet-container .sidebar .treasure input,
+.spacedragon-ameaca .sheet-container .sidebar .dv input { font-size: 0.85rem; }
+.spacedragon-ameaca .sd-escondido { display: none; }
+
+/* A descrição e o sabor: o sistema entrega caixas de três linhas, e o texto
+ * de uma criatura tem parágrafos. */
+.spacedragon-ameaca .monster-tab-info textarea { min-height: 7rem; }
+.spacedragon-ameaca .monster-tab-info .editor,
+.spacedragon-ameaca .monster-tab-info .editor-content { min-height: 18rem; }

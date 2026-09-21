@@ -11,8 +11,10 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 14 · <strong>DES</strong> 12 · <strong>CON</strong> 16 · <strong>INT</strong> 10 · <strong>CIE</strong> 12 · <strong>COM</strong> 8</p></div><p>Humanoides robóticos representam o último estágio de desenvolvimento tecnológico em relação ao cérebro positrônico antes que ele fosse aperfeiçoado para o modelo atual. Sua inteligência ainda é primitiva se comparada à humana, mas significativamente desenvolvida em comparação a animais e certos alienígenas. Podem comunicar-se através de frases simples, são capazes de aprender comandos e executá-los. Desativação humanoides robóticos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
     "described_attacks": "1 PANCADA +8 (1D8+4) 1 RAIO LASER +4 (1D6)",
-    "encounters": "ERRANTE 1D2 GRUPO 1D4",
-    "xp": "ODU 1.075 XP",
+    "encounters": "1D2",
+    "encounters_lair": "1D4",
+    "xp": "1.075 XP",
+    "treasure": "O, D, U",
     "dv": "9+3 (39/75)",
     "ca": "15 (CORPO ROBÓTICO +4)",
     "jp": "12",
@@ -120,6 +122,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 14,
           "DES": 12,

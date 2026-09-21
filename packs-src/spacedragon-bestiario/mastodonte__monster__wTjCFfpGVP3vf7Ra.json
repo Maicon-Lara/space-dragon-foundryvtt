@@ -11,7 +11,8 @@
     "habitat": "PLANÍCIES",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Mamutis gigantus</em></p><p><strong>FOR</strong> 26 · <strong>DES</strong> 14 · <strong>CON</strong> 20 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p></div><p>Mastodontes são enormes mamíferos aparentados a elefantes, mas cobertos de pelos grossos. Suas enormes presas frontais são afiadas e mortais quando usadas para um ataque. São herbívoros e vivem em manadas pelas planícies, sempre migrando para onde haja pasto e plantas rasteiras. Quando a manada é ameaçada todos os membros disparam contra os inimigos, atropelando todos em seu caminho. Arremesso uma vítima atingida por um ataque com as presas do mastodonte é arremessada a 1d6 metros de distância, se não passar em uma JPR. Atropelar um mastodonte em corrida pode atropelar todos em sua frente que não passarem em uma JPR. O atropelamento causa o mesmo dano do ataque com presas.</p>",
     "described_attacks": "1 ATAQUE COM PRESAS +14 (2D8+8+ARREMESSO) ATROPELAR (VER TEXTO)",
-    "encounters": "ERRANTE 1D2 MANADA 2D6",
+    "encounters": "1D2",
+    "encounters_lair": "2D6",
     "xp": "2.075 XP",
     "dv": "12+5 (53/101)",
     "ca": "15 (PELAGEM GROSSA +3)",
@@ -86,6 +87,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Mamutis gigantus",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "MANADA"
+        },
         "atributos": {
           "FOR": 26,
           "DES": 14,

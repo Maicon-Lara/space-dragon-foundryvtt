@@ -11,7 +11,8 @@
     "habitat": "FLORESTAS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Vipera eletricus</em></p><p><strong>FOR</strong> 8 · <strong>DES</strong> 18 · <strong>CON</strong> 8 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p></div><p>Eletricobras são répteis rastejantes de coloração azul com marcas amarelas na pele que caçam mordendo suas vítimas e as matando com as descargas elétricas por elas produzidas. Embora prefiram viver em terra as eletricobras também são ótimas nadadoras, e sua bioeletricidade torna-se mais mortal em ambientes inundados. Descarga elétrica a descarga elétrica da eletricobra atinge uma área de 5m² ao redor da criatura. Todos nessa área devem fazer uma JPR para sofrer apenas metade do dano. Quem falhar nessa jogada sofre o dano normalmente e deve fazer uma JPF, para não ficar paralisado por 4d10 segundos.</p>",
     "described_attacks": "1 MORDIDA +4 (1D6+1D4 ELÉTRICO) 1 DESCARGA ELÉTRICA 1D8 ELÉTRICO + PARALISAÇÃO, VER TEXTO)",
-    "encounters": "GRUPO 1D6 NINHO 3D6",
+    "encounters": "1D6",
+    "encounters_lair": "3D6",
     "xp": "100 XP",
     "dv": "2 (8/16)",
     "ca": "14",
@@ -87,6 +88,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Vipera eletricus",
+        "encontro": {
+          "grupo": "GRUPO",
+          "covil": "NINHO"
+        },
         "atributos": {
           "FOR": 8,
           "DES": 18,

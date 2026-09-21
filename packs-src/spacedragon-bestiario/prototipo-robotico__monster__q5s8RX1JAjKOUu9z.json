@@ -11,8 +11,10 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 12 · <strong>DES</strong> 8 · <strong>CON</strong> 9 · <strong>INT</strong> 6 · <strong>CIE</strong> 4 · <strong>COM</strong> 2</p></div><p>Protótipos foram os primeiros robôs humanoides desenvolvidos, portanto, os primeiros a possuírem um cérebro positrônico, embora muito primitivo. Limitam-se a movimentação básica como andar e atacar, sendo incapazes de raciocínio lógico ou reação elaborada a estímulos. Desativação protótipos robóticos podem ser desativados por cientistas através de um disruptor positrônico.</p>",
     "described_attacks": "1 PANCADA +2 (1D6+1)",
-    "encounters": "ERRANTE 1D4 GRUPO 2D8",
-    "xp": "U 75 XP",
+    "encounters": "1D4",
+    "encounters_lair": "2D8",
+    "xp": "75 XP",
+    "treasure": "U",
     "dv": "2 (8/16)",
     "ca": "11 (CORPO ROBÓTICO +1)",
     "jp": "17",
@@ -86,6 +88,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 12,
           "DES": 8,

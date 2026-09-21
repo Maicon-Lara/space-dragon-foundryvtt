@@ -117,15 +117,81 @@ function texto(el, novo) {
   el.append?.(novo);
 }
 
+/** "BANDO" → "Bando". */
+const capitaliza = (s) => {
+  const t = String(s ?? "").trim().toLowerCase();
+  return t ? t.charAt(0).toUpperCase() + t.slice(1) : "";
+};
+
+/**
+ * ── A FICHA AINDA FALAVA A LÍNGUA DA FANTASIA ───────────────────────────────
+ *
+ * "Alinhamento Caótico", "Tesouros — Errantes e Covil". No Space Dragon é
+ * AFILIAÇÃO (leal, neutro, rebelde) e são RELÍQUIAS: as iniciais O, D e U do
+ * bloco dizem que o alienígena carrega relíquia ofensiva, defensiva ou
+ * utilitária (11.6), e o XP vem separado, como prêmio pela derrota.
+ *
+ * E cada espécie chama o covil do seu jeito — NINHO, TOCA, NAVE, BASE,
+ * ALCATEIA. O nome vem do próprio bloco, pelos flags que o build gravou.
+ */
+const RELIQUIAS = "Relíquias que o alienígena carrega: O ofensiva, D defensiva, U utilitária (Cap. 11.6).";
+const AFILIACOES = { "Ordeiro": "Leal", "Caótico": "Rebelde" };
+
+/** Troca o texto de um rótulo que case com `qual`, e devolve se trocou. */
+function renomeia(el, qual, novo, dica = null) {
+  if (!el || !qual.test(el.textContent.trim())) return false;
+  el.textContent = novo;
+  if (dica) el.setAttribute("title", dica);
+  return true;
+}
+
 /** Os rótulos do Space Dragon na ficha de ameaça. */
 function rotular(app, elemento) {
   try {
     const raiz = elemento?.querySelectorAll ? elemento : elemento?.[0];
     if (!raiz?.querySelector) return;
+    const dados = app.actor?.flags?.[ID]?.ameaca ?? {};
+
     for (const stat of raiz.querySelectorAll(".stats .stat")) {
       const label = stat.querySelector("label");
       if (label && /^CA\b/.test(label.textContent.trim())) label.textContent = "CP";
     }
+
+    // O valor inteiro na dica: "15 (TRAJES DE COMBATE)" não cabe na caixa.
+    for (const input of raiz.querySelectorAll(".sidebar input")) {
+      const v = input.getAttribute?.("value");
+      if (v && String(v).length > 4) input.setAttribute("title", v);
+    }
+
+    // Afiliação, e não Alinhamento: leal, neutro e rebelde.
+    for (const div of raiz.querySelectorAll(".alignment")) {
+      renomeia(div.querySelector("label"), /^Alinhamento$/i, "Afiliação");
+      for (const op of div.querySelectorAll("option")) {
+        const novo = AFILIACOES[op.textContent.trim()];
+        if (novo) op.textContent = novo;
+      }
+    }
+
+    // Encontros: o número fica na caixa e o nome do bloco vira o rótulo.
+    const enc = raiz.querySelector(".encounter");
+    if (enc) {
+      const subs = enc.querySelectorAll(".encounter-value label");
+      if (dados.encontro?.grupo && subs[0]) subs[0].textContent = capitaliza(dados.encontro.grupo);
+      if (dados.encontro?.covil && subs[1]) subs[1].textContent = capitaliza(dados.encontro.covil);
+    }
+
+    // Relíquias, e não Tesouros. O segundo campo, de covil, não existe aqui.
+    const tes = raiz.querySelector(".treasure");
+    if (tes) {
+      renomeia(tes.querySelector("label"), /^Tesouros?$/i, "Relíquias", RELIQUIAS);
+      const valores = tes.querySelectorAll(".treasure-value");
+      const sub = valores[0]?.querySelector("label");
+      if (sub) { sub.textContent = "O · D · U"; sub.setAttribute("title", RELIQUIAS); }
+      valores[1]?.classList?.add("sd-escondido");
+    }
+
+    // XP é o prêmio pela derrota.
+    renomeia(raiz.querySelector(".xp label"), /^XP$/i, "Prêmio");
     const jp = raiz.querySelector(".jp-roll");
     if (jp) {
       texto(jp, "JP");
@@ -287,7 +353,11 @@ function injetarPainel(app, elemento) {
     if (stats && !stats.querySelector(".sd-ameaca-painel")) stats.insertAdjacentHTML("beforeend", painelAmeaca(dados));
     const info = raiz.querySelector(".basic-info");
     if (info && !info.querySelector(".sd-ameaca-cientifico")) info.insertAdjacentHTML("beforeend", campoCientifico(dados));
-    // O que a criatura carrega, na aba de ataques, logo abaixo deles.
+    // O que a criatura carrega, na aba de ataques, logo abaixo deles. Se a
+    // ficha já tiver uma aba de equipamento — de uma versão do sistema ou de
+    // outro módulo —, o bloco não entra: ela é o lugar certo, e duas listas da
+    // mesma coisa é pior do que nenhuma.
+    if (raiz.querySelector(`[data-tab="equipment"]`)) return;
     const aba = raiz.querySelector(".monster-tab-attacks");
     if (aba && !aba.querySelector(".sd-equipamento")) {
       aba.insertAdjacentHTML("beforeend", blocoEquipamento(app.actor));
@@ -312,6 +382,11 @@ export function registrarFichaAmeaca(padrao = true) {
     static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
         classes: [...super.defaultOptions.classes, MARCA_AMEACA],
+        // A criatura do Space Dragon escreve mais em cada campo — "15 (TRAJES
+        // DE COMBATE)", "16 (+2 CONTRA VENENO)" — e ainda ganha o painel de
+        // atributos na lateral. Nos 600x650 do sistema tudo saía cortado.
+        width: 760,
+        height: 780,
       });
     }
 

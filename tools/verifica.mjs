@@ -110,7 +110,30 @@ console.log(`\n${BLOCOS.length + 3 - falhasB}/${BLOCOS.length + 3} blocos do bes
 //
 // Cada linha foi lida no bloco da criatura: vezes, nome, BA e o dado que o
 // botão de dano rola. As formas esquisitas do livro estão todas aqui.
-const { ataquesDoBloco, monsterDoc } = await import("./lib.mjs");
+const { ataquesDoBloco, monsterDoc, premiosDe, encontrosDe } = await import("./lib.mjs");
+
+// ── Prêmios e encontros, como o livro imprime ──────────────────────────────
+//
+// "PRÊMIOS OD 37 XP": as iniciais são as RELÍQUIAS que o alienígena carrega —
+// O ofensiva, D defensiva, U utilitária (11.6) —, e não parte do XP.
+// "ENCONTROS BANDO 3D6 BASE 10D6" são dois números, e cada espécie chama o
+// covil do seu jeito.
+{
+  const CASOS = [
+    ["Zork", { xp: "37 XP", treasure: "O, D" }, { encounters: "3D6", encounters_lair: "10D6", rotulos: { grupo: "BANDO", covil: "BASE" } }, "pág. 243"],
+    ["Aranha Gigante", { xp: "205 XP" }, { encounters: "1D4", encounters_lair: "2D6", rotulos: { grupo: "GRUPO", covil: "NINHO" } }, "pág. 210"],
+    ["Cientista (Nível 1)", { xp: "1.200 XP", treasure: "O, D, U" }, { encounters: "1D4" }, "pág. 203"],
+  ];
+  let falhasP = 0;
+  for (const [nome, premio, encontro, onde] of CASOS) {
+    const p = premiosDe(criatura(nome)?.premios);
+    const e = encontrosDe(criatura(nome)?.encontros);
+    const ok = JSON.stringify(p) === JSON.stringify(premio) && JSON.stringify(e) === JSON.stringify(encontro);
+    if (!ok) falhasP += 1;
+    console.log(`  ${ok ? "✔" : "✘"} ${nome.padEnd(22)} prêmio e encontros  ${onde}${ok ? "" : ` — ${JSON.stringify(p)} ${JSON.stringify(e)}`}`);
+  }
+  if (falhasP) process.exit(1);
+}
 const ATAQUES = [
   ["Tiranossauro", 0, { vezes: 1, nome: "Mordida", ba: 16, dano: "3d8+6" }],
   ["Tiranossauro", 1, { vezes: 1, nome: "Ataque com cauda", ba: 10, dano: "2d6+2" }],

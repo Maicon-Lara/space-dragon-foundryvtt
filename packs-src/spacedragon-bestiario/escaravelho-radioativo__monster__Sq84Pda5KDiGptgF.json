@@ -11,7 +11,8 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Scarabus uranius</em></p><p><strong>FOR</strong> 12 · <strong>DES</strong> 10 · <strong>CON</strong> 14 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>Escaravelhos radioativos são besouros marrons maiores que seres humanos e emitem um brilho verde devido a sua radioatividade. Em geral, habitam as ruínas de antigas estações humanas, onde acabam sendo contaminados por vazamentos radioativos. Atacarão usando suas pinças, com as quais cortam suas vítimas ao meio antes de devorá-las. Radioatividade qualquer personagem que sofra um ataque bem-sucedido de um escaravelho radioativo tem 15% de chance de sofrer também uma contaminação radioativa. Mesmo que um personagem não seja atingido pela criatura a simples proximidade também confere uma chance de 5% de contaminação.</p>",
     "described_attacks": "1 PINÇA +6 (1D6+4+RADIOATIVIDADE)",
-    "encounters": "GRUPO 1D4 INFESTAÇÃO 2D6",
+    "encounters": "1D4",
+    "encounters_lair": "2D6",
     "xp": "405 XP",
     "dv": "5+2 (22/42)",
     "ca": "14 (CARAPAÇA GROSSA +4)",
@@ -87,6 +88,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Scarabus uranius",
+        "encontro": {
+          "grupo": "GRUPO",
+          "covil": "INFESTAÇÃO"
+        },
         "atributos": {
           "FOR": 12,
           "DES": 10,

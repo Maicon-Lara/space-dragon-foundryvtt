@@ -11,7 +11,8 @@
     "habitat": "MONTANHAS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Giganto petricus</em></p><p><strong>FOR</strong> 22 · <strong>DES</strong> 14 · <strong>CON</strong> 18 · <strong>INT</strong> 8 · <strong>CIE</strong> 6 · <strong>COM</strong> 4</p><p><strong>Redução de dano</strong> 6/ÁCIDO</p></div><p>Os gigantes de pedra são enormes humanoides inteiramente feitos de rocha, mas ao contrário de cristaloides e outras formas de vida rochosas, possuem detalhes faciais e corporais similares a humanos, embora não tão refinados. Raramente são vistos e lendas de povos primitivos dos planetas que habitam comumente os tinham como ídolos, personificações da força da natureza. Corpo de pedra gigantes de pedra ignoram boa parte do dano que sofrem, exceto quando a fonte de dano é ácida o suficiente para corroer seu corpo de pedra.</p>",
     "described_attacks": "1 PANCADA +12 (4D6+6) 1 ROCHA ARREMESSADA +6 (3D6)",
-    "encounters": "ERRANTE 1D2 GRUPO 1D4",
+    "encounters": "1D2",
+    "encounters_lair": "1D4",
     "xp": "1.480 XP",
     "dv": "10+4 (44/84)",
     "ca": "18 (CORPO DE PEDRA +6)",
@@ -120,6 +121,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Giganto petricus",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 22,
           "DES": 14,

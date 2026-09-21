@@ -11,8 +11,10 @@
     "habitat": "DESERTOS E TERRENOS ROCHOSOS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Repto sapiens</em></p><p><strong>FOR</strong> 14 · <strong>DES</strong> 14 · <strong>CON</strong> 12 · <strong>INT</strong> 9 · <strong>CIE</strong> 8 · <strong>COM</strong> 8</p><p><strong>Resistência mental</strong> 10%</p></div><p>Homens lagarto são uma espécie de morfologia e mente humanoides, sendo inclusive capazes de fala, pensamento lógico e desenvolvimento científico. Seu atual estágio, entretanto, ainda é primitivo, com seu modo de vida resumindo-se à caça nos desertos onde vivem e na manipulação básica do fogo. Membros da espécie usam tanto suas armas rudimentares quanto o próprio corpo reptiliano para atacar. Resistência mental os cérebros dos homens lagarto são 90% iguais aos dos humanos, o que lhes confere 10% de resistência contra poderes mentais.</p>",
     "described_attacks": "1 MORDIDA +3 (1D6+3) 1 ATAQUE COM CAUDA +2 (1D4+2) 1 LANÇA DE LÂMINA +1 (1D8+3)",
-    "encounters": "GRUPO 1D6 TOCA 3D6",
-    "xp": "OD 280 XP",
+    "encounters": "1D6",
+    "encounters_lair": "3D6",
+    "xp": "280 XP",
+    "treasure": "O, D",
     "dv": "4+1 (17/33)",
     "ca": "14 (COURAÇA GROSSA +2)",
     "jp": "16",
@@ -154,6 +156,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Repto sapiens",
+        "encontro": {
+          "grupo": "GRUPO",
+          "covil": "TOCA"
+        },
         "atributos": {
           "FOR": 14,
           "DES": 14,

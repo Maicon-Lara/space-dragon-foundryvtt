@@ -1001,18 +1001,41 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   const gancho = ganchos.find((g) => g.nome === "renderOD2MonsterSheet");
   if (!gancho) probRot.push("ninguém se registrou em renderOD2MonsterSheet");
   else {
-    const html = `<div class="stats">
-      <div class="stat"><label class="font-bold">CA</label><input name="system.ca" value="14"></div>
+    const html = `<div class="sidebar"><div class="stats">
+      <div class="stat"><label class="font-bold">CA</label><input name="system.ca" value="15 (TRAJES DE COMBATE)"></div>
       <div class="stat"><a class="font-bold jp-roll"><i class="fa-thin fa-dice-d20"></i>JP</a></div>
       <div class="stat"><a class="font-bold mo-roll"><i class="fa-thin fa-dice-d6"></i>MO</a></div>
-    </div>`;
+      <div class="encounter"><label class="font-bold">Encontro</label>
+        <div class="encounter-value"><input name="system.encounters" value="3D6"><label class="text-xs">Errantes</label></div>
+        <div class="encounter-value"><input name="system.encounters_lair" value="10D6"><label class="text-xs">Covil</label></div>
+      </div>
+      <div class="treasure"><label class="font-bold">Tesouros</label>
+        <div class="treasure-value"><input name="system.treasure" value="O, D"><label class="text-xs">Errantes</label></div>
+        <div class="treasure-value"><input name="system.treasure_lair" value=""><label class="text-xs">Covil</label></div>
+      </div>
+    </div></div>
+    <div class="alignment"><select name="system.alignment"><option>Ordeiro</option><option>Neutro</option><option>Caótico</option></select><label class="font-bold">Alinhamento</label></div>
+    <div class="xp"><label class="font-bold">XP</label><input name="system.xp" value="37 XP"></div>`;
     const raizAm = monta(html);
     const app = new reg.cls();
-    app.actor = { type: "monster", name: "Aranha" };
+    app.actor = { type: "monster", name: "Zork", flags: { spacedragon: { ameaca: { encontro: { grupo: "BANDO", covil: "BASE" } } } } };
     gancho.fn(app, raizAm);
     const rotulo = raizAm.querySelector(".stats .stat label")?.textContent.trim();
     const moral = raizAm.querySelector(".mo-roll")?.textContent.trim();
     if (rotulo !== "CP") probRot.push(`o rótulo da defesa ficou "${rotulo}", esperava CP`);
+    // A ficha falava a língua da fantasia: Alinhamento, Tesouros, Covil.
+    const rotuloDe = (sel) => raizAm.querySelector(sel)?.textContent.trim();
+    if (rotuloDe(".alignment label") !== "Afiliação") probRot.push(`Alinhamento virou "${rotuloDe(".alignment label")}"`);
+    const afil = raizAm.querySelectorAll(".alignment option").map((o) => o.textContent.trim()).join("/");
+    if (afil !== "Leal/Neutro/Rebelde") probRot.push(`afiliações "${afil}", esperava Leal/Neutro/Rebelde`);
+    if (rotuloDe(".treasure label") !== "Relíquias") probRot.push(`Tesouros virou "${rotuloDe(".treasure label")}"`);
+    if (!/O · D · U/.test(raizAm.querySelector(".treasure-value label")?.textContent ?? "")) probRot.push("as relíquias não foram explicadas");
+    if (!raizAm.querySelectorAll(".treasure-value")[1]?.classList.contains("sd-escondido")) probRot.push("o tesouro de covil, que o Space Dragon não tem, continuou à vista");
+    if (rotuloDe(".xp label") !== "Prêmio") probRot.push(`XP virou "${rotuloDe(".xp label")}"`);
+    const encs = raizAm.querySelectorAll(".encounter-value label").map((l) => l.textContent.trim()).join("/");
+    if (encs !== "Bando/Base") probRot.push(`encontros "${encs}", esperava Bando/Base (do bloco do Zork)`);
+    // O valor que não cabe na caixa vai para a dica.
+    if (raizAm.querySelector(".stats .stat input")?.getAttribute("title") !== "15 (TRAJES DE COMBATE)") probRot.push("o CP inteiro não foi para a dica");
     if (moral !== "Moral") probRot.push(`o botão de Moral ficou "${moral}"`);
     // A ficha do sistema, sem o módulo, não é tocada.
     const raizOD2 = monta(html);

@@ -11,7 +11,8 @@
     "habitat": "TERRENOS ROCHOSOS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Minerio humanoidis</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 7 · <strong>CON</strong> 16 · <strong>INT</strong> 5 · <strong>CIE</strong> 0 · <strong>COM</strong> 2</p><p><strong>Redução de dano</strong> 6/FÍSICO</p></div><p>Cristaloides são formas de vida vagamente humanoides cujo corpo é formado de cristais, mas sem detalhes específicos como rostos definidos, mãos ou dedos. Por serem formados de cristais comumente são encontrados em terrenos rochosos, em especial montanhas ou cavernas. Essa característica também faz com que feixes de laser ou outras formas de energia sejam refletidas em seus corpos, podendo inclusive reverter-se contra os atiradores. Reflexão em uma falha crítica com uma arma de energia contra um cristaloide ele poderá redirecionar intencionalmente o feixe contra um inimigo qualquer em seu campo de visão. O novo alvo deverá fazer uma JPR para desviar-se.</p>",
     "described_attacks": "1 PANCADA +7 (1D10+6)",
-    "encounters": "ERRANTE 1D2 GRUPO 1D6",
+    "encounters": "1D2",
+    "encounters_lair": "1D6",
     "xp": "945 XP",
     "dv": "8+3 (35/67)",
     "ca": "16 (CORPO DE CRISTAL +6)",
@@ -86,6 +87,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Minerio humanoidis",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 18,
           "DES": 7,

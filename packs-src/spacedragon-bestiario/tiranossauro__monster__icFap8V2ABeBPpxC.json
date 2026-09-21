@@ -11,7 +11,8 @@
     "habitat": "FLORESTAS E PLANÍCIES",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Tirano saurus</em></p><p><strong>FOR</strong> 22 · <strong>DES</strong> 14 · <strong>CON</strong> 18 · <strong>INT</strong> 2 · <strong>CIE</strong> 0 · <strong>COM</strong> 1</p></div><p>Tiranossauros são enormes alienossauros bípedes, carnívoros e muito agressivos. Suas bocarras os permitem tanto arrancar enormes pedaços de presas grandes, quanto engolir presas pequenas sem nem ao menos mastigá-las. Seus membros superiores são atrofiados, então a única forma de ataque dos tiranossauros além de mordidas é usar suas caudas como chicotes. Engolir em uma rolagem crítica de ataque com mordida o tiranossauro pode engolir uma vitima, se esta não passar em uma JPR. Uma vítima engolida viva respirará com dificuldade e não poderá mover-se no estômago do tiranossauro.</p>",
     "described_attacks": "1 MORDIDA +16 (3D8+6 + ENGOLIR) 1 ATAQUE COM CAUDA +10 (2D6+2)",
-    "encounters": "ERRANTE 1D2 NINHO 1D4",
+    "encounters": "1D2",
+    "encounters_lair": "1D4",
     "xp": "2.615 XP",
     "dv": "14+4 (60/116)",
     "ca": "15 (COURAÇA GROSSA +3)",
@@ -120,6 +121,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Tirano saurus",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "NINHO"
+        },
         "atributos": {
           "FOR": 22,
           "DES": 14,

@@ -11,7 +11,8 @@
     "habitat": "RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 5 · <strong>DES</strong> 3 · <strong>CON</strong> 4 · <strong>INT</strong> 3 · <strong>CIE</strong> 2 · <strong>COM</strong> 0</p></div><p>Sucata robótica é um termo para qualquer tipo de robô humanoide que esteja deteriorado ou danificado a ponto de ser praticamente impossível definir seu nível de desenvolvimento tecnológico ou função. As sucatas são totalmente imprevisíveis e instáveis, podendo iniciar ou parar um ataque ou outra ação a qualquer momento. Desativação sucatas robóticas podem ser desativadas por cientistas através de um disruptor positrônico.</p>",
     "described_attacks": "1 PANCADA +1 (1D4+1)",
-    "encounters": "ERRANTE 2D6 GRUPO 5D6",
+    "encounters": "2D6",
+    "encounters_lair": "5D6",
     "xp": "25 XP",
     "dv": "1 (4/8)",
     "ca": "10",
@@ -86,6 +87,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 5,
           "DES": 3,

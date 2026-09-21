@@ -11,7 +11,8 @@
     "habitat": "SUBTERRÂNEO",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Vermis glutonius</em></p><p><strong>FOR</strong> 11 · <strong>DES</strong> 12 · <strong>CON</strong> 8 · <strong>INT</strong> 2 · <strong>CIE</strong> 12 · <strong>COM</strong> 0</p></div><p>Vermes gigantes são anelídeos gigantes que vivem sob a terra alimentando-se de raízes de árvores e qualquer material orgânico que encontram. Os alimentos são triturados com suas bocas circulares com centenas de dentes. Não possuem órgãos sensoriais, portanto não conseguem distinguir se algo é comida, ou não até que tentem devorá-lo. Têm aversão a luz, e raramente são vistos na superfície. Engolir em uma rolagem crítica de ataque com mordida o verme gigante pode engolir uma vitima que não passar em uma JPR. Uma vítima engolida viva respirará com dificuldade e não poderá mover-se no estômago do verme.</p>",
     "described_attacks": "1 MORDIDA +5 (1D8 + ENGOLIR)",
-    "encounters": "ERRANTE 1D6 COLÔNIA 2D8",
+    "encounters": "1D6",
+    "encounters_lair": "2D8",
     "xp": "280 XP",
     "dv": "4 (16/32)",
     "ca": "11",
@@ -86,6 +87,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Vermis glutonius",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "COLÔNIA"
+        },
         "atributos": {
           "FOR": 11,
           "DES": 12,

@@ -11,8 +11,10 @@
     "habitat": "FLORESTAS E RUÍNAS",
     "description": "<div class=\"sd-bloco-extra\"><p><em>Simio sapiens</em></p><p><strong>FOR</strong> 18 · <strong>DES</strong> 14 · <strong>CON</strong> 14 · <strong>INT</strong> 11 · <strong>CIE</strong> 5 · <strong>COM</strong> 12</p><p><strong>Resistência mental</strong> 5%</p></div>",
     "described_attacks": "1 ESPADA DE LÂMINA +6 (1D8+4) 1 ZARABATANA +3 (1D4 + VENENO)",
-    "encounters": "ERRANTE 1D6 GRUPO 3D6",
-    "xp": "U 450 XP",
+    "encounters": "1D6",
+    "encounters_lair": "3D6",
+    "xp": "450 XP",
+    "treasure": "U",
     "dv": "5+2 (22/42)",
     "ca": "14 (ROUPAS PROTETORAS +2)",
     "jp": "14",
@@ -120,6 +122,10 @@
     "spacedragon": {
       "ameaca": {
         "cientifico": "Simio sapiens",
+        "encontro": {
+          "grupo": "ERRANTE",
+          "covil": "GRUPO"
+        },
         "atributos": {
           "FOR": 18,
           "DES": 14,
