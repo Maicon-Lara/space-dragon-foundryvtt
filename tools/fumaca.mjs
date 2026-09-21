@@ -1281,6 +1281,16 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   gancho.fn(appV, raizV);
   if (!raizV.querySelector(".sd-equip-vazio")) probEq.push("criatura sem equipamento devia ver o convite para arrastar");
 
+  // Com o "Qualidade de Vida" na mesa, quem lista o equipamento é a aba dele.
+  const raizQV = monta(`<div class="basic-info"></div><div class="stats"></div>
+    <nav class="tabs"><a class="item" data-tab="od2qdv-monster-equipment">Equipamentos</a></nav>
+    <div class="monster-tab-attacks"></div>`);
+  const appQV = new reg.cls();
+  appQV.actor = bicho;
+  gancho.fn(appQV, raizQV);
+  if (raizQV.querySelector(".sd-equipamento")) probEq.push("com aba de equipamento na ficha, o bloco não devia entrar");
+  if (!raizQV.querySelector(".sd-ameaca-painel")) probEq.push("o painel de atributos tem de entrar de qualquer jeito");
+
   if (probEq.length) {
     for (const x of probEq) console.error(`  ✘ ${x}`);
     process.exit(1);

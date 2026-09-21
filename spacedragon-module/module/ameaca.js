@@ -343,6 +343,12 @@ function ligarEquipamento(raiz, ator) {
   }
 }
 
+/** Outro módulo (ou o sistema) já cuida do equipamento desta criatura? */
+function equipamentoJaTemDono(raiz) {
+  if (game?.modules?.get?.("old-dragon-2-qualidade-de-vida")?.active) return true;
+  return !!raiz.querySelector(`[data-tab*="equip"]`);
+}
+
 /** Põe o painel e o nome científico na ficha, uma vez por renderização. */
 function injetarPainel(app, elemento) {
   try {
@@ -353,11 +359,15 @@ function injetarPainel(app, elemento) {
     if (stats && !stats.querySelector(".sd-ameaca-painel")) stats.insertAdjacentHTML("beforeend", painelAmeaca(dados));
     const info = raiz.querySelector(".basic-info");
     if (info && !info.querySelector(".sd-ameaca-cientifico")) info.insertAdjacentHTML("beforeend", campoCientifico(dados));
-    // O que a criatura carrega, na aba de ataques, logo abaixo deles. Se a
-    // ficha já tiver uma aba de equipamento — de uma versão do sistema ou de
-    // outro módulo —, o bloco não entra: ela é o lugar certo, e duas listas da
-    // mesma coisa é pior do que nenhuma.
-    if (raiz.querySelector(`[data-tab="equipment"]`)) return;
+    // O que a criatura carrega, na aba de ataques, logo abaixo deles.
+    //
+    // Menos quando já existe uma aba de equipamento na ficha: o "Old Dragon 2:
+    // Qualidade de Vida" põe uma ("od2qdv-monster-equipment"), e ela é o lugar
+    // certo — duas listas da mesma coisa é pior do que nenhuma. A checagem é
+    // pelo MÓDULO ATIVO, e não só pela aba, porque quem desenha primeiro
+    // depende da ordem dos ganchos: se esperássemos a aba aparecer, a corrida
+    // decidiria, e às vezes sairiam as duas.
+    if (equipamentoJaTemDono(raiz)) return;
     const aba = raiz.querySelector(".monster-tab-attacks");
     if (aba && !aba.querySelector(".sd-equipamento")) {
       aba.insertAdjacentHTML("beforeend", blocoEquipamento(app.actor));

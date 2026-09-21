@@ -151,9 +151,26 @@ class No {
     }
   }
 
-  /** Só `.classe`, `tag` e descendência por espaço. É tudo o que o painel usa. */
+  /**
+   * `.classe`, `tag`, `[attr]`, `[attr="v"]` e `[attr*="v"]`, e descendência
+   * por espaço. O seletor de atributo entrou quando a Ficha de Ameaça passou a
+   * procurar a aba de equipamento de outro módulo, que se identifica por
+   * `data-tab`, e não por classe.
+   */
   casa(parte) {
     if (parte.startsWith(".")) return this.classList.includes(parte.slice(1));
+    if (parte.startsWith("[")) {
+      const m = parte.match(/^\[([^\]=*^$]+)(?:([*^$]?)=["']?([^"'\]]*)["']?)?\]$/);
+      if (!m) return false;
+      const [, nome, op, valor] = m;
+      const v = this.atributos[nome.toLowerCase()];
+      if (v === undefined) return false;
+      if (valor === undefined) return true;
+      if (op === "*") return v.includes(valor);
+      if (op === "^") return v.startsWith(valor);
+      if (op === "$") return v.endsWith(valor);
+      return v === valor;
+    }
     return this.tag === parte;
   }
 
