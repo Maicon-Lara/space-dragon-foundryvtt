@@ -15,7 +15,15 @@
     "is_equipped": false
   },
   "effects": [],
-  "flags": {},
+  "flags": {
+    "spacedragon": {
+      "aparato": {
+        "categoria": "Ofensivo",
+        "nt": 9,
+        "feito": false
+      }
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

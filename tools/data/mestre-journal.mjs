@@ -1,7 +1,7 @@
 // O journal do Capítulo 11.
 
 import {
-  CLICHES, INTERESSES, RELIQUIAS, SUPERFICIES, ATMOSFERAS,
+  CLICHES, INTERESSES, RELIQUIAS, DEFEITOS, SUPERFICIES, ATMOSFERAS,
   FAUNA_FLORA_SOCIEDADE, DRAGOES_T11_10,
 } from "./mestre.mjs";
 import { DRAGOES } from "./bestiario.mjs";
@@ -13,6 +13,17 @@ const tab = (cab, linhas) =>
 const numerada = (lista) =>
   tab(["d" + lista.length, "resultado"],
     lista.map((x, i) => `<tr><td><strong>${i + 1}</strong></td><td>${x}</td></tr>`).join(""));
+
+// A T11-4 tem três linhas que mudam com o tipo da relíquia; as outras sete são
+// uma frase só. Por isso a coluna do defeito aceita as duas formas.
+const defeitos = tab(["1d10", "defeito"], DEFEITOS.map((l) => {
+  const corpo = l.defeito
+    ? l.defeito
+    : `<strong>Ofensivas e armas:</strong> ${l.porTipo.ofensivo}<br>` +
+      `<strong>Defensivas e vestes:</strong> ${l.porTipo.defensivo}<br>` +
+      `<strong>Utilitárias, itens mundanos, veículos e naves:</strong> ${l.porTipo.utilitario}`;
+  return `<tr><td><strong>${l.d}</strong></td><td>${corpo}</td></tr>`;
+}).join(""));
 
 const reliquias = Object.entries(RELIQUIAS).map(([titulo, linhas]) =>
   `<h3>${titulo}</h3>` +
@@ -95,6 +106,18 @@ significa que ela quebra na primeira utilização — o achado vira uma cena, n�
 item.</p>
 
 ${reliquias}
+
+<h2>T11-4: Defeitos de relíquias</h2>
+<p>Três linhas mudam conforme o que a relíquia é: arma e ofensiva voltam-se
+contra quem usa, veste e defensiva invertem o efeito, e utilitária, item
+mundano, veículo e nave enguiçam.</p>
+${defeitos}
+
+<p class='nota-casa'><em>A macro <strong>T11-3: Relíquia Tecnológica</strong>
+rola as sete tabelas de uma vez e sugere um aparato do compêndio, e a
+<strong>T11-4</strong> rola o defeito. Na Ficha de Ameaça, o botão ao lado das
+Relíquias gera o que aquele alienígena carrega, pelas letras O, D e U do
+bloco.</em></p>
 `,
     },
     {

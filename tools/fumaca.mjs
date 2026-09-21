@@ -1298,6 +1298,83 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   console.log("  ✔ ameaça: equipamento da criatura na ficha — abrir, virar ataque e remover");
 }
 
+// ── Relíquias tecnológicas (T11-3) e defeitos (T11-4) ──────────────────────
+// O bloco da criatura diz as letras — "PRÊMIOS O,D 37 XP" —, e elas decidem o
+// tipo de aparato, no lugar do d6. O cartão vai sussurrado ao Mestre, porque o
+// livro manda manter a instabilidade em segredo.
+{
+  const probRel = [];
+  const rel = await import("../spacedragon-module/module/reliquias.js");
+
+  // As faixas da tabela, lidas à mão na T11-3 (pág. 194).
+  const { RELIQUIAS: TAB } = await import("../spacedragon-module/module/dados.js");
+  const FAIXAS = [
+    ["Tipo de relíquia (1d20)", 1, "Arma"], ["Tipo de relíquia (1d20)", 9, "Item mundano"],
+    ["Tipo de relíquia (1d20)", 10, "Aparato tecnológico"], ["Tipo de relíquia (1d20)", 20, "Nave"],
+    ["Nível tecnológico (1d20)", 7, "3º NT"], ["Nível tecnológico (1d20)", 20, "10º NT"],
+    ["Instabilidade (1d10)", 3, "30%"], ["Tipo de aparato (1d6)", 5, "Utilitário"],
+    ["Criadores (1d10)", 8, "Xhenianos"],
+  ];
+  for (const [tabela, valor, esperado] of FAIXAS) {
+    const lido = rel.daFaixa(TAB[tabela], valor);
+    if (lido !== esperado) probRel.push(`${tabela} com ${valor} deu "${lido}", esperava "${esperado}"`);
+  }
+
+  if (rel.letrasDe({ system: { treasure: "O, D" } }).join("") !== "OD") probRel.push("as letras do bloco não foram lidas");
+  if (rel.letrasDe({ system: { treasure: "" } }).length) probRel.push("criatura sem letras não carrega relíquia");
+
+  // Dados fixos: tipo 10 (aparato), NT 7 (3º), instabilidade 3, o resto 1.
+  const cartoesRel = [];
+  const RollAntes = globalThis.Roll;
+  const ChatAntes = globalThis.ChatMessage;
+  const fila = { "1d20": [10, 7], "1d10": [3, 1, 1, 1], "1d6": [5] };
+  globalThis.Roll = class {
+    constructor(f) { this.f = f; }
+    async evaluate() { this.total = (fila[this.f] ?? []).shift() ?? 1; return this; }
+  };
+  globalThis.ChatMessage = {
+    getSpeaker: () => ({}),
+    getWhisperRecipients: (q) => [q],
+    create: async (m) => cartoesRel.push(m),
+  };
+  globalThis.game.packs = { get: () => null };
+
+  const r = await rel.gerarReliquia({ categoria: "Defensivo" });
+  if (r.tipo.texto !== "Aparato tecnológico") probRel.push(`tipo ${r.tipo.texto} com 10 no d20`);
+  if (r.nt.texto !== "3º NT") probRel.push(`NT ${r.nt.texto} com 7 no d20`);
+  if (r.instabilidade.texto !== "30%") probRel.push(`instabilidade ${r.instabilidade.texto} com 3 no d10`);
+  if (r.aparato.valor !== null || r.aparato.texto !== "Defensivo") probRel.push("a letra do bloco devia decidir o aparato, sem rolar o d6");
+  if (cartoesRel[0]?.whisper?.[0] !== "GM") probRel.push("o cartão da relíquia tem de ir sussurrado ao Mestre");
+
+  // A criatura com duas letras gera duas relíquias, uma por letra.
+  const zork = { name: "Zork", system: { treasure: "O, D" } };
+  fila["1d20"] = [1, 1, 1, 1]; fila["1d10"] = [1, 1, 1, 1, 1, 1, 1, 1]; fila["1d6"] = [];
+  const duas = await rel.gerarDaCriatura(zork);
+  if (duas.length !== 2) probRel.push(`${duas.length} relíquias para "O, D", esperava 2`);
+  if (!/ofensiva/.test(cartoesRel[1]?.content ?? "") || !/defensiva/.test(cartoesRel[2]?.content ?? "")) {
+    probRel.push("os títulos deviam dizer qual letra gerou cada relíquia");
+  }
+
+  // T11-4: a linha 2 muda com o tipo da relíquia.
+  fila["1d10"] = [2];
+  const def = await rel.rolarDefeito("defensivo");
+  if (!/inverso dos originais/.test(def.texto)) probRel.push(`defeito 2 de defensiva: "${def.texto}"`);
+  fila["1d10"] = [2];
+  const defO = await rel.rolarDefeito("ofensivo");
+  if (!/voltam-se contra o usuário/.test(defO.texto)) probRel.push(`defeito 2 de ofensiva: "${defO.texto}"`);
+  fila["1d10"] = [10];
+  if (!/inutilizável/.test((await rel.rolarDefeito()).texto)) probRel.push("defeito 10 inutiliza a relíquia");
+
+  globalThis.Roll = RollAntes;
+  globalThis.ChatMessage = ChatAntes;
+
+  if (probRel.length) {
+    for (const x of probRel) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ relíquias: T11-3 pelas faixas do livro, a letra do bloco decide o aparato, duas letras dão duas relíquias, e a T11-4 muda com o tipo");
+}
+
 // ── A opção "Fichas Space Dragon como padrão" ──────────────────────────────
 // Ligada (o padrão), o ator SEM ficha marcada é do Space Dragon — é a mesa
 // de Space Dragon, onde ninguém marca ator por ator. Com a ficha do sistema

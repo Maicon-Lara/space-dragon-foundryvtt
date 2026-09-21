@@ -1,0 +1,27 @@
+{
+  "folder": "gFZHaYQqhiOIzTb7",
+  "name": "T11-3: Relíquia Tecnológica",
+  "type": "script",
+  "_id": "O8ctZkfgZWEplKpH",
+  "img": "icons/svg/item-bag.svg",
+  "scope": "global",
+  "command": "game.spacedragon.reliquia();",
+  "author": "swspacedragonbld",
+  "ownership": {
+    "default": 2
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 80,
+  "_key": "!macros!O8ctZkfgZWEplKpH"
+}

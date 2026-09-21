@@ -480,6 +480,7 @@ function montaAparatos() {
       seedNome: a.seedNome,
       desc: corpoAparato(a),
       cost: a.custo,
+      ...(a.categoria ? { flags: { spacedragon: { aparato: { categoria: a.categoria, nt: a.nt ?? null, feito: !!a.feito } } } } : {}),
     }, a.feito ? pFeitos._id : pAparatos._id, a.feito ? "sd-feito" : "sd-aparato", i * 10));
   });
   return docs;
@@ -590,6 +591,24 @@ function montaMacros() {
     comando: "game.spacedragon.falhaCriticaNave();",
     img: "icons/svg/hazard.svg",
   }, pasta._id, 70));
+
+  docs.push(macroDoc({
+    nome: "T11-3: Relíquia Tecnológica",
+    comando: "game.spacedragon.reliquia();",
+    img: "icons/svg/item-bag.svg",
+  }, pasta._id, 80));
+
+  docs.push(macroDoc({
+    nome: "T11-4: Defeito de Relíquia",
+    comando: "game.spacedragon.defeitoDeReliquia();",
+    img: "icons/svg/hazard.svg",
+  }, pasta._id, 90));
+
+  docs.push(macroDoc({
+    nome: "Desativar Robôs (T3-2)",
+    comando: "game.spacedragon.desativarRobos();",
+    img: "icons/svg/combat.svg",
+  }, pasta._id, 35));
 
   docs.push(macroDoc({
     nome: "Dano Crítico (Cosmonauta)",

@@ -707,7 +707,10 @@ export function miscDoc(it, folderId, seedPrefix, sort) {
     img: it.img || iconeSemantico(it.nome, `${OD2I}/misc.svg`),
     system: equipmentBase(it),
     effects: [],
-    flags: {},
+    // O gerador de relíquias sorteia categoria e nível tecnológico e precisa
+    // achar um aparato de verdade no compêndio. A descrição diz "Aparato
+    // ofensivo de 1º nível tecnológico", mas ler frase não é contrato.
+    flags: it.flags ?? {},
     _stats: stats(),
     sort: sort,
     ownership: { default: 0 },

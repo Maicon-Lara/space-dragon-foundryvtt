@@ -313,3 +313,6 @@
 .spacedragon-ameaca .monster-tab-info textarea { min-height: 7rem; }
 .spacedragon-ameaca .monster-tab-info .editor,
 .spacedragon-ameaca .monster-tab-info .editor-content { min-height: 18rem; }
+
+/* O botão de gerar relíquia, junto do campo que traz as iniciais O, D e U. */
+.spacedragon-ameaca .treasure .sd-gerar-reliquia { display: block; margin-top: 4px; text-align: center; font-size: 0.85rem; }

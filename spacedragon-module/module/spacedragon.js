@@ -36,6 +36,7 @@ import { ligarDegraus } from "./degraus.js";
 import { aplicarJP, rolarJP } from "./jp.js";
 import { registrarFichaAmeaca, rolarJPAmeaca, rolarMoral } from "./ameaca.js";
 import { abrirDesativar, rolarDesativar } from "./robos.js";
+import { abrirReliquia, gerarReliquia, gerarDaCriatura, rolarDefeito } from "./reliquias.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -132,6 +133,7 @@ Hooks.once("ready", () => {
     compararEscalas, diagnostico, danosMortais, bonusDeCP, jp: rolarJP,
     jpAmeaca: rolarJPAmeaca, moral: rolarMoral,
     desativarRobos: abrirDesativar, rolarDesativar,
+    reliquia: abrirReliquia, gerarReliquia, reliquiasDaCriatura: gerarDaCriatura, defeitoDeReliquia: rolarDefeito,
     ordem: abrirOrdem,
     alcance: orcamento, gastarAlcance: gastar, descansar,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),

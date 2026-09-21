@@ -1250,3 +1250,239 @@ export const DESATIVAR_ROBOS = [
     "androide": "3"
   }
 ];
+
+// T11-3 e T11-4: as sete rolagens que montam uma relíquia, e os defeitos.
+export const RELIQUIAS = {
+  "Tipo de relíquia (1d20)": [
+    {
+      "faixa": "1–3",
+      "r": "Arma"
+    },
+    {
+      "faixa": "4–6",
+      "r": "Veste"
+    },
+    {
+      "faixa": "7–9",
+      "r": "Item mundano"
+    },
+    {
+      "faixa": "10–18",
+      "r": "Aparato tecnológico"
+    },
+    {
+      "faixa": "19",
+      "r": "Veículo"
+    },
+    {
+      "faixa": "20",
+      "r": "Nave"
+    }
+  ],
+  "Tipo de aparato (1d6)": [
+    {
+      "faixa": "1–2",
+      "r": "Ofensivo"
+    },
+    {
+      "faixa": "3–4",
+      "r": "Defensivo"
+    },
+    {
+      "faixa": "5–6",
+      "r": "Utilitário"
+    }
+  ],
+  "Nível tecnológico (1d20)": [
+    {
+      "faixa": "1–3",
+      "r": "1º NT"
+    },
+    {
+      "faixa": "4–6",
+      "r": "2º NT"
+    },
+    {
+      "faixa": "7–8",
+      "r": "3º NT"
+    },
+    {
+      "faixa": "9–10",
+      "r": "4º NT"
+    },
+    {
+      "faixa": "11–12",
+      "r": "5º NT"
+    },
+    {
+      "faixa": "13–14",
+      "r": "6º NT"
+    },
+    {
+      "faixa": "15–16",
+      "r": "7º NT"
+    },
+    {
+      "faixa": "17–18",
+      "r": "8º NT"
+    },
+    {
+      "faixa": "19",
+      "r": "9º NT"
+    },
+    {
+      "faixa": "20",
+      "r": "10º NT"
+    }
+  ],
+  "Instabilidade (1d10)": [
+    {
+      "faixa": "1",
+      "r": "10%"
+    },
+    {
+      "faixa": "2",
+      "r": "20%"
+    },
+    {
+      "faixa": "3",
+      "r": "30%"
+    },
+    {
+      "faixa": "4",
+      "r": "40%"
+    },
+    {
+      "faixa": "5",
+      "r": "50%"
+    },
+    {
+      "faixa": "6",
+      "r": "60%"
+    },
+    {
+      "faixa": "7",
+      "r": "70%"
+    },
+    {
+      "faixa": "8",
+      "r": "80%"
+    },
+    {
+      "faixa": "9",
+      "r": "90%"
+    },
+    {
+      "faixa": "10",
+      "r": "Um defeito ocorre na primeira utilização e a relíquia é inutilizada."
+    }
+  ],
+  "Particularidades (1d10)": [
+    {
+      "faixa": "1–5",
+      "r": "Nenhuma"
+    },
+    {
+      "faixa": "6–7",
+      "r": "Formato diferenciado"
+    },
+    {
+      "faixa": "8–9",
+      "r": "Duas relíquias em uma — role novamente"
+    },
+    {
+      "faixa": "10",
+      "r": "Utilizável por qualquer classe"
+    }
+  ],
+  "Criadores (1d10)": [
+    {
+      "faixa": "1–5",
+      "r": "Humanos"
+    },
+    {
+      "faixa": "6–7",
+      "r": "Espécie humanoide"
+    },
+    {
+      "faixa": "8–9",
+      "r": "Xhenianos"
+    },
+    {
+      "faixa": "10",
+      "r": "Desconhecidos"
+    }
+  ],
+  "Consequências de uso (1d10)": [
+    {
+      "faixa": "1–5",
+      "r": "Nenhuma"
+    },
+    {
+      "faixa": "6–7",
+      "r": "Instabilidade deteriora"
+    },
+    {
+      "faixa": "8–9",
+      "r": "Contaminação radioativa"
+    },
+    {
+      "faixa": "10",
+      "r": "Relíquia inteligente"
+    }
+  ]
+};
+export const DEFEITOS = [
+  {
+    "d": 1,
+    "defeito": "A relíquia explode, causando 1d6 de dano por fogo em todos ao redor."
+  },
+  {
+    "d": 2,
+    "porTipo": {
+      "ofensivo": "Os efeitos voltam-se contra o usuário.",
+      "defensivo": "A relíquia é ativada, mas seus efeitos são o inverso dos originais.",
+      "utilitario": "A relíquia funciona, mas precisará de um teste de operar máquinas a cada turno."
+    }
+  },
+  {
+    "d": 3,
+    "defeito": "Um curto-circuito causa 2d6 de dano elétrico ao usuário."
+  },
+  {
+    "d": 4,
+    "porTipo": {
+      "ofensivo": "O efeito atinge outro alvo aleatório.",
+      "defensivo": "Os efeitos não funcionam, mas é impossível detectar o defeito.",
+      "utilitario": "A relíquia funcionará pela metade do tempo e causará metade dos efeitos."
+    }
+  },
+  {
+    "d": 5,
+    "defeito": "Superaquecimento da relíquia causa 1d6 de dano por calor ao usuário."
+  },
+  {
+    "d": 6,
+    "porTipo": {
+      "ofensivo": "Apenas metade do efeito é causado.",
+      "defensivo": "A relíquia garante apenas metade de seus efeitos.",
+      "utilitario": "A relíquia parará de funcionar abruptamente em 1d4 minutos."
+    }
+  },
+  {
+    "d": 7,
+    "defeito": "A relíquia fica sem energia imediatamente e precisará de reparos."
+  },
+  {
+    "d": 8,
+    "defeito": "Dano permanente na relíquia faz com que sua instabilidade aumente em 10%."
+  },
+  {
+    "d": 9,
+    "defeito": "Mau funcionamento pede uma nova jogada de defeito a cada minuto."
+  },
+  {
+    "d": 10,
+    "defeito": "A relíquia fica inutilizável."
+  }
+];

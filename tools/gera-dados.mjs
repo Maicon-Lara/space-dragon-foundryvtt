@@ -18,6 +18,7 @@ import { T7_4, T7_5 } from "./data/combate.mjs";
 import { T10_6_CRITICOS, T10_6_FALHAS } from "./data/naves.mjs";
 import { CAMPO_NA_FICHA, NOME } from "./data/onde-anotar.mjs";
 import { DESATIVAR_ROBOS, TIPOS_DE_ROBO, LETRAS } from "./data/robos.mjs";
+import { RELIQUIAS, DEFEITOS } from "./data/mestre.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const DESTINO = path.resolve(AQUI, "..", "spacedragon-module", "module", "dados.js");
@@ -153,5 +154,9 @@ export const FALHAS_NAVE = ${j(T10_6_FALHAS)};
 export const TIPOS_DE_ROBO = ${j(TIPOS_DE_ROBO)};
 export const LETRAS_ROBO = ${j(LETRAS)};
 export const DESATIVAR_ROBOS = ${j(DESATIVAR_ROBOS)};
+
+// T11-3 e T11-4: as sete rolagens que montam uma relíquia, e os defeitos.
+export const RELIQUIAS = ${j(RELIQUIAS)};
+export const DEFEITOS = ${j(DEFEITOS)};
 `);
 console.log(`  ✔ module/dados.js: ${TESTES.length} testes, ${Object.keys(prog).length} progressões`);

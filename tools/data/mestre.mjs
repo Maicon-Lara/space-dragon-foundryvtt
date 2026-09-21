@@ -74,6 +74,38 @@ export const RELIQUIAS = {
   ],
 };
 
+/**
+ * T11-4: defeitos de relíquias, em 1d10.
+ *
+ * Três linhas — 2, 4 e 6 — mudam conforme o que a relíquia É: arma e ofensiva
+ * viram contra quem usa, veste e defensiva invertem, e o resto enguiça. Por
+ * isso elas não são uma frase só.
+ */
+export const DEFEITOS = [
+  { d: 1, defeito: "A relíquia explode, causando 1d6 de dano por fogo em todos ao redor." },
+  { d: 2, porTipo: {
+    ofensivo: "Os efeitos voltam-se contra o usuário.",
+    defensivo: "A relíquia é ativada, mas seus efeitos são o inverso dos originais.",
+    utilitario: "A relíquia funciona, mas precisará de um teste de operar máquinas a cada turno.",
+  } },
+  { d: 3, defeito: "Um curto-circuito causa 2d6 de dano elétrico ao usuário." },
+  { d: 4, porTipo: {
+    ofensivo: "O efeito atinge outro alvo aleatório.",
+    defensivo: "Os efeitos não funcionam, mas é impossível detectar o defeito.",
+    utilitario: "A relíquia funcionará pela metade do tempo e causará metade dos efeitos.",
+  } },
+  { d: 5, defeito: "Superaquecimento da relíquia causa 1d6 de dano por calor ao usuário." },
+  { d: 6, porTipo: {
+    ofensivo: "Apenas metade do efeito é causado.",
+    defensivo: "A relíquia garante apenas metade de seus efeitos.",
+    utilitario: "A relíquia parará de funcionar abruptamente em 1d4 minutos.",
+  } },
+  { d: 7, defeito: "A relíquia fica sem energia imediatamente e precisará de reparos." },
+  { d: 8, defeito: "Dano permanente na relíquia faz com que sua instabilidade aumente em 10%." },
+  { d: 9, defeito: "Mau funcionamento pede uma nova jogada de defeito a cada minuto." },
+  { d: 10, defeito: "A relíquia fica inutilizável." },
+];
+
 /** T11-5: superfícies planetárias, em 1d10. */
 export const SUPERFICIES = [
   { d: 1, superficie: "Planícies", fauna: "Mamíferos, répteis e aves", flora: "Gramíneas", temp: "Moderada" },

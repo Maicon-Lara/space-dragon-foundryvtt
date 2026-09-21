@@ -188,6 +188,16 @@ function rotular(app, elemento) {
       const sub = valores[0]?.querySelector("label");
       if (sub) { sub.textContent = "O · D · U"; sub.setAttribute("title", RELIQUIAS); }
       valores[1]?.classList?.add("sd-escondido");
+      // Gerar o que o alienígena carrega, pela T11-3. O gerador de tesouro do
+      // "Qualidade de Vida" lê a notação do Old Dragon, que aqui não vale.
+      if (!tes.querySelector(".sd-gerar-reliquia")) {
+        tes.insertAdjacentHTML("beforeend", `<a class="sd-gerar-reliquia" title="Gerar as relíquias deste alienígena pela T11-3"><i class="fa-solid fa-gem"></i> Gerar</a>`);
+        tes.querySelector(".sd-gerar-reliquia")?.addEventListener("click", (ev) => {
+          ev.preventDefault?.();
+          ev.stopPropagation?.();
+          import("./reliquias.js").then(({ gerarDaCriatura }) => gerarDaCriatura(app.actor));
+        });
+      }
     }
 
     // XP é o prêmio pela derrota.
