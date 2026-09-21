@@ -12,7 +12,7 @@
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 12 · <strong>DES</strong> 12 · <strong>CON</strong> 12 · <strong>INT</strong> 10 · <strong>CIE</strong> 16 · <strong>COM</strong> 10</p></div><p>Operar Máquinas o cientista tem 80% de chance de operar qualquer equipamento. Aparatos Tecnológicos o cientista carrega consigo 1d4 aparatos tecnológicos até o 3º NT.</p>",
     "described_attacks": "1 PISTOLA LASER +4 (1D6)",
     "encounters": "1D4",
-    "xp": "1.200 XP",
+    "xp": "100 XP",
     "treasure": "O, D, U",
     "dv": "1D8+1 (5)",
     "ca": "13 (VESTES LEVES)",

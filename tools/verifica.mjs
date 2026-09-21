@@ -90,6 +90,12 @@ const BLOCOS = [
   ["Tiranossauro", "dv", "14+4 (60/116)", "pág. 239"],
   ["Tentaculoide", "cp", "15 (CORPO MALEÁVEL +2)", "pág. 238"],
   ["Tentaculoide", "premios", "2.075 XP", "pág. 238"],
+  // O PNJ com níveis de classe dá 10% do XP do nível dele, com mínimo de 100
+  // (11.2). O de 1º nível tinha o prêmio do de 5º, dez vezes maior.
+  ["Cientista (Nível 1)", "premios", "O,D,U 100 XP", "pág. 202"],
+  ["Cientista (Nível 5)", "premios", "O,D,U 1.200 XP", "pág. 202"],
+  ["Mentálico (Nível 5)", "premios", "U 2.000 XP", "pág. 204"],
+  ["Zork", "premios", "OD 37 XP", "pág. 243"],
 ];
 let falhasB = 0;
 for (const [nome, campo, esperado, onde] of BLOCOS) {
@@ -122,7 +128,7 @@ const { ataquesDoBloco, monsterDoc, premiosDe, encontrosDe } = await import("./l
   const CASOS = [
     ["Zork", { xp: "37 XP", treasure: "O, D" }, { encounters: "3D6", encounters_lair: "10D6", rotulos: { grupo: "BANDO", covil: "BASE" } }, "pág. 243"],
     ["Aranha Gigante", { xp: "205 XP" }, { encounters: "1D4", encounters_lair: "2D6", rotulos: { grupo: "GRUPO", covil: "NINHO" } }, "pág. 210"],
-    ["Cientista (Nível 1)", { xp: "1.200 XP", treasure: "O, D, U" }, { encounters: "1D4" }, "pág. 203"],
+    ["Cientista (Nível 1)", { xp: "100 XP", treasure: "O, D, U" }, { encounters: "1D4" }, "pág. 202"],
   ];
   let falhasP = 0;
   for (const [nome, premio, encontro, onde] of CASOS) {

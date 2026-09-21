@@ -49,7 +49,7 @@ export const CRIATURAS = [
     ataques: "1 PISTOLA LASER +4 (1D6)",
     habitat: "QUALQUER",
     encontros: "1D4",
-    premios: "O,D,U 1.200 XP",
+    premios: "O,D,U 100 XP",
     movimento: "10M",
     moral: "50%",
     texto: "Operar Máquinas o cientista tem 80% de chance de operar qualquer equipamento. Aparatos Tecnológicos o cientista carrega consigo 1d4 aparatos tecnológicos até o 3º NT.",
