@@ -36,6 +36,18 @@ def main():
                 z.write(caminho, interno)
                 dentro[interno] = True
 
+        # As licenças ficam na RAIZ do repositório, e o zip é montado de dentro
+        # de spacedragon-module/ — sem isto elas não seriam distribuídas. A
+        # cláusula 10 da OGL não deixa margem: "You MUST include a copy of this
+        # License with every copy of the Open Game Content You Distribute". O zip
+        # é o que as pessoas instalam, então é nele que a licença tem de ir.
+        for nome in ("LICENSE.md", "OGL.txt"):
+            origem = os.path.join(RAIZ, nome)
+            if not os.path.exists(origem):
+                raise SystemExit("%s nao existe na raiz: a OGL exige que ele va no zip" % nome)
+            z.write(origem, nome)
+            dentro[nome] = True
+
     problemas = []
     if "module.json" not in dentro:
         problemas.append("o zip não tem module.json na raiz")
