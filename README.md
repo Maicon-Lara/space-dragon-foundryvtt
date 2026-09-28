@@ -6,7 +6,10 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 0.6.0.** Capítulos 1 a 4 portados — 65 de 245 páginas.
+> **Estado: 1.16.1 — os onze capítulos portados.** 397 documentos em nove
+> compêndios: 47 de classe, 14 de espécie, 42 de equipamento, 112 poderes mentais,
+> 82 aparatos e feitos, 61 criaturas, 4 tabelas de rolagem, 25 macros e 10 journals
+> de regra.
 
 ## O que ele é
 
@@ -103,13 +106,13 @@ npm run publicar    # build + zip
 | 2 — Espécies | 15 | ✅ as três, com as 20 mutações |
 | 3 — Classes | 24 | ✅ as quatro, com as 12 especializações |
 | 4 — Subatributos | 6 | ✅ PV, CP, BA, JP, idiomas, Afiliação |
-| 5 — Créditos e Equipamento | 10 | ⬜ |
-| 6 — Aventuras Espaciais | 10 | ⬜ |
-| 7 — Combate e Danos | 16 | ⬜ |
-| 8 — Aparatos e Feitos Científicos | 34 | ⬜ |
-| 9 — Poderes Mentais | 41 | ⬜ |
-| 10 — Espaçonaves e Estações | 15 | ⬜ |
-| 11 — Seção do Mestre | 56 | ⬜ |
+| 5 — Créditos e Equipamento | 10 | ✅ journal + 42 itens |
+| 6 — Aventuras Espaciais | 10 | ✅ journal (gravidade, vácuo, transporte) |
+| 7 — Combate e Danos | 16 | ✅ journal (Ordem de Ação, críticos, cura e morte) |
+| 8 — Aparatos e Feitos Científicos | 34 | ✅ journal + 82 aparatos e feitos, por NT |
+| 9 — Poderes Mentais | 41 | ✅ 112 poderes, da 1ª à 10ª Grandeza |
+| 10 — Espaçonaves e Estações | 15 | ✅ journal (T10-1 a T10-7, combate espacial) |
+| 11 — Seção do Mestre | 56 | ✅ journal + 61 criaturas + gerador de relíquias |
 
 ## Licença
 
