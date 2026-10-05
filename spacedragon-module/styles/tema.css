@@ -153,52 +153,39 @@ body.spacedragon-tema .journal-entry-page .nota-casa {
 
 /* ── O TEXTO CLARO EM JANELA CLARA ──────────────────────────────────────────
  *
- * MEDIDO numa ficha de item da mesa, com o Foundry em tema escuro:
+ * Com o Foundry em tema escuro, as janelas que o SISTEMA marca como claras
+ * recebem a cor de texto do tema escuro: rgb(217,214,204) sobre o pergaminho dá
+ * 1,19:1 de contraste, que é texto invisível.
  *
- *   classes: "olddragon2e sheet item themed theme-light"
- *   cor:     rgb(217, 214, 204)   ← a cor de texto do tema ESCURO
+ * ── O ESCOPO, QUE JÁ FOI LARGO DEMAIS ───────────────────────────────────────
  *
- * Sobre o pergaminho do sistema, 1,19:1 de contraste. A WCAG pede 4,5:1 para
- * texto normal; 1,19 é texto invisível. Corrigido: 14,5:1.
+ * A primeira versão disto alcançava `.themed.theme-light` e `.window-content` —
+ * ou seja, TODA janela clara do Foundry, de qualquer módulo — e ainda com
+ * `!important`. Na mesa isso quebrou a interface: a regra passou por cima de
+ * cores que outros módulos usam de propósito, inclusive as que carregam
+ * informação.
  *
- * ── POR QUE A VARIÁVEL, E NÃO SÓ `color` ────────────────────────────────────
- *
- * Porque `color` conserta só o que HERDA. Quem lê `--color-text-primary`
- * diretamente — e o sistema e os módulos leem — continuaria claro. Redefinindo
- * a variável no escopo da janela clara, tudo que depende dela se acerta junto,
- * inclusive o que ainda não existe.
- *
- * ── POR QUE É SEGURO ────────────────────────────────────────────────────────
- *
- * A regra só alcança janelas que elas mesmas se declaram `theme-light`. Numa
- * janela clara, texto claro é inequivocamente errado — não há leitura em que
- * 1,19:1 seja a intenção de alguém. E tudo está sob `body.spacedragon-contraste`,
- * que sai com um clique na opção.
- *
- * Sem `!important`: a especificidade (body + classe + duas classes) já vence a
- * definição de variável do tema, que mora no `:root`. */
-body.spacedragon-contraste .themed.theme-light,
-body.spacedragon-contraste .application.theme-light,
-body.spacedragon-contraste .window-app.theme-light {
+ * Agora ela alcança só o que este módulo tem o direito de pintar: as janelas do
+ * SISTEMA olddragon2e e as fichas deste módulo e do Star Wars. O que for de
+ * outro módulo fica como o autor dele quis — mesmo que fique feio, não é nosso
+ * para consertar.
+ */
+body.spacedragon-contraste .olddragon2e.theme-light,
+body.spacedragon-contraste .spacedragon-ficha.theme-light,
+body.spacedragon-contraste .spacedragon-ameaca.theme-light,
+body.spacedragon-contraste .starwars-sd.theme-light {
   --color-text-primary: #191813;
   --color-text-secondary: #4a463d;
-  --color-text-emphatic: #0d0c0a;
   color: #191813;
 }
 
-/* Os campos de formulário dentro dessas janelas: input, textarea e select têm
- * cor própria no Foundry, e por isso não herdam a de cima. */
-/* Com `!important`: a primeira versão desta correção declarou a variável e a
- * cor sem ele, e na mesa NÃO pegou — o texto continuou em rgb(217,214,204).
- * Quem pinta aquele texto o faz com `!important`, e sem empatar o peso a regra
- * daqui perde em silêncio. É a terceira vez que este mesmo padrão aparece neste
- * projeto, sempre com o mesmo desfecho. */
-body.spacedragon-contraste .themed.theme-light input,
-body.spacedragon-contraste .themed.theme-light textarea,
-body.spacedragon-contraste .themed.theme-light select,
-body.spacedragon-contraste .themed.theme-light .description,
-body.spacedragon-contraste .themed.theme-light .editor-content,
-body.spacedragon-contraste .themed.theme-light .window-content,
-body.spacedragon-contraste .application.theme-light .window-content {
+/* Os campos e a descrição, que têm cor própria e não herdam. Com `!important`
+ * porque a regra do outro lado também o usa — mas sempre dentro do escopo
+ * acima, nunca em janela de terceiro. */
+body.spacedragon-contraste .olddragon2e.theme-light input,
+body.spacedragon-contraste .olddragon2e.theme-light textarea,
+body.spacedragon-contraste .olddragon2e.theme-light select,
+body.spacedragon-contraste .olddragon2e.theme-light .description,
+body.spacedragon-contraste .olddragon2e.theme-light .editor-content {
   color: #191813 !important;
 }

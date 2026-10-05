@@ -82,11 +82,12 @@ function registrarContraste() {
       "Com o Foundry em tema escuro, as fichas e janelas que o sistema pinta de claro " +
       "continuam com a cor de texto do tema escuro — o que dá 1,19:1 de contraste e deixa " +
       "o texto praticamente invisível. Isto devolve a cor escura nessas janelas. " +
-      "Desligue se o seu Foundry já está em tema claro.",
+      "Desligue se o seu Foundry já está em tema claro. Vem DESLIGADA: mexer na cor " +
+      "de janelas que não são deste módulo é coisa que só se faz a pedido.",
     scope: "client",
     config: true,
     type: Boolean,
-    default: true,
+    default: false,
     onChange: aplicarContraste,
   });
 }
