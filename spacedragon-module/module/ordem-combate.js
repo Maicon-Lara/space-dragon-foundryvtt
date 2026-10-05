@@ -28,6 +28,9 @@ import { MODOS } from "./ordem.js";
 import { opcoesDeOrdem } from "./ordem-ficha.js";
 
 const ID = "spacedragon";
+// Marca de que já envolvemos o protótipo: um segundo envoltório sobre o nosso
+// chamaria a janela duas vezes.
+const MARCA_PATCH = "__sdOrdemRollInitiative";
 
 const escapa = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -107,8 +110,11 @@ async function gravar(combat, id, valor) {
   }
 }
 
-async function perguntar(combat) {
-  const meus = meusCombatentes(combat.combatants.contents, { ehMestre: !!game.user?.isGM });
+async function perguntar(combat, ids = null) {
+  let meus = meusCombatentes(combat.combatants.contents, { ehMestre: !!game.user?.isGM });
+  // Quando a pergunta vem de um clique em "rolar iniciativa", ela vale só para
+  // os combatentes daquele clique — e não para todos os meus.
+  if (ids?.length) meus = meus.filter((c) => ids.includes(c.id));
   if (!meus.length) return;
 
   const V2 = foundry.applications?.api?.DialogV2;
@@ -177,7 +183,51 @@ export function registrarOpcaoDeCombate() {
   });
 }
 
+/**
+ * `rollInitiative` deixa de rolar 1d20 e passa a perguntar a ação.
+ *
+ * ── POR QUE AQUI, E NÃO NOS BOTÕES ──────────────────────────────────────────
+ *
+ * Porque há mais de um rastreador no mundo. O padrão do Foundry tem o seu botão;
+ * o *Combat Tracker Dock* tem três caminhos próprios (o retrato do combatente,
+ * "rolar todos" e "rolar PNJs"); o *Combat Carousel* tem o ícone do card. Caçar
+ * botão por botão significa perseguir o CSS de cada módulo a cada versão deles,
+ * e perder sempre que um novo aparecer.
+ *
+ * Todos, porém, acabam chamando `combat.rollInitiative()`. Trocando esse ponto,
+ * qualquer um deles passa a abrir a janela de declaração — inclusive a rolagem
+ * automática que o Foundry faz ao adicionar um combatente, que de outro modo
+ * encheria a fila de 1d20 antes de alguém declarar.
+ *
+ * ── O QUE ISTO CUSTA, DITO EM VOZ ALTA ──────────────────────────────────────
+ *
+ * É um patch no protótipo de `Combat`, e o cabeçalho de ordem.js diz que este
+ * módulo não reescreve a iniciativa de um sistema alheio. A diferença é o
+ * consentimento: isto só entra com a opção LIGADA, e a opção existe justamente
+ * para quem decidiu jogar a T7-2. Com ela desligada, o original roda intacto e
+ * nada neste arquivo toca em nada.
+ *
+ * O original fica guardado e é chamado de volta nesse caso — não substituímos a
+ * regra do sistema, desviamos a chamada enquanto a mesa quer o desvio.
+ */
+export function envolverRollInitiative() {
+  const Base = CONFIG.Combat?.documentClass;
+  if (!Base?.prototype || Base.prototype[MARCA_PATCH]) return;
+  const original = Base.prototype.rollInitiative;
+  if (typeof original !== "function") return;
+
+  Base.prototype.rollInitiative = async function (ids, options) {
+    if (!ligada()) return original.call(this, ids, options);
+    const lista = Array.isArray(ids) ? ids : ids ? [ids] : null;
+    await perguntar(this, lista);
+    return this;
+  };
+  Base.prototype[MARCA_PATCH] = true;
+}
+
 export function ligarOrdemNoCombate() {
+  envolverRollInitiative();
+
   // Os dois momentos em que a T7-2 manda declarar: o começo do combate e cada
   // rodada nova. `combatRound` já cobre a virada; `combatStart` existe porque a
   // primeira rodada não "vira".

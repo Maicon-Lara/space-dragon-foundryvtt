@@ -145,6 +145,62 @@ confere(houveContainer, "nenhuma container query nas folhas — o layout não en
   }
 }
 
+// ── 6. O CARTÃO DO CHAT SE BASTA ──────────────────────────────────────────
+//
+// O cartão saiu ilegível na mesa: texto claro sobre o pergaminho claro do chat.
+// A cor herdada do chat muda com o tema do Foundry, com o sistema e com
+// qualquer módulo de interface — então o cartão não pode depender dela.
+//
+// A regra é o PAR: fundo e cor declarados juntos. Fundo sem cor herda o texto
+// do tema (foi exatamente o bug); cor sem fundo aposta no que o chat vai fazer.
+{
+  const css = semComentarios(fs.readFileSync(path.join(RAIZ, FOLHAS[0]), "utf8"));
+
+  const luminancia = (hex) => {
+    const n = hex.replace("#", "");
+    const c = [0, 2, 4].map((i) => parseInt(n.slice(i, i + 2), 16) / 255)
+      .map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4));
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  };
+  const contraste = (a, b) => {
+    const [maior, menor] = [luminancia(a), luminancia(b)].sort((x, y) => y - x);
+    return (maior + 0.05) / (menor + 0.05);
+  };
+
+  const bloco = (sel) => {
+    const i = css.indexOf(sel);
+    return i < 0 ? "" : css.slice(i, css.indexOf("}", i));
+  };
+
+  const principal = bloco(".chat-message .sd-teste {");
+  confere(!!principal, "o cartão do chat não tem regra própria — ele herdaria a cor do tema");
+
+  const fundo = principal.match(/background:\s*(#[0-9a-fA-F]{6})/)?.[1];
+  const cor = principal.match(/color:\s*(#[0-9a-fA-F]{6})/)?.[1];
+  confere(!!fundo && !!cor,
+    "fundo e cor têm de ser declarados JUNTOS: fundo sem cor herda o texto do tema, " +
+    "e cor sem fundo aposta no que o chat faz");
+
+  if (fundo && cor) {
+    const r = contraste(cor, fundo);
+    confere(r >= 4.5, `contraste do cartão ${r.toFixed(2)}:1 — a WCAG pede 4,5:1 para texto normal`);
+  }
+
+  // O texto de apoio também: ele é mais leve DE PROPÓSITO, mas leve demais é
+  // o mesmo bug de novo, só que mais discreto.
+  const apoio = bloco(".chat-message .sd-teste .sd-nota,");
+  const corApoio = apoio.match(/color:\s*(#[0-9a-fA-F]{6})/)?.[1];
+  if (corApoio && fundo) {
+    const r = contraste(corApoio, fundo);
+    confere(r >= 4.5, `contraste do texto de apoio ${r.toFixed(2)}:1 — a WCAG pede 4,5:1`);
+  }
+
+  // E nada de `opacity` no cartão do chat: opacidade sobre cor herdada foi
+  // metade do problema original, porque esconde o quanto o contraste caiu.
+  confere(!/opacity:/.test(principal),
+    "o cartão do chat não deve usar opacity — ela mascara a queda de contraste");
+}
+
 if (problemas.length) {
   for (const p of problemas) console.error(`  ✘ ${p}`);
   process.exit(1);
@@ -153,5 +209,5 @@ console.log(
   "  ✔ layout que encolhe: todo @container tem contêiner declarado (e todo " +
     "contêiner é usado), nenhuma @media de largura onde a janela é que muda, " +
     "todo grid de 3+ colunas tem versão estreita, e as queries vêm depois das " +
-    "regras base"
+    "regras base, e o cartão do chat com contraste próprio medido"
 );

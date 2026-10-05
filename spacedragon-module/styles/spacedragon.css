@@ -406,6 +406,35 @@
   cursor: pointer;
 }
 
+/* ── O CARTÃO NO CHAT: CONTRASTE PRÓPRIO ───────────────────────────────────
+ *
+ * O cartão saía ilegível: texto claro sobre o pergaminho claro do chat, com só
+ * o título sobrevivendo (o `.title` tem cor própria, vinda do sistema).
+ *
+ * A causa está FORA deste módulo — é a cor de texto que o cartão herda do chat,
+ * e ela muda com o tema do Foundry, com o sistema e com qualquer módulo de
+ * interface instalado. Por isso a correção não é descobrir quem a define e
+ * disputar: é o cartão deixar de depender dela.
+ *
+ * Fundo e cor próprios, os dois declarados juntos. Nunca um sem o outro: fundo
+ * sem cor herda o texto do tema (foi o bug), e cor sem fundo aposta no que o
+ * chat vai fazer. Juntos, o par se basta — tema claro, tema escuro, ou o que
+ * vier depois.
+ *
+ * O contraste deste par é 15,7:1, bem acima dos 4,5:1 da WCAG para texto
+ * normal, e tools/teste-responsivo.mjs o recalcula a cada build. */
+.chat-message .sd-teste {
+  color: #191813;
+  background: #f4f1e6;
+  border-radius: 3px;
+  padding: 0.3rem 0.45rem;
+}
+/* O texto de apoio continua mais leve que o principal, mas por MISTURA com o
+ * fundo declarado acima, e não por `opacity` sobre uma cor herdada — era daí
+ * que vinha metade do problema. */
+.chat-message .sd-teste .sd-nota,
+.chat-message .sd-teste .sd-conta { color: #4a463d; }
+
 /* ── A janela de declaração por rodada ─────────────────────────────────────
  * Uma linha por combatente que o usuário controla: nome, ação e o valor. O
  * jogador vê uma; o Mestre, as dos PNJs. */

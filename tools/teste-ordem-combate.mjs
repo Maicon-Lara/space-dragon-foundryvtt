@@ -16,7 +16,9 @@
 //
 // Uso: node tools/teste-ordem-combate.mjs
 
-import { meusCombatentes, lerFormulario } from "../spacedragon-module/module/ordem-combate.js";
+import {
+  meusCombatentes, lerFormulario, envolverRollInitiative,
+} from "../spacedragon-module/module/ordem-combate.js";
 
 const problemas = [];
 const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
@@ -128,6 +130,58 @@ confere(lerFormulario({}).length === 0, "formulário sem querySelectorAll não q
     "a T7-2 manda declarar no começo E a cada rodada — faltou um dos dois ganchos");
 }
 
+/* ── O DESVIO DE rollInitiative ──────────────────────────────────────────── */
+//
+// É o ponto que TODOS os rastreadores compartilham: o padrão do Foundry, o
+// Combat Tracker Dock (três caminhos próprios) e o Combat Carousel. Caçar botão
+// por botão seria perseguir o CSS de cada um; o desvio pega todos.
+//
+// O que não pode acontecer, em ordem de gravidade:
+//   · desviar com a opção DESLIGADA — o módulo quebraria a iniciativa de quem
+//     nunca pediu a T7-2;
+//   · envolver duas vezes — a janela abriria em dobro.
+{
+  let chamouOriginal = 0;
+  class CombatFalso {
+    async rollInitiative(ids) { chamouOriginal += 1; return `original:${ids}`; }
+  }
+  globalThis.CONFIG = { Combat: { documentClass: CombatFalso } };
+  globalThis.foundry = {};            // sem DialogV2: `perguntar` sai cedo
+  globalThis.game = { user: { isGM: true }, settings: { get: () => desligada ? false : true } };
+  let desligada = true;
+
+  envolverRollInitiative();
+  const c = new CombatFalso();
+  c.combatants = { contents: [] };
+
+  // opção DESLIGADA: o original roda intacto
+  await c.rollInitiative(["x"]);
+  confere(chamouOriginal === 1, "com a opção desligada, rollInitiative tem de chamar o original");
+
+  // opção LIGADA: o original não roda
+  desligada = false;
+  await c.rollInitiative(["x"]);
+  confere(chamouOriginal === 1,
+    "com a opção ligada, rollInitiative NÃO pode rolar 1d20 — é a regra que a T7-2 substitui");
+
+  // Envolver de novo não pode re-embrulhar. A primeira versão deste teste
+  // contava chamadas ao original, e isso NÃO prova nada: com a opção ligada,
+  // cada envoltório retorna antes de chamar o de baixo, então o contador fica
+  // igual com um ou com cinco. O que se mede é a IDENTIDADE da função — se ela
+  // mudar, a cadeia cresceu a cada `ready`.
+  const envolvida = CombatFalso.prototype.rollInitiative;
+  envolverRollInitiative();
+  envolverRollInitiative();
+  confere(CombatFalso.prototype.rollInitiative === envolvida,
+    "envolver de novo re-embrulhou a função — a cadeia cresce a cada recarga");
+
+  // e o original volta a valer se a opção for desligada no meio da sessão
+  desligada = true;
+  await c.rollInitiative(["x"]);
+  confere(chamouOriginal === 2,
+    "desligar a opção no meio da sessão tem de devolver a iniciativa original");
+}
+
 if (problemas.length) {
   for (const p of problemas) console.error(`  ✘ ${p}`);
   process.exit(1);
@@ -135,5 +189,5 @@ if (problemas.length) {
 console.log(
   "  ✔ ordem no combate: o Mestre declara pelos PNJs e por mais ninguém, o jogador " +
     "só pelo seu, ninguém fica sem declarante, token sem ator não entra, o formulário " +
-    "não troca linha, e a opção vem desligada"
+    "não troca linha, a opção vem desligada, e rollInitiative só é desviado com ela ligada"
 );
