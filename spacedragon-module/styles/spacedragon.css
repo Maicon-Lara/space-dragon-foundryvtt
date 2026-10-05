@@ -437,22 +437,38 @@
   border-radius: 3px;
   padding: 0.3rem 0.45rem;
 }
-.chat-message .sd-teste p,
-.chat-message .sd-teste li,
-.chat-message .sd-teste ol,
-.chat-message .sd-teste ul,
-.chat-message .sd-teste span,
-.chat-message .sd-teste strong,
-.chat-message .sd-teste em,
-.chat-message .message-content .sd-teste p,
-.chat-message .message-content .sd-teste li,
-.chat-message .message-content .sd-teste span,
-.chat-message .message-content .sd-teste strong,
-.chat-message .message-content .sd-teste em { color: inherit !important; }
+/* ── CADA CLASSE PELO NOME, E NÃO POR ELEMENTO ─────────────────────────────
+ *
+ * A tentativa anterior cobriu os filhos por ELEMENTO (`p`, `span`, `strong`) e
+ * só metade do cartão melhorou. O print da mesa mostrou qual metade: ficaram
+ * legíveis exatamente as classes que eu havia nomeado (`.sd-conta`, `.sd-nota`)
+ * e continuaram invisíveis as que eu não nomeei — `.result`, que é a classe mais
+ * usada dos cartões, e `.sd-acao`.
+ *
+ * A razão é especificidade: `.chat-message .sd-teste p` perde para uma regra de
+ * classe com `!important` do outro lado. Nomear a classe empata o peso e a
+ * especificidade dobrada desempata.
+ *
+ * Esta lista é GERADA das classes que os cartões realmente usam, e
+ * tools/teste-cartoes.mjs recusa qualquer classe nova que não esteja aqui. */
+.chat-message .sd-teste .result,
+.chat-message .sd-teste .sd-acao,
+.chat-message .sd-teste .sd-parcelas,
+.chat-message .sd-teste .sd-testes,
+.chat-message .message-content .sd-teste .result,
+.chat-message .message-content .sd-teste .sd-acao,
+.chat-message .message-content .sd-teste .sd-parcelas,
+.chat-message .message-content .sd-teste .sd-testes,
+.chat-message .message-content .sd-teste .success { color: inherit !important; }
 
 /* O texto de apoio continua mais leve que o principal, mas por MISTURA com o
  * fundo declarado acima, e não por `opacity` sobre uma cor herdada — era daí
  * que vinha metade do problema. */
+/* `.success` é semântica — o verde diz "passou", e trocá-lo por preto apagaria
+ * a informação. Verde escuro o bastante para o fundo creme: 7,0:1. */
+.chat-message .sd-teste .success,
+.chat-message .message-content .sd-teste .success { color: #1f5c33 !important; }
+
 .chat-message .sd-teste .sd-nota,
 .chat-message .sd-teste .sd-conta,
 .chat-message .sd-teste .sd-pos,
