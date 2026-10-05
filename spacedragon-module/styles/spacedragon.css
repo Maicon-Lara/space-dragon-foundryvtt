@@ -423,17 +423,42 @@
  *
  * O contraste deste par é 15,7:1, bem acima dos 4,5:1 da WCAG para texto
  * normal, e tools/teste-responsivo.mjs o recalcula a cada build. */
+/* O `!important` e os filhos nomeados um a um: a primeira tentativa declarou
+ * fundo e cor no bloco e confiou na herança, e o texto continuou invisível na
+ * mesa. Quem quer que esteja pintando aquele texto o faz com especificidade
+ * maior que `.chat-message .sd-teste`, ou direto nos filhos — e disputar
+ * caminho a caminho com um CSS que não se conhece é perder a cada versão dele.
+ *
+ * O escopo continua mínimo: só dentro do cartão deste módulo, no chat. */
+.chat-message .message-content .sd-teste,
 .chat-message .sd-teste {
-  color: #191813;
-  background: #f4f1e6;
+  color: #191813 !important;
+  background: #f4f1e6 !important;
   border-radius: 3px;
   padding: 0.3rem 0.45rem;
 }
+.chat-message .sd-teste p,
+.chat-message .sd-teste li,
+.chat-message .sd-teste ol,
+.chat-message .sd-teste ul,
+.chat-message .sd-teste span,
+.chat-message .sd-teste strong,
+.chat-message .sd-teste em,
+.chat-message .message-content .sd-teste p,
+.chat-message .message-content .sd-teste li,
+.chat-message .message-content .sd-teste span,
+.chat-message .message-content .sd-teste strong,
+.chat-message .message-content .sd-teste em { color: inherit !important; }
+
 /* O texto de apoio continua mais leve que o principal, mas por MISTURA com o
  * fundo declarado acima, e não por `opacity` sobre uma cor herdada — era daí
  * que vinha metade do problema. */
 .chat-message .sd-teste .sd-nota,
-.chat-message .sd-teste .sd-conta { color: #4a463d; }
+.chat-message .sd-teste .sd-conta,
+.chat-message .sd-teste .sd-pos,
+.chat-message .message-content .sd-teste .sd-nota,
+.chat-message .message-content .sd-teste .sd-conta,
+.chat-message .message-content .sd-teste .sd-pos { color: #4a463d !important; }
 
 /* ── A janela de declaração por rodada ─────────────────────────────────────
  * Uma linha por combatente que o usuário controla: nome, ação e o valor. O
