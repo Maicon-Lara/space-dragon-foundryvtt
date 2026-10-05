@@ -188,10 +188,17 @@ body.spacedragon-contraste .window-app.theme-light {
 
 /* Os campos de formulário dentro dessas janelas: input, textarea e select têm
  * cor própria no Foundry, e por isso não herdam a de cima. */
+/* Com `!important`: a primeira versão desta correção declarou a variável e a
+ * cor sem ele, e na mesa NÃO pegou — o texto continuou em rgb(217,214,204).
+ * Quem pinta aquele texto o faz com `!important`, e sem empatar o peso a regra
+ * daqui perde em silêncio. É a terceira vez que este mesmo padrão aparece neste
+ * projeto, sempre com o mesmo desfecho. */
 body.spacedragon-contraste .themed.theme-light input,
 body.spacedragon-contraste .themed.theme-light textarea,
 body.spacedragon-contraste .themed.theme-light select,
 body.spacedragon-contraste .themed.theme-light .description,
-body.spacedragon-contraste .themed.theme-light .editor-content {
-  color: #191813;
+body.spacedragon-contraste .themed.theme-light .editor-content,
+body.spacedragon-contraste .themed.theme-light .window-content,
+body.spacedragon-contraste .application.theme-light .window-content {
+  color: #191813 !important;
 }
