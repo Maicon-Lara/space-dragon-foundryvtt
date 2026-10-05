@@ -316,3 +316,68 @@
 
 /* O botão de gerar relíquia, junto do campo que traz as iniciais O, D e U. */
 .spacedragon-ameaca .treasure .sd-gerar-reliquia { display: block; margin-top: 4px; text-align: center; font-size: 0.85rem; }
+
+/* ── Ordem de Ação na aba de ataques (T7-2) ─────────────────────────────────
+ *
+ * O painel é simples: um rótulo, um seletor de ação e uma linha com o campo do
+ * valor e o botão de declarar.
+ *
+ * O `!important` aqui não é preguiça, e está só em três propriedades. A ficha
+ * do Old Dragon 2 dá `width: 100%` e altura fixa a TODO `input` e `button`
+ * dela; sem desfazer isso, o campo sai espremido num risco e o botão engole a
+ * linha inteira. Foi exatamente esse o sintoma que custou uma tarde de caça ao
+ * CSS errado — a regra sem `!important` perde para a do sistema, e perde em
+ * silêncio, porque o painel continua aparecendo, só torto.
+ *
+ * O escopo é a marca do painel, nunca o input da ficha: desfazer a largura do
+ * sistema fora daqui mexeria na ficha de quem não pediu nada. */
+.sd-ordem-ficha {
+  margin: 0 0 8px;
+  padding: 6px 8px;
+  border: 1px solid var(--sd-caixa, #ccd3f0);
+  border-radius: 4px;
+}
+.sd-ordem-ficha .sd-ordem-cabeca {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.sd-ordem-ficha .sd-ordem-dica {
+  font-size: 9.5px;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: .75;
+}
+.sd-ordem-ficha .sd-ordem-acao { width: 100%; margin: 5px 0 4px; font-size: 11px; }
+
+.sd-ordem-ficha .sd-ordem-linha {
+  display: flex;
+  gap: 4px;
+  align-items: stretch;
+  width: 100%;
+}
+.sd-ordem-ficha .sd-ordem-valor {
+  flex: 1 1 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  /* A ficha também impõe ALTURA, e não só largura: sem isto o campo sai com a
+   * altura de linha dela e desalinha do botão. */
+  height: auto !important;
+  min-height: 0 !important;
+  font-size: 12px;
+  text-align: center;
+}
+.sd-ordem-ficha .sd-ordem-declarar {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 1px 12px;
+  font-size: 11px;
+  line-height: 1.6;
+  cursor: pointer;
+}

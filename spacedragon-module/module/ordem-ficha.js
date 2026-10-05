@@ -1,0 +1,276 @@
+/**
+ * A declaração da Ordem de Ação na ficha do personagem (T7-2).
+ *
+ * ── POR QUE NA FICHA, SE A JANELA JÁ EXISTE ─────────────────────────────────
+ *
+ * A janela de ordem.js é do MESTRE: ele digita nome por nome, escolhe a ação de
+ * cada um e informa o dado. Funciona, e continua existindo — mas põe no Mestre
+ * um trabalho que é dos jogadores, e toda rodada, porque a T7-2 manda declarar
+ * de novo a cada rodada.
+ *
+ * Este painel passa a declaração para quem declara. O jogador abre a aba de
+ * ataques, escolhe "atacar com o blaster" e clica: a ficha rola o dado de dano
+ * da arma — porque na T7-2 o valor da ordem É o dano — e manda o resultado ao
+ * chat com a conta à vista.
+ *
+ * ── O QUE ELE NÃO FAZ POR PADRÃO ────────────────────────────────────────────
+ *
+ * Não escreve no rastreador de combate. Essa é uma decisão de projeto do módulo,
+ * declarada em ordem.js: reescrever a iniciativa de um sistema alheio quebraria
+ * todo módulo de combate instalado. Quem quer o valor no rastreador liga a opção
+ * "Gravar no rastreador de combate" — e aí assume o atrito, de olhos abertos.
+ *
+ * A ordem na tela continua sendo a do Foundry, que é DECRESCENTE: o rastreador
+ * vai mostrar a fila ao contrário da regra. É por isso que a opção vem
+ * desligada, e é isso que o módulo Star Wars resolve por cima, com a inversão
+ * da classe de Combate.
+ *
+ * ── A LIÇÃO DE CSS QUE ESTE PAINEL CARREGA ──────────────────────────────────
+ *
+ * A ficha do Old Dragon 2 dá `width: 100%` e altura fixa a todo `input` e
+ * `button` dela. Um painel injetado que não desfaça isso sai com o campo
+ * espremido num risco e o botão engolindo a linha. As regras de `.sd-ordem-*`
+ * em spacedragon.css usam `!important` exatamente nesses pontos, e só neles.
+ */
+
+import { MODOS } from "./ordem.js";
+import { ligarNaFicha } from "./ficha.js";
+
+const ID = "spacedragon";
+const MARCA = "sd-ordem-ficha";
+
+/* ── ONDE O PAINEL ENTRA ───────────────────────────────────────────────────
+ *
+ * A ficha do sistema nomeia as abas por classe: `.character-tab-spells`,
+ * `.character-tab-equipment`, e no monstro `.monster-tab-attacks` (é assim que
+ * mental.js e ameaca.js as acham). A de ataques do personagem segue o padrão,
+ * mas o nome dela é o único que este repositório nunca precisou citar — então
+ * aqui vão candidatos, do mais provável ao mais genérico.
+ *
+ * O `[data-tab]` genérico vem por último e ignora o que está dentro de `<nav>`:
+ * ali mora o LINK da aba, não o painel dela, e injetar no link põe o painel na
+ * barra de abas.
+ *
+ * Sem nenhum candidato o painel NÃO é desenhado, e o console diz qual nome ele
+ * procurou. Painel que aparece no lugar errado é pior que painel que não
+ * aparece: o primeiro a mesa usa errado, o segundo ela reporta.
+ */
+const CANDIDATOS = [
+  ".character-tab-attacks",
+  ".character-tab-attack",
+  ".character-tab-combat",
+];
+
+export function abaDeAtaques(raiz) {
+  for (const sel of CANDIDATOS) {
+    const n = raiz.querySelector(sel);
+    if (n) return { no: n, por: sel };
+  }
+  const porDados = [...raiz.querySelectorAll('[data-tab="attacks"]')].find((n) => !n.closest("nav"));
+  if (porDados) return { no: porDados, por: '[data-tab="attacks"]' };
+  return null;
+}
+
+/* ── AS OPÇÕES QUE O JOGADOR VÊ ────────────────────────────────────────────
+ *
+ * As armas do personagem primeiro, equipadas antes das guardadas, cada uma já
+ * com o dado de dano dela no campo — é o que torna o painel mais rápido que a
+ * janela do Mestre: ninguém precisa lembrar nem digitar o dado.
+ *
+ * Depois as três formas da T7-2, para o que não é arma: aparato ou poder (valor
+ * fixo), e movimentação ou outra ação (10 − Destreza).
+ */
+export function opcoesDeOrdem(ator) {
+  const armas = (ator?.items ?? [])
+    .filter((i) => i.type === "weapon" && String(i.system?.damage ?? "").trim())
+    .sort((a, b) => Number(b.system?.is_equipped ?? 0) - Number(a.system?.is_equipped ?? 0));
+
+  const lista = armas.map((a) => ({
+    chave: `arma:${a.id}`,
+    modo: "ataque",
+    campo: String(a.system.damage).trim(),
+    rotulo: `Atacar com ${a.name} — ${String(a.system.damage).trim()}`,
+  }));
+
+  // Sem nenhuma arma cadastrada o jogador ainda precisa poder atacar: a opção
+  // genérica fica sempre, com o dado em branco para ele digitar.
+  lista.push({
+    chave: "ataque",
+    modo: "ataque",
+    campo: armas.length ? String(armas[0].system.damage).trim() : MODOS.ataque.campo,
+    rotulo: `Atacar — ${MODOS.ataque.dica}`,
+  });
+  lista.push({
+    chave: "aparato",
+    modo: "aparato",
+    campo: MODOS.aparato.campo,
+    rotulo: `${MODOS.aparato.rotulo} — ${MODOS.aparato.dica}`,
+  });
+  lista.push({
+    chave: "movimento",
+    modo: "movimento",
+    // O modificador de Destreza já vem da ficha: é o número que o jogador mais
+    // erraria de cabeça, e o único dos três que o ator sabe sozinho.
+    campo: String(Number(ator?.system?.mod_destreza ?? 0)),
+    rotulo: `${MODOS.movimento.rotulo} — ${MODOS.movimento.dica}`,
+  });
+
+  return lista;
+}
+
+const escapa = (s) =>
+  String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/** A escolha sobrevive ao redesenho da ficha, por ator. */
+const escolhido = new Map();
+
+export function montarPainel(ator) {
+  const lista = opcoesDeOrdem(ator);
+  const sel = lista.find((l) => l.chave === escolhido.get(ator?.id)) ?? lista[0];
+  const opcoes = lista
+    .map(
+      (l) =>
+        `<option value="${escapa(l.chave)}" data-modo="${escapa(l.modo)}" ` +
+        `data-campo="${escapa(l.campo)}"${l.chave === sel.chave ? " selected" : ""}>` +
+        `${escapa(l.rotulo)}</option>`
+    )
+    .join("");
+
+  return (
+    `<section class="${MARCA}">` +
+    `<div class="sd-ordem-cabeca">` +
+    `<strong>Ordem de Ação</strong>` +
+    `<span class="sd-ordem-dica" title="T7-2: o valor vem da ação escolhida, e muda a cada rodada">` +
+    `menor age primeiro</span>` +
+    `</div>` +
+    `<select class="sd-ordem-acao">${opcoes}</select>` +
+    `<div class="sd-ordem-linha">` +
+    `<input type="text" class="sd-ordem-valor" value="${escapa(sel.campo)}" ` +
+    `title="O dado de dano, o NT ou a Grandeza, ou o modificador de Destreza. Dá para corrigir à mão.">` +
+    `<button type="button" class="sd-ordem-declarar">declarar</button>` +
+    `</div></section>`
+  );
+}
+
+/* ── A DECLARAÇÃO ──────────────────────────────────────────────────────────── */
+
+const ligado = (chave, padrao = false) => {
+  try {
+    return game.settings?.get?.(ID, chave) ?? padrao;
+  } catch {
+    return padrao;
+  }
+};
+
+async function declarar(ator, raiz) {
+  const op = raiz.querySelector(".sd-ordem-acao")?.selectedOptions?.[0];
+  if (!op) return;
+  const modo = MODOS[op.dataset.modo] ?? MODOS.ataque;
+  const entrada = String(raiz.querySelector(".sd-ordem-valor")?.value ?? "").trim();
+
+  const { n, como, roll } = await modo.valor(entrada);
+
+  // O rastreador só por opção, e só se houver combate: ver o cabeçalho.
+  let noRastreador = false;
+  if (ligado("ordemNoRastreador")) {
+    const tok = ator.getActiveTokens?.()[0]?.document;
+    const c = tok && game.combat?.getCombatantByToken?.(tok.id);
+    if (c) {
+      await game.combat.setInitiative(c.id, n);
+      noRastreador = true;
+    }
+  }
+
+  await ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor: ator }),
+    content:
+      `<div class="title">Ordem de Ação</div>` +
+      `<div class="sd-teste">` +
+      `<p class="sd-acao">${escapa(op.textContent)}</p>` +
+      `<p class="result"><strong>${n}</strong></p>` +
+      `<p class="sd-conta">${escapa(como)}</p>` +
+      `<p class="sd-nota"><em>Age primeiro o menor resultado, pela T7-2. ` +
+      `A rodada dura o maior resultado da mesa × 2 segundos.</em></p>` +
+      (noRastreador
+        ? `<p class="sd-nota"><em>Gravado no rastreador — que ordena do maior para o ` +
+          `menor, ao contrário da regra.</em></p>`
+        : "") +
+      `</div>`,
+    ...(roll ? { rolls: [roll], sound: CONFIG.sounds?.dice } : {}),
+  });
+}
+
+function ligarEventos(raiz, ator) {
+  // A ficha do sistema salva em `change` e redesenha: sem isto, escolher a ação
+  // no `select` dispararia um salvamento do ator e o painel sumiria no meio do
+  // clique.
+  for (const ev of ["change", "input"]) raiz.addEventListener(ev, (e) => e.stopPropagation());
+
+  raiz.querySelector(".sd-ordem-acao")?.addEventListener("change", (e) => {
+    const op = e.currentTarget.selectedOptions?.[0];
+    if (!op) return;
+    escolhido.set(ator.id, op.value);
+    const campo = raiz.querySelector(".sd-ordem-valor");
+    if (campo) campo.value = op.dataset.campo ?? "";
+  });
+
+  raiz.querySelector(".sd-ordem-declarar")?.addEventListener("click", () => declarar(ator, raiz));
+}
+
+export function registrarOpcoes() {
+  game.settings.register(ID, "ordemNaFicha", {
+    name: "Declarar a Ordem de Ação na ficha",
+    hint:
+      "Põe na aba de ataques um painel onde o próprio jogador escolhe a ação e rola o " +
+      "valor da T7-2, em vez de o Mestre preencher a janela de ordem a cada rodada. " +
+      "A janela continua disponível na macro.",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+  });
+
+  game.settings.register(ID, "ordemNoRastreador", {
+    name: "Gravar a Ordem de Ação no rastreador de combate",
+    hint:
+      "O valor declarado vai para a iniciativa do combatente. Atenção: o rastreador do " +
+      "Foundry ordena do MAIOR para o menor, e a T7-2 manda o menor agir primeiro — a " +
+      "fila aparece ao contrário da regra. Deixe desligado, a menos que use um módulo " +
+      "que inverta a ordenação.",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+  });
+}
+
+export function ligarOrdemNaFicha() {
+  ligarNaFicha((app, elemento) => {
+    try {
+      if (!ligado("ordemNaFicha", true)) return;
+      const raiz = elemento instanceof HTMLElement ? elemento : elemento?.[0];
+      const ator = app?.actor ?? app?.document;
+      if (!raiz || ator?.type !== "character") return;
+
+      // Remove antes de desenhar: a ficha redesenha a cada mudança, e sem isto
+      // o painel se acumularia a cada salvamento.
+      raiz.querySelectorAll(`.${MARCA}`).forEach((n) => n.remove());
+
+      const aba = abaDeAtaques(raiz);
+      if (!aba) {
+        console.warn(
+          `${ID} | aba de ataques não encontrada (procurei ${CANDIDATOS.join(", ")} e ` +
+            `[data-tab="attacks"]) — painel da Ordem de Ação não desenhado`
+        );
+        return;
+      }
+
+      aba.no.insertAdjacentHTML("afterbegin", montarPainel(ator));
+      const painel = aba.no.querySelector(`.${MARCA}`);
+      if (painel) ligarEventos(painel, ator);
+    } catch (e) {
+      // Nunca quebrar a ficha do sistema por causa de um painel do módulo.
+      console.warn(`${ID} | painel da Ordem de Ação não pôde ser desenhado`, e);
+    }
+  });
+}

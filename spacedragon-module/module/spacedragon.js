@@ -29,6 +29,7 @@ import { rolarPV, rolarCritico, multiplicadorCritico } from "./vitalidade.js";
 import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
 import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
+import { ligarOrdemNaFicha, registrarOpcoes as registrarOpcoesDaOrdem } from "./ordem-ficha.js";
 import { registrarTema, ligarTema } from "./tema.js";
 import { registrarFicha } from "./ficha.js";
 import { ligarRotulos } from "./rotulos.js";
@@ -61,6 +62,7 @@ function estendeNiveis() {
 
 Hooks.once("init", () => {
   registrarTema();
+  registrarOpcoesDaOrdem();
 
   // As fichas são registradas no `ready` (ver lá). Aqui só a opção, que
   // precisa existir antes de ser lida.
@@ -120,6 +122,7 @@ Hooks.once("ready", () => {
   ligarGrandezas();
   ligarMental();
   ligarDegraus();
+  ligarOrdemNaFicha();
   // Por último: a aba de Poderes precisa estar desenhada para os rótulos de
   // Grandeza serem trocados.
   ligarRotulos();

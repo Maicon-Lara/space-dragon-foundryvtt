@@ -38,8 +38,14 @@ const ID = "spacedragon";
 const escapa = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-/** As três formas de obter o número, na ordem da T7-2. */
-const MODOS = {
+/**
+ * As três formas de obter o número, na ordem da T7-2.
+ *
+ * Exportado porque o painel da ficha (ordem-ficha.js) usa as MESMAS contas.
+ * Duas cópias da T7-2 em dois arquivos é como a regra passa a divergir sem
+ * ninguém notar: a janela diria uma coisa e a ficha outra.
+ */
+export const MODOS = {
   ataque: {
     rotulo: "Ataque",
     dica: "dado de dano da arma",
