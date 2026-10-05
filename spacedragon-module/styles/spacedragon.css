@@ -54,6 +54,7 @@
   border-left: 2px solid rgba(128, 128, 128, 0.35);
   background: rgba(128, 128, 128, 0.06);
   border-radius: 2px;
+  color: var(--sd-tinta, #191813);
 }
 
 .spacedragon-testes .sd-testes {
@@ -161,6 +162,20 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* ── O PAR COR+FUNDO NOS PAINÉIS DESTE MÓDULO ──────────────────────────────
+ *
+ * Painel que declara fundo e NÃO declara cor fica refém do tema do Foundry: com
+ * o VTT em tema escuro, o texto vem claro e cai sobre o fundo claro do painel.
+ * Foi o que aconteceu com o cartão do chat, com o botão e com os rótulos, em
+ * lugares diferentes, até a causa aparecer.
+ *
+ * A regra do projeto, daqui em diante: **o módulo pinta o que o módulo cria, e
+ * declara sempre os dois**. Nada de mexer em janela de terceiro — foi assim que
+ * a interface da mesa quebrou.
+ *
+ * `var(--sd-tinta, …)` acompanha a paleta quando o tema do módulo está ligado, e
+ * cai no escuro legível quando não está. */
+
 /* ── Alcance mental na aba de Poderes ─────────────────────────────────────
  *
  * O orçamento é o número que a mesa procura, então ele é o maior elemento do
@@ -172,6 +187,7 @@
   border: 1px solid rgba(128, 128, 128, 0.3);
   border-radius: 3px;
   background: rgba(128, 128, 128, 0.06);
+  color: var(--sd-tinta, #191813);
 }
 
 .spacedragon-mental .sd-mental-cabeca {
@@ -360,6 +376,9 @@
   padding: 6px 8px;
   border: 1px solid var(--sd-caixa, #ccd3f0);
   border-radius: 4px;
+  /* o par, como todo painel deste módulo */
+  background: var(--sd-fundo, #f4f1e6);
+  color: var(--sd-tinta, #191813);
 }
 .sd-ordem-ficha .sd-ordem-cabeca {
   display: flex;
