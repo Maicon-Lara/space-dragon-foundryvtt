@@ -28,6 +28,11 @@ import { fileURLToPath } from "node:url";
 const RAIZ = path.resolve(fileURLToPath(import.meta.url), "../..");
 const FOLHAS = ["spacedragon-module/styles/spacedragon.css", "spacedragon-module/styles/tema.css"];
 
+// As raízes de ficha, que o Foundry dimensiona pela janela e por isso não
+// precisam de largura explícita. Qualquer OUTRO elemento com
+// `container-type: inline-size` precisa — ver a conferência 5.
+const RAIZES_DE_FICHA = new Set([".spacedragon-ameaca"]);
+
 const problemas = [];
 const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
 
@@ -82,6 +87,28 @@ for (const rel of FOLHAS) {
     confere(dentroDeContainer.includes(classe),
       `${nome}: "${sel}" tem ${colunas} colunas e nenhuma versão estreita em @container — ` +
       `numa ficha apertada isso vira ${colunas} rótulos ilegíveis`);
+  }
+
+  // ── 5. CONTAINMENT EXIGE LARGURA EXPLÍCITA ──────────────────────────────
+  //
+  // `container-type: inline-size` tira do elemento o dimensionamento pelo
+  // conteúdo no eixo horizontal. Num pai que estica os filhos ninguém nota; num
+  // pai que os alinha pelo início, o elemento COLAPSA até o mínimo. Foi assim
+  // que o painel da Ordem de Ação saiu como uma coluna de 60px, com o título
+  // quebrado em três linhas e o botão cortado.
+  //
+  // Não vale para a RAIZ de uma ficha: quem a dimensiona é a janela do Foundry.
+  for (const m of css.matchAll(/([^{}@]+)\{([^{}]*container-type:\s*inline-size[^{}]*)\}/g)) {
+    const sel = m[1].trim().split("\n").pop().trim();
+    const corpo = m[2];
+    // Lista EXPLÍCITA, e não um padrão de nome: a primeira versão disto usava
+    // /^\.[a-z-]+(-ficha)?$/, que é guloso e também casava ".sd-ordem-ficha" —
+    // justamente o elemento que o teste existe para cobrir. A sabotagem passou
+    // batida, e a asserção não valia nada.
+    if (RAIZES_DE_FICHA.has(sel)) continue;
+    confere(/width:\s*100%/.test(corpo),
+      `${nome}: "${sel}" tem container-type sem width explícita — num pai que ` +
+      `não estica os filhos, ele colapsa até o mínimo`);
   }
 
   // ── 4. mínimo fixo que não cede ─────────────────────────────────────────

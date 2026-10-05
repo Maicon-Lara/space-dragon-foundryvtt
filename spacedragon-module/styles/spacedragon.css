@@ -342,6 +342,19 @@
    * `@media` responderia à TELA, que não muda quando a janela da ficha muda. */
   container-type: inline-size;
   container-name: ordem;
+  /* ── A LARGURA, QUE O CONTAINMENT EXIGE ──────────────────────────────────
+   * `container-type: inline-size` TIRA do elemento o dimensionamento pelo
+   * conteúdo no eixo horizontal. Num pai que estica os filhos isso não se nota;
+   * num pai que os alinha pelo início (`align-items: flex-start`, que é o caso
+   * da aba de ataques), o elemento colapsa até o mínimo — e o painel sai como
+   * uma coluna de 60px com "ORDEM DE AÇÃO" quebrado em três linhas.
+   *
+   * Então a largura passa a ser explícita. As três linhas cobrem pai em fluxo
+   * normal, pai flex e pai grid, sem precisar saber qual é. */
+  width: 100%;
+  box-sizing: border-box;
+  align-self: stretch;
+  grid-column: 1 / -1;
 
   margin: 0 0 8px;
   padding: 6px 8px;
@@ -391,6 +404,25 @@
   font-size: 11px;
   line-height: 1.6;
   cursor: pointer;
+}
+
+/* ── A janela de declaração por rodada ─────────────────────────────────────
+ * Uma linha por combatente que o usuário controla: nome, ação e o valor. O
+ * jogador vê uma; o Mestre, as dos PNJs. */
+.sd-ordem-combate { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.sd-ordem-linha-combate {
+  display: flex; gap: 6px; align-items: center;
+}
+.sd-ordem-linha-combate .sd-ordem-nome {
+  flex: 0 0 8em; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-weight: 600;
+}
+.sd-ordem-linha-combate .sd-ordem-modo { flex: 1 1 auto; min-width: 0; }
+/* O campo do valor é curto de propósito: cabe "1d8+2" e nada mais. */
+.sd-ordem-linha-combate .sd-ordem-entrada {
+  flex: 0 0 5.5em !important; width: auto !important; min-width: 0 !important;
+  text-align: center;
 }
 
 /* ── OS PAINÉIS ENCOLHENDO ─────────────────────────────────────────────────
