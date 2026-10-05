@@ -532,8 +532,20 @@ const regras = css
   .split("}")
   .map((b) => b.split("{")[0].trim())
   .filter(Boolean);
-const soltas = regras.filter((sel) => !sel.split(",").every((s) => s.includes("body.spacedragon-tema")));
-if (soltas.length) probTema.push(`regras fora da classe do tema: ${soltas.join(" | ").slice(0, 120)}`);
+// Duas classes valem como escopo, e as duas saem por opção do cliente:
+//   · spacedragon-tema      — repinta a ficha com a paleta do módulo
+//   · spacedragon-contraste — devolve o texto escuro em janela clara
+//
+// A segunda nasceu de um bug medido na mesa: com o Foundry em tema escuro, as
+// janelas que o sistema marca como CLARAS recebiam texto rgb(217,214,204), que
+// dá 1,19:1 de contraste sobre o pergaminho — texto invisível. Ela é correção,
+// e não enfeite, mas continua opcional pelo mesmo motivo do tema: nenhum módulo
+// deve repintar a janela de quem não pediu.
+const ESCOPOS = ["body.spacedragon-tema", "body.spacedragon-contraste"];
+const soltas = regras.filter(
+  (sel) => !sel.split(",").every((s) => ESCOPOS.some((e) => s.includes(e)))
+);
+if (soltas.length) probTema.push(`regras fora das classes de escopo: ${soltas.join(" | ").slice(0, 120)}`);
 
 if (probTema.length) {
   for (const p of probTema) console.error(`  ✘ ${p}`);

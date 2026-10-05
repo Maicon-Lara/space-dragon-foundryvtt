@@ -150,3 +150,48 @@ body.spacedragon-tema .journal-entry-page .nota-casa {
   padding-left: 0.6rem;
   background: rgba(47, 158, 143, 0.07);
 }
+
+/* ── O TEXTO CLARO EM JANELA CLARA ──────────────────────────────────────────
+ *
+ * MEDIDO numa ficha de item da mesa, com o Foundry em tema escuro:
+ *
+ *   classes: "olddragon2e sheet item themed theme-light"
+ *   cor:     rgb(217, 214, 204)   ← a cor de texto do tema ESCURO
+ *
+ * Sobre o pergaminho do sistema, 1,19:1 de contraste. A WCAG pede 4,5:1 para
+ * texto normal; 1,19 é texto invisível. Corrigido: 14,5:1.
+ *
+ * ── POR QUE A VARIÁVEL, E NÃO SÓ `color` ────────────────────────────────────
+ *
+ * Porque `color` conserta só o que HERDA. Quem lê `--color-text-primary`
+ * diretamente — e o sistema e os módulos leem — continuaria claro. Redefinindo
+ * a variável no escopo da janela clara, tudo que depende dela se acerta junto,
+ * inclusive o que ainda não existe.
+ *
+ * ── POR QUE É SEGURO ────────────────────────────────────────────────────────
+ *
+ * A regra só alcança janelas que elas mesmas se declaram `theme-light`. Numa
+ * janela clara, texto claro é inequivocamente errado — não há leitura em que
+ * 1,19:1 seja a intenção de alguém. E tudo está sob `body.spacedragon-contraste`,
+ * que sai com um clique na opção.
+ *
+ * Sem `!important`: a especificidade (body + classe + duas classes) já vence a
+ * definição de variável do tema, que mora no `:root`. */
+body.spacedragon-contraste .themed.theme-light,
+body.spacedragon-contraste .application.theme-light,
+body.spacedragon-contraste .window-app.theme-light {
+  --color-text-primary: #191813;
+  --color-text-secondary: #4a463d;
+  --color-text-emphatic: #0d0c0a;
+  color: #191813;
+}
+
+/* Os campos de formulário dentro dessas janelas: input, textarea e select têm
+ * cor própria no Foundry, e por isso não herdam a de cima. */
+body.spacedragon-contraste .themed.theme-light input,
+body.spacedragon-contraste .themed.theme-light textarea,
+body.spacedragon-contraste .themed.theme-light select,
+body.spacedragon-contraste .themed.theme-light .description,
+body.spacedragon-contraste .themed.theme-light .editor-content {
+  color: #191813;
+}
