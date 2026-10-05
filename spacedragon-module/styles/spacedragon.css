@@ -395,6 +395,15 @@
   font-size: 12px;
   text-align: center;
 }
+/* ── O BOTÃO DECLARA O PAR, COMO TUDO AQUI ─────────────────────────────────
+ *
+ * Ele saiu sem texto na mesa: só a borda aparecia. A causa é a de sempre — eu
+ * dei a ele largura, altura e padding, e NÃO dei cor nem fundo. Sem o par, o
+ * texto herda a cor do tema e cai em cima do fundo que o tema lhe der.
+ *
+ * O par é fixo de propósito, e não herdado: assim o botão é legível na ficha
+ * clara e na escura. Azul-escuro do módulo com texto creme, 13,5:1 — e como ele
+ * é o único botão de ação do painel, destacar-se é o que se quer dele. */
 .sd-ordem-ficha .sd-ordem-declarar {
   flex: 0 0 auto !important;
   width: auto !important;
@@ -404,6 +413,15 @@
   font-size: 11px;
   line-height: 1.6;
   cursor: pointer;
+  background: var(--sd-barra, #1b2340) !important;
+  color: #f2f0ea !important;
+  border: 1px solid var(--sd-barra, #1b2340) !important;
+  border-radius: 3px;
+}
+.sd-ordem-ficha .sd-ordem-declarar:hover {
+  background: var(--sd-brilho, #2f9e8f) !important;
+  border-color: var(--sd-brilho, #2f9e8f) !important;
+  color: #0e1a18 !important;
 }
 
 /* ── O CARTÃO NO CHAT: CONTRASTE PRÓPRIO ───────────────────────────────────
