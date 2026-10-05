@@ -41,11 +41,14 @@ const MARCA = "sd-ordem-ficha";
 
 /* ── ONDE O PAINEL ENTRA ───────────────────────────────────────────────────
  *
- * A ficha do sistema nomeia as abas por classe: `.character-tab-spells`,
- * `.character-tab-equipment`, e no monstro `.monster-tab-attacks` (é assim que
- * mental.js e ameaca.js as acham). A de ataques do personagem segue o padrão,
- * mas o nome dela é o único que este repositório nunca precisou citar — então
- * aqui vão candidatos, do mais provável ao mais genérico.
+ * A ficha do sistema nomeia as abas por classe. As seis do personagem, lidas na
+ * ficha real (Foundry 13 + olddragon2e, com o módulo ativo):
+ *
+ *   character-tab-attacks · character-tab-race · character-tab-class
+ *   character-tab-spells · character-tab-equipment · character-tab-details
+ *
+ * A de ataques é a PRIMEIRA, e é a que este painel usa. As outras entram como
+ * candidatos por segurança, para o caso de o sistema renomeá-la.
  *
  * O `[data-tab]` genérico vem por último e ignora o que está dentro de `<nav>`:
  * ali mora o LINK da aba, não o painel dela, e injetar no link põe o painel na
