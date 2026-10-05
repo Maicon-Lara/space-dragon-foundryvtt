@@ -189,3 +189,47 @@ body.spacedragon-contraste .olddragon2e.theme-light .description,
 body.spacedragon-contraste .olddragon2e.theme-light .editor-content {
   color: #191813 !important;
 }
+
+/* ── O TEMA EM TODAS AS JANELAS DO MÓDULO ───────────────────────────────────
+ *
+ * Antes o tema alcançava as fichas do sistema e os journals, e parava aí. As
+ * janelas que o PRÓPRIO módulo cria — os diálogos de teste, de ordem de ação,
+ * de robôs e relíquias, e os painéis injetados — ficavam com a cor que o tema
+ * do Foundry desse. Com o VTT em escuro, isso é texto claro sobre fundo claro.
+ *
+ * Agora elas entram no tema. É a mesma regra que valeu o dia inteiro, levada
+ * até o fim: **o módulo pinta o que o módulo cria**. Nada aqui toca janela de
+ * terceiro, e tudo sai junto quando a opção é desligada.
+ *
+ * O par é declarado em cada uma. Fundo sem cor foi a origem de todos os
+ * sintomas de hoje, e o teste agora recusa. */
+body.spacedragon-tema .sd-dialogo,
+body.spacedragon-tema .sd-ordem-combate,
+body.spacedragon-tema .spacedragon-mental,
+body.spacedragon-tema .sd-ordem-ficha,
+body.spacedragon-tema .sd-ameaca-painel {
+  background: var(--sd-fundo, #eef0f8) !important;
+  color: var(--sd-tinta, #10162c) !important;
+  border-color: var(--sd-caixa, #ccd3f0) !important;
+}
+
+/* Os campos dentro dessas janelas: input, select e textarea têm cor própria e
+ * não herdam a de cima. */
+body.spacedragon-tema .sd-dialogo input,
+body.spacedragon-tema .sd-dialogo select,
+body.spacedragon-tema .sd-dialogo textarea,
+body.spacedragon-tema .sd-ordem-combate input,
+body.spacedragon-tema .sd-ordem-combate select,
+body.spacedragon-tema .sd-ordem-ficha input,
+body.spacedragon-tema .sd-ordem-ficha select {
+  background: #fff !important;
+  color: var(--sd-tinta, #10162c) !important;
+}
+
+/* O texto de apoio dessas janelas, mais leve mas ainda legível. */
+body.spacedragon-tema .sd-dialogo .sd-explica,
+body.spacedragon-tema .sd-ordem-combate .sd-explica,
+body.spacedragon-tema .sd-ordem-ficha .sd-ordem-dica {
+  color: var(--sd-tinta, #10162c) !important;
+  opacity: .8;
+}

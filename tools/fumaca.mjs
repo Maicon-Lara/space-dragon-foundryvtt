@@ -547,6 +547,40 @@ const soltas = regras.filter(
 );
 if (soltas.length) probTema.push(`regras fora das classes de escopo: ${soltas.join(" | ").slice(0, 120)}`);
 
+// ── O TEMA ALCANÇA TODAS AS JANELAS DO MÓDULO ─────────────────────────────
+//
+// O tema nasceu cobrindo as fichas do sistema e os journals. As janelas que o
+// PRÓPRIO módulo cria ficaram de fora, e com o Foundry em tema escuro elas
+// davam texto claro sobre fundo claro — o sintoma que custou o dia 05/10/2026.
+//
+// A lista é explícita de propósito: criar um painel novo e esquecer de
+// tematizá-lo quebra aqui, e não na mesa.
+{
+  const JANELAS_DO_MODULO = [
+    "sd-dialogo",          // os diálogos de teste, robôs, relíquias, ordem
+    "sd-ordem-combate",    // a declaração por rodada
+    "sd-ordem-ficha",      // o painel na aba de ataques
+    "spacedragon-mental",  // o alcance mental, na aba de poderes
+    "spacedragon-testes",  // o painel de testes de classe
+    "sd-ameaca-painel",    // os atributos na Ficha de Ameaça
+  ];
+  for (const classe of JANELAS_DO_MODULO) {
+    // O seletor EXATO, e não `includes`: ".sd-dialogo" aparece dentro de
+    // ".sd-dialogo input", e a conferência passaria com a janela destematizada
+    // e só os campos dela cobertos. Foi assim que a primeira versão desta
+    // asserção deixou a sabotagem passar duas vezes.
+    const exato = new RegExp(
+      String.raw`body\.spacedragon-tema \.${classe}\s*[,{]`
+    );
+    if (!exato.test(css)) {
+      probTema.push(
+        `o tema não alcança .${classe}, que é janela deste módulo — com o Foundry ` +
+        `em tema escuro ela fica com texto claro sobre fundo claro`
+      );
+    }
+  }
+}
+
 if (probTema.length) {
   for (const p of probTema) console.error(`  ✘ ${p}`);
   process.exit(1);
