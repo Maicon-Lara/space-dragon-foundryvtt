@@ -270,6 +270,9 @@
  * lateral e o nome científico no cabeçalho. Ver module/ameaca.js. O mesmo
  * dado vem escrito no topo da descrição, para quem abrir a criatura na ficha
  * do sistema; aqui ele é escondido, para não aparecer duas vezes. */
+/* A Ficha de Ameaça como contêiner de referência: sem isto, o `@container`
+ * do fim do arquivo não acha ancestral nenhum e a regra é letra morta. */
+.spacedragon-ameaca { container-type: inline-size; container-name: ameaca; }
 .spacedragon-ameaca .sd-bloco-extra { display: none; }
 .spacedragon-ameaca .sd-ameaca-painel { display: flex; flex-direction: column; gap: 4px; }
 .spacedragon-ameaca .sd-ameaca-atributos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
@@ -299,7 +302,9 @@
  * O sistema dá 40x40 px fixos a CP, JP e Moral, e a criatura do Space Dragon
  * escreve "15 (TRAJES DE COMBATE)" ali. A barra lateral fica mais larga, as
  * caixas acompanham, e o valor inteiro vai na dica ao passar o mouse. */
-.spacedragon-ameaca .sheet-container .sidebar { min-width: 230px; }
+/* `min()` e não 230px cru: numa ficha mais estreita que isso, o mínimo fixo
+ * empurra o conteúdo para fora em vez de ceder. */
+.spacedragon-ameaca .sheet-container .sidebar { min-width: min(230px, 100%); }
 .spacedragon-ameaca .sheet-container .sidebar .stats { width: 100%; }
 .spacedragon-ameaca .sheet-container .sidebar .stats .stat { grid-template-columns: 4.5rem 1fr; font-size: 1rem; }
 .spacedragon-ameaca .sheet-container .sidebar .stats .stat input { width: 100%; height: 30px; font-size: 0.85rem; }
@@ -332,6 +337,12 @@
  * O escopo é a marca do painel, nunca o input da ficha: desfazer a largura do
  * sistema fora daqui mexeria na ficha de quem não pediu nada. */
 .sd-ordem-ficha {
+  /* O painel é o próprio contêiner de referência: ele pode estar no meio de uma
+   * aba larga ou numa ficha que o jogador encolheu até caber ao lado do mapa.
+   * `@media` responderia à TELA, que não muda quando a janela da ficha muda. */
+  container-type: inline-size;
+  container-name: ordem;
+
   margin: 0 0 8px;
   padding: 6px 8px;
   border: 1px solid var(--sd-caixa, #ccd3f0);
@@ -380,4 +391,28 @@
   font-size: 11px;
   line-height: 1.6;
   cursor: pointer;
+}
+
+/* ── OS PAINÉIS ENCOLHENDO ─────────────────────────────────────────────────
+ *
+ * Por CONTÊINER, não por tela: a ficha do Foundry é uma janela que se arrasta,
+ * e `@media` não a enxerga. Navegador sem `@container` ignora este bloco e fica
+ * com o layout largo.
+ */
+
+@container ordem (max-width: 230px) {
+  /* Abaixo disto, campo e botão lado a lado deixam ~90px para o dado: o
+   * "declarar" ainda cabe, mas o campo some. Empilhar é melhor que ter um dos
+   * dois ilegível — e empilhado o botão ganha a linha inteira, que é mais fácil
+   * de acertar no meio da rodada. */
+  .sd-ordem-ficha .sd-ordem-linha { flex-direction: column; }
+  .sd-ordem-ficha .sd-ordem-valor,
+  .sd-ordem-ficha .sd-ordem-declarar { width: 100% !important; }
+  .sd-ordem-ficha .sd-ordem-cabeca { flex-direction: column; align-items: flex-start; gap: 0; }
+}
+
+/* A grade de atributos da Ficha de Ameaça: três colunas de número cabem em
+ * pouco, mas não em qualquer coisa. */
+@container ameaca (max-width: 300px) {
+  .spacedragon-ameaca .sd-ameaca-atributos { grid-template-columns: repeat(2, 1fr); }
 }
