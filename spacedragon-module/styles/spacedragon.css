@@ -496,7 +496,18 @@
 .chat-message .message-content .sd-teste .sd-acao,
 .chat-message .message-content .sd-teste .sd-parcelas,
 .chat-message .message-content .sd-teste .sd-testes,
-.chat-message .message-content .sd-teste .success { color: inherit !important; }
+.chat-message .message-content .sd-teste .success {
+  /* COR EXPLÍCITA, e não `inherit`.
+   *
+   * A versão anterior usava `color: inherit !important` aqui, apostando que o
+   * bloco pai `.sd-teste` tivesse recebido a cor. Na mesa ele NÃO recebeu: no
+   * cartão da Ordem de Ação sobreviveram só as classes com cor própria
+   * (`.sd-conta`, `.sd-nota`) e sumiram as que herdavam — a linha da ação e o
+   * número do resultado.
+   *
+   * `inherit` é uma cadeia, e cadeia tem elo fraco. Cor explícita não tem. */
+  color: #191813 !important;
+}
 
 /* O texto de apoio continua mais leve que o principal, mas por MISTURA com o
  * fundo declarado acima, e não por `opacity` sobre uma cor herdada — era daí
