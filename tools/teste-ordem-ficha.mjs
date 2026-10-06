@@ -263,6 +263,29 @@ confere(abaDeAtaques(raizFalsa()) === null, "sem aba nenhuma, devolve null e o p
     "gravar no rastreador tem de vir DESLIGADO — ver a decisão declarada em ordem.js");
 }
 
+/* ── DECLARAR IMPLICA GRAVAR NO RASTREADOR ───────────────────────────────── */
+//
+// NASCIDA DA MESA. Quem liga "perguntar a ação a cada rodada" liga só aquela
+// opção, porque é a que descreve o que ele quer. A gravação no rastreador era
+// uma SEGUNDA opção, desligada por padrão — e o resultado foi: o jogador
+// declarava pela ficha, o valor saía no chat, e o rastreador continuava no
+// número velho.
+//
+// Quem pede a declaração está pedindo que a ordem saia dela.
+{
+  const fs = await import("node:fs");
+  const fonte = fs.readFileSync(
+    new URL("../spacedragon-module/module/ordem-ficha.js", import.meta.url), "utf8");
+  const i = fonte.indexOf("let noRastreador");
+  confere(i > 0, "não achei a gravação no rastreador");
+  const trecho = fonte.slice(i, i + 300);
+  confere(/ordemNoCombate/.test(trecho),
+    "a declaração por rodada tem de implicar a gravação no rastreador — senão o " +
+    "jogador declara, o valor sai no chat, e a fila fica no número velho");
+  confere(/ordemNoRastreador/.test(trecho),
+    "a opção própria de gravação continua valendo para quem quer só ela");
+}
+
 if (problemas.length) {
   for (const p of problemas) console.error(`  ✘ ${p}`);
   process.exit(1);

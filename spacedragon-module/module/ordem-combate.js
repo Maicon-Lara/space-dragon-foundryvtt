@@ -228,11 +228,24 @@ export function envolverRollInitiative() {
 export function ligarOrdemNoCombate() {
   envolverRollInitiative();
 
-  // Os dois momentos em que a T7-2 manda declarar: o começo do combate e cada
-  // rodada nova. `combatRound` já cobre a virada; `combatStart` existe porque a
-  // primeira rodada não "vira".
-  Hooks.on("combatStart", (combat) => { if (ligada()) perguntar(combat); });
-  Hooks.on("combatRound", (combat) => { if (ligada()) perguntar(combat); });
+  /* ── POR QUE `updateCombat`, E NÃO `combatStart`/`combatRound` ────────────
+   *
+   * Porque aqueles DOIS SÓ DISPARAM NO MESTRE. O Foundry guarda os eventos de
+   * turno atrás de uma checagem de GM ativo, e a primeira versão disto não
+   * sabia: na mesa, a janela de declaração aparecia só para o Mestre, pelos
+   * PNJs, e os jogadores nunca eram perguntados. O changelog da versão anterior
+   * afirma o contrário, e afirma errado.
+   *
+   * `updateCombat` é gancho de DOCUMENTO: ele chega a todos os clientes que
+   * enxergam o combate. A virada de rodada se reconhece por `mudou.round`, que
+   * é o campo que mudou — e vale tanto para a primeira rodada quanto para as
+   * seguintes, então um gancho cobre o que antes precisava de dois.
+   */
+  Hooks.on("updateCombat", (combat, mudou) => {
+    if (!ligada()) return;
+    if (mudou?.round == null) return;
+    perguntar(combat);
+  });
 
   // O botão de rolar iniciativa sai de cena: na T7-2 não se rola iniciativa, e
   // deixá-lo ali é convidar a mesa a jogar a regra errada. Removido do DOM, e

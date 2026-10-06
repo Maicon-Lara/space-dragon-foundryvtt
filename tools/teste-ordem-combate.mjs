@@ -125,9 +125,25 @@ confere(lerFormulario({}).length === 0, "formulário sem querySelectorAll não q
   const j = fonte.indexOf("renderCombatTracker");
   confere(/if \(!ligada\(\)\) return;/.test(fonte.slice(j, j + 400)),
     "o botão de rolar iniciativa só pode sumir com a opção ligada");
-  // Os dois momentos da T7-2: o começo e cada rodada.
-  confere(fonte.includes('Hooks.on("combatStart"') && fonte.includes('Hooks.on("combatRound"'),
-    "a T7-2 manda declarar no começo E a cada rodada — faltou um dos dois ganchos");
+  /* ── O GANCHO PRECISA CHEGAR AOS JOGADORES ──────────────────────────────
+   *
+   * A ASSERÇÃO QUE NASCEU DA MESA. `combatStart` e `combatRound` SÓ DISPARAM NO
+   * MESTRE: o Foundry guarda os eventos de turno atrás de uma checagem de GM
+   * ativo. A primeira versão usava os dois, e o sintoma foi exatamente esse —
+   * a janela de declaração aparecia só para o Mestre, pelos PNJs, e os
+   * jogadores nunca eram perguntados.
+   *
+   * `updateCombat` é gancho de DOCUMENTO e chega a todos os clientes. A virada
+   * se reconhece por `mudou.round`.
+   */
+  confere(!/Hooks\.on\("combat(Start|Round)"/.test(fonte),
+    "combatStart/combatRound só disparam no Mestre — os jogadores nunca seriam " +
+    "perguntados. Use updateCombat, que chega a todos os clientes");
+  confere(/Hooks\.on\("updateCombat"/.test(fonte),
+    "falta o gancho updateCombat, que é o que alcança os jogadores");
+  confere(/mudou\?\.round == null/.test(fonte),
+    "updateCombat dispara em toda mudança de combate — sem conferir `round`, a " +
+    "janela abriria a cada ataque, não a cada rodada");
 }
 
 /* ── O DESVIO DE rollInitiative ──────────────────────────────────────────── */

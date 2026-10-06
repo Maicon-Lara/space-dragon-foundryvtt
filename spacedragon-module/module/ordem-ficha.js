@@ -181,8 +181,21 @@ async function declarar(ator, raiz) {
   const { n, como, roll } = await modo.valor(entrada);
 
   // O rastreador só por opção, e só se houver combate: ver o cabeçalho.
+  /* ── QUANDO O VALOR VAI PARA O RASTREADOR ─────────────────────────────────
+   *
+   * Pela opção própria, OU quando a declaração por rodada está ligada.
+   *
+   * Na mesa, a combinação natural era a que não funcionava: quem liga
+   * "perguntar a ação a cada rodada" liga só aquela, porque é a que descreve o
+   * que ele quer — e a gravação, numa segunda opção desligada por padrão,
+   * ficava de fora. O jogador declarava pela ficha, o valor saía no chat, e o
+   * rastreador continuava no número velho.
+   *
+   * Quem pede a declaração está pedindo que a ordem saia dela. As duas opções
+   * continuam existindo para quem quer só uma das coisas.
+   */
   let noRastreador = false;
-  if (ligado("ordemNoRastreador")) {
+  if (ligado("ordemNoRastreador") || ligado("ordemNoCombate")) {
     const tok = ator.getActiveTokens?.()[0]?.document;
     const c = tok && game.combat?.getCombatantByToken?.(tok.id);
     if (c) {
