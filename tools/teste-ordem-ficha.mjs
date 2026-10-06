@@ -156,6 +156,58 @@ function raizFalsa({ classes = [], dataTabs = [] } = {}) {
 }
 confere(abaDeAtaques(raizFalsa()) === null, "sem aba nenhuma, devolve null e o painel não é desenhado");
 
+/* ── A CRIATURA TAMBÉM DECLARA ────────────────────────────────────────────── */
+//
+// A T7-2 vale para todo mundo que age na rodada, e o Mestre declara pelos PNJs
+// como o jogador pelo seu. O sistema usa tipos de item DIFERENTES para a mesma
+// ideia — `weapon` no personagem, `monster_attack` na criatura — e a ordem não
+// distingue: o que entra nela é o dado de dano, venha de uma arma empunhada ou
+// de uma garra.
+{
+  const garra = (nome, dano) => ({
+    id: `m-${nome}`, name: nome, type: "monster_attack", system: { damage: dano },
+  });
+  const criatura = {
+    id: "bicho", type: "monster",
+    items: [garra("Mordida", "2d6"), garra("Garras", "1d8")],
+    system: {},
+  };
+  const ops = opcoesDeOrdem(criatura);
+
+  // a chave leva o prefixo `arma:` para qualquer ataque, de arma ou de garra:
+  // ela é interna, e o que a distingue é o id do item.
+  confere(ops.some((o) => o.chave === "arma:m-Mordida"),
+    "o ataque de criatura não virou opção de ordem");
+  const mordida = ops.find((o) => o.chave === "arma:m-Mordida");
+  confere(mordida?.campo === "2d6", `o dado do ataque devia vir pronto, veio ${mordida?.campo}`);
+  // "Atacar com Mordida" soaria errado: a garra não se empunha.
+  confere(!mordida?.rotulo?.startsWith("Atacar com"),
+    `o rótulo do ataque de criatura não deve dizer "Atacar com": "${mordida?.rotulo}"`);
+  confere(!!mordida?.rotulo?.includes("Mordida") && !!mordida?.rotulo?.includes("2d6"),
+    "o rótulo precisa dizer o ataque e o dado");
+
+  // as três formas da T7-2 continuam lá, inclusive para a criatura
+  for (const c of ["ataque", "aparato", "movimento"]) {
+    confere(ops.some((o) => o.chave === c), `falta a opção "${c}" para a criatura`);
+  }
+
+  // Criatura não tem modificador de Destreza no `system` (ele vive em flag, e
+  // converter atributo em modificador acoplaria isto à tabela do módulo). O
+  // campo fica em 0, editável, e o Mestre ajusta.
+  confere(ops.find((o) => o.chave === "movimento")?.campo === "0",
+    "sem modificador de Destreza, o campo abre em 0 para o Mestre ajustar");
+}
+
+// E a aba: a da criatura tem outro nome.
+{
+  const raiz = {
+    querySelector: (sel) => (sel === ".monster-tab-attacks" ? { marca: "aba" } : null),
+    querySelectorAll: () => [],
+  };
+  confere(abaDeAtaques(raiz)?.por === ".monster-tab-attacks",
+    "o painel não acha a aba de ataques da criatura");
+}
+
 /* ── O CSS, QUE É METADE DESTE PAINEL ────────────────────────────────────── */
 {
   const css = fs.readFileSync(path.join(RAIZ, "spacedragon-module", "styles", "spacedragon.css"), "utf8");
@@ -219,5 +271,5 @@ console.log(
   "  ✔ ordem na ficha: as contas da T7-2 numa fonte só, a arma equipada primeiro " +
     "com o dado pronto, o nome escapado, a aba achada sem confundir o link do <nav>, " +
     "o !important nos pontos em que a ficha impõe largura E altura (e em nenhum outro), " +
-    "e o rastreador desligado por padrão"
+    "o rastreador desligado por padrão, e a criatura declarando com os ataques dela"
 );

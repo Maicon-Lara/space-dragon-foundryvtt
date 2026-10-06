@@ -60,6 +60,7 @@ const MARCA = "sd-ordem-ficha";
  */
 const CANDIDATOS = [
   ".character-tab-attacks",
+  ".monster-tab-attacks",   // a Ficha de Ameaça e a de monstro do sistema
   ".character-tab-attack",
   ".character-tab-combat",
 ];
@@ -84,15 +85,21 @@ export function abaDeAtaques(raiz) {
  * fixo), e movimentação ou outra ação (10 − Destreza).
  */
 export function opcoesDeOrdem(ator) {
+  // `weapon` é do personagem; `monster_attack` é da criatura — o sistema usa
+  // tipos diferentes para a mesma ideia, e a T7-2 não distingue: o que entra na
+  // ordem é o DADO DE DANO, venha ele de uma arma empunhada ou de uma garra.
   const armas = (ator?.items ?? [])
-    .filter((i) => i.type === "weapon" && String(i.system?.damage ?? "").trim())
+    .filter((i) => ["weapon", "monster_attack"].includes(i.type)
+      && String(i.system?.damage ?? "").trim())
     .sort((a, b) => Number(b.system?.is_equipped ?? 0) - Number(a.system?.is_equipped ?? 0));
 
   const lista = armas.map((a) => ({
     chave: `arma:${a.id}`,
     modo: "ataque",
     campo: String(a.system.damage).trim(),
-    rotulo: `Atacar com ${a.name} — ${String(a.system.damage).trim()}`,
+    rotulo: a.type === "monster_attack"
+      ? `${a.name} — ${String(a.system.damage).trim()}`
+      : `Atacar com ${a.name} — ${String(a.system.damage).trim()}`,
   }));
 
   // Sem nenhuma arma cadastrada o jogador ainda precisa poder atacar: a opção
@@ -248,12 +255,25 @@ export function registrarOpcoes() {
 }
 
 export function ligarOrdemNaFicha() {
-  ligarNaFicha((app, elemento) => {
+  /* ── PERSONAGEM E CRIATURA ────────────────────────────────────────────────
+   *
+   * `ligarNaFicha` do ficha.js resolve a cascata de ganchos da ficha de
+   * PERSONAGEM (ela dispara três ganchos na mesma renderização, e ganchar os
+   * três desenha em triplicado). A ficha de criatura é outra classe e tem o
+   * gancho próprio — então o mesmo desenhista entra nos dois.
+   *
+   * Desenhar em dobro não é risco aqui: o desenhista remove o painel anterior
+   * antes de inserir o novo. O risco seria o contrário — a criatura ficar sem
+   * painel, e o Mestre sem declarar pelos PNJs.
+   */
+  const desenha = (app, elemento) => {
     try {
       if (!ligado("ordemNaFicha", true)) return;
       const raiz = elemento instanceof HTMLElement ? elemento : elemento?.[0];
       const ator = app?.actor ?? app?.document;
-      if (!raiz || ator?.type !== "character") return;
+      // personagem, ajudante e criatura: a T7-2 vale para todo mundo que age
+      // na rodada, e o Mestre declara pelos PNJs como o jogador pelo seu.
+      if (!raiz || !["character", "retainer", "monster"].includes(ator?.type)) return;
 
       // Remove antes de desenhar: a ficha redesenha a cada mudança, e sem isto
       // o painel se acumularia a cada salvamento.
@@ -275,5 +295,8 @@ export function ligarOrdemNaFicha() {
       // Nunca quebrar a ficha do sistema por causa de um painel do módulo.
       console.warn(`${ID} | painel da Ordem de Ação não pôde ser desenhado`, e);
     }
-  });
+  };
+
+  ligarNaFicha(desenha);
+  Hooks.on("renderOD2MonsterSheet", desenha);
 }
