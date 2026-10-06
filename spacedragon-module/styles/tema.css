@@ -151,6 +151,25 @@ body.spacedragon-tema .journal-entry-page .nota-casa {
   background: rgba(47, 158, 143, 0.07);
 }
 
+/* ── QUANDO O TEMA DO LIVRO MANDA, ESTA CORREÇÃO SE CALA ───────────────────
+ *
+ * O módulo Star Wars tem um tema próprio (`body.starwars-sd-tema`) que JÁ
+ * resolve o contraste no modo escuro: ele redefine `--color-text-*` para claro
+ * sobre o fundo de espaço que ele mesmo pinta.
+ *
+ * As duas coisas juntas brigavam. Esta correção força texto PRETO em janela
+ * marcada clara; o tema do livro pinta aquela mesma janela de ESCURO e quer
+ * texto claro. O resultado na mesa foi preto sobre preto — o mesmo bug de
+ * sempre, de cabeça para baixo.
+ *
+ * Não há cor intermediária que resolva: nenhuma serve bem a texto preto E
+ * branco ao mesmo tempo. O que resolve é precedência — quem pinta o fundo
+ * decide a cor do texto, e quem pinta o fundo ali é o tema do livro.
+ *
+ * Por isso o `:not(.starwars-sd-tema)` em tudo abaixo. Com o tema do livro
+ * ligado, nada daqui alcança nada.
+ */
+
 /* ── O TEXTO CLARO EM JANELA CLARA ──────────────────────────────────────────
  *
  * Com o Foundry em tema escuro, as janelas que o SISTEMA marca como claras
@@ -170,10 +189,10 @@ body.spacedragon-tema .journal-entry-page .nota-casa {
  * outro módulo fica como o autor dele quis — mesmo que fique feio, não é nosso
  * para consertar.
  */
-body.spacedragon-contraste .olddragon2e.theme-light,
-body.spacedragon-contraste .spacedragon-ficha.theme-light,
-body.spacedragon-contraste .spacedragon-ameaca.theme-light,
-body.spacedragon-contraste .starwars-sd.theme-light {
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light,
+body.spacedragon-contraste:not(.starwars-sd-tema) .spacedragon-ficha.theme-light,
+body.spacedragon-contraste:not(.starwars-sd-tema) .spacedragon-ameaca.theme-light,
+body.spacedragon-contraste:not(.starwars-sd-tema) .starwars-sd.theme-light {
   --color-text-primary: #191813;
   --color-text-secondary: #4a463d;
   color: #191813;
@@ -182,11 +201,11 @@ body.spacedragon-contraste .starwars-sd.theme-light {
 /* Os campos e a descrição, que têm cor própria e não herdam. Com `!important`
  * porque a regra do outro lado também o usa — mas sempre dentro do escopo
  * acima, nunca em janela de terceiro. */
-body.spacedragon-contraste .olddragon2e.theme-light input,
-body.spacedragon-contraste .olddragon2e.theme-light textarea,
-body.spacedragon-contraste .olddragon2e.theme-light select,
-body.spacedragon-contraste .olddragon2e.theme-light .description,
-body.spacedragon-contraste .olddragon2e.theme-light .editor-content {
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light input,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light textarea,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light select,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light .description,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light .editor-content {
   color: #191813 !important;
 }
 
@@ -202,29 +221,29 @@ body.spacedragon-contraste .olddragon2e.theme-light .editor-content {
  *
  * `label` cobre a maioria; `.hint` e `.notes` são o texto de apoio do Foundry.
  * Tudo dentro do escopo da janela do sistema, e só com a opção ligada. */
-body.spacedragon-contraste .olddragon2e.theme-light label,
-body.spacedragon-contraste .olddragon2e.theme-light .form-group > label,
-body.spacedragon-contraste .olddragon2e.theme-light .hint,
-body.spacedragon-contraste .olddragon2e.theme-light .notes,
-body.spacedragon-contraste .olddragon2e.theme-light legend,
-body.spacedragon-contraste .olddragon2e.theme-light h1,
-body.spacedragon-contraste .olddragon2e.theme-light h2,
-body.spacedragon-contraste .olddragon2e.theme-light h3,
-body.spacedragon-contraste .olddragon2e.theme-light h4,
-body.spacedragon-contraste .olddragon2e.theme-light p,
-body.spacedragon-contraste .olddragon2e.theme-light span,
-body.spacedragon-contraste .olddragon2e.theme-light li,
-body.spacedragon-contraste .olddragon2e.theme-light td,
-body.spacedragon-contraste .olddragon2e.theme-light th {
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light label,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light .form-group > label,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light .hint,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light .notes,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light legend,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light h1,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light h2,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light h3,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light h4,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light p,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light span,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light li,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light td,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light th {
   color: #191813 !important;
 }
 
 /* Exceto o que está DENTRO de caixa escura: ali o texto claro é o certo, e
  * forçá-lo a escuro criaria o problema inverso. Os campos do sistema são
  * escuros, e já foram tratados acima com a cor deles. */
-body.spacedragon-contraste .olddragon2e.theme-light input,
-body.spacedragon-contraste .olddragon2e.theme-light select,
-body.spacedragon-contraste .olddragon2e.theme-light textarea {
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light input,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light select,
+body.spacedragon-contraste:not(.starwars-sd-tema) .olddragon2e.theme-light textarea {
   background: #fff !important;
 }
 
@@ -298,43 +317,43 @@ body.spacedragon-tema .sd-ordem-ficha .sd-ordem-dica {
  * `.critical`, `.fumble`, e o que o Foundry marca como `.danger`/`.warning`. Se
  * o módulo não consegue distinguir decoração de informação, ao menos não apaga
  * os casos em que a intenção está escrita no nome da classe. */
-body.spacedragon-contraste-total .themed.theme-light,
-body.spacedragon-contraste-total .application.theme-light,
-body.spacedragon-contraste-total .window-app.theme-light {
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .application.theme-light,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .window-app.theme-light {
   --color-text-primary: #191813;
   --color-text-secondary: #4a463d;
 }
 
-body.spacedragon-contraste-total .themed.theme-light label,
-body.spacedragon-contraste-total .themed.theme-light legend,
-body.spacedragon-contraste-total .themed.theme-light .hint,
-body.spacedragon-contraste-total .themed.theme-light .notes,
-body.spacedragon-contraste-total .themed.theme-light h1,
-body.spacedragon-contraste-total .themed.theme-light h2,
-body.spacedragon-contraste-total .themed.theme-light h3,
-body.spacedragon-contraste-total .themed.theme-light h4,
-body.spacedragon-contraste-total .themed.theme-light p,
-body.spacedragon-contraste-total .themed.theme-light li,
-body.spacedragon-contraste-total .themed.theme-light td,
-body.spacedragon-contraste-total .themed.theme-light th,
-body.spacedragon-contraste-total .chat-message h1,
-body.spacedragon-contraste-total .chat-message h2,
-body.spacedragon-contraste-total .chat-message h3,
-body.spacedragon-contraste-total .chat-message h4,
-body.spacedragon-contraste-total .chat-message p,
-body.spacedragon-contraste-total .chat-message li,
-body.spacedragon-contraste-total .chat-message td {
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light label,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light legend,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light .hint,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light .notes,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light h1,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light h2,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light h3,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light h4,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light p,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light li,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light td,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .themed.theme-light th,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .chat-message h1,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .chat-message h2,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .chat-message h3,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .chat-message h4,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .chat-message p,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .chat-message li,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .chat-message td {
   color: #191813 !important;
 }
 
 /* A cor que CARREGA INFORMAÇÃO fica como o autor quis. */
-body.spacedragon-contraste-total .success,
-body.spacedragon-contraste-total .failure,
-body.spacedragon-contraste-total .critical,
-body.spacedragon-contraste-total .fumble,
-body.spacedragon-contraste-total .danger,
-body.spacedragon-contraste-total .warning,
-body.spacedragon-contraste-total a.content-link,
-body.spacedragon-contraste-total a.inline-roll {
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .success,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .failure,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .critical,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .fumble,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .danger,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) .warning,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) a.content-link,
+body.spacedragon-contraste-total:not(.starwars-sd-tema) a.inline-roll {
   color: revert !important;
 }

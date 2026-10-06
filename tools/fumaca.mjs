@@ -588,6 +588,36 @@ if (soltas.length) probTema.push(`regras fora das classes de escopo: ${soltas.jo
   }
 }
 
+// ── A CORREÇÃO DE CONTRASTE CEDE AO TEMA DO LIVRO ─────────────────────────
+//
+// O módulo Star Wars tem tema próprio que já resolve o modo escuro: ele pinta a
+// ficha de escuro e o texto de claro. A correção de contraste faz o oposto —
+// força texto preto em janela marcada clara.
+//
+// Juntas, deram PRETO SOBRE PRETO na mesa. Não há cor intermediária que sirva a
+// texto preto e branco ao mesmo tempo; o que resolve é precedência: quem pinta o
+// fundo decide a cor do texto.
+{
+  // sem os comentários: eles falam de `spacedragon-contraste` justamente para
+  // explicar a regra, e seriam lidos como seletor
+  const linhas = css
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .split("}")
+    .map((b) => b.split("{")[0].trim())
+    .filter((sel) => /spacedragon-contraste/.test(sel));
+  for (const sel of linhas) {
+    for (const parte of sel.split(",")) {
+      if (!/spacedragon-contraste/.test(parte)) continue;
+      if (!/:not\(\.starwars-sd-tema\)/.test(parte)) {
+        probTema.push(
+          `a regra de contraste "${parte.trim().slice(0, 60)}" não cede ao tema do ` +
+          `livro — com ele ligado, isto dá texto preto sobre fundo preto`
+        );
+      }
+    }
+  }
+}
+
 if (probTema.length) {
   for (const p of probTema) console.error(`  ✘ ${p}`);
   process.exit(1);
