@@ -3,13 +3,13 @@
 // ── POR QUE ISTO VIROU UM TESTE ─────────────────────────────────────────────
 //
 // Na barra de abas da ficha, o nome da aba aberta era pintado com
-// `--sd-brilho`. Sobre a barra escura isso dava uma palavra em verde-fósforo no
+// `--sd-aba-ativa`. Sobre a barra escura isso dava uma palavra em verde-fósforo no
 // meio de cinco em branco — e a mesa relatou a mesma coisa duas vezes, em dias
 // diferentes, antes de mandar o print que mostrou o que era.
 //
 // ── A ASSERÇÃO QUE MAIS IMPORTA ─────────────────────────────────────────────
 //
-// Que a aba ativa NÃO receba `--sd-brilho` como `color`. O filete pode (e
+// Que a aba ativa NÃO receba `--sd-aba-ativa` como `color`. O filete pode (e
 // deve) usar a cor de destaque; a palavra, não. A diferença entre as duas
 // coisas é uma vírgula num seletor, e foi uma vírgula que causou isto.
 //
@@ -39,12 +39,12 @@ confere(daAbaAtiva.length > 0, "nenhuma regra para a aba ativa — o tema não a
 for (const b of daAbaAtiva) {
   // `color:` pode existir, mas NUNCA com a cor de destaque
   const cor = /(?:^|[;{\s])color:\s*([^;]+)/.exec(b.corpo)?.[1] ?? "";
-  confere(!/--sd-brilho/.test(cor),
-    `a aba ativa pinta o TEXTO com --sd-brilho ("${cor.trim()}") — é a palavra em ` +
+  confere(!/--sd-aba-ativa/.test(cor),
+    `a aba ativa pinta o TEXTO com a cor do traço ("${cor.trim()}") — é a palavra em ` +
     `verde-fósforo no meio das brancas que a mesa reclamou duas vezes`);
 
   // e o filete tem de continuar marcando: sem cor e sem traço, não se vê qual aba está aberta
-  const temFilete = /border-bottom-color:\s*[^;]*--sd-brilho/.test(b.corpo);
+  const temFilete = /border-bottom-color:\s*[^;]*--sd-aba-ativa/.test(b.corpo);
   const temCor = cor.length > 0;
   confere(temFilete || temCor,
     "a regra da aba ativa não dá nem cor nem filete — não se saberia qual aba está aberta");
@@ -66,14 +66,14 @@ for (const b of daAbaAtiva) {
     "a aba ativa força a cor do texto e não declara text-decoration-color — " +
     "o sublinhado herda a cor da palavra e some na barra escura");
   const corTraco = /text-decoration-color:\s*([^;!]+)/.exec(b.corpo)?.[1]?.trim() ?? "";
-  confere(/--sd-brilho/.test(corTraco),
-    `o traço da aba ativa é "${corTraco}" — devia ser a cor de destaque, que é ` +
+  confere(/--sd-aba-ativa/.test(corTraco),
+    `o traço da aba ativa é "${corTraco}" — devia ser a cor da aba ativa, que é ` +
     "a única coisa marcando qual aba está aberta agora");
 }
 
 // Em algum lugar o filete PRECISA existir, ou a seleção fica invisível.
 confere(
-  daAbaAtiva.some((b) => /border-bottom-color:\s*[^;]*--sd-brilho/.test(b.corpo)),
+  daAbaAtiva.some((b) => /border-bottom-color:\s*[^;]*--sd-aba-ativa/.test(b.corpo)),
   "nenhuma regra dá o filete de destaque à aba ativa — tirando a cor do texto, " +
   "sobrou nada marcando qual está aberta"
 );
@@ -93,5 +93,5 @@ if (problemas.length) {
 console.log(
   "  ✔ aba ativa: o texto na cor da barra (forçada, não herdada do sistema) e o " +
     "destaque no traço, com text-decoration-color próprio (senão o sublinhado herda o " +
-    "branco da palavra e some) — a palavra nunca em --sd-brilho"
+    "branco da palavra e some) — a palavra nunca em --sd-aba-ativa"
 );

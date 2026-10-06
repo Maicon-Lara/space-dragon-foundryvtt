@@ -43,6 +43,14 @@ body.spacedragon-tema {
   --sd-barra: #1b2340;
   --sd-tinta: #10162c;
   --sd-brilho: #2f9e8f;
+  /* O traço da aba aberta tem cor PRÓPRIA, e não a de destaque geral.
+   *
+   * Duas razões. A primeira é a mesa: pediu ouro ali, e o destaque geral é
+   * ciano no Space Dragon e verde no Star Wars. A segunda é que este traço vive
+   * sempre sobre `--sd-barra`, que é escura nos dois temas — então ele pode ser
+   * uma cor clara fixa, enquanto `--sd-brilho` precisa funcionar sobre papel e
+   * sobre espaço, e por isso muda de valor. São problemas diferentes. */
+  --sd-aba-ativa: #ffd93b;
 }
 
 /* ── Os fundos ──────────────────────────────────────────────────────────── */
@@ -139,10 +147,10 @@ body.spacedragon-tema .olddragon2e.sheet .tabs .item.active {
    * traço na cor de destaque. O `border-bottom` abaixo fica porque nem toda
    * barra de abas do sistema usa sublinhado — onde for borda, é ela que marca.
    */
-  text-decoration-color: var(--sd-brilho) !important;
+  text-decoration-color: var(--sd-aba-ativa) !important;
   text-decoration-thickness: 2px !important;
   text-underline-offset: 3px !important;
-  border-bottom-color: var(--sd-brilho) !important;
+  border-bottom-color: var(--sd-aba-ativa) !important;
   border-bottom-width: 2px !important;
 }
 
