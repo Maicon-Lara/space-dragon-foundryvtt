@@ -190,6 +190,44 @@ body.spacedragon-contraste .olddragon2e.theme-light .editor-content {
   color: #191813 !important;
 }
 
+/* ── OS RÓTULOS ────────────────────────────────────────────────────────────
+ *
+ * Medido numa ficha de item com o Foundry em escuro: os VALORES (em caixas
+ * escuras) e a descrição ficavam legíveis, e sumiam só os rótulos — "Quantidade",
+ * "Preço", "Peso em carga", "Item mágico".
+ *
+ * A razão é que redefinir `--color-text-primary` não alcança quem define `color`
+ * direto no elemento, e é o que o sistema faz nos rótulos. Então eles são
+ * nomeados um a um.
+ *
+ * `label` cobre a maioria; `.hint` e `.notes` são o texto de apoio do Foundry.
+ * Tudo dentro do escopo da janela do sistema, e só com a opção ligada. */
+body.spacedragon-contraste .olddragon2e.theme-light label,
+body.spacedragon-contraste .olddragon2e.theme-light .form-group > label,
+body.spacedragon-contraste .olddragon2e.theme-light .hint,
+body.spacedragon-contraste .olddragon2e.theme-light .notes,
+body.spacedragon-contraste .olddragon2e.theme-light legend,
+body.spacedragon-contraste .olddragon2e.theme-light h1,
+body.spacedragon-contraste .olddragon2e.theme-light h2,
+body.spacedragon-contraste .olddragon2e.theme-light h3,
+body.spacedragon-contraste .olddragon2e.theme-light h4,
+body.spacedragon-contraste .olddragon2e.theme-light p,
+body.spacedragon-contraste .olddragon2e.theme-light span,
+body.spacedragon-contraste .olddragon2e.theme-light li,
+body.spacedragon-contraste .olddragon2e.theme-light td,
+body.spacedragon-contraste .olddragon2e.theme-light th {
+  color: #191813 !important;
+}
+
+/* Exceto o que está DENTRO de caixa escura: ali o texto claro é o certo, e
+ * forçá-lo a escuro criaria o problema inverso. Os campos do sistema são
+ * escuros, e já foram tratados acima com a cor deles. */
+body.spacedragon-contraste .olddragon2e.theme-light input,
+body.spacedragon-contraste .olddragon2e.theme-light select,
+body.spacedragon-contraste .olddragon2e.theme-light textarea {
+  background: #fff !important;
+}
+
 /* ── O TEMA EM TODAS AS JANELAS DO MÓDULO ───────────────────────────────────
  *
  * Antes o tema alcançava as fichas do sistema e os journals, e parava aí. As
