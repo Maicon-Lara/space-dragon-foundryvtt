@@ -541,7 +541,14 @@ const regras = css
 // dá 1,19:1 de contraste sobre o pergaminho — texto invisível. Ela é correção,
 // e não enfeite, mas continua opcional pelo mesmo motivo do tema: nenhum módulo
 // deve repintar a janela de quem não pediu.
-const ESCOPOS = ["body.spacedragon-tema", "body.spacedragon-contraste"];
+// As três classes de escopo, listadas uma a uma. "contraste-total" passaria
+// pelo `includes` de "contraste" por acidente de substring — e depender disso
+// é como as asserções deste projeto já falharam mais de uma vez.
+const ESCOPOS = [
+  "body.spacedragon-tema",
+  "body.spacedragon-contraste",
+  "body.spacedragon-contraste-total",
+];
 const soltas = regras.filter(
   (sel) => !sel.split(",").every((s) => ESCOPOS.some((e) => s.includes(e)))
 );

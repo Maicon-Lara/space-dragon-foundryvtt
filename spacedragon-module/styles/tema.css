@@ -271,3 +271,70 @@ body.spacedragon-tema .sd-ordem-ficha .sd-ordem-dica {
   color: var(--sd-tinta, #10162c) !important;
   opacity: .8;
 }
+
+/* ── MODO DE EMERGÊNCIA: TEXTO ESCURO EM TODA JANELA CLARA ──────────────────
+ *
+ * Tudo sob `body.spacedragon-contraste-total`, uma opção que vem DESLIGADA e
+ * cujo próprio nome avisa do risco.
+ *
+ * ── O QUE ELA FAZ, E O QUE PODE QUEBRAR ─────────────────────────────────────
+ *
+ * Pinta de escuro o texto de qualquer janela marcada `theme-light`, venha ela do
+ * sistema, deste módulo ou de QUALQUER outro — os títulos do "Qualidade de
+ * Vida", cartões de chat alheios, o que houver.
+ *
+ * Numa versão anterior, uma regra assim (ligada por padrão, ainda por cima)
+ * quebrou a interface de uma mesa: ela passa por cima de cores que outros
+ * módulos usam de propósito, e algumas dessas cores CARREGAM INFORMAÇÃO — o
+ * verde de um sucesso, o vermelho de um dano.
+ *
+ * Então ela existe como último recurso, para quem prefere interface estranha a
+ * texto invisível. A saída sem risco nenhum continua sendo pôr o Foundry em
+ * tema claro.
+ *
+ * ── O QUE FICA DE FORA, DE PROPÓSITO ────────────────────────────────────────
+ *
+ * Elementos com cor semântica declarada pelo autor: `.success`, `.failure`,
+ * `.critical`, `.fumble`, e o que o Foundry marca como `.danger`/`.warning`. Se
+ * o módulo não consegue distinguir decoração de informação, ao menos não apaga
+ * os casos em que a intenção está escrita no nome da classe. */
+body.spacedragon-contraste-total .themed.theme-light,
+body.spacedragon-contraste-total .application.theme-light,
+body.spacedragon-contraste-total .window-app.theme-light {
+  --color-text-primary: #191813;
+  --color-text-secondary: #4a463d;
+}
+
+body.spacedragon-contraste-total .themed.theme-light label,
+body.spacedragon-contraste-total .themed.theme-light legend,
+body.spacedragon-contraste-total .themed.theme-light .hint,
+body.spacedragon-contraste-total .themed.theme-light .notes,
+body.spacedragon-contraste-total .themed.theme-light h1,
+body.spacedragon-contraste-total .themed.theme-light h2,
+body.spacedragon-contraste-total .themed.theme-light h3,
+body.spacedragon-contraste-total .themed.theme-light h4,
+body.spacedragon-contraste-total .themed.theme-light p,
+body.spacedragon-contraste-total .themed.theme-light li,
+body.spacedragon-contraste-total .themed.theme-light td,
+body.spacedragon-contraste-total .themed.theme-light th,
+body.spacedragon-contraste-total .chat-message h1,
+body.spacedragon-contraste-total .chat-message h2,
+body.spacedragon-contraste-total .chat-message h3,
+body.spacedragon-contraste-total .chat-message h4,
+body.spacedragon-contraste-total .chat-message p,
+body.spacedragon-contraste-total .chat-message li,
+body.spacedragon-contraste-total .chat-message td {
+  color: #191813 !important;
+}
+
+/* A cor que CARREGA INFORMAÇÃO fica como o autor quis. */
+body.spacedragon-contraste-total .success,
+body.spacedragon-contraste-total .failure,
+body.spacedragon-contraste-total .critical,
+body.spacedragon-contraste-total .fumble,
+body.spacedragon-contraste-total .danger,
+body.spacedragon-contraste-total .warning,
+body.spacedragon-contraste-total a.content-link,
+body.spacedragon-contraste-total a.inline-roll {
+  color: revert !important;
+}
