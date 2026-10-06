@@ -50,6 +50,27 @@ for (const b of daAbaAtiva) {
     "a regra da aba ativa não dá nem cor nem filete — não se saberia qual aba está aberta");
 }
 
+// ── O SUBLINHADO TEM DE TER COR PRÓPRIA ────────────────────────────────────
+//
+// `text-decoration` usa a cor do TEXTO quando ninguém diz o contrário. Assim
+// que a cor do texto da aba ativa passou a ser forçada para branco, o traço
+// foi junto: a aba aberta ficou marcada por um sublinhado branco sobre barra
+// escura — invisível, que é o oposto do que se queria.
+//
+// Esta é a asserção que amarra as duas decisões: quem força a cor do texto
+// precisa dizer, na mesma regra, de que cor é o traço.
+for (const b of daAbaAtiva) {
+  const forcaCor = /(?:^|[;{\s])color:\s*[^;]+!important/.test(b.corpo);
+  if (!forcaCor) continue;
+  confere(/text-decoration-color:/.test(b.corpo),
+    "a aba ativa força a cor do texto e não declara text-decoration-color — " +
+    "o sublinhado herda a cor da palavra e some na barra escura");
+  const corTraco = /text-decoration-color:\s*([^;!]+)/.exec(b.corpo)?.[1]?.trim() ?? "";
+  confere(/--sd-brilho/.test(corTraco),
+    `o traço da aba ativa é "${corTraco}" — devia ser a cor de destaque, que é ` +
+    "a única coisa marcando qual aba está aberta agora");
+}
+
 // Em algum lugar o filete PRECISA existir, ou a seleção fica invisível.
 confere(
   daAbaAtiva.some((b) => /border-bottom-color:\s*[^;]*--sd-brilho/.test(b.corpo)),
@@ -71,5 +92,6 @@ if (problemas.length) {
 }
 console.log(
   "  ✔ aba ativa: o texto na cor da barra (forçada, não herdada do sistema) e o " +
-    "destaque só no filete — a palavra nunca em --sd-brilho"
+    "destaque no traço, com text-decoration-color próprio (senão o sublinhado herda o " +
+    "branco da palavra e some) — a palavra nunca em --sd-brilho"
 );

@@ -128,6 +128,20 @@ body.spacedragon-tema .class-ability-tab-mechanics a {
  */
 body.spacedragon-tema .olddragon2e.sheet .tabs .item.active {
   color: #ffffff !important;
+  /* ── O SUBLINHADO PRECISA DA COR DELE, SEPARADA ─────────────────────────
+   *
+   * O traço da aba ativa é `text-decoration`, e text-decoration usa a cor do
+   * TEXTO quando ninguém diz o contrário. Ao forçar a palavra para branco, o
+   * traço foi junto — e a aba aberta ficou marcada por um sublinhado branco
+   * sobre barra escura, que é justamente o que não se enxerga.
+   *
+   * `text-decoration-color` é o que separa as duas coisas: palavra branca,
+   * traço na cor de destaque. O `border-bottom` abaixo fica porque nem toda
+   * barra de abas do sistema usa sublinhado — onde for borda, é ela que marca.
+   */
+  text-decoration-color: var(--sd-brilho) !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
   border-bottom-color: var(--sd-brilho) !important;
   border-bottom-width: 2px !important;
 }
