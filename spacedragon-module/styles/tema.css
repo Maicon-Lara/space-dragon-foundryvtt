@@ -106,7 +106,6 @@ body.spacedragon-tema .journal-sheet .journal-page-content .tab-title {
 
 /* ── E o interativo vira ciano ──────────────────────────────────────────── */
 
-body.spacedragon-tema .olddragon2e.sheet .tabs .item.active,
 body.spacedragon-tema .olddragon2e.sheet a:hover,
 body.spacedragon-tema .border-button:hover,
 body.spacedragon-tema .race-ability-tab-mechanics a,
@@ -114,8 +113,23 @@ body.spacedragon-tema .class-ability-tab-mechanics a {
   color: var(--sd-brilho) !important;
 }
 
+/* ── A ABA ATIVA: o filete marca, a palavra não ────────────────────────────
+ *
+ * O nome da aba aberta era pintado com `--sd-brilho`, e sobre a barra escura
+ * isso dava uma palavra em verde-fósforo no meio de cinco em branco. A mesa
+ * pediu o contrário: a palavra na cor normal da barra, e só o traço de baixo
+ * dizendo qual está aberta.
+ *
+ * A cor é FORÇADA, e não apenas removida daqui: sem declaração a aba cairia na
+ * cor que o sistema dá, que não é a mesma das abas vizinhas nesta barra — e a
+ * aba ativa ficaria diferente das outras de um jeito que ninguém escolheu.
+ *
+ * O filete passa a fazer o trabalho sozinho, e por isso ganhou espessura.
+ */
 body.spacedragon-tema .olddragon2e.sheet .tabs .item.active {
+  color: #ffffff !important;
   border-bottom-color: var(--sd-brilho) !important;
+  border-bottom-width: 2px !important;
 }
 
 body.spacedragon-tema .olddragon2e.sheet input[type='checkbox'] {
