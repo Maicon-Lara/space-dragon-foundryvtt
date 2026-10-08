@@ -286,3 +286,33 @@ export function updateDaNave(antes, depois, id = "spacedragon") {
   const diff = caminhosAlterados(antes, depois, `flags.${id}.${FLAG}.`);
   return Object.keys(diff).length ? diff : null;
 }
+
+/* ── A FLAG DE NAVE NUM ITEM, SOB QUALQUER DOS DOIS IDS ───────────────────── */
+
+/** O id sob o qual as naves moravam antes de vierem para o Space Dragon. */
+export const ID_ANTIGO = "starwars-sd";
+
+/**
+ * Lê `camaraDeNave` ou `equipamentoDeNave` de um item, nos dois ids.
+ *
+ * ── POR QUE OS DOIS, E NÃO SÓ O NOVO ───────────────────────────────
+ *
+ * Recompilar o compêndio conserta os itens do PACK. Não conserta os itens que
+ * já estão DENTRO das naves da mesa: um item embedado é uma cópia, feita no dia
+ * do arrasto, e nada no Foundry a atualiza quando o pack muda.
+ *
+ * Então a nave que a mesa construiu antes da mudança de id tem doze cômodos com
+ * `flags["starwars-sd"]`, e a ficha que lesse apenas `flags["spacedragon"]`
+ * não desenharia nenhum botão de instalar — que foi exatamente o que aconteceu.
+ *
+ * A migração (nave-migrar-flag.js) reescreve esses itens, mas ela só roda com o
+ * Mestre na mesa, e só uma vez. Esta leitura faz a ficha funcionar ANTES dela, e
+ * também para quem arrastar um item de um backup antigo depois.
+ */
+export function flagDeNave(item, nome, id = "spacedragon") {
+  for (const quem of [id, ID_ANTIGO]) {
+    const v = item?.flags?.[quem]?.[nome] ?? item?.getFlag?.(quem, nome);
+    if (v) return v;
+  }
+  return null;
+}

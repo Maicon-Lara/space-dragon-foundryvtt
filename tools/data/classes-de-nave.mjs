@@ -57,8 +57,10 @@ export const comodosDaNave = Object.entries(CAMARAS).map(([chave, c], i) => ({
         `<strong>Reparo em campo:</strong> ${Math.round(c.obra * 0.25).toLocaleString("pt-BR")} ` +
         `créditos, metade do prazo (T10-2).</p>`
       : ""),
-  // a mesma flag das câmaras-item: é por ela que a ficha reconhece o cômodo
-  flags: { "starwars-sd": { camaraDeNave: { chave } } },
+  // A mesma flag das câmaras-item: é por ela que a ficha reconhece o cômodo, e o
+  // id do módulo é parte do caminho. Ficou em "starwars-sd" depois que as naves
+  // vieram para cá, e o seletor de cômodos sumiu da ficha sem erro nenhum.
+  flags: { spacedragon: { camaraDeNave: { chave } } },
 }));
 
 export const classesDeNave = Object.entries(TIPOS).map(([chave, t]) => ({

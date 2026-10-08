@@ -54,7 +54,7 @@ import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 import { registrarFichaDeNavePC, redesenharFichasDeNave } from "./nave-pc-ficha.js";
 import { criarNave, dialogoDeNovaNave, ligarBotaoDeNovaNave } from "./nave-nova.js";
 import { navesAntigas, converterNave, converterTodas } from "./nave-converter.js";
-import { migrarNavesNoReady, migrarNaves, navesPorMigrar } from "./nave-migrar-flag.js";
+import { migrarNavesNoReady, migrarNaves, navesPorMigrar, porMigrar } from "./nave-migrar-flag.js";
 import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaRodada } from "./ordem-inversao.js";
 
 const ID = "spacedragon";
@@ -123,7 +123,10 @@ Hooks.once("ready", () => {
       ...(mod.api ?? {}),
       criarNave, dialogoDeNovaNave,
       navesAntigas, converterNave, converterTodas,
-      migrarNaves, navesPorMigrar,
+      // `porMigrar` é a lista completa: a nave sem a flag nova MAIS a nave cujos
+      // itens ficaram atrás. `navesPorMigrar` é só a primeira metade, e foi por ela
+      // que as naves da mesa pareceram prontas sem os botões de instalar.
+      migrarNaves, porMigrar, navesPorMigrar,
     };
   }
 

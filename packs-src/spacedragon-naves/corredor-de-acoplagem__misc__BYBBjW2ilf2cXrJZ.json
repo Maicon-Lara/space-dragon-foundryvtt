@@ -16,7 +16,7 @@
   },
   "effects": [],
   "flags": {
-    "starwars-sd": {
+    "spacedragon": {
       "equipamentoDeNave": {
         "chave": "acoplagem",
         "grupo": "utilitario",

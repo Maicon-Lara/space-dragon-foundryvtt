@@ -30,7 +30,7 @@
   },
   "effects": [],
   "flags": {
-    "starwars-sd": {
+    "spacedragon": {
       "equipamentoDeNave": {
         "chave": "disparadores",
         "grupo": "combate",

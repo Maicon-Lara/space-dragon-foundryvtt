@@ -48,6 +48,22 @@ const ROOT = path.resolve(AQUI, "..");
 const SRC = path.join(ROOT, "packs-src");
 const OUT = path.join(ROOT, "spacedragon-module", "packs");
 
+/* ── O ID DO MÓDULO, UMA VEZ SÓ ───────────────────────────────────
+ *
+ * A ficha de nave reconhece um cômodo pela FLAG do item, e não pelo nome:
+ * `flags[<id do módulo>].camaraDeNave.chave`. O id faz parte do CAMINHO, e
+ * quando as naves vieram do módulo de Star Wars para cá, o build continuou
+ * gravando `flags["starwars-sd"]` enquanto a ficha já lia `flags["spacedragon"]`.
+ *
+ * O item existia, a lista aparecia — e NENHUM botão de instalar era desenhado,
+ * porque `marcarComodos` procura a flag e dá `continue` quando não acha. Foi
+ * assim que o seletor de cômodos sumiu da ficha, sem um erro no console para
+ * dizer por quê.
+ *
+ * Literal nenhum: o id vem daqui, e trocar aqui troca nos dois lugares.
+ */
+const ID_MODULO = "spacedragon";
+
 const P_CLASSES = "spacedragon-classes";
 const P_ESPECIES = "spacedragon-especies";
 const P_TABELAS = "spacedragon-tabelas";
@@ -750,7 +766,7 @@ function buildNavesDocs() {
           fEquip._id, "nave-equip", (i + 1) * 100000)
       : miscDoc({ nome: e.nome, desc: e.desc, img: e.img },
           fEquip._id, "nave-equip", (i + 1) * 100000);
-    doc.flags["starwars-sd"] = { equipamentoDeNave: { chave: e.chave, grupo: e.grupo, cabe: e.cabe } };
+    doc.flags[ID_MODULO] = { equipamentoDeNave: { chave: e.chave, grupo: e.grupo, cabe: e.cabe } };
     docs.push(doc);
   });
 
@@ -805,7 +821,7 @@ function buildNavesDocs() {
   camarasDeNave.forEach((c, i) => {
     const doc = miscDoc({ nome: c.nome, desc: c.desc, img: c.img, cost: `${c.obra}` },
       fCamaras._id, "nave-camara", (i + 1) * 100000);
-    doc.flags["starwars-sd"] = { camaraDeNave: { chave: c.chave } };
+    doc.flags[ID_MODULO] = { camaraDeNave: { chave: c.chave } };
     docs.push(doc);
   });
 

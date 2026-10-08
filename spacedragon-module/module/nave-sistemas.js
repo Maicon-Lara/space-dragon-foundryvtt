@@ -27,7 +27,7 @@
 
 import { CAMARAS } from "./camaras.js";
 import { EQUIPAMENTOS_DE_NAVE } from "./equipamentos-nave.js";
-import { estadoDoComodo } from "./nave-pc-dados.js";
+import { estadoDoComodo, flagDeNave } from "./nave-pc-dados.js";
 
 /** Uma câmara está operacional? Só «instalada» conta. */
 export function operacional(nave, chave) {
@@ -73,7 +73,7 @@ export function podeEscapar(nave) {
 export function equipamentosDoAtor(ator, id = "spacedragon") {
   const chaves = new Set();
   for (const i of ator?.items ?? []) {
-    const c = i?.flags?.[id]?.equipamentoDeNave?.chave ?? i?.getFlag?.(id, "equipamentoDeNave")?.chave;
+    const c = flagDeNave(i, "equipamentoDeNave", id)?.chave;
     if (c) chaves.add(c);
   }
   return chaves;

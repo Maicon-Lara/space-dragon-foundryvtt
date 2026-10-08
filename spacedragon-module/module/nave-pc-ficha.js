@@ -38,7 +38,7 @@
 
 import {
   naveDe, estadoDoComodo, proximoEstado, comodosInstalados, FLAG, updateDaNave,
-  orcamentoDeCamaras, CAMARAS_BASE,
+  orcamentoDeCamaras, CAMARAS_BASE, flagDeNave,
 } from "./nave-pc-dados.js";
 import { linhasDoVoo, CUSTOS } from "./nave-voo.js";
 import {
@@ -544,7 +544,10 @@ export function renomearAbas(raiz) {
  *
  * ── COMO O CÔMODO É RECONHECIDO ───────────────────────────────────────────
  *
- * Pela FLAG do item, e não pelo nome: `flags["spacedragon"].camaraDeNave.chave`.
+ * Pela FLAG do item, e não pelo nome: `flags["spacedragon"].camaraDeNave.chave`
+ * — lida pelos DOIS ids por `flagDeNave`, porque os cômodos que já estão dentro
+ * das naves da mesa foram copiados quando o id ainda era "starwars-sd", e
+ * recompilar o pack não toca num item embedado.
  * Nome muda com tradução e com revisão de texto; a flag é nossa e não muda.
  */
 export const CLASSE_SELETOR = "sw-comodo-estado";
@@ -593,8 +596,7 @@ export function marcarComodos(raiz, ator) {
 
   for (const linha of raiz.querySelectorAll("[data-item-id]")) {
     const item = ator.items?.get?.(linha.dataset.itemId);
-    const chave = item?.getFlag?.(ID, "camaraDeNave")?.chave
-      ?? item?.flags?.[ID]?.camaraDeNave?.chave;
+    const chave = flagDeNave(item, "camaraDeNave", ID)?.chave;
     if (!chave) continue;
     achados += 1;
 
