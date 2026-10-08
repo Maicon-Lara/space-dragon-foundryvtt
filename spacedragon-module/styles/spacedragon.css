@@ -435,7 +435,7 @@
 .sd-ordem-ficha {
   /* O painel é o próprio contêiner de referência: ele pode estar no meio de uma
    * aba larga ou numa ficha que o jogador encolheu até caber ao lado do mapa.
-   * `@media` responderia à TELA, que não muda quando a janela da ficha muda. */
+   * `@media` responderia à TELA, que não muda quando a janela da ficha muda. */;
   container-type: inline-size;
   container-name: ordem;
   /* ── A LARGURA, QUE O CONTAINMENT EXIGE ──────────────────────────────────
@@ -489,7 +489,7 @@
   width: auto !important;
   min-width: 0 !important;
   /* A ficha também impõe ALTURA, e não só largura: sem isto o campo sai com a
-   * altura de linha dela e desalinha do botão. */
+   * altura de linha dela e desalinha do botão. */;
   height: auto !important;
   min-height: 0 !important;
   font-size: 12px;

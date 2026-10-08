@@ -35,10 +35,15 @@ const PROP_DE_COR = [
   /^fill$/,
   /^stroke$/,
   /^caret-color$/,
+  // o prefixo da WebKit para a cor do texto: mesma coisa com outro nome, e o
+  // removedor não o conhecia — sobrou pintando quatro regras numa folha que
+  // deveria estar sem cor nenhuma
+  /^-webkit-text-fill-color$/,
+  /^-webkit-text-stroke(-color)?$/,
 ];
 
 /** As variáveis que guardam cor — as de tipografia têm nomes próprios. */
-const VAR_DE_COR = /^--(sw|sd)-(?!serif|display|condensada|font)/;
+const VAR_DE_COR = /^--(sw|sd|starwars-sd|spacedragon)-(?!serif|display|condensada|font)/;
 
 /** Esta declaração é de cor? */
 export function ehCor(prop, valor) {
@@ -61,7 +66,29 @@ export function limparDeclaracao(prop, valor) {
   if (ehCor(p, valor)) return null;
 
   if (/^border(-top|-right|-bottom|-left)?$/.test(p) || p === "outline") {
-    const partes = valor.trim().split(/\s+(?![^(]*\))/);
+    /* ── O SPLIT TEM DE RESPEITAR OS PARÊNTESES ────────────────────────
+     *
+     * `border: 1px solid color-mix(in srgb, var(--x) 40%, transparent)` tem
+     * espaços DENTRO da função. Partindo por espaço, `color-mix(in` e `srgb,`
+     * viram pedaços soltos — e o resultado foi `border: 1px solid srgb,;`,
+     * que não é CSS válido e quebra a regra inteira.
+     *
+     * Este split conta parênteses e só corta no nível zero.
+     */
+    const partes = [];
+    let atual = "";
+    let nivel = 0;
+    for (const ch of valor.trim()) {
+      if (ch === "(") nivel += 1;
+      else if (ch === ")") nivel -= 1;
+      if (/\s/.test(ch) && nivel === 0) {
+        if (atual) partes.push(atual);
+        atual = "";
+      } else {
+        atual += ch;
+      }
+    }
+    if (atual) partes.push(atual);
     const semCor = partes.filter((x) => !pareceCor(x));
     return semCor.length ? `${prop.trim()}: ${semCor.join(" ")}` : null;
   }
@@ -122,29 +149,32 @@ export function tirarCores(css) {
         decls.push(bruto);
         continue;
       }
-      const corte = bruto.indexOf(":");
+      /* ── O COMENTÁRIO SAI ANTES DE PROCURAR O ":" ──────────────────────
+       *
+       * Duas armadilhas, as duas vividas:
+       *
+       *   1. Dividindo por `;`, um comentário colado na linha de cima vem
+       *      junto, e o nome da propriedade passa a incluí-lo.
+       *   2. Pior: um `:` DENTRO do comentário é encontrado primeiro. Em
+       *      "/* o par: sem a cor… * / color: var(…)", o corte caía no "o par:"
+       *      e a declaração de cor passava intacta — foi assim que uma `color`
+       *      sobreviveu a três passagens da limpeza.
+       *
+       * Então o comentário é separado primeiro, e o `:` é procurado no que
+       * sobra.
+       */
+      const comentarios = bruto.match(/\/\*[\s\S]*?\*\//g) ?? [];
+      const semComentario = bruto.replace(/\/\*[\s\S]*?\*\//g, "").trim();
+      for (const c of comentarios) decls.push(c);
+      if (!semComentario) continue;
+
+      const corte = semComentario.indexOf(":");
       if (corte < 0) {
-        decls.push(bruto);
+        decls.push(semComentario);
         continue;
       }
-      /* ── O COMENTÁRIO ANTES DA DECLARAÇÃO NÃO É PARTE DO NOME ───────────
-       *
-       * Dividindo por `;`, um comentário colado na linha de cima vem junto:
-       *
-       *   /* o par, como todo painel * /
-       *   background: var(--sd-fundo)
-       *
-       * vira um pedaço só, e o nome da propriedade passa a ser
-       * "/* o par… * /
-  background" — que não casa com nada, e a declaração
-       * de cor passava intacta. Foi assim que um `background` sobreviveu à
-       * limpeza e ficou sozinho, sem a cor que o acompanhava.
-       */
-      const propCrua = bruto.slice(0, corte);
-      const comentarios = propCrua.match(/\/\*[\s\S]*?\*\//g) ?? [];
-      const prop = propCrua.replace(/\/\*[\s\S]*?\*\//g, "").trim();
-      for (const c of comentarios) decls.push(c);
-      const valor = bruto.slice(corte + 1);
+      const prop = semComentario.slice(0, corte).trim();
+      const valor = semComentario.slice(corte + 1);
       const limpa = limparDeclaracao(prop, valor);
       if (limpa === null) fora += 1;
       else decls.push(limpa);
