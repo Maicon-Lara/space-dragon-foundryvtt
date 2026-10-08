@@ -33,6 +33,17 @@ const problemas = [];
 const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
 
 /* ── A ESCOLA DE MAGIA NÃO APARECE ─────────────────────────────────────────── */
+//
+// ── POR QUE O ESCOPO É A FICHA, E NÃO A ABA ─────────────────────────────────
+//
+// A primeira versão escopava em `.sd-poderes-mentais`, que só é posto na aba de
+// quem é da classe MENTÁLICO. O Sensível à Força do módulo de Star Wars não é —
+// e ele é justamente quem tem poderes em quantidade. A marca de escola
+// continuava aparecendo na ficha dele, ao lado das correntes da Força (Luz,
+// Sombra, Universal), que são a categoria dele.
+//
+// Duas categorias de jogos diferentes na mesma linha, e uma delas sem sentido
+// nenhum ali.
 {
   // as quatro tradições do sistema, mais o nome genérico da tag
   const ALVOS = [
@@ -43,17 +54,35 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
     ["illusionist-tag", "Ilusionista"],
   ];
   for (const [classe, oQueE] of ALVOS) {
-    confere(css.includes(`.spacedragon-ficha .sd-poderes-mentais .${classe}`),
+    confere(css.includes(`.spacedragon-ficha .${classe}`),
       `a ficha não esconde .${classe} (${oQueE}) — no Space Dragon não há escola de magia, ` +
       `e a marca é categoria de outro jogo`);
   }
 
   // e escondem de verdade
-  const i = css.indexOf(".spacedragon-ficha .sd-poderes-mentais .spell-school-tag");
+  const i = css.indexOf(".spacedragon-ficha .spell-school-tag");
   const bloco = css.slice(i, css.indexOf("}", i));
   confere(/display:\s*none/.test(bloco), "a regra existe mas não esconde nada");
   confere(/!important/.test(bloco),
     "sem !important a regra perde para o CSS do sistema, que desenha a tag");
+}
+
+/* ── O ESCOPO NÃO PODE SER A ABA MENTAL ────────────────────────────────────── */
+//
+// `sd-poderes-mentais` é posto por mental.js, e só em quem é da classe
+// Mentálico — a condição está lá: `if (classeBase(ator) !== "Mentálico") return;`.
+//
+// Escopar a escola de magia nessa classe deixa de fora o Sensível à Força do
+// módulo de Star Wars, que usa a mesma ficha e tem mais poderes que ninguém.
+// Foi o erro da primeira versão, e a mesa o encontrou em minutos.
+{
+  for (const linha of css.split("\n")) {
+    if (!/school-tag|arcane-tag|divine-tag|necromancer-tag|illusionist-tag/.test(linha)) continue;
+    if (!linha.trim().startsWith(".")) continue;
+    confere(!linha.includes("sd-poderes-mentais"),
+      `"${linha.trim()}" escopa a escola na aba MENTAL — ela só existe para a classe ` +
+      `Mentálico, e o Sensível à Força da mesma ficha continuaria vendo a marca`);
+  }
 }
 
 /* ── O ESCOPO: SÓ NA FICHA DO SPACE DRAGON ─────────────────────────────────── */

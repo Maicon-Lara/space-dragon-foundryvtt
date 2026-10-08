@@ -293,11 +293,22 @@
  * tag, e a busca no histórico confirma. Ela vem do sistema — ou sempre apareceu,
  * ou chegou numa atualização do olddragon2e.
  */
-.spacedragon-ficha .sd-poderes-mentais .spell-school-tag,
-.spacedragon-ficha .sd-poderes-mentais .arcane-tag,
-.spacedragon-ficha .sd-poderes-mentais .divine-tag,
-.spacedragon-ficha .sd-poderes-mentais .necromancer-tag,
-.spacedragon-ficha .sd-poderes-mentais .illusionist-tag {
+/* O escopo é a FICHA, e não a aba marcada como mental.
+ *
+ * `sd-poderes-mentais` só é posta na aba de quem é da classe Mentálico — e o
+ * Sensível à Força do módulo de Star Wars não é. A regra escopada na aba o
+ * deixava de fora, e ele é justamente quem tem poderes em quantidade: as
+ * correntes da Força (Luz, Sombra, Universal) são a categoria DELE, e a escola
+ * arcana por cima é de um terceiro jogo.
+ *
+ * Em `.spacedragon-ficha` a regra alcança os dois: quem usa esta ficha não joga
+ * Old Dragon 2 puro, e nenhum dos dois cenários tem escola de magia.
+ */
+.spacedragon-ficha .spell-school-tag,
+.spacedragon-ficha .arcane-tag,
+.spacedragon-ficha .divine-tag,
+.spacedragon-ficha .necromancer-tag,
+.spacedragon-ficha .illusionist-tag {
   display: none !important;
 }
 
