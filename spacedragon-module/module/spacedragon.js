@@ -42,6 +42,22 @@ import { abrirReliquia, gerarReliquia, gerarDaCriatura, rolarDefeito } from "./r
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
+/* ── AS NAVES (CAPÍTULO 10) ────────────────────────────────────────────────
+ *
+ * A T10-1 a T10-8 são do LIVRO Space Dragon: tipos de nave, câmaras,
+ * combustível, equipamentos, combate espacial e veículos. Elas moraram um
+ * tempo no módulo de Star Wars porque foi lá que a mesa precisou delas
+ * primeiro — mas uma mesa de Space Dragon sem Star Wars ficava sem naves, o
+ * que é o contrário do que o livro oferece.
+ *
+ * A ordem de ação (T7-2) veio junto pelo mesmo motivo.
+ */
+import { registrarFichaDeNavePC, redesenharFichasDeNave } from "./nave-pc-ficha.js";
+import { criarNave, dialogoDeNovaNave, ligarBotaoDeNovaNave } from "./nave-nova.js";
+import { navesAntigas, converterNave, converterTodas } from "./nave-converter.js";
+import { migrarNavesNoReady, migrarNaves, navesPorMigrar } from "./nave-migrar-flag.js";
+import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaRodada } from "./ordem-inversao.js";
+
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
 
@@ -103,6 +119,16 @@ Hooks.once("init", () => {
 });
 
 Hooks.once("ready", () => {
+  const mod = globalThis.game?.modules?.get?.(ID);
+  if (mod) {
+    mod.api = {
+      ...(mod.api ?? {}),
+      criarNave, dialogoDeNovaNave,
+      navesAntigas, converterNave, converterTodas,
+      migrarNaves, navesPorMigrar,
+    };
+  }
+
   // No `ready`, e não no `init`: no Foundry 13.351 o registro de fichas é uma
   // fila processada depois do `init` e do `setup`. No `init` a ficha do
   // sistema ainda não estava lá para ser estendida, e as fichas do módulo
@@ -149,4 +175,48 @@ Hooks.once("ready", () => {
   };
 
   console.log(`${ID} | ${TESTES.length} testes prontos, nível até o ${NIVEL_MAXIMO}º`);
+
+  /* ── AS NAVES ENTRAM POR ÚLTIMO ──────────────────────────────────────────
+   *
+   * A Ficha de Nave ESTENDE a ficha do Space Dragon, e a ficha do Space Dragon
+   * é registrada mais acima neste mesmo `ready`. Registrada antes, a Ficha de
+   * Nave não achava a classe-base e caía na do sistema — e o painel de testes
+   * parava de injetar, com o sintoma aparecendo longe da causa.
+   *
+   * Ordem de dependência, e não gosto: quem estende entra depois de quem é
+   * estendido.
+   */
+  /* ── AS NAVES, ISOLADAS DO RESTO ─────────────────────────────────────────
+   *
+   * Tudo do capítulo 10 vai dentro de um try. As naves são UMA parte do módulo,
+   * e um erro nelas não pode levar junto os testes de atributo, os poderes e a
+   * ficha — que é o que acontecia: a primeira linha lançava e o resto do
+   * `ready` nunca rodava, com o sintoma aparecendo longe da causa.
+   */
+  try {
+    registrarFichaDeNavePC();
+    ligarBotaoDeNovaNave();
+    // a migração das naves criadas quando as regras moravam no Star Wars: sem
+    // ela a nave abre VAZIA, que parece apagada
+    migrarNavesNoReady();
+
+    // ── As naves do TIPO de ator antigo ──
+    //
+    // Mais velhas que a migração acima: são de quando a nave era um tipo de
+    // ator próprio. Elas não carregam mais, e por isso o aviso tem de aparecer
+    // na TELA — no console ninguém olha sem motivo.
+    const antigas = navesAntigas().length;
+    if (antigas > 0) {
+      console.log(
+        `${ID} | ${antigas} nave(s) no tipo de ator antigo. Para converter: ` +
+        `game.modules.get("${ID}").api.converterTodas()`
+      );
+      globalThis.ui?.notifications?.info?.(
+        `${antigas} nave(s) ainda usam o tipo de ator antigo. O console diz como converter.`
+      );
+    }
+  } catch (e) {
+    console.warn(`${ID} | as naves não puderam ser ligadas`, e);
+  }
+
 });

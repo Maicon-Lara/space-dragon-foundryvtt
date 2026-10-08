@@ -38,6 +38,10 @@ import { CRIATURAS } from "./data/bestiario.mjs";
 import { mestreJournal } from "./data/mestre-journal.mjs";
 import { CLICHES, INTERESSES } from "./data/mestre.mjs";
 import { aventurasJournal } from "./data/aventuras-journal.mjs";
+import { tiposComoRaca } from "./data/tipos-como-raca.mjs";
+import { classesDeNave, comodosDaNave } from "./data/classes-de-nave.mjs";
+import { equipamentosDeNave } from "./data/equipamentos-de-nave.mjs";
+import { camarasDeNave } from "./data/camaras-de-nave.mjs";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(AQUI, "..");
@@ -48,6 +52,11 @@ const P_CLASSES = "spacedragon-classes";
 const P_ESPECIES = "spacedragon-especies";
 const P_TABELAS = "spacedragon-tabelas";
 const P_JOURNAL = "spacedragon-journal";
+// O capítulo 10 do livro: tipos, câmaras e equipamentos de nave.
+const P_NAVES = "spacedragon-naves";
+// O id do compêndio para montar os UUIDs internos — a raça aponta para a
+// habilidade dela, a classe para os cômodos, e tudo mora neste mesmo pack.
+const NAVES_PACK = P_NAVES;
 const P_MACROS = "spacedragon-macros";
 const P_EQUIPAMENTO = "spacedragon-equipamento";
 const P_PODERES = "spacedragon-poderes";
@@ -673,6 +682,7 @@ async function main() {
 
   await compila(P_MACROS, montaMacros());
   await compila(P_JOURNAL, journais.map((e, i) => journalDoc(e, (i + 1) * 1000)));
+  await compila(P_NAVES, buildNavesDocs());
 
   console.log("Concluído.");
 }
@@ -681,3 +691,123 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
+
+/* ── O PACK DE NAVES (CAPÍTULO 10) ─────────────────────────────────────────
+ *
+ * Os tipos (T10-1) como raça, as câmaras (T10-2) como habilidades de classe, e
+ * os equipamentos (T10-4) como itens — as armas de verdade, os demais como
+ * item comum.
+ *
+ * Isto veio do módulo de Star Wars, onde foi escrito primeiro porque foi lá que
+ * a mesa precisou de naves. Mas o capítulo 10 é do LIVRO: uma mesa de Space
+ * Dragon sem Star Wars ficava sem naves, o que é o contrário do que o livro
+ * oferece.
+ */
+function buildNavesDocs() {
+  const docs = [];
+  const pasta = (nome, seed) => {
+    const f = folderDoc(nome, "Item", seed);
+    docs.push(f);
+    return f;
+  };
+
+  const fEquip = pasta("Equipamentos adicionais (T10-4)", "nave-equip-pasta");
+  equipamentosDeNave.forEach((e, i) => {
+    /* ── AS ARMAS SÃO `weapon`, E NÃO `misc` ──────────────────────────────
+     *
+     * Todos os equipamentos da T10-4 nasciam `misc` — item genérico. A mesa
+     * reportou o efeito: as armas «estão como item geral, não como arma, e não
+     * geram ataque». É exatamente isso: o sistema só desenha o botão de rolar
+     * dano para itens do tipo `weapon` com `damage` preenchido, e um `misc`
+     * fica na mochila sem nada para clicar.
+     *
+     * As cinco de combate com dano declarado (disparadores, canhões,
+     * metralhadora, mísseis) viram arma de verdade. O Computador Balístico, os
+     * Defletores e o Escudo de Força continuam `misc`, e devem continuar: eles
+     * não atiram, modificam o que atira — e um "ataque" de Escudo de Força na
+     * ficha seria um botão que ninguém saberia o que faz.
+     *
+     * `ranged` porque é o que o sistema usa para o que dispara à distância, e
+     * `two_handed` porque uma arma de nave não é empunhada por ninguém — o
+     * campo existe para o cálculo de mãos livres do personagem, e deixá-la
+     * como arma de uma mão a tornaria combinável com escudo.
+     */
+    const dano = e.dano;
+    const doc = dano
+      ? weaponDoc(
+          {
+            nome: e.nome,
+            desc: e.desc,
+            img: e.img,
+            damage: dano,
+            ranged: true,
+            melee: false,
+            two_handed: true,
+            // o alcance é o do combate espacial, que o §10.6 não mede em
+            // metros: quem decide se a nave alvo está ao alcance é o Mestre
+            shoot_range: 0,
+          },
+          fEquip._id, "nave-equip", (i + 1) * 100000)
+      : miscDoc({ nome: e.nome, desc: e.desc, img: e.img },
+          fEquip._id, "nave-equip", (i + 1) * 100000);
+    doc.flags["starwars-sd"] = { equipamentoDeNave: { chave: e.chave, grupo: e.grupo, cabe: e.cabe } };
+    docs.push(doc);
+  });
+
+  /* ── OS TIPOS DE NAVE, COMO RAÇA ─────────────────────────────────────────
+   *
+   * A nave numa ficha de personagem É de um tipo, e tipo é o que a raça
+   * significa no Old Dragon 2. Arrastar "Caça" para a ficha dá CP 28 e
+   * movimento 150 m pela maquinaria do sistema — `natural_armor` e `movement`
+   * —, sem automação nossa.
+   *
+   * Cada tipo leva uma habilidade de raça com o que a raça NÃO carrega: a BA e
+   * a JP (que no sistema vêm da classe) e a fórmula de PV (que a mesa rola).
+   */
+  {
+    const fTipos = pasta("Tipos de nave (T10-1)", "nave-tipo-pasta");
+    tiposComoRaca.forEach((t, i) => {
+      const hab = raceAbilityDoc(t.habilidade, fTipos._id, `nave-tipo:${t.chave}`, (i + 1) * 1000);
+      docs.push(hab);
+      const raca = raceDoc({ ...t }, fTipos._id, [itemUuid(NAVES_PACK, hab._id)]);
+      raca.sort = (i + 1) * 100000;
+      docs.push(raca);
+    });
+  }
+
+  /* ── UMA CLASSE POR TIPO, E OS CÔMODOS COMO HABILIDADES ──────────────────
+   *
+   * No Old Dragon 2 a BA e a JP vêm da CLASSE, por nível — e na T10-1 elas
+   * variam por tipo. Uma classe "Nave" genérica daria os mesmos números a
+   * todos; uma por tipo traz os certos pela maquinaria do sistema.
+   *
+   * As doze habilidades são COMPARTILHADAS pelas oito classes: o cômodo é o
+   * mesmo em qualquer nave, e o que muda é quais estão instalados — estado do
+   * ator, não da classe. Um cômodo, uma descrição, um lugar para corrigir.
+   */
+  {
+    const fComodos = pasta("Cômodos (T10-2)", "nave-comodo-pasta");
+    const uuids = comodosDaNave.map((c, i) => {
+      const hab = classAbilityDoc(c, fComodos._id, "nave-comodo", (i + 1) * 1000);
+      docs.push(hab);
+      return itemUuid(NAVES_PACK, hab._id);
+    });
+
+    const fClasses = pasta("Tipos de nave — classe (T10-1)", "nave-classe-pasta");
+    classesDeNave.forEach((c, i) => {
+      const cls = classDoc(c, fClasses._id, uuids);
+      cls.sort = (i + 1) * 100000;
+      docs.push(cls);
+    });
+  }
+
+  const fCamaras = pasta("Câmaras (T10-2)", "nave-camara-pasta");
+  camarasDeNave.forEach((c, i) => {
+    const doc = miscDoc({ nome: c.nome, desc: c.desc, img: c.img, cost: `${c.obra}` },
+      fCamaras._id, "nave-camara", (i + 1) * 100000);
+    doc.flags["starwars-sd"] = { camaraDeNave: { chave: c.chave } };
+    docs.push(doc);
+  });
+
+  return docs;
+}

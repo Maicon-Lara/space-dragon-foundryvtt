@@ -19,6 +19,25 @@
   opacity: 0.75;
 }
 
+/* O cartão de fim de rodada da ordem de ação (T7-2).
+ *
+ * O conteúdo vai num filho de `.sd-teste`, e não na mesma div: é a forma que o
+ * resto do módulo usa, e é o que faz o par cor + fundo do cartão alcançar o que
+ * está dentro. Uma classe solta no mesmo elemento herdaria a cor do tema do
+ * Foundry e sairia ilegível — como aconteceu com `.result`.
+ *
+ * A lista de quem agiu só precisa do recuo. */
+.sd-teste .sd-ordem-rodada {
+  /* Cor explícita, e não `inherit`: a herança depende de o bloco pai ter cor
+     declarada, e numa mensagem de chat ele frequentemente não tem — foi assim
+     que o cartão saiu invisível antes. É o mesmo par que o resto da folha usa. */
+  color: var(--sd-tinta, #191813);
+}
+.sd-teste .sd-ordem-rodada ol {
+  margin: 4px 0;
+  padding-left: 18px;
+}
+
 .sd-teste .sd-nota {
   margin: 0.4rem 0 0;
   padding-top: 0.35rem;
