@@ -583,6 +583,42 @@ export function botaoDoComodo(chave, estado) {
   );
 }
 
+/* ── O PLANO B: O NOME ESCRITO NA FICHA ─────────────────────────────── */
+
+/** De rótulo para chave: "Ponte de Comando" → "ponte". Montado uma vez. */
+const CHAVE_POR_ROTULO = new Map(
+  Object.entries(CAMARAS).map(([chave, c]) => [c.rotulo.toLowerCase(), chave])
+);
+
+/**
+ * A chave do cômodo lida do NOME escrito no `<li>`.
+ *
+ * ── POR QUE UM PLANO B, E POR QUE ESTE ─────────────────────────────
+ *
+ * Os cômodos chegam à nave como habilidades da CLASSE, e `data-item-id` aponta
+ * para a habilidade dentro de `actor.system.class_abilities`, que o sistema
+ * resolve a partir dos UUIDs do COMPÊNDIO. Esses documentos nem sempre estão
+ * embutidos no ator: `ator.items.get(id)` devolve `undefined`, o laço dá
+ * `continue`, e a ficha fica sem botão nenhum — sem erro no console, porque
+ * não há erro.
+ *
+ * Isto não é novidade neste projeto: `painel.js` já tinha vivido a mesma falha
+ * e já tinha a mesma saída, com a mesma nota escrita. Eu reescrevi a leitura
+ * por `items.get` de novo aqui, em código novo, enquanto a lição estava num
+ * arquivo ao lado. É por isso que o teste desta função simula o ator SEM os
+ * itens: é o caso real da mesa, e era o único que nenhum teste cobria.
+ *
+ * O escopo é `.ability strong`, que é o que o template do sistema escreve para
+ * uma habilidade de classe. Casar por nome em qualquer linha faria um
+ * equipamento chamado "Arsenal" virar cômodo; dentro de `.ability`, não.
+ */
+function chavePeloNome(linha) {
+  const forte = linha.querySelector?.(".ability strong");
+  if (!forte) return null;
+  const nome = forte.textContent.trim().replace(/:$/, "").toLowerCase();
+  return CHAVE_POR_ROTULO.get(nome) ?? null;
+}
+
 /**
  * Põe o seletor em cada cômodo da aba de classe, e marca os ausentes.
  *
@@ -596,7 +632,7 @@ export function marcarComodos(raiz, ator) {
 
   for (const linha of raiz.querySelectorAll("[data-item-id]")) {
     const item = ator.items?.get?.(linha.dataset.itemId);
-    const chave = flagDeNave(item, "camaraDeNave", ID)?.chave;
+    const chave = flagDeNave(item, "camaraDeNave", ID)?.chave ?? chavePeloNome(linha);
     if (!chave) continue;
     achados += 1;
 
