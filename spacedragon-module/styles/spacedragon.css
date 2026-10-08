@@ -279,6 +279,28 @@
  * da Grandeza-limite e do alcance. A caixa de memorizar fica, e passa a
  * significar CONHECIDO; espaços e usos somem — no cabeçalho e em cada linha,
  * para a linha flex continuar alinhada. Ver module/poder-mental.js. */
+/* ── A ESCOLA DE MAGIA ─────────────────────────────────────────────────────
+ *
+ * O sistema marca cada magia com a escola — `<div class="spell-school-tag
+ * arcane-tag" title="Arcana">A</div>` —, porque no Old Dragon 2 ela decide quem
+ * pode lançar o quê.
+ *
+ * No Space Dragon não há escolas: o poder é MENTAL, e quem o realiza é definido
+ * pela classe e pela Grandeza. Um "A" de Arcana na ficha de um cosmonauta é uma
+ * categoria de outro jogo, e quem lê fica procurando onde escolher a escola.
+ *
+ * Isto NÃO é resíduo da remoção de cores: nenhum dos módulos jamais tratou esta
+ * tag, e a busca no histórico confirma. Ela vem do sistema — ou sempre apareceu,
+ * ou chegou numa atualização do olddragon2e.
+ */
+.spacedragon-ficha .sd-poderes-mentais .spell-school-tag,
+.spacedragon-ficha .sd-poderes-mentais .arcane-tag,
+.spacedragon-ficha .sd-poderes-mentais .divine-tag,
+.spacedragon-ficha .sd-poderes-mentais .necromancer-tag,
+.spacedragon-ficha .sd-poderes-mentais .illusionist-tag {
+  display: none !important;
+}
+
 .spacedragon-ficha .sd-poderes-mentais .list .slots,
 .spacedragon-ficha .sd-poderes-mentais .list .daily-uses,
 .spacedragon-ficha .sd-poderes-mentais .spell-slots,

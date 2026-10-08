@@ -5,7 +5,7 @@
   "license": "MIT",
   "description": "Livro Basico de Space Dragon como compendios para o sistema Old Dragon 2",
   "scripts": {
-    "build": "node tools/gera-dados.mjs && node tools/build.mjs && node tools/verifica.mjs && node tools/fumaca.mjs && node tools/teste-ordem-ficha.mjs && node tools/teste-responsivo.mjs && node tools/teste-ordem-combate.mjs && node tools/teste-cartoes.mjs && node tools/teste-nave-pc.mjs && node tools/teste-nave-pc-dados.mjs && node tools/teste-nave-voo.mjs && node tools/teste-nave-sistemas.mjs && node tools/teste-nave-salto.mjs && node tools/teste-nave-camadas.mjs && node tools/teste-nave-acoes.mjs && node tools/teste-nave-nova.mjs && node tools/teste-nave-converter.mjs && node tools/teste-tripulacao.mjs && node tools/teste-ordem-opcao.mjs",
+    "build": "node tools/gera-dados.mjs && node tools/build.mjs && node tools/verifica.mjs && node tools/fumaca.mjs && node tools/teste-ordem-ficha.mjs && node tools/teste-responsivo.mjs && node tools/teste-ordem-combate.mjs && node tools/teste-cartoes.mjs && node tools/teste-nave-pc.mjs && node tools/teste-nave-pc-dados.mjs && node tools/teste-nave-voo.mjs && node tools/teste-nave-sistemas.mjs && node tools/teste-nave-salto.mjs && node tools/teste-nave-camadas.mjs && node tools/teste-nave-acoes.mjs && node tools/teste-nave-nova.mjs && node tools/teste-nave-converter.mjs && node tools/teste-tripulacao.mjs && node tools/teste-ordem-opcao.mjs && node tools/teste-poderes-mentais.mjs",
     "empacotar": "python tools/empacotar.py",
     "publicar": "npm run build && npm run empacotar",
     "verifica": "node tools/gera-dados.mjs && node tools/verifica.mjs",
