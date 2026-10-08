@@ -150,7 +150,25 @@ else {
   if (Array.isArray(api.TESTES) && !api.TESTES.length) falhas.push("TESTES veio vazio");
 }
 
-if (!classes.has("spacedragon-tema")) falhas.push("o tema não marcou o <body>");
+/* ── O TEMA DE CORES SAIU DO MÓDULO ──────────────────────────────────────
+ *
+ * Esta asserção exigia que o módulo marcasse o `<body>` com a própria classe
+ * de tema. Ela fazia sentido enquanto havia um tema: o módulo pintava a ficha,
+ * os cartões e os painéis com uma paleta própria.
+ *
+ * A mesa pediu o contrário — que o visual volte a ser o do sistema, e que só a
+ * TIPOGRAFIA seja nossa. Sem cores, não há o que marcar no body, e a classe
+ * viraria um gancho de CSS que ninguém usa.
+ *
+ * O que ficou no lugar: o módulo NÃO pode voltar a pintar o body sem que
+ * alguém decida isso de novo.
+ */
+if (classes.has("spacedragon-tema")) {
+  falhas.push(
+    "o módulo voltou a marcar o <body> com a classe de tema — as cores saíram " +
+    "na 1.26.0, e só a tipografia é nossa agora"
+  );
+}
 
 const niveis = Object.keys(CONFIG.olddragon2e.levels).map(Number);
 const teto = Math.max(...niveis);
@@ -500,155 +518,21 @@ if (probOrdem.length) {
 }
 console.log(`  ✔ ordem de ação: crescente (${res.combatentes.map((c) => `${c.nome} ${c.n}`).join(", ")}), rodada de ${res.duracao}s`);
 
-// ── O tema liga e desliga sem recarregar? ──────────────────────────────────
-//
-// Todo o CSS do tema está sob `body.spacedragon-tema`. Se a opção não tirar a
-// classe, não há como voltar à ficha original sem desinstalar o módulo — e
-// repintar a ficha de quem só queria os compêndios seria decidir pelo outro.
-const opcaoTema = "spacedragon.tema";
-const { registrarTema, ligarTema } = await import("../spacedragon-module/module/tema.js");
+/* ── O TEMA DE CORES SAIU ──────────────────────────────────────────────────
+ *
+ * Aqui havia um bloco que ligava e desligava o tema do módulo e conferia que
+ * todo o CSS ficava sob a classe do `<body>`, para quem desligasse voltar à
+ * ficha original.
+ *
+ * Ele existia porque o módulo tinha paleta própria. A mesa pediu o contrário:
+ * o visual volta a ser o do sistema, e só a TIPOGRAFIA é nossa. Sem cores não
+ * há tema para ligar, e a folha `tema.css` foi apagada.
+ *
+ * O que ficou no lugar é a guarda inversa — que o módulo não volte a pintar
+ * sem que alguém decida isso de novo. Ela está lá em cima, na checagem do
+ * `<body>`.
+ */
 
-const probTema = [];
-if (!classes.has("spacedragon-tema")) probTema.push("o tema não estava ligado por padrão");
-
-// A opção é registrada com onChange; simula o usuário desligando.
-const cfgTema = opcoes.get(opcaoTema);
-if (cfgTema !== true) probTema.push(`o padrão da opção é ${cfgTema}, esperava true`);
-
-game.settings.set("spacedragon", "tema", false);
-ligarTema();
-if (classes.has("spacedragon-tema")) probTema.push("desligar não tirou a classe do <body>");
-
-game.settings.set("spacedragon", "tema", true);
-ligarTema();
-if (!classes.has("spacedragon-tema")) probTema.push("religar não devolveu a classe");
-
-// E o CSS tem de estar TODO sob a classe: uma regra solta repintaria a ficha
-// de quem desligou.
-const fs = await import("node:fs");
-const css = fs.readFileSync("spacedragon-module/styles/tema.css", "utf8");
-const regras = css
-  .replace(/\/\*[\s\S]*?\*\//g, "")
-  .split("}")
-  .map((b) => b.split("{")[0].trim())
-  .filter(Boolean);
-// Duas classes valem como escopo, e as duas saem por opção do cliente:
-//   · spacedragon-tema      — repinta a ficha com a paleta do módulo
-//   · spacedragon-contraste — devolve o texto escuro em janela clara
-//
-// A segunda nasceu de um bug medido na mesa: com o Foundry em tema escuro, as
-// janelas que o sistema marca como CLARAS recebiam texto rgb(217,214,204), que
-// dá 1,19:1 de contraste sobre o pergaminho — texto invisível. Ela é correção,
-// e não enfeite, mas continua opcional pelo mesmo motivo do tema: nenhum módulo
-// deve repintar a janela de quem não pediu.
-// As três classes de escopo, listadas uma a uma. "contraste-total" passaria
-// pelo `includes` de "contraste" por acidente de substring — e depender disso
-// é como as asserções deste projeto já falharam mais de uma vez.
-const ESCOPOS = [
-  "body.spacedragon-tema",
-  "body.spacedragon-contraste",
-  "body.spacedragon-contraste-total",
-];
-const soltas = regras.filter(
-  (sel) => !sel.split(",").every((s) => ESCOPOS.some((e) => s.includes(e)))
-);
-if (soltas.length) probTema.push(`regras fora das classes de escopo: ${soltas.join(" | ").slice(0, 120)}`);
-
-// ── O TEMA ALCANÇA TODAS AS JANELAS DO MÓDULO ─────────────────────────────
-//
-// O tema nasceu cobrindo as fichas do sistema e os journals. As janelas que o
-// PRÓPRIO módulo cria ficaram de fora, e com o Foundry em tema escuro elas
-// davam texto claro sobre fundo claro — o sintoma que custou o dia 05/10/2026.
-//
-// A lista é explícita de propósito: criar um painel novo e esquecer de
-// tematizá-lo quebra aqui, e não na mesa.
-{
-  const JANELAS_DO_MODULO = [
-    "sd-dialogo",          // os diálogos de teste, robôs, relíquias, ordem
-    "sd-ordem-combate",    // a declaração por rodada
-    "sd-ordem-ficha",      // o painel na aba de ataques
-    "spacedragon-mental",  // o alcance mental, na aba de poderes
-    "spacedragon-testes",  // o painel de testes de classe
-    "sd-ameaca-painel",    // os atributos na Ficha de Ameaça
-  ];
-  for (const classe of JANELAS_DO_MODULO) {
-    // O seletor EXATO, e não `includes`: ".sd-dialogo" aparece dentro de
-    // ".sd-dialogo input", e a conferência passaria com a janela destematizada
-    // e só os campos dela cobertos. Foi assim que a primeira versão desta
-    // asserção deixou a sabotagem passar duas vezes.
-    const exato = new RegExp(
-      String.raw`body\.spacedragon-tema \.${classe}\s*[,{]`
-    );
-    if (!exato.test(css)) {
-      probTema.push(
-        `o tema não alcança .${classe}, que é janela deste módulo — com o Foundry ` +
-        `em tema escuro ela fica com texto claro sobre fundo claro`
-      );
-    }
-  }
-}
-
-// ── A CORREÇÃO DE CONTRASTE CEDE AO TEMA DO LIVRO ─────────────────────────
-//
-// O módulo Star Wars tem tema próprio que já resolve o modo escuro: ele pinta a
-// ficha de escuro e o texto de claro. A correção de contraste faz o oposto —
-// força texto preto em janela marcada clara.
-//
-// Juntas, deram PRETO SOBRE PRETO na mesa. Não há cor intermediária que sirva a
-// texto preto e branco ao mesmo tempo; o que resolve é precedência: quem pinta o
-// fundo decide a cor do texto.
-{
-  // sem os comentários: eles falam de `spacedragon-contraste` justamente para
-  // explicar a regra, e seriam lidos como seletor
-  const linhas = css
-    .replace(/\/\*[\s\S]*?\*\//g, "")
-    .split("}")
-    .map((b) => b.split("{")[0].trim())
-    .filter((sel) => /spacedragon-contraste/.test(sel));
-  for (const sel of linhas) {
-    for (const parte of sel.split(",")) {
-      if (!/spacedragon-contraste/.test(parte)) continue;
-      if (!/:not\(\.starwars-sd-tema\)/.test(parte)) {
-        probTema.push(
-          `a regra de contraste "${parte.trim().slice(0, 60)}" não cede ao tema do ` +
-          `livro — com ele ligado, isto dá texto preto sobre fundo preto`
-        );
-      }
-    }
-  }
-}
-
-if (probTema.length) {
-  for (const p of probTema) console.error(`  ✘ ${p}`);
-  process.exit(1);
-}
-// ── E as regras GANHAM do sistema? ────────────────────────────────────────
-//
-// A primeira versão do tema perdeu na contagem de especificidade: o sistema
-// pinta o carmim em seletores de cinco classes, e as regras curtas do tema têm
-// três. As barras de equipamento e as etiquetas de nível ficaram vermelhas, sem
-// erro nenhum — só a cor errada na tela.
-//
-// A camada de sobreposição declara `!important` nas cores. O teste exige isso
-// de toda declaração de cor, porque esquecer uma volta a produzir o mesmo
-// sintoma silencioso.
-const cores = [];
-for (const bloco of css.replace(/\/\*[\s\S]*?\*\//g, "").split("}")) {
-  const [sel, corpo] = bloco.split("{");
-  if (!corpo || !sel.includes("body.spacedragon-tema")) continue;
-  if (sel.trim() === "body.spacedragon-tema") continue; // o bloco das variáveis
-  for (const decl of corpo.split(";")) {
-    const d = decl.trim();
-    if (!/^(background-color|color|border-color|accent-color|border-bottom-color)\s*:/.test(d)) continue;
-    if (!d.includes("!important")) cores.push(`${sel.trim().split(",")[0].slice(0, 50)} → ${d.slice(0, 40)}`);
-  }
-}
-if (cores.length) {
-  for (const c of cores) console.error(`  ✘ cor sem !important, vai perder para o sistema: ${c}`);
-  process.exit(1);
-}
-
-console.log(`  ✔ tema: liga, desliga e religa, ${regras.length} regras sob a classe, cores com precedência`);
 
 // ── As habilidades de classe saem em ordem de nível? ──────────────────────
 const { ordenarHabilidades } = await import("../spacedragon-module/module/atributos.js");

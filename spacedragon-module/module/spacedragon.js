@@ -31,7 +31,6 @@ import { ligarGrandezas } from "./poderes.js";
 import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
 import { ligarOrdemNaFicha, registrarOpcoes as registrarOpcoesDaOrdem } from "./ordem-ficha.js";
 import { ligarOrdemNoCombate, registrarOpcaoDeCombate } from "./ordem-combate.js";
-import { registrarTema, ligarTema } from "./tema.js";
 import { registrarFicha } from "./ficha.js";
 import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
@@ -78,7 +77,6 @@ function estendeNiveis() {
 }
 
 Hooks.once("init", () => {
-  registrarTema();
   registrarOpcoesDaOrdem();
   registrarOpcaoDeCombate();
 
@@ -137,7 +135,6 @@ Hooks.once("ready", () => {
   registrarFicha(padrao);
   registrarFichaAmeaca(padrao);
   estendeNiveis();
-  ligarTema();
   aplicarModificadores(game.settings.get(ID, "modificadores"));
   // O bônus de CP por nível (T4-1) é regra do livro, não opção: vale sempre
   // para quem usa a ficha do Space Dragon.

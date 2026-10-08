@@ -48,20 +48,7 @@
   font-size: 11px;
   text-transform: lowercase;
   cursor: pointer;
-  background: var(--sd-caixa, #e6dcc3);
-  color: var(--sd-tinta, #1a1a18);
-  border: 1px solid var(--sd-barra, #2a2e38);
-}
-
-.spacedragon-nave-pc .sw-comodo-estado.estado-instalada {
-  background: var(--sd-barra, #2a2e38);
-  color: #f2f0ea;
-}
-
-.spacedragon-nave-pc .sw-comodo-estado.estado-danificada {
-  background: #8c2230;
-  color: #f7ecec;
-  border-color: #8c2230;
+  border: 1px solid;
 }
 
 /* O cômodo que a nave NÃO tem fica apagado, mas legível: ele continua ali para
@@ -70,16 +57,22 @@
  * `opacity` aqui é deliberado e seguro — o texto por baixo tem contraste de
  * sobra, e o que se quer é justamente o apagado. Não é o caso que o teste dos
  * cartões proíbe, que era opacidade escondendo contraste perdido. */
-.spacedragon-nave-pc .comodo-ausente { opacity: .55; }
+.spacedragon-nave-pc .comodo-ausente {
+  opacity: .55;
+}
 
-.spacedragon-nave-pc .comodo-danificada { text-decoration: line-through dotted; }
+.spacedragon-nave-pc .comodo-danificada {
+  text-decoration: line-through dotted;
+}
 
 /* O que a nave não usa: XP, alinhamento e idiomas.
    Quem marca é a ficha (ocultarOQueNaveNaoUsa), pelo CAMINHO DO SCHEMA e com
    limite de subida — ver a nota em nave-pc-ficha.js. Aqui só se esconde o que
    já foi marcado, e nunca um seletor do sistema: assim um erro de mira não
    pode apagar a ficha inteira. */
-.spacedragon-nave-pc .sw-nave-nao-usa { display: none !important; }
+.spacedragon-nave-pc .sw-nave-nao-usa {
+  display: none !important;
+}
 
 /* ── O PAINEL DE VOO ───────────────────────────────────────────────────────
  *
@@ -102,10 +95,8 @@
 .spacedragon-nave-pc .sw-guia-nave {
   margin: 0 0 8px;
   padding: 7px 10px;
-  border: 1px dashed color-mix(in srgb, var(--sd-brilho, #2f9e8f) 55%, transparent);
+  border: 1px dashed srgb,;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--sd-brilho, #2f9e8f) 7%, transparent);
-  color: var(--sd-tinta, #1a1a18);
   font-size: 12px;
 }
 
@@ -117,28 +108,28 @@
 
 .spacedragon-nave-pc .sw-guia-nave li {
   margin: 3px 0;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 /* o passo feito recua: o que importa é o que falta */
-.spacedragon-nave-pc .sw-guia-nave .guia-feito { opacity: .55; }
+.spacedragon-nave-pc .sw-guia-nave .guia-feito {
+  opacity: .55;
+}
 
-.spacedragon-nave-pc .sw-guia-nave .guia-falta { font-weight: 600; }
+.spacedragon-nave-pc .sw-guia-nave .guia-falta {
+  font-weight: 600;
+}
 
 .spacedragon-nave-pc .sw-guia-nave .guia-nota {
   margin: 5px 0 0;
   font-size: 11px;
   opacity: .8;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-voo {
   margin: 0 0 8px;
   padding: 6px 8px;
-  border: 1px solid color-mix(in srgb, var(--sd-brilho, #2f9e8f) 40%, transparent);
+  border: 1px solid srgb,;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--sd-brilho, #2f9e8f) 8%, transparent);
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-voo .voo-linha {
@@ -162,13 +153,11 @@
   text-transform: uppercase;
   letter-spacing: .04em;
   opacity: .75;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-voo .voo-valor {
   font-weight: 700;
   font-size: 14px;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 /* A avaria é aviso, e usa a cor de aviso — não a de destaque. O piloto precisa
@@ -176,8 +165,6 @@
 .spacedragon-nave-pc .sw-painel-voo .voo-avaria {
   margin-top: 5px;
   font-size: 12px;
-  color: #8c3a20;
-  background: color-mix(in srgb, #8c3a20 10%, transparent);
   border-radius: 3px;
   padding: 2px 6px;
 }
@@ -185,7 +172,6 @@
 .spacedragon-nave-pc .sw-painel-voo .voo-tanque {
   margin-top: 5px;
   font-size: 11px;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-voo .voo-tanque-barra {
@@ -193,13 +179,11 @@
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 2px;
-  background: color-mix(in srgb, var(--sd-tinta, #1a1a18) 15%, transparent);
 }
 
 .spacedragon-nave-pc .sw-painel-voo .voo-tanque-barra i {
   display: block;
   height: 100%;
-  background: var(--sd-brilho, #2f9e8f);
 }
 
 /* Os avisos da nave: o que ela deixou de conseguir fazer.
@@ -210,65 +194,36 @@
   margin: 5px 0 0;
   padding: 0 0 0 16px;
   font-size: 11px;
-  color: var(--sd-tinta, #1a1a18);
 }
 
-.spacedragon-nave-pc .sw-painel-voo .voo-avisos li { margin: 1px 0; }
+.spacedragon-nave-pc .sw-painel-voo .voo-avisos li {
+  margin: 1px 0;
+}
 
 .spacedragon-nave-pc .sw-painel-voo .voo-grave {
-  color: #8c3a20;
   font-weight: 700;
 }
 
-.spacedragon-nave-pc .sw-painel-voo .voo-aviso { color: #8a6d1f; }
-
 .spacedragon-nave-pc .sw-painel-voo .voo-nota {
-  color: var(--sd-tinta, #1a1a18);
   opacity: .75;
 }
 
-.spacedragon-nave-pc .sw-painel-voo small { opacity: .7; font-weight: 400; }
-
-/* ── O PAINEL DA TRIPULAÇÃO (§7) ───────────────────────────────────────────
- *
- * Cinco postos, cada um com as opções da rodada. O par cor + fundo em toda
- * regra, como no painel de voo.
- *
- * As ações vêm em dois pesos: o que a ficha APLICA sozinha vem em negrito, o
- * que fica para a mesa vem leve. É a diferença entre esperar uma automação e
- * saber que ela não vem — e a nota do painel diz isso em palavras, porque
- * negrito sozinho ninguém decifra.
- */
-.spacedragon-nave-pc .sw-painel-tripulacao {
-  color: var(--sd-tinta, #1a1a18);
+.spacedragon-nave-pc .sw-painel-voo small {
+  opacity: .7;
+  font-weight: 400;
 }
 
 .spacedragon-nave-pc .sw-painel-tripulacao .tripulacao-nota {
   margin: 0 0 6px;
   font-size: 11px;
   opacity: .8;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-tripulacao .posto {
   margin: 0 0 6px;
   padding: 5px 8px;
-  border-left: 3px solid color-mix(in srgb, var(--sd-brilho, #2f9e8f) 55%, transparent);
-  background: color-mix(in srgb, var(--sd-brilho, #2f9e8f) 6%, transparent);
-  color: var(--sd-tinta, #1a1a18);
+  border-left: 3px solid srgb,;
   border-radius: 0 3px 3px 0;
-}
-
-/* o posto ocupado puxa a cor: é onde há alguém para agir */
-.spacedragon-nave-pc .sw-painel-tripulacao .posto-ocupado {
-  border-left-color: var(--sd-brilho, #2f9e8f);
-  background: color-mix(in srgb, var(--sd-brilho, #2f9e8f) 14%, transparent);
-}
-
-/* o travado não some: ele precisa estar à vista, dizendo por que não age */
-.spacedragon-nave-pc .sw-painel-tripulacao .posto-travado {
-  border-left-color: #8c3a20;
-  background: color-mix(in srgb, #8c3a20 8%, transparent);
 }
 
 .spacedragon-nave-pc .sw-painel-tripulacao .posto-cabeca {
@@ -288,27 +243,17 @@
   min-width: 8ch;
   font-size: 12px;
   padding: 1px 4px;
-  border: 1px solid transparent;
+  border: 1px solid;
   border-radius: 3px;
-  background: color-mix(in srgb, var(--sd-tinta, #1a1a18) 5%, transparent);
-  color: var(--sd-tinta, #1a1a18);
-}
-
-.spacedragon-nave-pc .sw-painel-tripulacao .sw-posto-nome:hover {
-  border-color: color-mix(in srgb, var(--sd-tinta, #1a1a18) 20%, transparent);
 }
 
 .spacedragon-nave-pc .sw-painel-tripulacao .sw-posto-nome:focus {
-  border-color: var(--sd-brilho, #2f9e8f);
-  background: color-mix(in srgb, var(--sd-tinta, #1a1a18) 8%, transparent);
-  color: var(--sd-tinta, #1a1a18);
   outline: none;
 }
 
 /* o placeholder diz QUEM PODE ocupar: é informação, não ruído, e por isso não
    fica apagado demais */
 .spacedragon-nave-pc .sw-painel-tripulacao .sw-posto-nome::placeholder {
-  color: var(--sd-tinta, #1a1a18);
   opacity: .5;
   font-style: italic;
 }
@@ -316,13 +261,11 @@
 .spacedragon-nave-pc .sw-painel-tripulacao .posto-faz {
   font-size: 11px;
   opacity: .85;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-tripulacao .posto-aviso {
   margin-top: 3px;
   font-size: 11px;
-  color: #8c3a20;
 }
 
 .spacedragon-nave-pc .sw-painel-tripulacao .posto-acoes {
@@ -337,10 +280,11 @@
 
 .spacedragon-nave-pc .sw-painel-tripulacao .posto-acao {
   min-width: max-content;
-  color: var(--sd-tinta, #1a1a18);
 }
 
-.spacedragon-nave-pc .sw-painel-tripulacao .acao-auto { font-weight: 700; }
+.spacedragon-nave-pc .sw-painel-tripulacao .acao-auto {
+  font-weight: 700;
+}
 
 /* A ação automática é BOTÃO; a de mesa é texto. A diferença está na forma, e
    não só no peso: um item que parece clicável e não é custa um clique e uma
@@ -350,15 +294,9 @@
   padding: 0 7px;
   font-size: 11px;
   line-height: 1.6;
-  border: 1px solid color-mix(in srgb, var(--sd-brilho, #2f9e8f) 50%, transparent);
+  border: 1px solid srgb,;
   border-radius: 3px;
-  background: color-mix(in srgb, var(--sd-brilho, #2f9e8f) 12%, transparent);
-  color: var(--sd-tinta, #1a1a18);
   cursor: pointer;
-}
-
-.spacedragon-nave-pc .sw-painel-tripulacao .sw-posto-acao:hover {
-  background: color-mix(in srgb, var(--sd-brilho, #2f9e8f) 26%, transparent);
 }
 
 /* o fim da rodada fica à parte e discreto: é frequente, mas não é a ação
@@ -369,16 +307,18 @@
   min-width: max-content;
   padding: 1px 10px;
   font-size: 11px;
-  border: 1px dashed color-mix(in srgb, var(--sd-tinta, #1a1a18) 35%, transparent);
+  border: 1px dashed srgb,;
   border-radius: 3px;
-  background: transparent;
-  color: var(--sd-tinta, #1a1a18);
   opacity: .8;
 }
 
-.spacedragon-nave-pc .sw-painel-tripulacao .sw-fim-rodada:hover { opacity: 1; }
+.spacedragon-nave-pc .sw-painel-tripulacao .sw-fim-rodada:hover {
+  opacity: 1;
+}
 
-.spacedragon-nave-pc .sw-painel-tripulacao .acao-texto { opacity: .7; }
+.spacedragon-nave-pc .sw-painel-tripulacao .acao-texto {
+  opacity: .7;
+}
 
 /* ── AS TRÊS CAMADAS OPCIONAIS (§7) ────────────────────────────────────────
  *
@@ -388,16 +328,13 @@
  */
 .spacedragon-nave-pc .sw-painel-camadas {
   margin-top: 8px;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-camadas .camada {
   margin: 0 0 6px;
   padding: 5px 8px;
-  border: 1px solid color-mix(in srgb, var(--sd-brilho, #2f9e8f) 35%, transparent);
+  border: 1px solid srgb,;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--sd-brilho, #2f9e8f) 5%, transparent);
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-camadas .camada-cabeca {
@@ -412,13 +349,11 @@
   font-size: 11px;
   opacity: .8;
   min-width: max-content;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 /* gastar além do reator é possível — "Forçar o reator" dá +2, com risco de
    avaria — então isto é aviso, e não erro */
 .spacedragon-nave-pc .sw-painel-camadas .camada-sobra.excedeu {
-  color: #8c3a20;
   font-weight: 700;
   opacity: 1;
 }
@@ -437,19 +372,16 @@
 .spacedragon-nave-pc .sw-painel-camadas .relogio-nome {
   min-width: 9ch;
   font-weight: 600;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-camadas .energia-pontos {
   min-width: 2ch;
   text-align: center;
   font-weight: 700;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-camadas .energia-efeito {
   opacity: .7;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 /* as marcas do relógio em monoespaçada: sem isso as bolinhas cheias e vazias
@@ -458,20 +390,19 @@
   font-family: monospace;
   font-size: 14px;
   letter-spacing: 2px;
-  color: var(--sd-brilho, #2f9e8f);
 }
 
 .spacedragon-nave-pc .sw-painel-camadas button {
   min-width: max-content;
   padding: 0 7px;
   line-height: 1.5;
-  border: 1px solid color-mix(in srgb, var(--sd-brilho, #2f9e8f) 45%, transparent);
+  border: 1px solid srgb,;
   border-radius: 3px;
-  background: color-mix(in srgb, var(--sd-brilho, #2f9e8f) 12%, transparent);
-  color: var(--sd-tinta, #1a1a18);
 }
 
-.spacedragon-nave-pc .sw-painel-camadas button:disabled { opacity: .35; }
+.spacedragon-nave-pc .sw-painel-camadas button:disabled {
+  opacity: .35;
+}
 
 .spacedragon-nave-pc .sw-painel-camadas .camada-lista {
   margin: 4px 0;
@@ -479,10 +410,7 @@
   font-size: 11px;
 }
 
-.spacedragon-nave-pc .sw-painel-camadas .avaria-corre { color: #8a6d1f; }
-
 .spacedragon-nave-pc .sw-painel-camadas .avaria-venceu {
-  color: #8c3a20;
   font-weight: 600;
 }
 
@@ -490,12 +418,10 @@
   margin-top: 4px;
   font-size: 11px;
   font-weight: 600;
-  color: var(--sd-tinta, #1a1a18);
 }
 
 .spacedragon-nave-pc .sw-painel-camadas .camada-nota {
   margin-top: 3px;
   font-size: 10px;
   opacity: .7;
-  color: var(--sd-tinta, #1a1a18);
 }

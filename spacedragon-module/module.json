@@ -154,7 +154,6 @@
   ],
   "styles": [
     "styles/spacedragon.css",
-    "styles/tema.css",
     "styles/nave.css"
   ]
 }

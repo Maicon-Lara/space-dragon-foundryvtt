@@ -26,7 +26,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const RAIZ = path.resolve(fileURLToPath(import.meta.url), "../..");
-const FOLHAS = ["spacedragon-module/styles/spacedragon.css", "spacedragon-module/styles/tema.css"];
+// `tema.css` saiu na 1.26.0: as cores voltaram a ser do sistema, e a folha era
+// 100% cor. `nave.css` entrou com a Ficha de Nave.
+const FOLHAS = [
+  "spacedragon-module/styles/spacedragon.css",
+  "spacedragon-module/styles/nave.css",
+];
 
 // As raízes de ficha, que o Foundry dimensiona pela janela e por isso não
 // precisam de largura explícita. Qualquer OUTRO elemento com
@@ -172,14 +177,26 @@ confere(houveContainer, "nenhuma container query nas folhas — o layout não en
     return i < 0 ? "" : css.slice(i, css.indexOf("}", i));
   };
 
+  /* ── O CARTÃO DO CHAT, DEPOIS QUE AS CORES SAÍRAM ───────────────────────
+   *
+   * Este bloco media o contraste do cartão e exigia fundo e cor DECLARADOS
+   * JUNTOS — metade do par vinha do tema do Foundry, e as duas andavam
+   * separadas.
+   *
+   * Desde a 1.26.0 o módulo não pinta: o cartão usa as cores do chat do
+   * sistema, que já são legíveis por construção. Exigir o par agora cobraria
+   * exatamente o que foi removido a pedido da mesa.
+   *
+   * A medição de contraste fica, e vale QUANDO houver cor: se alguém voltar a
+   * pintar o cartão, a régua da WCAG volta a valer sem que ninguém precise
+   * lembrar de reativá-la.
+   */
   const principal = bloco(".chat-message .sd-teste {");
-  confere(!!principal, "o cartão do chat não tem regra própria — ele herdaria a cor do tema");
-
   const fundo = principal.match(/background:\s*(#[0-9a-fA-F]{6})/)?.[1];
   const cor = principal.match(/color:\s*(#[0-9a-fA-F]{6})/)?.[1];
-  confere(!!fundo && !!cor,
-    "fundo e cor têm de ser declarados JUNTOS: fundo sem cor herda o texto do tema, " +
-    "e cor sem fundo aposta no que o chat faz");
+  confere(!(fundo && !cor) && !(cor && !fundo),
+    `o cartão do chat declara ${fundo ? "fundo sem cor" : "cor sem fundo"} — ` +
+    "a metade que falta vem do tema, e as duas andam separadas");
 
   if (fundo && cor) {
     const r = contraste(cor, fundo);
@@ -246,10 +263,17 @@ confere(houveContainer, "nenhuma container query nas folhas — o layout não en
     if (!/(width|height|padding|flex|font|border)\s*:/.test(corpo)) continue;
     const temCor = /(^|[;{\s])color\s*:/.test(corpo);
     const temFundo = /background(-color)?\s*:/.test(corpo);
-    // Com uma regra BASE de botão na folha, a classe pode não declarar nada —
-    // ela herda o par de lá, e isso é coerente. O que nunca pode é declarar
-    // METADE: aí a outra metade vem do tema, e as duas andam separadas.
-    if (temBaseDeBotao && !temCor && !temFundo) continue;
+    /* ── OU OS DOIS, OU NENHUM ─────────────────────────────────────────
+     *
+     * A regra nunca foi "declare cor e fundo": era "não declare METADE". Uma
+     * metade vem do tema do Foundry, e as duas andam separadas — foi assim que
+     * o botão saiu sem texto.
+     *
+     * Desde a 1.26.0 o módulo não pinta mais nada: as cores voltaram a ser do
+     * sistema, e só a tipografia é nossa. Então NENHUM dos dois é o estado
+     * normal, e exigir o par passaria a cobrar justamente o que foi removido.
+     */
+    if (!temCor && !temFundo) continue;
     confere(temCor && temFundo,
       `.${c} é um <button> que o CSS estiliza, e declara ${temCor ? "cor sem fundo" : temFundo ? "fundo sem cor" : "nem cor nem fundo"} — ` +
       `a metade que falta vem do tema, e foi assim que o botão saiu sem texto`);

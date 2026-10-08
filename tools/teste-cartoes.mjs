@@ -92,30 +92,43 @@ confere(cartoes >= 4, `só ${cartoes} cartões encontrados — a varredura deve 
     return (maior + 0.05) / (menor + 0.05);
   };
 
+  /* ── O CARTÃO DO CHAT, DEPOIS QUE AS CORES SAÍRAM ───────────────────────
+   *
+   * Aqui se exigia o par cor + fundo com `!important`, e se media o contraste.
+   * Cada uma dessas regras nasceu de um bug real: metade do par vinha do tema
+   * do Foundry; sem `!important` a declaração perdia para o CSS do chat.
+   *
+   * Desde a 1.26.0 o módulo não pinta nada — as cores voltaram a ser do
+   * sistema a pedido da mesa, e o chat do Foundry já é legível por construção.
+   * Exigir o par agora cobraria o que foi removido de propósito.
+   *
+   * O QUE FICOU, e é o que importa: as regras continuam valendo SE alguém
+   * voltar a pintar. Quem declarar fundo tem de declarar cor, com `!important`
+   * e com contraste de 4,5:1 — sem precisar lembrar de reativar nada.
+   */
   const i = css.indexOf(`.chat-message .${MARCA} {`);
-  confere(i > 0, `não há regra para .chat-message .${MARCA} — o cartão herdaria a cor do chat`);
   const bloco = i > 0 ? css.slice(i, css.indexOf("}", i)) : "";
 
   const fundo = bloco.match(/background:\s*(#[0-9a-fA-F]{6})/)?.[1];
   const cor = bloco.match(/color:\s*(#[0-9a-fA-F]{6})/)?.[1];
-  confere(!!fundo && !!cor,
-    "fundo e cor têm de vir JUNTOS: fundo sem cor herda o texto do tema (foi o bug), " +
-    "e cor sem fundo aposta no que o chat faz");
+
+  confere(!(fundo && !cor) && !(cor && !fundo),
+    `o cartão declara ${fundo ? "fundo sem cor" : "cor sem fundo"} — a metade que ` +
+    "falta vem do tema do Foundry, e as duas andam separadas");
 
   if (fundo && cor) {
     const r = contraste(cor, fundo);
     confere(r >= 4.5, `contraste do cartão ${r.toFixed(2)}:1 — a WCAG pede 4,5:1`);
+
+    // O `!important` não é preguiça: a primeira versão declarou o par sem ele e
+    // perdeu para o CSS de fora — medido no console da mesa, rgb(217,214,204)
+    // continuou valendo.
+    confere(/color:\s*#[0-9a-fA-F]{6}\s*!important/.test(bloco),
+      "a cor precisa de !important: sem ele perde para o CSS que pinta o chat");
+    confere(/background:\s*#[0-9a-fA-F]{6}\s*!important/.test(bloco),
+      "o fundo precisa de !important pelo mesmo motivo");
   }
 
-  // O `!important` aqui NÃO é preguiça, e o teste o exige: a primeira versão
-  // declarou o par sem ele e perdeu para o CSS de fora — medido no console da
-  // mesa, rgb(217,214,204) continuou valendo. Sem o !important o bug volta.
-  confere(/color:\s*#[0-9a-fA-F]{6}\s*!important/.test(bloco),
-    "a cor precisa de !important: sem ele perde para o CSS que pinta o chat");
-  confere(/background:\s*#[0-9a-fA-F]{6}\s*!important/.test(bloco),
-    "o fundo precisa de !important pelo mesmo motivo");
-
-  // E `opacity` não entra: ela mascara a queda de contraste.
   confere(!/opacity:/.test(bloco), "o cartão não deve usar opacity — ela esconde o contraste perdido");
 
   // ── NADA DE `color: inherit` NO CARTÃO ────────────────────────────────────
@@ -172,7 +185,20 @@ confere(cartoes >= 4, `só ${cartoes} cartões encontrados — a varredura deve 
 
   confere(usadas.size > 0, "nenhuma classe encontrada nos cartões — a varredura falhou");
 
-  for (const nome of [...usadas].sort()) {
+  /* ── SÓ FAZ SENTIDO ONDE O MÓDULO PINTA ─────────────────────────────────
+   *
+   * Esta asserção exigia que toda classe usada num cartão tivesse regra no
+   * CSS: sem regra, ela herdava a cor do tema e sumia — foi o que aconteceu
+   * com `.result`.
+   *
+   * Desde a 1.26.0 o módulo não declara cor nenhuma; o cartão usa as do chat
+   * do sistema, e as classes servem só para estrutura e tipografia. Uma classe
+   * sem regra deixou de ser risco, e a asserção passou a cobrar regras vazias.
+   *
+   * Ela volta a valer sozinha no dia em que o cartão tiver cor outra vez.
+   */
+  const cartaoPinta = /\.chat-message \.[a-z-]+ \{[^}]*color:/.test(css);
+  for (const nome of cartaoPinta ? [...usadas].sort() : []) {
     confere(css.includes(`.${MARCA} .${nome}`),
       `a classe .${nome} aparece num cartão e o CSS não a nomeia — ela vai herdar a ` +
       `cor do tema e sair invisível, como aconteceu com .result`);

@@ -18,21 +18,6 @@
 .sd-teste .sd-parcelas li em {
   opacity: 0.75;
 }
-
-/* O cartão de fim de rodada da ordem de ação (T7-2).
- *
- * O conteúdo vai num filho de `.sd-teste`, e não na mesma div: é a forma que o
- * resto do módulo usa, e é o que faz o par cor + fundo do cartão alcançar o que
- * está dentro. Uma classe solta no mesmo elemento herdaria a cor do tema do
- * Foundry e sairia ilegível — como aconteceu com `.result`.
- *
- * A lista de quem agiu só precisa do recuo. */
-.sd-teste .sd-ordem-rodada {
-  /* Cor explícita, e não `inherit`: a herança depende de o bloco pai ter cor
-     declarada, e numa mensagem de chat ele frequentemente não tem — foi assim
-     que o cartão saiu invisível antes. É o mesmo par que o resto da folha usa. */
-  color: var(--sd-tinta, #191813);
-}
 .sd-teste .sd-ordem-rodada ol {
   margin: 4px 0;
   padding-left: 18px;
@@ -41,7 +26,7 @@
 .sd-teste .sd-nota {
   margin: 0.4rem 0 0;
   padding-top: 0.35rem;
-  border-top: 1px solid rgba(128, 128, 128, 0.3);
+  border-top: 1px solid;
   font-size: var(--font-size-12, 0.8rem);
   opacity: 0.85;
 }
@@ -70,10 +55,8 @@
 .spacedragon-testes {
   margin: 0.35rem 0 0.15rem;
   padding: 0.3rem 0.45rem;
-  border-left: 2px solid rgba(128, 128, 128, 0.35);
-  background: rgba(128, 128, 128, 0.06);
+  border-left: 2px solid;
   border-radius: 2px;
-  color: var(--sd-tinta, #191813);
 }
 
 .spacedragon-testes .sd-testes {
@@ -203,10 +186,8 @@
 .spacedragon-mental {
   margin: 0 0 0.6rem;
   padding: 0.45rem 0.6rem;
-  border: 1px solid rgba(128, 128, 128, 0.3);
+  border: 1px solid;
   border-radius: 3px;
-  background: rgba(128, 128, 128, 0.06);
-  color: var(--sd-tinta, #191813);
 }
 
 .spacedragon-mental .sd-mental-cabeca {
@@ -288,7 +269,9 @@
  * O sistema esconde a habilidade e os blocos de 3º/6º/10º que o personagem
  * não alcançou; os degraus de 5º/10º/20º do Space Dragon moram no texto, e
  * module/degraus.js os marca. Mesma regra do sistema: não aparecem. */
-.spacedragon-ficha .sd-degrau-futuro { display: none !important; }
+.spacedragon-ficha .sd-degrau-futuro {
+  display: none !important;
+}
 
 /* ── Poderes mentais, e não magia vanciana ─────────────────────────────────
  * O sistema dá a cada poder "memorizar", espaços e usos por dia. O Space
@@ -299,7 +282,9 @@
 .spacedragon-ficha .sd-poderes-mentais .list .slots,
 .spacedragon-ficha .sd-poderes-mentais .list .daily-uses,
 .spacedragon-ficha .sd-poderes-mentais .spell-slots,
-.spacedragon-ficha .sd-poderes-mentais .spell-daily-uses { display: none !important; }
+.spacedragon-ficha .sd-poderes-mentais .spell-daily-uses {
+  display: none !important;
+}
 
 /* Ficha de Ameaça: o painel do bloco do livro (atributos, RM, RD) na barra
  * lateral e o nome científico no cabeçalho. Ver module/ameaca.js. O mesmo
@@ -307,31 +292,83 @@
  * do sistema; aqui ele é escondido, para não aparecer duas vezes. */
 /* A Ficha de Ameaça como contêiner de referência: sem isto, o `@container`
  * do fim do arquivo não acha ancestral nenhum e a regra é letra morta. */
-.spacedragon-ameaca { container-type: inline-size; container-name: ameaca; }
-.spacedragon-ameaca .sd-bloco-extra { display: none; }
-.spacedragon-ameaca .sd-ameaca-painel { display: flex; flex-direction: column; gap: 4px; }
-.spacedragon-ameaca .sd-ameaca-atributos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
-.spacedragon-ameaca .sd-ameaca-defesas { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.spacedragon-ameaca {
+  container-type: inline-size;
+  container-name: ameaca;
+}
+.spacedragon-ameaca .sd-bloco-extra {
+  display: none;
+}
+.spacedragon-ameaca .sd-ameaca-painel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.spacedragon-ameaca .sd-ameaca-atributos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.spacedragon-ameaca .sd-ameaca-defesas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
 .spacedragon-ameaca .sd-ameaca-atributo,
-.spacedragon-ameaca .sd-ameaca-defesa { display: flex; flex-direction: column; align-items: center; }
+.spacedragon-ameaca .sd-ameaca-defesa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .spacedragon-ameaca .sd-ameaca-atributo input,
-.spacedragon-ameaca .sd-ameaca-defesa input { width: 100%; text-align: center; }
-.spacedragon-ameaca .sd-ameaca-cientifico { display: flex; flex-direction: column; }
-.spacedragon-ameaca .sd-ameaca-cientifico input { font-style: italic; }
+.spacedragon-ameaca .sd-ameaca-defesa input {
+  width: 100%;
+  text-align: center;
+}
+.spacedragon-ameaca .sd-ameaca-cientifico {
+  display: flex;
+  flex-direction: column;
+}
+.spacedragon-ameaca .sd-ameaca-cientifico input {
+  font-style: italic;
+}
 
 /* Desativar Robôs: o tipo que o disruptor não afeta aparece, apagado e sem
  * botão, para o jogador ver que ele existe e que ainda não chega lá. */
-.spacedragon-testes .sd-robo-imune { opacity: 0.45; cursor: default; }
+.spacedragon-testes .sd-robo-imune {
+  opacity: 0.45;
+  cursor: default;
+}
 
 /* Ficha de Ameaça: o que a criatura carrega. A ficha do sistema só lista
  * ataques de monstro, mas o ator guarda item de qualquer tipo — arrastar já
  * funcionava, e o item não aparecia em lugar nenhum. Ver module/ameaca.js. */
-.spacedragon-ameaca .sd-equipamento { margin-top: 8px; }
-.spacedragon-ameaca .sd-equip-linha { display: flex; align-items: center; gap: 6px; padding: 2px 4px; }
-.spacedragon-ameaca .sd-equip-abrir { flex: 1; }
-.spacedragon-ameaca .sd-equip-dano { opacity: 0.8; font-size: 0.9em; }
-.spacedragon-ameaca .sd-equip-controles { display: flex; gap: 6px; flex: 0 0 auto; }
-.spacedragon-ameaca .sd-equip-vazio { padding: 4px; opacity: 0.75; font-size: 0.9em; }
+.spacedragon-ameaca .sd-equipamento {
+  margin-top: 8px;
+}
+.spacedragon-ameaca .sd-equip-linha {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+}
+.spacedragon-ameaca .sd-equip-abrir {
+  flex: 1;
+}
+.spacedragon-ameaca .sd-equip-dano {
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+.spacedragon-ameaca .sd-equip-controles {
+  display: flex;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+.spacedragon-ameaca .sd-equip-vazio {
+  padding: 4px;
+  opacity: 0.75;
+  font-size: 0.9em;
+}
 
 /* ── Ficha de Ameaça: caber o que o bloco do livro escreve ──────────────────
  * O sistema dá 40x40 px fixos a CP, JP e Moral, e a criatura do Space Dragon
@@ -339,23 +376,47 @@
  * caixas acompanham, e o valor inteiro vai na dica ao passar o mouse. */
 /* `min()` e não 230px cru: numa ficha mais estreita que isso, o mínimo fixo
  * empurra o conteúdo para fora em vez de ceder. */
-.spacedragon-ameaca .sheet-container .sidebar { min-width: min(230px, 100%); }
-.spacedragon-ameaca .sheet-container .sidebar .stats { width: 100%; }
-.spacedragon-ameaca .sheet-container .sidebar .stats .stat { grid-template-columns: 4.5rem 1fr; font-size: 1rem; }
-.spacedragon-ameaca .sheet-container .sidebar .stats .stat input { width: 100%; height: 30px; font-size: 0.85rem; }
+.spacedragon-ameaca .sheet-container .sidebar {
+  min-width: min(230px, 100%);
+}
+.spacedragon-ameaca .sheet-container .sidebar .stats {
+  width: 100%;
+}
+.spacedragon-ameaca .sheet-container .sidebar .stats .stat {
+  grid-template-columns: 4.5rem 1fr;
+  font-size: 1rem;
+}
+.spacedragon-ameaca .sheet-container .sidebar .stats .stat input {
+  width: 100%;
+  height: 30px;
+  font-size: 0.85rem;
+}
 .spacedragon-ameaca .sheet-container .sidebar .encounter input,
 .spacedragon-ameaca .sheet-container .sidebar .treasure input,
-.spacedragon-ameaca .sheet-container .sidebar .dv input { font-size: 0.85rem; }
-.spacedragon-ameaca .sd-escondido { display: none; }
+.spacedragon-ameaca .sheet-container .sidebar .dv input {
+  font-size: 0.85rem;
+}
+.spacedragon-ameaca .sd-escondido {
+  display: none;
+}
 
 /* A descrição e o sabor: o sistema entrega caixas de três linhas, e o texto
  * de uma criatura tem parágrafos. */
-.spacedragon-ameaca .monster-tab-info textarea { min-height: 7rem; }
+.spacedragon-ameaca .monster-tab-info textarea {
+  min-height: 7rem;
+}
 .spacedragon-ameaca .monster-tab-info .editor,
-.spacedragon-ameaca .monster-tab-info .editor-content { min-height: 18rem; }
+.spacedragon-ameaca .monster-tab-info .editor-content {
+  min-height: 18rem;
+}
 
 /* O botão de gerar relíquia, junto do campo que traz as iniciais O, D e U. */
-.spacedragon-ameaca .treasure .sd-gerar-reliquia { display: block; margin-top: 4px; text-align: center; font-size: 0.85rem; }
+.spacedragon-ameaca .treasure .sd-gerar-reliquia {
+  display: block;
+  margin-top: 4px;
+  text-align: center;
+  font-size: 0.85rem;
+}
 
 /* ── Ordem de Ação na aba de ataques (T7-2) ─────────────────────────────────
  *
@@ -380,7 +441,7 @@
   /* ── A LARGURA, QUE O CONTAINMENT EXIGE ──────────────────────────────────
    * `container-type: inline-size` TIRA do elemento o dimensionamento pelo
    * conteúdo no eixo horizontal. Num pai que estica os filhos isso não se nota;
-   * num pai que os alinha pelo início (`align-items: flex-start`, que é o caso
+  * num pai que os alinha pelo início (`align-items: flex-start`, que é o caso
    * da aba de ataques), o elemento colapsa até o mínimo — e o painel sai como
    * uma coluna de 60px com "ORDEM DE AÇÃO" quebrado em três linhas.
    *
@@ -390,14 +451,11 @@
   box-sizing: border-box;
   align-self: stretch;
   grid-column: 1 / -1;
-
   margin: 0 0 8px;
   padding: 6px 8px;
-  border: 1px solid var(--sd-caixa, #ccd3f0);
+  border: 1px solid;
   border-radius: 4px;
-  /* o par, como todo painel deste módulo */
-  background: var(--sd-fundo, #f4f1e6);
-  color: var(--sd-tinta, #191813);
+  /* o par, como todo painel deste módulo */;
 }
 .sd-ordem-ficha .sd-ordem-cabeca {
   display: flex;
@@ -414,7 +472,11 @@
   letter-spacing: 0;
   opacity: .75;
 }
-.sd-ordem-ficha .sd-ordem-acao { width: 100%; margin: 5px 0 4px; font-size: 11px; }
+.sd-ordem-ficha .sd-ordem-acao {
+  width: 100%;
+  margin: 5px 0 4px;
+  font-size: 11px;
+}
 
 .sd-ordem-ficha .sd-ordem-linha {
   display: flex;
@@ -451,15 +513,8 @@
   font-size: 11px;
   line-height: 1.6;
   cursor: pointer;
-  background: var(--sd-barra, #1b2340) !important;
-  color: #f2f0ea !important;
-  border: 1px solid var(--sd-barra, #1b2340) !important;
+  border: 1px solid !important;
   border-radius: 3px;
-}
-.sd-ordem-ficha .sd-ordem-declarar:hover {
-  background: var(--sd-brilho, #2f9e8f) !important;
-  border-color: var(--sd-brilho, #2f9e8f) !important;
-  color: #0e1a18 !important;
 }
 
 /* ── O CARTÃO NO CHAT: CONTRASTE PRÓPRIO ───────────────────────────────────
@@ -488,77 +543,41 @@
  * O escopo continua mínimo: só dentro do cartão deste módulo, no chat. */
 .chat-message .message-content .sd-teste,
 .chat-message .sd-teste {
-  color: #191813 !important;
-  background: #f4f1e6 !important;
   border-radius: 3px;
   padding: 0.3rem 0.45rem;
 }
-/* ── CADA CLASSE PELO NOME, E NÃO POR ELEMENTO ─────────────────────────────
- *
- * A tentativa anterior cobriu os filhos por ELEMENTO (`p`, `span`, `strong`) e
- * só metade do cartão melhorou. O print da mesa mostrou qual metade: ficaram
- * legíveis exatamente as classes que eu havia nomeado (`.sd-conta`, `.sd-nota`)
- * e continuaram invisíveis as que eu não nomeei — `.result`, que é a classe mais
- * usada dos cartões, e `.sd-acao`.
- *
- * A razão é especificidade: `.chat-message .sd-teste p` perde para uma regra de
- * classe com `!important` do outro lado. Nomear a classe empata o peso e a
- * especificidade dobrada desempata.
- *
- * Esta lista é GERADA das classes que os cartões realmente usam, e
- * tools/teste-cartoes.mjs recusa qualquer classe nova que não esteja aqui. */
-.chat-message .sd-teste .result,
-.chat-message .sd-teste .sd-acao,
-.chat-message .sd-teste .sd-parcelas,
-.chat-message .sd-teste .sd-testes,
-.chat-message .message-content .sd-teste .result,
-.chat-message .message-content .sd-teste .sd-acao,
-.chat-message .message-content .sd-teste .sd-parcelas,
-.chat-message .message-content .sd-teste .sd-testes,
-.chat-message .message-content .sd-teste .success {
-  /* COR EXPLÍCITA, e não `inherit`.
-   *
-   * A versão anterior usava `color: inherit !important` aqui, apostando que o
-   * bloco pai `.sd-teste` tivesse recebido a cor. Na mesa ele NÃO recebeu: no
-   * cartão da Ordem de Ação sobreviveram só as classes com cor própria
-   * (`.sd-conta`, `.sd-nota`) e sumiram as que herdavam — a linha da ação e o
-   * número do resultado.
-   *
-   * `inherit` é uma cadeia, e cadeia tem elo fraco. Cor explícita não tem. */
-  color: #191813 !important;
-}
-
-/* O texto de apoio continua mais leve que o principal, mas por MISTURA com o
- * fundo declarado acima, e não por `opacity` sobre uma cor herdada — era daí
- * que vinha metade do problema. */
-/* `.success` é semântica — o verde diz "passou", e trocá-lo por preto apagaria
- * a informação. Verde escuro o bastante para o fundo creme: 7,0:1. */
-.chat-message .sd-teste .success,
-.chat-message .message-content .sd-teste .success { color: #1f5c33 !important; }
-
-.chat-message .sd-teste .sd-nota,
-.chat-message .sd-teste .sd-conta,
-.chat-message .sd-teste .sd-pos,
-.chat-message .message-content .sd-teste .sd-nota,
-.chat-message .message-content .sd-teste .sd-conta,
-.chat-message .message-content .sd-teste .sd-pos { color: #4a463d !important; }
 
 /* ── A janela de declaração por rodada ─────────────────────────────────────
  * Uma linha por combatente que o usuário controla: nome, ação e o valor. O
  * jogador vê uma; o Mestre, as dos PNJs. */
-.sd-ordem-combate { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.sd-ordem-combate {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+}
 .sd-ordem-linha-combate {
-  display: flex; gap: 6px; align-items: center;
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 .sd-ordem-linha-combate .sd-ordem-nome {
-  flex: 0 0 8em; min-width: 0;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  flex: 0 0 8em;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: 600;
 }
-.sd-ordem-linha-combate .sd-ordem-modo { flex: 1 1 auto; min-width: 0; }
+.sd-ordem-linha-combate .sd-ordem-modo {
+  flex: 1 1 auto;
+  min-width: 0;
+}
 /* O campo do valor é curto de propósito: cabe "1d8+2" e nada mais. */
 .sd-ordem-linha-combate .sd-ordem-entrada {
-  flex: 0 0 5.5em !important; width: auto !important; min-width: 0 !important;
+  flex: 0 0 5.5em !important;
+  width: auto !important;
+  min-width: 0 !important;
   text-align: center;
 }
 
@@ -574,14 +593,24 @@
    * "declarar" ainda cabe, mas o campo some. Empilhar é melhor que ter um dos
    * dois ilegível — e empilhado o botão ganha a linha inteira, que é mais fácil
    * de acertar no meio da rodada. */
-  .sd-ordem-ficha .sd-ordem-linha { flex-direction: column; }
+  .sd-ordem-ficha .sd-ordem-linha {
+  flex-direction: column;
+}
   .sd-ordem-ficha .sd-ordem-valor,
-  .sd-ordem-ficha .sd-ordem-declarar { width: 100% !important; }
-  .sd-ordem-ficha .sd-ordem-cabeca { flex-direction: column; align-items: flex-start; gap: 0; }
+  .sd-ordem-ficha .sd-ordem-declarar {
+  width: 100% !important;
+}
+  .sd-ordem-ficha .sd-ordem-cabeca {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
 }
 
 /* A grade de atributos da Ficha de Ameaça: três colunas de número cabem em
  * pouco, mas não em qualquer coisa. */
 @container ameaca (max-width: 300px) {
-  .spacedragon-ameaca .sd-ameaca-atributos { grid-template-columns: repeat(2, 1fr); }
+  .spacedragon-ameaca .sd-ameaca-atributos {
+  grid-template-columns: repeat(2, 1fr);
+}
 }
