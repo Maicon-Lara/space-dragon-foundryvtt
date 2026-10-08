@@ -30,6 +30,14 @@ import { duracaoDaRodada, ordenarCrescente, simultaneos } from "./ordem-de-acao.
 
 const ID = "spacedragon";
 
+/**
+ * A inversão do rastreador segue o mesmo interruptor da regra.
+ *
+ * `ordemDeAcao` é registrada em ordem-ficha.js, e vale para tudo o que a T7-2
+ * muda: o painel na ficha, a gravação da iniciativa e esta ordenação. Dois
+ * interruptores para a mesma regra deixariam a mesa com a fila invertida e o
+ * painel escondido, ou o contrário — e nenhum dos dois estados é a regra.
+ */
 export const ordemLigada = () => {
   try {
     return globalThis.game?.settings?.get?.(ID, "ordemDeAcao") === true;

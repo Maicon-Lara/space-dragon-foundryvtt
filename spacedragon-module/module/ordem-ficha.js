@@ -172,6 +172,18 @@ const ligado = (chave, padrao = false) => {
   }
 };
 
+/**
+ * A regra da Ordem de Ação está em uso?
+ *
+ * É o interruptor mestre. As opções de DETALHE — o painel na ficha, a gravação
+ * no rastreador — descrevem como a regra aparece, e não fazem sentido sem ela.
+ *
+ * Fora do Foundry (nos testes) não há settings, e a resposta é `false`: o
+ * padrão conservador é a iniciativa do sistema, porque inverter a ordem de um
+ * combate sem alguém pedir é a mudança mais visível que um módulo pode fazer.
+ */
+export const regraDaOrdemLigada = () => ligado("ordemDeAcao", false);
+
 async function declarar(ator, raiz) {
   const op = raiz.querySelector(".sd-ordem-acao")?.selectedOptions?.[0];
   if (!op) return;
@@ -241,17 +253,38 @@ function ligarEventos(raiz, ator) {
 }
 
 export function registrarOpcoes() {
-  game.settings.register(ID, "ordemNaFicha", {
-    name: "Declarar a Ordem de Ação na ficha",
+  /* ── O INTERRUPTOR DA REGRA ───────────────────────────────────────────────
+   *
+   * A Ordem de Ação é a T7-2 do Space Dragon: o valor vem da AÇÃO escolhida, e
+   * o MENOR age primeiro. É o oposto da iniciativa do Old Dragon 2, em que se
+   * rola uma vez por rodada e o maior age primeiro.
+   *
+   * As duas não convivem — ou a mesa usa uma, ou usa a outra —, e por isso esta
+   * opção existe. DESLIGADA, o módulo não toca em nada: a iniciativa continua
+   * sendo a do sistema, com a adaptação que o Space Dragon faz dela (o módulo
+   * já ajusta os atributos e os modificadores em outro lugar).
+   *
+   * O padrão é DESLIGADO. Inverter a ordem de um combate é a mudança mais
+   * visível que um módulo pode fazer numa mesa, e quem não pediu não deve ser
+   * surpreendido — ainda mais numa regra em que o engano não aparece: a fila
+   * fica na ordem errada e todo mundo joga a rodada inteira sem notar.
+   *
+   * As três opções abaixo são DETALHES de como a regra aparece, e só valem com
+   * esta ligada.
+   */
+  game.settings.register(ID, "ordemDeAcao", {
+    name: "Usar a Ordem de Ação (T7-2)",
     hint:
-      "Põe na aba de ataques um painel onde o próprio jogador escolhe a ação e rola o " +
-      "valor da T7-2, em vez de o Mestre preencher a janela de ordem a cada rodada. " +
-      "A janela continua disponível na macro.",
+      "A regra do Space Dragon: o valor da iniciativa vem da AÇÃO que o personagem " +
+      "escolhe, e o MENOR age primeiro. Desligada, a mesa usa a iniciativa normal do " +
+      "Old Dragon 2 — uma rolagem por rodada, maior primeiro —, que é o padrão.",
     scope: "world",
     config: true,
     type: Boolean,
-    default: true,
+    default: false,
+    requiresReload: true,
   });
+
 
   game.settings.register(ID, "ordemNoRastreador", {
     name: "Gravar a Ordem de Ação no rastreador de combate",
@@ -281,7 +314,17 @@ export function ligarOrdemNaFicha() {
    */
   const desenha = (app, elemento) => {
     try {
-      if (!ligado("ordemNaFicha", true)) return;
+      /* ── A REGRA LIGA O PAINEL ────────────────────────────────────────
+       *
+       * Havia uma opção separada para o painel na ficha. Duas opções para a
+       * mesma decisão: quem liga a T7-2 quer declarar a ação em algum lugar, e
+       * a ficha é esse lugar — o painel É como a regra se usa, não um enfeite
+       * dela.
+       *
+       * Com a regra desligada, o painel seria uma caixa que não leva a lugar
+       * nenhum.
+       */
+      if (!regraDaOrdemLigada()) return;
       const raiz = elemento instanceof HTMLElement ? elemento : elemento?.[0];
       const ator = app?.actor ?? app?.document;
       // personagem, ajudante e criatura: a T7-2 vale para todo mundo que age
