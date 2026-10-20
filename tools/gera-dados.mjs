@@ -160,3 +160,20 @@ export const RELIQUIAS = ${j(RELIQUIAS)};
 export const DEFEITOS = ${j(DEFEITOS)};
 `);
 console.log(`  ✔ module/dados.js: ${TESTES.length} testes, ${Object.keys(prog).length} progressões`);
+
+// ── lang-padrao.js: o pt-BR como módulo, para `t()` fora do Foundry ──────────
+//
+// No Foundry, `t()` (module/i18n.js) usa `game.i18n`. Nos testes em Node não
+// há Foundry, e sem isto `t()` devolveria a CHAVE: todo teste que lê o texto de
+// um painel passaria a ler "spacedragon.nave.voo.avaria". O JSON é a fonte; este
+// arquivo é cópia gerada, e tools/teste-lang.mjs falha se os dois divergirem.
+{
+  const LANG = path.resolve(AQUI, "..", "spacedragon-module", "lang", "pt-BR.json");
+  const SAIDA = path.resolve(AQUI, "..", "spacedragon-module", "module", "lang-padrao.js");
+  const lang = JSON.parse(fs.readFileSync(LANG, "utf8"));
+  fs.writeFileSync(SAIDA,
+    "// GERADO POR tools/gera-dados.mjs a partir de lang/pt-BR.json — NÃO EDITAR À MÃO.\n" +
+    "// Usado por module/i18n.js só quando não há game.i18n (testes em Node).\n" +
+    `export const LANG_PADRAO = ${JSON.stringify(lang, null, 2)};\n`);
+  console.log(`  ✔ module/lang-padrao.js: ${Object.keys(lang).length} chaves`);
+}
