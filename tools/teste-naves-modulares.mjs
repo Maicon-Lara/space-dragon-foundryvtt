@@ -22,7 +22,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   naveVazia, resumoDasCamaras, compraDeCamara, CAMARAS_BASE, CHAVES_DAS_CAMARAS,
+  reparoDeCamara, metadeDoPrazo,
 } from "../spacedragon-module/module/nave-pc-dados.js";
+import * as camarasJs from "../spacedragon-module/module/camaras.js";
 import { botaoDoComodo, painelDasCamaras } from "../spacedragon-module/module/nave-pc-ficha.js";
 import { CAMARAS } from "../spacedragon-module/module/camaras.js";
 
@@ -88,6 +90,21 @@ const nave = (tamanho, camaras = {}) => ({ ...naveVazia(), tamanho, camaras });
   confere(/Compradas: Aposentos da Tripulação/.test(html), "o painel não lista o que foi comprado");
 }
 
+/* ── O reparo da danificada: 25% da obra, metade do prazo ──────────────── */
+{
+  const avariada = nave("Média", { laboratorio: "danificada" });
+  const r = reparoDeCamara("laboratorio", avariada);
+  confere(r?.custo === Math.round(CAMARAS.laboratorio.obra * 0.25), `o reparo custou ${r?.custo}, esperava 25% da obra`);
+  confere(reparoDeCamara("laboratorio", nave("Média")) === null, "só a danificada se repara");
+  for (const [prazo, metade] of [["1 semana", "4 dias"], ["2 semanas", "1 semana"], ["3 dias", "2 dias"], ["1,5 semana", "6 dias"], ["3 semanas", "11 dias"]]) {
+    confere(metadeDoPrazo(prazo) === metade, `metade de ${prazo} deu ${metadeDoPrazo(prazo)}, esperava ${metade}`);
+  }
+  const b = botaoDoComodo("laboratorio", "danificada");
+  confere(/reparar/.test(b), "a dica da danificada não oferece o reparo");
+  confere(!("camaraOperacional" in camarasJs) && !("decidirCamara" in camarasJs),
+    "camaraOperacional/decidirCamara voltaram — liam o estado cru, sem o padrão de fábrica");
+}
+
 /* ── A ficha liga o clique e o arrastar à compra ───────────────────────── */
 {
   const fonte = fs.readFileSync(path.join(RAIZ, "spacedragon-module", "module", "nave-pc-ficha.js"), "utf8");
@@ -97,6 +114,8 @@ const nave = (tamanho, camaras = {}) => ({ ...naveVazia(), tamanho, camaras });
     "a ficha não intercepta a câmara arrastada do compêndio");
   confere(/super\._onDropItem\(event, data\)/.test(fonte), "o arrastar de outros itens deixou de ir para o sistema");
   confere(/porPainelDasCamaras\(raiz, this\.actor\)/.test(fonte), "o painel das câmaras não é desenhado na ficha");
+  confere(/=== "danificada"\) return this\.#repararOuArrancar\(chave\)/.test(fonte),
+    "o clique numa câmara danificada não oferece o reparo");
 }
 
 if (problemas.length) {

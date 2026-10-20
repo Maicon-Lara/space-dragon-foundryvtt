@@ -28,7 +28,7 @@
    dependa da T10-1 poderia ser testado sem fingir metade do Foundry. */
 import { POSTOS } from "./tripulacao.js";
 import { TIPOS } from "./tipos-de-nave.js";
-import { CAMARAS } from "./camaras.js";
+import { CAMARAS, REPARO_DE_CAMARA } from "./camaras.js";
 
 export const FLAG = "nave";
 
@@ -291,6 +291,36 @@ export function compraDeCamara(chave, nave) {
     usadas: o.usadas,
     // a de fábrica não conta contra o limite; as outras contam
     excede: !deFabrica && tamanho in LIVRES_POR_TAMANHO && o.usadas + 1 > o.livres,
+  };
+}
+
+/**
+ * Metade de um prazo de obra, arredondada para cima em dias: "1 semana" vira
+ * "4 dias", "2 semanas" vira "1 semana". O reparo da T10-2 leva metade do tempo
+ * da obra, e "metade de 1,5 semana" não é coisa que a mesa queira calcular.
+ */
+export function metadeDoPrazo(prazo) {
+  const m = String(prazo ?? "").match(/^\s*(\d+(?:[.,]\d+)?)\s*(dia|semana|m[eê]s)/i);
+  if (!m) return prazo ? `metade de ${prazo}` : "metade do prazo";
+  const n = Number(m[1].replace(",", "."));
+  const porUnidade = /^dia/i.test(m[2]) ? 1 : /^semana/i.test(m[2]) ? 7 : 30;
+  const dias = Math.ceil((n * porUnidade) / 2);
+  if (dias % 7 === 0) return `${dias / 7} ${dias === 7 ? "semana" : "semanas"}`;
+  return `${dias} ${dias === 1 ? "dia" : "dias"}`;
+}
+
+/**
+ * O que custa reparar uma câmara danificada: 25% da obra e metade do prazo
+ * (T10-2). Null se ela não está danificada.
+ */
+export function reparoDeCamara(chave, nave) {
+  const c = CAMARAS[chave];
+  if (!c || estadoDoComodo(nave, chave) !== "danificada") return null;
+  return {
+    chave,
+    rotulo: c.rotulo,
+    custo: Math.round((c.obra ?? 0) * REPARO_DE_CAMARA),
+    prazo: metadeDoPrazo(c.prazo),
   };
 }
 
