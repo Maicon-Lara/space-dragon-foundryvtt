@@ -93,7 +93,9 @@ spacedragon-module/   o que o Foundry carrega
 
 ```
 npm install
-npm run publicar    # build + zip
+npm run build       # tools/data → packs-src → LevelDB
+npm test            # os 24 testes, em paralelo (node tools/roda-testes.mjs --filtro nave roda só alguns)
+npm run publicar    # build + testes + zip
 ```
 
 `packs-src/` e os LevelDB **nunca na mão**: são saída do build. Os LevelDB e o
