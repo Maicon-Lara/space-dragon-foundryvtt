@@ -71,5 +71,8 @@
   "spacedragon.mutacao.selo": "Mutação: {atributo} vale {valor} nas contas. O campo guarda o valor rolado.",
   "spacedragon.janela.comprarCamara": "Comprar câmara (T10-2)",
   "spacedragon.aviso.camaraJaInstalada": "{camara} já está instalada em {nave}.",
-  "spacedragon.aviso.camaraDanificada": "{camara} está danificada em {nave}. A T10-2 manda repará-la (25% do valor, metade do prazo), e não comprá-la de novo."
+  "spacedragon.aviso.camaraDanificada": "{camara} está danificada em {nave}. A T10-2 manda repará-la (25% do valor, metade do prazo), e não comprá-la de novo.",
+  "spacedragon.janela.camaraDanificada": "Câmara danificada (T10-2)",
+  "spacedragon.botao.reparar": "Reparar",
+  "spacedragon.botao.arrancar": "Arrancar"
 }

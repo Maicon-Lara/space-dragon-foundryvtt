@@ -38,7 +38,7 @@
 
 import {
   naveDe, estadoDoComodo, proximoEstado, comodosInstalados, FLAG, updateDaNave,
-  CAMARAS_BASE, flagDeNave, resumoDasCamaras, compraDeCamara, creditos,
+  CAMARAS_BASE, flagDeNave, resumoDasCamaras, compraDeCamara, creditos, reparoDeCamara,
 } from "./nave-pc-dados.js";
 import { linhasDoVoo, CUSTOS } from "./nave-voo.js";
 import {
@@ -580,11 +580,9 @@ export function botaoDoComodo(chave, estado) {
   const titulo = estado === "ausente"
     ? `A nave não tem esta câmara. Clique para comprar: obra de ${creditos(c?.obra)} créditos, ` +
       `${c?.prazo ?? "prazo do Mestre"}. ${c?.efeito ?? ""}`
-    : `Está ${rotulo}. Clique para ${{
-        danificada: "marcar como danificada",
-        ausente: "desinstalar",
-      }[seguinte] ?? `mudar para ${seguinte}`}. ` +
-      `Consertar uma danificada custa 25% da obra e metade do prazo (T10-2).`;
+    : estado === "danificada"
+      ? `Está danificada. Clique para reparar (25% da obra, metade do prazo — T10-2) ou arrancar.`
+      : `Está instalada. Clique para marcar como danificada.`;
   return (
     `<button type="button" class="${CLASSE_SELETOR} estado-${estado}" ` +
     `data-comodo="${chave}" data-proximo="${seguinte}" ` +
@@ -911,6 +909,7 @@ export function registrarFichaDeNavePC() {
         const nave = naveDe(this.actor, ID);
         const chave = b.dataset.comodo;
         if (estadoDoComodo(nave, chave) === "ausente") return this.#comprarCamara(chave);
+        if (estadoDoComodo(nave, chave) === "danificada") return this.#repararOuArrancar(chave);
         const novo = proximoEstado(estadoDoComodo(nave, chave));
         await this.#gravarNave(nave, {
           ...nave,
@@ -969,6 +968,50 @@ export function registrarFichaDeNavePC() {
           `</div>`,
       });
       return chave;
+    }
+
+    /**
+     * A câmara danificada: reparar (25% da obra, metade do prazo) ou arrancar.
+     *
+     * Antes o clique numa danificada a ARRANCAVA, e a única volta era comprá-la
+     * de novo pelo preço cheio — embora a dica e a T10-2 falassem em reparo.
+     */
+    async #repararOuArrancar(chave) {
+      if (!this.isEditable) return null;
+      const nave = naveDe(this.actor, ID);
+      const r = reparoDeCamara(chave, nave);
+      if (!r) return null;
+      const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+      const V2 = globalThis.foundry?.applications?.api?.DialogV2;
+      const escolha = V2
+        ? await V2.wait({
+            window: { title: txt("spacedragon.janela.camaraDanificada") },
+            content:
+              `<p><strong>${esc(r.rotulo)}</strong> está danificada em ${esc(this.actor.name)}.</p>` +
+              `<p>Reparo: <strong>${creditos(r.custo)} créditos</strong>, ${esc(r.prazo)} (T10-2).</p>`,
+            buttons: [
+              { action: "reparar", label: txt("spacedragon.botao.reparar"), default: true },
+              { action: "arrancar", label: txt("spacedragon.botao.arrancar") },
+              { action: "cancelar", label: txt("spacedragon.botao.cancelar") },
+            ],
+            rejectClose: false,
+          })
+        : (globalThis.confirm?.(`Reparar ${r.rotulo} por ${creditos(r.custo)} créditos?`) ? "reparar" : null);
+
+      if (escolha !== "reparar" && escolha !== "arrancar") return null;
+      const novo = escolha === "reparar" ? "instalada" : "ausente";
+      await this.#gravarNave(nave, { ...nave, camaras: { ...(nave.camaras ?? {}), [chave]: novo } });
+      if (escolha === "reparar") {
+        await globalThis.ChatMessage?.create?.({
+          speaker: globalThis.ChatMessage.getSpeaker?.({ actor: this.actor }),
+          content:
+            `<div class="sd-teste"><div class="title">${esc(txt("spacedragon.janela.camaraDanificada"))}</div>` +
+            `<p><strong>${esc(r.rotulo)}</strong> reparada em <strong>${esc(this.actor.name)}</strong>.</p>` +
+            `<p>Reparo: ${creditos(r.custo)} créditos, ${esc(r.prazo)}.</p></div>`,
+        });
+      }
+      return escolha;
     }
 
     /**
