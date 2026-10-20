@@ -129,7 +129,11 @@
     }
   },
   "effects": [],
-  "flags": {},
+  "flags": {
+    "spacedragon": {
+      "mutacao": "degeneracao"
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

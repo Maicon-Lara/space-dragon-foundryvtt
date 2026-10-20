@@ -33,6 +33,7 @@ import {
   PROGRESSAO, ATRIBUTO, ROTULO_COLUNA, TESTES,
 } from "./dados.js";
 import { t as txt } from "./i18n.js";
+import { atributoEfetivo } from "./mutacoes.js";
 import { chassiDe, celulaDe, progressaoDe } from "./chassi.js";
 
 // Reexportado de propósito: quem quer a regra importa daqui, não do arquivo
@@ -103,9 +104,11 @@ function nivelDe(ator) {
  */
 function atributoDe(ator, atributo) {
   const campo = CAMPO_NA_FICHA[atributo];
-  return leNumero(ator?.system, [
+  const cru = leNumero(ator?.system, [
     campo, `atributos.${campo}`, `attributes.${campo}`, `abilities.${campo}`,
   ]);
+  // O valor EFETIVO: o campo mais as mutações do Mutante (mutacoes.js).
+  return cru ? atributoEfetivo(ator, atributo, cru) : cru;
 }
 
 /**

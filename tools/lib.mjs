@@ -470,7 +470,9 @@ export function raceAbilityDoc(ability, folderId, seedPrefix, sort) {
     img: ability.img || iconeSemantico(ability.nome, ICONS.race_ability),
     system: sys,
     effects: [],
-    flags: {},
+    // a flag `spacedragon.mutacao` diz o lado das habilidades do Mutante
+    // (module/mutacoes.js): a mesma chave existe nos dois seletores
+    flags: ability.flags ?? {},
     _stats: stats(),
     sort: sort,
     ownership: { default: 0 },

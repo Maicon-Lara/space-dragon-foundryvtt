@@ -42,6 +42,7 @@ import { aplicarJP, rolarJP } from "./jp.js";
 import { registrarFichaAmeaca, rolarJPAmeaca, rolarMoral } from "./ameaca.js";
 import { abrirDesativar, rolarDesativar } from "./robos.js";
 import { abrirReliquia, gerarReliquia, gerarDaCriatura, rolarDefeito } from "./reliquias.js";
+import { ligarMutacoes } from "./mutacoes-ficha.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -149,6 +150,7 @@ Hooks.once("ready", () => {
   ligarCabecalho();
   ligarGrandezas();
   ligarMental();
+  ligarMutacoes();
   ligarDegraus();
   ligarOrdemNaFicha();
   ligarOrdemNoCombate();

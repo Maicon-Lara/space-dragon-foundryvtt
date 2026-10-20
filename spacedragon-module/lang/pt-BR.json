@@ -59,5 +59,14 @@
   "spacedragon.aviso.faltaAtributo": "{teste} precisa do valor de {atributo}, que este módulo anota no campo {campo} da ficha.",
   "spacedragon.aviso.semClassePV": "A ficha precisa de uma classe para rolar pontos de vida.",
   "spacedragon.aviso.selecioneCosmonauta": "Selecione o token do cosmonauta.",
-  "spacedragon.aviso.criticoCosmonauta": "Dano crítico com multiplicador é habilidade de Cosmonauta."
+  "spacedragon.aviso.criticoCosmonauta": "Dano crítico com multiplicador é habilidade de Cosmonauta.",
+  "spacedragon.mutacao.titulo": "Mutações na ficha",
+  "spacedragon.mutacao.aplicado": "Aplicado automaticamente:",
+  "spacedragon.mutacao.mesa": "Fica com a mesa:",
+  "spacedragon.mutacao.mesmoNumero": "Aprimoramento e degeneração com o mesmo número ({numero}) na T2-1. O livro manda rerrolar até darem números diferentes.",
+  "spacedragon.mutacao.teto": "{atributo} no máximo {teto}",
+  "spacedragon.mutacao.distancia": "{ajuste} no ataque à distância",
+  "spacedragon.mutacao.dvSobe": "dado de vida uma categoria acima",
+  "spacedragon.mutacao.dvDesce": "dado de vida uma categoria abaixo",
+  "spacedragon.mutacao.selo": "Mutação: {atributo} vale {valor} nas contas. O campo guarda o valor rolado."
 }
