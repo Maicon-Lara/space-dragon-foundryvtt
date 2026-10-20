@@ -28,6 +28,7 @@
 
 import { atorUsaFichaSD } from "./ficha.js";
 import { envolver, MODELO_PERSONAGEM } from "./envelope.js";
+import { efeitosDe } from "./mutacoes.js";
 
 import { t as txt } from "./i18n.js";
 
@@ -40,10 +41,14 @@ export const JPS = {
   jps: { rotulo: "JPM", nome: "Jogada de Proteção Mental", mod: "mod_sabedoria", atributo: "Intelecto" },
 };
 
-/** Modificador que entra na rolagem: o do atributo mais o bônus de espécie. */
+/**
+ * Modificador que entra na rolagem: o do atributo, o bônus de espécie e o das
+ * mutações (Audição e Sexto Sentido na JPR, Mente na JPM — ver mutacoes.js).
+ */
 export function modificadorDaJP(sistema, qual) {
   const j = JPS[qual];
-  return (Number(sistema[j.mod]) || 0) + (Number(sistema[`${qual}_race_bonus`]) || 0);
+  return (Number(sistema[j.mod]) || 0) + (Number(sistema[`${qual}_race_bonus`]) || 0) +
+    (efeitosDe(sistema.parent).jp[qual] || 0);
 }
 
 /**

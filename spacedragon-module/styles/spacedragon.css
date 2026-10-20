@@ -636,6 +636,37 @@
   text-align: center;
 }
 
+/* ── Mutações do Mutante (module/mutacoes-ficha.js) ─────────────────────────
+ * O selo ao lado do atributo ajustado e o resumo no fim da aba de Espécie. */
+.spacedragon-ficha .sd-mutacao-ajuste {
+  display: inline-block;
+  margin-left: 2px;
+  padding: 0 3px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  font-size: 10px;
+  line-height: 14px;
+  vertical-align: middle;
+  cursor: help;
+}
+.spacedragon-ficha .sd-mutacao-resumo {
+  margin: 0.5rem 0 0;
+  padding: 0.4rem 0.5rem;
+  border: 1px dashed currentColor;
+  border-radius: 4px;
+  font-size: var(--font-size-12, 0.8rem);
+}
+.spacedragon-ficha .sd-mutacao-resumo p,
+.spacedragon-ficha .sd-mutacao-resumo ul {
+  margin: 0.25rem 0 0;
+}
+.spacedragon-ficha .sd-mutacao-resumo ul {
+  padding-left: 1.1rem;
+}
+.spacedragon-ficha .sd-mutacao-alerta {
+  font-weight: bold;
+}
+
 /* ── OS PAINÉIS ENCOLHENDO ─────────────────────────────────────────────────
  *
  * Por CONTÊINER, não por tela: a ficha do Foundry é uma janela que se arrasta,
@@ -669,3 +700,4 @@
   grid-template-columns: repeat(2, 1fr);
 }
 }
+

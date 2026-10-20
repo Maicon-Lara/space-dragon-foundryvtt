@@ -330,11 +330,50 @@ for (const [nivel, bonus] of T4_1) {
   if (bonusDeCP(nivel) !== bonus) erros.push(`T4-1: nível ${nivel} deu +${bonusDeCP(nivel)}, esperava +${bonus}`);
 }
 
+// ── As mutações do Mutante chegam aos getters ──
+// Força 9 com Atributo Ampliado (+3) tem de dar o modificador de Força 12, e
+// Intelecto 17 com Mente Simplificada (teto 10) o de Intelecto 10 — sem que
+// o campo mude. Sexto Sentido ampliado soma +2 no CP.
+{
+  const mutante = (aprimoramento, degeneracao, extra = {}) => {
+    const m = Object.assign(new CONFIG.Actor.dataModels.character(), atributos, extra);
+    const opcoes = (lado) => ({ variable_construction: { available_options: [] }, lado });
+    m.variable_construction_selections = { apr: [{ key: aprimoramento }], deg: [{ key: degeneracao }] };
+    m.parent = {
+      flags: { core: { sheetClass: "spacedragon.SDCharacterSheet" } },
+      system: m,
+      items: new Map([
+        ["apr", { name: "Aprimoramento", flags: {}, system: opcoes("aprimoramento") }],
+        ["deg", { name: "Degeneração", flags: {}, system: opcoes("degeneracao") }],
+      ]),
+    };
+    return m;
+  };
+  const referencia = (extra) => Object.assign(new CONFIG.Actor.dataModels.character(), atributos, extra, {
+    parent: { flags: { core: { sheetClass: "spacedragon.SDCharacterSheet" } } },
+  });
+
+  const a = mutante("08-forca-3", "03-mente-simplificada", { sabedoria: 17 });
+  if (a.mod_forca !== referencia({ forca: 12 }).mod_forca) {
+    erros.push(`Força 9 + Atributo Ampliado deu mod ${a.mod_forca}, esperava o de Força 12 (${referencia({ forca: 12 }).mod_forca})`);
+  }
+  if (a.forca !== 9) erros.push(`a mutação alterou o campo de Força: ${a.forca}`);
+  if (a.mod_sabedoria !== referencia({ sabedoria: 10 }).mod_sabedoria) {
+    erros.push(`Intelecto 17 + Mente Simplificada deu mod ${a.mod_sabedoria}, esperava o de Intelecto 10`);
+  }
+
+  const b = mutante("07-sexto-sentido", "08-forca-3", { _armadura: 2, level: 8 });
+  const semMutacao = referencia({ _armadura: 2, level: 8 });
+  if (b.ac_total !== semMutacao.ac_total + 2) {
+    erros.push(`Sexto Sentido deu CP ${b.ac_total}, esperava ${semMutacao.ac_total + 2} (+2 sobre o mesmo personagem sem mutação)`);
+  }
+}
+
 if (erros.length) {
   for (const e of erros) console.error(`  ✘ ${e}`);
   process.exit(1);
 }
-console.log("  ✔ modificadores: escala do Space Dragon só em quem usa a ficha dele, e reversível; CP com o bônus da T4-1");
+console.log("  ✔ modificadores: escala do Space Dragon só em quem usa a ficha dele, e reversível; CP com o bônus da T4-1; mutações do Mutante no atributo efetivo e no CP");
 
 // ── Danos Mortais no PV, e a Economia virou Créditos? ─────────────────────
 //

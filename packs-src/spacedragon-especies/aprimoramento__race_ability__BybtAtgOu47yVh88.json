@@ -129,7 +129,11 @@
     }
   },
   "effects": [],
-  "flags": {},
+  "flags": {
+    "spacedragon": {
+      "mutacao": "aprimoramento"
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

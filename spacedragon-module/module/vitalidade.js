@@ -28,6 +28,7 @@
 
 import { PROGRESSAO, FAIXAS, CAMPO_NA_FICHA, COLUNA_DERIVADA } from "./dados.js";
 import { chassiDe, celulaDe, progressaoDe } from "./chassi.js";
+import { efeitosDe, dadoDeVidaComMutacao } from "./mutacoes.js";
 
 import { t as txt } from "./i18n.js";
 
@@ -65,8 +66,12 @@ function celulaDV(ator, nivel) {
   return celulaDe(progressaoDe(ator), tabela, "dv", nivel) ?? null;
 }
 
-/** O dado de vida da classe, de `class.system.hp`. */
-const dadoDe = (ator) => Number(ator.system?.class?.system?.hp) || 0;
+/**
+ * O dado de vida da classe, de `class.system.hp` — uma categoria acima ou
+ * abaixo com Funções Vitais Superiores ou Debilitadas (mutacoes.js).
+ */
+const dadoDe = (ator) =>
+  dadoDeVidaComMutacao(Number(ator.system?.class?.system?.hp) || 0, efeitosDe(ator).dv);
 
 /**
  * Rola os pontos de vida do nível atual e soma ao total.

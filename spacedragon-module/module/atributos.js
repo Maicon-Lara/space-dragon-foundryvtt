@@ -50,6 +50,7 @@
 import { FAIXAS, CAMPO_NA_FICHA, COLUNA_DERIVADA } from "./dados.js";
 import { atorUsaFichaSD } from "./ficha.js";
 import { envolver, MODELO_PERSONAGEM } from "./envelope.js";
+import { atributoEfetivo, efeitosDe } from "./mutacoes.js";
 
 const ID = "spacedragon";
 
@@ -91,7 +92,8 @@ export function aplicarModificadores(ligado) {
       if (!coluna) continue;
       envolver(`${MODELO_PERSONAGEM}.mod_${campo}`, function (wrapped) {
         if (!modificadoresLigados || !atorUsaFichaSD(this.parent)) return wrapped();
-        return Number(coluna[faixaDe(this[campo])] ?? 0);
+        // O atributo EFETIVO: o campo mais as mutações do Mutante (mutacoes.js).
+        return Number(coluna[faixaDe(atributoEfetivo(this.parent, atributo, this[campo]))] ?? 0);
       });
     }
   }
@@ -136,7 +138,8 @@ export function aplicarCP() {
   if (cpEnvolvido) return true;
   cpEnvolvido = envolver(`${MODELO_PERSONAGEM}.ac_total`, function (wrapped) {
     const base = wrapped();
-    return atorUsaFichaSD(this.parent) ? base + bonusDeCP(this.level) : base;
+    // + o CP das mutações (Sexto Sentido ±2), além do bônus por nível
+    return atorUsaFichaSD(this.parent) ? base + bonusDeCP(this.level) + efeitosDe(this.parent).cp : base;
   });
   return cpEnvolvido;
 }

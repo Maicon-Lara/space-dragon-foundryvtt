@@ -111,6 +111,7 @@ export const especies = [
           "<p>O texto completo de cada mutação — genótipo, fenótipo e funcionamento — está no " +
           "journal <strong>Mutações do Homo novus</strong>.</p>",
         variable_construction: { choices_count: 1, available_options: opcoesDe("aprimoramento") },
+        flags: { spacedragon: { mutacao: "aprimoramento" } },
       },
       {
         nome: "Degeneração",
@@ -120,9 +121,10 @@ export const especies = [
           "sem ela sairia <em>Recuperação Acelerada</em> com <em>Recuperação Lenta</em>, que se anulam. " +
           "Quem rola nos dados rerrola até os dois dados darem números distintos; quem escolhe, " +
           "simplesmente não repete o número.</p>" +
-          "<p class='nota-casa'><em>A ficha não valida isso — os dois seletores são independentes. " +
-          "Confira o número antes de fechar.</em></p>",
+          "<p class='nota-casa'><em>Os dois seletores são independentes; se os números baterem, " +
+          "o resumo de mutações no fim desta aba avisa.</em></p>",
         variable_construction: { choices_count: 1, available_options: opcoesDe("degeneracao") },
+        flags: { spacedragon: { mutacao: "degeneracao" } },
       },
       {
         nome: "Herança Humana",

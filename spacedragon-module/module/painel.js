@@ -40,6 +40,7 @@ import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { CAMPO_NA_FICHA, NOME_ATRIBUTO, SIGLA, TESTES } from "./dados.js";
 import { preparar, rolar } from "./testes.js";
 import { habilidadeDe, progressaoDe } from "./chassi.js";
+import { atributoEfetivo } from "./mutacoes.js";
 import { HABILIDADE_ROBOS, blocoRobos, rolarDesativar, abrirDesativar } from "./robos.js";
 
 import { t as txt } from "./i18n.js";
@@ -48,7 +49,8 @@ const ID = "spacedragon";
 const MARCA = "spacedragon-testes";
 
 /** O valor de um atributo do Space Dragon, no campo do OD2 onde ele é anotado. */
-const atributoDe = (ator, a) => Number(ator.system?.[CAMPO_NA_FICHA[a]]) || 0;
+// O valor EFETIVO: o campo mais as mutações do Mutante (mutacoes.js).
+const atributoDe = (ator, a) => atributoEfetivo(ator, a);
 
 function valoresDe(ator) {
   const v = {};
