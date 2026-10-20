@@ -71,6 +71,8 @@
    já foi marcado, e nunca um seletor do sistema: assim um erro de mira não
    pode apagar a ficha inteira. */
 .spacedragon-nave-pc .sw-nave-nao-usa {
+  /* `!important` de propósito: esconde elemento do SISTEMA, que o mostra com
+     seletor de sete classes. Ver a nota no topo de spacedragon.css. */
   display: none !important;
 }
 
