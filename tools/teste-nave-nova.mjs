@@ -20,6 +20,7 @@ import { fileURLToPath } from "node:url";
 import { nomeDaClasse, opcoesDeTipo } from "../spacedragon-module/module/nave-nova.js";
 import { TIPOS } from "../spacedragon-module/module/tipos-de-nave.js";
 import { classesDeNave } from "./data/classes-de-nave.mjs";
+import { LANG } from "./lang-de-teste.mjs";
 
 const RAIZ = path.resolve(fileURLToPath(import.meta.url), "../..");
 const problemas = [];
@@ -77,7 +78,7 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
   confere(/hp: \{ value: 0, max: 0 \}/.test(corpo),
     "o criador rola os PV sozinho — a T10-1 dá o DADO, e sortear aqui faria duas naves " +
     "do mesmo tipo nascerem diferentes sem ninguém ver a rolagem");
-  confere(/role \$\{t\.pv\}/.test(corpo),
+  confere(/"spacedragon\.aviso\.pvZero", \{ pv: t\.pv \}/.test(corpo) && /role \{pv\}/.test(LANG["spacedragon.aviso.pvZero"] ?? ""),
     "o aviso não diz QUAL fórmula rolar — quem acabou de criar a nave não sabe de cor");
 
   // a ficha certa, já escolhida

@@ -61,6 +61,8 @@ import { navesAntigas, converterNave, converterTodas } from "./nave-converter.js
 import { migrarNavesNoReady, migrarNaves, navesPorMigrar, porMigrar } from "./nave-migrar-flag.js";
 import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaRodada } from "./ordem-inversao.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
 
@@ -87,11 +89,8 @@ Hooks.once("init", () => {
   // As fichas são registradas no `ready` (ver lá). Aqui só a opção, que
   // precisa existir antes de ser lida.
   game.settings.register(ID, "fichasPadrao", {
-    name: "Fichas Space Dragon como padrão",
-    hint:
-      "Todo personagem abre na Ficha Space Dragon e todo monstro na Ficha de Ameaça, " +
-      "sem marcar ator por ator. Desligue numa mesa mista com o Star Dragon ou com " +
-      "personagens de Old Dragon 2, e escolha a ficha no botão Sheet de cada ator.",
+    name: "spacedragon.opcao.fichasPadrao.nome",
+    hint: "spacedragon.opcao.fichasPadrao.dica",
     scope: "world",
     config: true,
     type: Boolean,
@@ -103,11 +102,8 @@ Hooks.once("init", () => {
   // ataque, proteção, PV e jogadas de proteção de todo personagem do mundo.
   // Quem instalar o módulo só pelos compêndios pode não querer isso.
   game.settings.register(ID, "modificadores", {
-    name: "Modificadores de atributo do Space Dragon",
-    hint:
-      "A ficha passa a usar a escala do Space Dragon — faixa neutra 10–11 e teto " +
-      "no 29 — em vez da do Old Dragon 2. Afeta ataque, proteção, PV e JP. " +
-      "Desligue para manter o cálculo original do sistema.",
+    name: "spacedragon.opcao.modificadores.nome",
+    hint: "spacedragon.opcao.modificadores.dica",
     scope: "world",
     config: true,
     type: Boolean,
@@ -215,9 +211,7 @@ Hooks.once("ready", () => {
         `${ID} | ${antigas} nave(s) no tipo de ator antigo. Para converter: ` +
         `game.modules.get("${ID}").api.converterTodas()`
       );
-      globalThis.ui?.notifications?.info?.(
-        `${antigas} nave(s) ainda usam o tipo de ator antigo. O console diz como converter.`
-      );
+      globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.navesAntigas", { n: antigas }));
     }
   } catch (e) {
     console.warn(`${ID} | as naves não puderam ser ligadas`, e);

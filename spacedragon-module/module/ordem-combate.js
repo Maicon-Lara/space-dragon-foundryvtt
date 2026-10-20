@@ -28,6 +28,8 @@ import { MODOS } from "./ordem.js";
 import { opcoesDeOrdem } from "./ordem-ficha.js";
 import { envolver } from "./envelope.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 // Marca de que já envolvemos o protótipo: um segundo envoltório sobre o nosso
 // chamaria a janela duas vezes.
@@ -127,11 +129,11 @@ async function perguntar(combat, ids = null) {
     `<div class="sd-ordem-combate">${meus.map(linha).join("")}</div>`;
 
   const escolhas = await V2.wait({
-    window: { title: `Ordem de Ação — rodada ${combat.round}` },
+    window: { title: txt("spacedragon.janela.ordemRodada", { rodada: combat.round }) },
     content: corpo,
     buttons: [
-      { action: "ok", label: "Declarar", default: true, callback: (_e, b) => lerFormulario(b.form) },
-      { action: "nao", label: "Depois", callback: () => null },
+      { action: "ok", label: txt("spacedragon.botao.declarar"), default: true, callback: (_e, b) => lerFormulario(b.form) },
+      { action: "nao", label: txt("spacedragon.botao.depois"), callback: () => null },
     ],
     rejectClose: false,
   });
@@ -170,13 +172,8 @@ async function perguntar(combat, ids = null) {
 
 export function registrarOpcaoDeCombate() {
   game.settings.register(ID, "ordemNoCombate", {
-    name: "Perguntar a ação ao começar o combate e a cada rodada",
-    hint:
-      "Em vez do botão de rolar iniciativa, cada jogador recebe uma janela com as ações do " +
-      "personagem dele (as armas já vêm com o dado de dano) e o valor da T7-2 vai para o " +
-      "rastreador. O Mestre declara pelos PNJs na mesma janela. Atenção: o rastreador do " +
-      "Foundry ordena do MAIOR para o menor, ao contrário da regra — use um módulo que " +
-      "inverta a ordenação, ou leia a fila de baixo para cima.",
+    name: "spacedragon.opcao.ordemNoCombate.nome",
+    hint: "spacedragon.opcao.ordemNoCombate.dica",
     scope: "world",
     config: true,
     type: Boolean,

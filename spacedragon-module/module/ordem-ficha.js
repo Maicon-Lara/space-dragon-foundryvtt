@@ -273,11 +273,8 @@ export function registrarOpcoes() {
    * esta ligada.
    */
   game.settings.register(ID, "ordemDeAcao", {
-    name: "Usar a Ordem de Ação (T7-2)",
-    hint:
-      "A regra do Space Dragon: o valor da iniciativa vem da AÇÃO que o personagem " +
-      "escolhe, e o MENOR age primeiro. Desligada, a mesa usa a iniciativa normal do " +
-      "Old Dragon 2 — uma rolagem por rodada, maior primeiro —, que é o padrão.",
+    name: "spacedragon.opcao.ordemDeAcao.nome",
+    hint: "spacedragon.opcao.ordemDeAcao.dica",
     scope: "world",
     config: true,
     type: Boolean,
@@ -287,12 +284,8 @@ export function registrarOpcoes() {
 
 
   game.settings.register(ID, "ordemNoRastreador", {
-    name: "Gravar a Ordem de Ação no rastreador de combate",
-    hint:
-      "O valor declarado vai para a iniciativa do combatente. Atenção: o rastreador do " +
-      "Foundry ordena do MAIOR para o menor, e a T7-2 manda o menor agir primeiro — a " +
-      "fila aparece ao contrário da regra. Deixe desligado, a menos que use um módulo " +
-      "que inverta a ordenação.",
+    name: "spacedragon.opcao.ordemNoRastreador.nome",
+    hint: "spacedragon.opcao.ordemNoRastreador.dica",
     scope: "world",
     config: true,
     type: Boolean,

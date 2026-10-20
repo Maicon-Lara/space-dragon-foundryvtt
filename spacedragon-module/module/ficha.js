@@ -35,6 +35,8 @@
 
 import { chassiDe } from "./chassi.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 export const MARCA_FICHA = "spacedragon-ficha";
 
@@ -129,7 +131,7 @@ export function registrarFicha(padrao = true) {
 
   foundry.documents.collections.Actors.registerSheet(ID, SDCharacterSheet, {
     types: ["character"],
-    label: "Ficha Space Dragon",
+    label: txt("spacedragon.ficha.personagem"),
     // Padrão do mundo pela opção do módulo, que vem LIGADA: numa mesa de
     // Space Dragon, todo personagem abre nela sem ninguém marcar ator por
     // ator. Numa mesa mista com o Star Dragon, o GM desliga, e quem é do Space

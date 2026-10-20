@@ -29,6 +29,8 @@
 import { PROGRESSAO, FAIXAS, CAMPO_NA_FICHA, COLUNA_DERIVADA } from "./dados.js";
 import { chassiDe, celulaDe, progressaoDe } from "./chassi.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 
 function faixaDe(valor) {
@@ -74,7 +76,7 @@ const dadoDe = (ator) => Number(ator.system?.class?.system?.hp) || 0;
 export async function rolarPV(ator = null, { nivel = null } = {}) {
   ator = ator ?? canvas?.tokens?.controlled?.[0]?.actor ?? game.user?.character ?? null;
   if (!ator?.system?.class) {
-    ui.notifications.warn("A ficha precisa de uma classe para rolar pontos de vida.");
+    ui.notifications.warn(txt("spacedragon.aviso.semClassePV"));
     return null;
   }
   const n = Number(nivel ?? ator.system?.level) || 1;
@@ -157,12 +159,12 @@ export function multiplicadorCritico(ator, nivel = null) {
 export async function rolarCritico(ator, formula = null, { degrausExtra = 0 } = {}) {
   ator = ator ?? canvas?.tokens?.controlled?.[0]?.actor ?? game.user?.character ?? null;
   if (!ator) {
-    ui.notifications.warn("Selecione o token do cosmonauta.");
+    ui.notifications.warn(txt("spacedragon.aviso.selecioneCosmonauta"));
     return null;
   }
   const base = multiplicadorCritico(ator);
   if (!base) {
-    ui.notifications.warn("Dano crítico com multiplicador é habilidade de Cosmonauta.");
+    ui.notifications.warn(txt("spacedragon.aviso.criticoCosmonauta"));
     return null;
   }
   if (!formula) {
@@ -205,22 +207,22 @@ async function pedeFormula(mult) {
   const V2 = foundry.applications?.api?.DialogV2;
   if (V2) {
     return V2.wait({
-      window: { title: "Dano Crítico — Space Dragon" },
+      window: { title: txt("spacedragon.janela.danoCritico") },
       content: conteudo,
       buttons: [
-        { action: "ok", label: "Rolar", default: true, callback: (_e, b) => colhe(b.form) },
-        { action: "nao", label: "Cancelar", callback: () => null },
+        { action: "ok", label: txt("spacedragon.botao.rolar"), default: true, callback: (_e, b) => colhe(b.form) },
+        { action: "nao", label: txt("spacedragon.botao.cancelar"), callback: () => null },
       ],
       rejectClose: false,
     });
   }
   return new Promise((ok) => {
     new Dialog({
-      title: "Dano Crítico — Space Dragon",
+      title: txt("spacedragon.janela.danoCritico"),
       content: conteudo,
       buttons: {
-        ok: { label: "Rolar", callback: (h) => ok(colhe((h[0] ?? h).querySelector("form"))) },
-        nao: { label: "Cancelar", callback: () => ok(null) },
+        ok: { label: txt("spacedragon.botao.rolar"), callback: (h) => ok(colhe((h[0] ?? h).querySelector("form"))) },
+        nao: { label: txt("spacedragon.botao.cancelar"), callback: () => ok(null) },
       },
       default: "ok",
       close: () => ok(null),

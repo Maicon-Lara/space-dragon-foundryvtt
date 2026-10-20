@@ -26,6 +26,8 @@
  * "Sheet". As criaturas do Bestiário deste módulo já vêm com ela marcada.
  */
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 export const MARCA_AMEACA = "spacedragon-ameaca";
 
@@ -49,7 +51,7 @@ const sinal = (n) => (n >= 0 ? `+${n}` : `${n}`);
 export async function rolarJPAmeaca(ator, situacional = 0) {
   const { valor, nota } = lerJP(ator.system?.jp);
   if (valor === null) {
-    ui.notifications.warn(`${ator.name} não tem JP numérica: "${ator.system?.jp ?? ""}".`);
+    ui.notifications.warn(txt("spacedragon.aviso.semJP", { nome: ator.name, valor: ator.system?.jp ?? "" }));
     return null;
   }
   const sit = Number(situacional) || 0;
@@ -73,7 +75,7 @@ export async function rolarJPAmeaca(ator, situacional = 0) {
 export async function rolarMoral(ator, situacional = 0) {
   const moral = lerMoral(ator.system?.mo);
   if (moral === null) {
-    ui.notifications.warn(`${ator.name} não tem Moral numérica: "${ator.system?.mo ?? ""}".`);
+    ui.notifications.warn(txt("spacedragon.aviso.semMoral", { nome: ator.name, valor: ator.system?.mo ?? "" }));
     return null;
   }
   // Moral de 2 a 12 sem "%" é a escala do Old Dragon 2 (2d6), não a do livro.
@@ -102,9 +104,9 @@ async function perguntarSituacao(titulo) {
   const V2 = foundry.applications?.api?.DialogV2;
   if (!V2?.prompt) return 0;
   const r = await V2.prompt({
-    window: { title: `${titulo} — modificador de situação` },
+    window: { title: txt("spacedragon.janela.situacao", { rotulo: titulo }) },
     content: `<div class="form-group"><label>Modificador de situação</label><input type="number" name="sit" value="0" autofocus></div>`,
-    ok: { label: "Rolar", callback: (ev, botao) => Number(botao.form?.elements?.sit?.value) || 0 },
+    ok: { label: txt("spacedragon.botao.rolar"), callback: (ev, botao) => Number(botao.form?.elements?.sit?.value) || 0 },
     rejectClose: false,
   });
   return r ?? null;
@@ -322,7 +324,7 @@ function ligarEquipamento(raiz, ator) {
         // Apagar item é irreversível, e aqui é um clique ao lado do de abrir.
         const V2 = foundry.applications?.api?.DialogV2;
         const ok = V2?.confirm
-          ? await V2.confirm({ window: { title: "Remover equipamento" }, content: `<p>Remover <strong>${esc(doc.name)}</strong> de ${esc(ator.name)}?</p>`, rejectClose: false })
+          ? await V2.confirm({ window: { title: txt("spacedragon.janela.removerEquipamento") }, content: `<p>Remover <strong>${esc(doc.name)}</strong> de ${esc(ator.name)}?</p>`, rejectClose: false })
           : true;
         if (ok) await ator.deleteEmbeddedDocuments("Item", [doc.id]);
       })();
@@ -431,7 +433,7 @@ export function registrarFichaAmeaca(padrao = true) {
 
   foundry.documents.collections.Actors.registerSheet(ID, SDMonsterSheet, {
     types: ["monster"],
-    label: "Ficha de Ameaça Space Dragon",
+    label: txt("spacedragon.ficha.ameaca"),
     // Padrão do mundo pela opção "Fichas Space Dragon como padrão". Numa mesa
     // mista, o GM desliga e escolhe no botão Sheet de cada monstro.
     makeDefault: !!padrao,

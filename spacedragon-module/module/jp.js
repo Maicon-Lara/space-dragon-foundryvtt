@@ -29,6 +29,8 @@
 import { atorUsaFichaSD } from "./ficha.js";
 import { envolver, MODELO_PERSONAGEM } from "./envelope.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 
 /** As três JP: o nome no sistema, o rótulo do Space Dragon e o atributo. */
@@ -104,9 +106,9 @@ export async function perguntarSituacao(rotulo) {
   const V2 = foundry.applications?.api?.DialogV2;
   if (!V2?.prompt) return 0;
   const r = await V2.prompt({
-    window: { title: `${rotulo} — modificador de situação` },
+    window: { title: txt("spacedragon.janela.situacao", { rotulo }) },
     content: `<div class="form-group"><label>Modificador de situação</label><input type="number" name="sit" value="0" autofocus></div>`,
-    ok: { label: "Rolar", callback: (ev, botao) => Number(botao.form?.elements?.sit?.value) || 0 },
+    ok: { label: txt("spacedragon.botao.rolar"), callback: (ev, botao) => Number(botao.form?.elements?.sit?.value) || 0 },
     rejectClose: false,
   });
   return r ?? null;

@@ -28,6 +28,8 @@
 
 import { duracaoDaRodada, ordenarCrescente, simultaneos } from "./ordem-de-acao.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 
 /**
@@ -98,11 +100,7 @@ export function conferirCombate() {
 /** Avisa o Mestre se a ordenação foi perdida para outro módulo. */
 export function avisarSeOrdemPerdida() {
   if (!ordemLigada() || conferirCombate()) return;
-  const msg =
-    "A Ordem de Ação está ligada, mas outro módulo substituiu a classe de " +
-    "Combate e a ordenação crescente se perdeu — o Combat Tracker vai ordenar " +
-    "do MAIOR para o menor, ao contrário da regra. Desligue o outro módulo, ou " +
-    "desligue a Ordem de Ação para não jogar com a ordem invertida sem perceber.";
+  const msg = txt("spacedragon.aviso.ordemPerdida");
   console.warn(`spacedragon | ${msg}`);
   ui.notifications?.error(msg, { permanent: true });
 }

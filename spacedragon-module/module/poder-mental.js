@@ -31,6 +31,8 @@ import { orcamento } from "./mental.js";
 import { preparar } from "./testes.js";
 import { CAMPO_NA_FICHA } from "./dados.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 const FLAG_GASTO = "alcanceGasto";
 
@@ -71,14 +73,11 @@ export async function realizarPoder(ator, item, { perguntar = confirmar } = {}) 
   const o = orcamento(ator);
 
   if (g > o.limite) {
-    ui.notifications.warn(`${item.name} é de ${g}ª Grandeza, acima do limite deste personagem, que é a ${o.limite}ª.`);
+    ui.notifications.warn(txt("spacedragon.aviso.poderAcimaDoLimite", { nome: item.name, grandeza: g, limite: o.limite }));
     return null;
   }
   if (g > o.restante) {
-    ui.notifications.warn(
-      `Faltam ${g - o.restante}% de alcance mental: restam ${o.restante}% e ${item.name} custa ${g}%. ` +
-      "O livro é taxativo: o alcance nunca pode ser ultrapassado."
-    );
+    ui.notifications.warn(txt("spacedragon.aviso.alcanceInsuficientePoder", { falta: g - o.restante, restante: o.restante, nome: item.name, custo: g }));
     return null;
   }
 

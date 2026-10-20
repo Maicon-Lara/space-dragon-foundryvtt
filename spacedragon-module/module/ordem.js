@@ -28,6 +28,8 @@
  * que se guarda no combatente.
  */
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 
 // Escape próprio: o nome do combatente é digitado pela mesa e vai para dentro
@@ -104,22 +106,22 @@ async function pergunta(linhas) {
   const conteudo = formulario(linhas);
   if (V2) {
     return V2.wait({
-      window: { title: "Ordem de Ação — Space Dragon" },
+      window: { title: txt("spacedragon.janela.ordem") },
       content: conteudo,
       buttons: [
-        { action: "ok", label: "Ordenar", default: true, callback: (_e, b) => colhe(b.form) },
-        { action: "nao", label: "Cancelar", callback: () => null },
+        { action: "ok", label: txt("spacedragon.botao.ordenar"), default: true, callback: (_e, b) => colhe(b.form) },
+        { action: "nao", label: txt("spacedragon.botao.cancelar"), callback: () => null },
       ],
       rejectClose: false,
     });
   }
   return new Promise((ok) => {
     new Dialog({
-      title: "Ordem de Ação — Space Dragon",
+      title: txt("spacedragon.janela.ordem"),
       content: conteudo,
       buttons: {
-        ok: { label: "Ordenar", callback: (h) => ok(colhe((h[0] ?? h).querySelector("form"))) },
-        nao: { label: "Cancelar", callback: () => ok(null) },
+        ok: { label: txt("spacedragon.botao.ordenar"), callback: (h) => ok(colhe((h[0] ?? h).querySelector("form"))) },
+        nao: { label: txt("spacedragon.botao.cancelar"), callback: () => ok(null) },
       },
       default: "ok",
       close: () => ok(null),
@@ -149,7 +151,7 @@ export async function abrirOrdem(linhas = 6) {
   }
 
   if (!combatentes.length) {
-    ui.notifications.warn("Nenhum combatente foi preenchido.");
+    ui.notifications.warn(txt("spacedragon.aviso.nenhumCombatente"));
     return null;
   }
 

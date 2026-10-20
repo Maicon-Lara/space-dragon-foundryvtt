@@ -42,6 +42,8 @@ import { preparar, rolar } from "./testes.js";
 import { habilidadeDe, progressaoDe } from "./chassi.js";
 import { HABILIDADE_ROBOS, blocoRobos, rolarDesativar, abrirDesativar } from "./robos.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 const MARCA = "spacedragon-testes";
 
@@ -208,7 +210,7 @@ function injeta(app, elemento) {
  */
 export function diagnostico() {
   const app = Object.values(ui.windows).find((w) => w?.actor?.type === "character");
-  if (!app) return ui.notifications.warn("Abra a ficha de um personagem primeiro.");
+  if (!app) return ui.notifications.warn(txt("spacedragon.aviso.abraFicha"));
 
   const raiz = app.element?.[0] ?? app.element;
   const naTela = [...(raiz?.querySelectorAll(".class-abilities .item") ?? [])]
