@@ -1,0 +1,22 @@
+{
+  "name": "7º NT",
+  "sorting": "m",
+  "folder": "i0lijuwtAHzB9kzc",
+  "type": "Item",
+  "_id": "W0gO7clMcOPqKvuN",
+  "description": "",
+  "sort": 7,
+  "color": "#2f7c5c",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!W0gO7clMcOPqKvuN"
+}

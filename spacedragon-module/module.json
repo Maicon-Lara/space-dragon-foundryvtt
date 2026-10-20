@@ -2,7 +2,7 @@
   "id": "spacedragon",
   "title": "Space Dragon — Livro Básico",
   "description": "O conteudo do Livro Basico Aprimorado de Space Dragon como compendios para o Foundry VTT, no sistema Old Dragon 2. As regras sao as do livro base, sem conversao.",
-  "version": "1.26.5",
+  "version": "1.27.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13"
@@ -42,17 +42,6 @@
   ],
   "packs": [
     {
-      "name": "spacedragon-classes",
-      "label": "Space Dragon — Classes",
-      "path": "packs/spacedragon-classes",
-      "type": "Item",
-      "system": "olddragon2e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
       "name": "spacedragon-especies",
       "label": "Space Dragon — Espécies",
       "path": "packs/spacedragon-especies",
@@ -64,9 +53,9 @@
       }
     },
     {
-      "name": "spacedragon-equipamento",
-      "label": "Space Dragon — Equipamento",
-      "path": "packs/spacedragon-equipamento",
+      "name": "spacedragon-classes",
+      "label": "Space Dragon — Classes",
+      "path": "packs/spacedragon-classes",
       "type": "Item",
       "system": "olddragon2e",
       "ownership": {
@@ -86,10 +75,43 @@
       }
     },
     {
+      "name": "spacedragon-equipamento",
+      "label": "Space Dragon — Equipamento",
+      "path": "packs/spacedragon-equipamento",
+      "type": "Item",
+      "system": "olddragon2e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
       "name": "spacedragon-aparatos",
       "label": "Space Dragon — Aparatos",
       "path": "packs/spacedragon-aparatos",
       "type": "Item",
+      "system": "olddragon2e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "spacedragon-naves",
+      "label": "Space Dragon — Naves e Veículos",
+      "path": "packs/spacedragon-naves",
+      "type": "Item",
+      "system": "olddragon2e",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "spacedragon-bestiario",
+      "label": "Space Dragon — Bestiário",
+      "path": "packs/spacedragon-bestiario",
+      "type": "Actor",
       "system": "olddragon2e",
       "ownership": {
         "PLAYER": "OBSERVER",
@@ -128,28 +150,50 @@
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
       }
-    },
+    }
+  ],
+  "packFolders": [
     {
-      "name": "spacedragon-bestiario",
-      "label": "Space Dragon — Bestiário",
-      "path": "packs/spacedragon-bestiario",
-      "type": "Actor",
-      "system": "olddragon2e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
-      "name": "spacedragon-naves",
-      "label": "Naves e Veículos (Space Dragon)",
-      "path": "packs/spacedragon-naves",
-      "type": "Item",
-      "system": "olddragon2e",
-      "ownership": {
-        "PLAYER": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
+      "name": "Space Dragon",
+      "sorting": "m",
+      "color": "#1f3a4d",
+      "packs": [],
+      "folders": [
+        {
+          "name": "Personagens",
+          "sorting": "m",
+          "packs": [
+            "spacedragon-especies",
+            "spacedragon-classes",
+            "spacedragon-poderes"
+          ]
+        },
+        {
+          "name": "Equipamento e Naves",
+          "sorting": "m",
+          "packs": [
+            "spacedragon-equipamento",
+            "spacedragon-aparatos",
+            "spacedragon-naves"
+          ]
+        },
+        {
+          "name": "Mestre",
+          "sorting": "m",
+          "packs": [
+            "spacedragon-bestiario",
+            "spacedragon-tabelas"
+          ]
+        },
+        {
+          "name": "Regras e Macros",
+          "sorting": "m",
+          "packs": [
+            "spacedragon-journal",
+            "spacedragon-macros"
+          ]
+        }
+      ]
     }
   ],
   "manifest": "https://github.com/Maicon-Lara/space-dragon-foundryvtt/releases/latest/download/module.json",

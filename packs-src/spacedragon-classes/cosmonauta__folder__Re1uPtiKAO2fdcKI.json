@@ -1,0 +1,22 @@
+{
+  "name": "Cosmonauta",
+  "sorting": "m",
+  "folder": null,
+  "type": "Item",
+  "_id": "Re1uPtiKAO2fdcKI",
+  "description": "",
+  "sort": 2,
+  "color": "#5a3f7c",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!Re1uPtiKAO2fdcKI"
+}

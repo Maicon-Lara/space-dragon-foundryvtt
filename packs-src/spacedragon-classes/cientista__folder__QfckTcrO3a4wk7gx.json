@@ -1,0 +1,22 @@
+{
+  "name": "Cientista",
+  "sorting": "m",
+  "folder": null,
+  "type": "Item",
+  "_id": "QfckTcrO3a4wk7gx",
+  "description": "",
+  "sort": 1,
+  "color": "#5a3f7c",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!QfckTcrO3a4wk7gx"
+}

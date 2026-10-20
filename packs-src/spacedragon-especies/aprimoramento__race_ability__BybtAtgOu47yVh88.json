@@ -1,11 +1,11 @@
 {
-  "folder": "putLQYz2gENoarVj",
+  "folder": "WAUcdYIeG3mvmHVa",
   "name": "Aprimoramento",
   "type": "race_ability",
   "_id": "BybtAtgOu47yVh88",
   "img": "systems/olddragon2e/assets/icons/diamond.svg",
   "system": {
-    "description": "<p>A metade boa do <strong>balanço genético</strong>. Escolha <strong>uma</strong> mutação da coluna de aprimoramentos da <strong>T2-1</strong> no seletor acima — ou role 1d10 e pegue a de número correspondente.</p><p>As duas que mandam rolar 1d6 numa subtabela (<em>Sentido Ampliado</em> e <em>Atributo Ampliado</em>) já vêm abertas nas seis variantes, então a escolha é uma só.</p><p>O texto completo de cada mutação — genótipo, fenótipo e funcionamento — está no journal <strong>Mutações do Homo novus</strong>.</p>",
+    "description": "<p>A metade boa do <strong>balanço genético</strong>. Escolha <strong>uma</strong> mutação da coluna de aprimoramentos da <strong>T2-1</strong> no seletor acima — ou role 1d10 e pegue a de número correspondente.</p><p>As duas que mandam rolar 1d6 numa subtabela (<em>Sentido Ampliado</em> e <em>Atributo Ampliado</em>) já vêm abertas nas seis variantes, então a escolha é uma só.</p><p>O que a mutação dá em número — atributo, JP, CP, ataque, dado de vida — entra sozinho na ficha; o resumo no fim desta aba mostra o que entrou e o que fica com a mesa.</p><p>O texto completo de cada mutação — genótipo, fenótipo e funcionamento — está no journal <strong>Mutações do Homo novus</strong>.</p>",
     "xp": null,
     "jp": {
       "jpc": false,
@@ -145,7 +145,7 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "sort": 0,
+  "sort": 100,
   "ownership": {
     "default": 0
   },

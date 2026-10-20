@@ -79,13 +79,26 @@ const P_PODERES = "spacedragon-poderes";
 const P_APARATOS = "spacedragon-aparatos";
 const P_BESTIARIO = "spacedragon-bestiario";
 
+/* ── A ORDEM DAS PASTAS ───────────────────────────────────────────────────
+ *
+ * Toda pasta nascia com `sort: 0`. Com empate, o Foundry ordena pelo nome, e
+ * a "10ª Grandeza" aparecia antes da "1ª", o "Mutante" antes do "Humano".
+ * Agora cada pasta tem a posição dela, na ordem do livro.
+ *
+ * E não há mais pasta-raiz repetindo o nome do compêndio ("Classes" dentro de
+ * "Space Dragon — Classes"): era um clique a mais para chegar em qualquer
+ * coisa.
+ */
+const COR = {
+  especie: "#2f5d7c",
+  classe: "#5a3f7c",
+  poder: "#5c2f7c",
+};
+
 /** Cor por pasta: sem isso o compêndio vira uma lista cinza indistinguível. */
 const PALETA = {
-  "Espécies": "#2f5d7c",
-  "Classes": "#5a3f7c",
   "Armas": "#7c4a2f",
   "Vestes e Proteção": "#2f6b6b",
-  "Poderes Mentais": "#5c2f7c",
   "Aparatos Tecnológicos": "#7c6b2f",
   "Feitos Científicos": "#2f7c5c",
   "Bestiário": "#7c2f3a",
@@ -95,20 +108,20 @@ const PALETA = {
 // ── Espécies ────────────────────────────────────────────────────────────────
 function montaEspecies() {
   const docs = [];
-  const pasta = folderDoc("Espécies", "Item", "sd-especies");
-  docs.push(pasta);
 
   especies.forEach((esp, i) => {
-    // Mesma razão das classes: as habilidades da espécie ficam junto DELA.
-    const sub = folderDoc(`Espécies — ${esp.nome}`, "Item", `sd-especie:${esp.nome}`);
+    // Uma pasta por espécie, com a ESPÉCIE dentro e primeiro, e as habilidades
+    // dela logo abaixo. Antes a espécie ficava numa pasta e as habilidades em
+    // outra, e quem procurava o Mutante achava dois lugares.
+    const sub = folderDoc(esp.nome, "Item", `sd-especie:${esp.nome}`, { sort: i + 1, color: COR.especie });
     docs.push(sub);
 
     const habs = (esp.habilidades ?? []).map((h, j) =>
-      raceAbilityDoc(h, sub._id, `sd-race-ab:${esp.nome}`, j));
+      raceAbilityDoc(h, sub._id, `sd-race-ab:${esp.nome}`, 100 + j));
     docs.push(...habs);
     docs.push({
-      ...raceDoc(esp, pasta._id, habs.map((h) => itemUuid(P_ESPECIES, h._id))),
-      sort: (i + 1) * 1000,
+      ...raceDoc(esp, sub._id, habs.map((h) => itemUuid(P_ESPECIES, h._id))),
+      sort: 0,
     });
   });
   return docs;
@@ -197,15 +210,15 @@ function degraus(e) {
 
 function montaClasses() {
   const docs = [];
-  const pasta = folderDoc("Classes", "Item", "sd-classes");
-  docs.push(pasta);
 
   classes.forEach((cls, i) => {
-    // Uma subpasta POR CLASSE. Sem isso, as habilidades e especializações caem
-    // numa lista única em ordem alfabética, e achar o que é do Gatuno vira
-    // caça. O "Pai — Filho" no nome é o que a aninhaPastas lê para hierarquizar.
-    const sub = folderDoc(`Classes — ${cls.nome}`, "Item", `sd-classe:${cls.nome}`);
-    docs.push(sub);
+    // Uma pasta POR CLASSE, na ordem do livro: a classe e as especializações
+    // à vista, e as habilidades numa subpasta. As habilidades entram sozinhas
+    // na ficha com a classe; ficavam misturadas aos itens que o jogador
+    // arrasta, e "Alcance Mental" aparecia antes de "Mentálico".
+    const sub = folderDoc(cls.nome, "Item", `sd-classe:${cls.nome}`, { sort: i + 1, color: COR.classe });
+    const pHabs = folderDoc(`${cls.nome} — Habilidades`, "Item", `sd-classe-hab:${cls.nome}`, { sort: 1, color: COR.classe });
+    docs.push(sub, pHabs);
 
     // ORDENADAS POR NÍVEL. O template do OD2 percorre `class_abilities` na
     // ordem do array, sem ordenar, então a ficha do Cosmonauta abria com
@@ -217,7 +230,7 @@ function montaClasses() {
     const habs = (cls.habilidades ?? [])
       .map((h, ordem) => ({ ...h, ordem }))
       .sort((a, b) => (a.level ?? 1) - (b.level ?? 1) || a.ordem - b.ordem)
-      .map((h, j) => classAbilityDoc(h, sub._id, `sd-class-ab:${cls.nome}`, j));
+      .map((h, j) => classAbilityDoc(h, pHabs._id, `sd-class-ab:${cls.nome}`, j));
     docs.push(...habs);
     const uuidsBase = habs.map((h) => itemUuid(P_CLASSES, h._id));
 
@@ -233,7 +246,7 @@ function montaClasses() {
       .forEach((e, j) => {
         const hab = classAbilityDoc(
           { nome: e.nome, level: 5, desc: degraus(e) },
-          sub._id, `sd-espec:${cls.nome}`, 100 + j
+          pHabs._id, `sd-espec:${cls.nome}`, 100 + j
         );
         docs.push(hab);
         docs.push({
@@ -284,23 +297,25 @@ function montaTabelas() {
       // `range` e `text` são os nomes que o rollTableDoc espera — conferidos na
       // lib, não deduzidos. Cada resultado ocupa uma face só.
       resultados: PARES.map((p) => ({ text: p[lado].nome, range: [p.indice, p.indice] })),
-    }, PARES.length));
+    }, lado === "aprimoramento" ? 100 : 200));
   }
 
   // As do Capítulo 11 são listas simples: a fórmula é 1dN, com N sendo o
   // tamanho da lista. A T11-1 tem ONZE entradas, então é 1d11 — não 1d10.
-  for (const [nome, desc, lista] of [
+  // O segundo argumento do rollTableDoc é a POSIÇÃO no compêndio. Ele recebia
+  // o tamanho da lista, e a T11-2 (9 resultados) aparecia antes da T2-1.
+  for (const [nome, desc, lista, posicao] of [
     ["T11-1: Clichês de ficção científica",
-     "Role para um gancho de aventura pulp.", CLICHES],
+     "Role para um gancho de aventura pulp.", CLICHES, 300],
     ["T11-2: Interesses de explorações",
-     "O que motiva uma expedição, ou o que ela pode render.", INTERESSES],
+     "O que motiva uma expedição, ou o que ela pode render.", INTERESSES, 400],
   ]) {
     docs.push(rollTableDoc({
       nome,
       desc,
       formula: `1d${lista.length}`,
       resultados: lista.map((texto, i) => ({ text: texto, range: [i + 1, i + 1] })),
-    }, lista.length));
+    }, posicao));
   }
 
   return docs;
@@ -379,8 +394,8 @@ function descricaoVeste(v) {
 
 function montaEquipamento() {
   const docs = [];
-  const armas = folderDoc("Armas", "Item", "sd-armas");
-  const vestes = folderDoc("Vestes e Proteção", "Item", "sd-vestes");
+  const armas = folderDoc("Armas", "Item", "sd-armas", { sort: 1 });
+  const vestes = folderDoc("Vestes e Proteção", "Item", "sd-vestes", { sort: 2 });
   docs.push(armas, vestes);
 
   ARMAS.forEach((a, i) => {
@@ -433,8 +448,6 @@ function montaEquipamento() {
 // diário.
 function montaPoderes() {
   const docs = [];
-  const raiz = folderDoc("Poderes Mentais", "Item", "sd-poderes");
-  docs.push(raiz);
 
   const porGrandeza = new Map();
   for (const p of PODERES) {
@@ -443,7 +456,8 @@ function montaPoderes() {
   }
 
   for (const g of [...porGrandeza.keys()].sort((a, b) => a - b)) {
-    const sub = folderDoc(`Poderes Mentais — ${g}ª Grandeza`, "Item", `sd-grandeza:${g}`);
+    // `sort: g`: sem ele a 10ª vinha antes da 1ª, pela ordem do nome.
+    const sub = folderDoc(`${g}ª Grandeza`, "Item", `sd-grandeza:${g}`, { sort: g, color: COR.poder });
     docs.push(sub);
 
     porGrandeza.get(g).forEach((p, i) => {
@@ -493,9 +507,24 @@ function corpoAparato(a) {
 
 function montaAparatos() {
   const docs = [];
-  const pAparatos = folderDoc("Aparatos Tecnológicos", "Item", "sd-aparatos");
-  const pFeitos = folderDoc("Feitos Científicos", "Item", "sd-feitos");
+  const pAparatos = folderDoc("Aparatos Tecnológicos", "Item", "sd-aparatos", { sort: 1 });
+  const pFeitos = folderDoc("Feitos Científicos", "Item", "sd-feitos", { sort: 2 });
   docs.push(pAparatos, pFeitos);
+
+  // Uma subpasta por nível tecnológico, que é o que limita quem constrói o
+  // quê: 54 aparatos numa lista só não se percorrem. "Pai — Filho" no nome é
+  // o que a aninhaPastas lê para pendurar a subpasta.
+  const porNT = new Map();
+  const pastaNT = (pai, a) => {
+    const chave = `${pai.name}|${a.nt ?? "?"}`;
+    if (!porNT.has(chave)) {
+      const rotulo = a.nt === null || a.nt === undefined ? "NT variável" : `${a.nt}º NT`;
+      const f = folderDoc(`${pai.name} — ${rotulo}`, "Item", `sd-nt:${pai.name}`, { sort: a.nt ?? 99 });
+      docs.push(f);
+      porNT.set(chave, f);
+    }
+    return porNT.get(chave);
+  };
 
   APARATOS.forEach((a, i) => {
     docs.push(miscDoc({
@@ -506,7 +535,7 @@ function montaAparatos() {
       desc: corpoAparato(a),
       cost: a.custo,
       ...(a.categoria ? { flags: { spacedragon: { aparato: { categoria: a.categoria, nt: a.nt ?? null, feito: !!a.feito } } } } : {}),
-    }, a.feito ? pFeitos._id : pAparatos._id, a.feito ? "sd-feito" : "sd-aparato", i * 10));
+    }, pastaNT(a.feito ? pFeitos : pAparatos, a)._id, a.feito ? "sd-feito" : "sd-aparato", i * 10));
   });
   return docs;
 }
@@ -518,8 +547,8 @@ function montaAparatos() {
 // como modelo de ficha; o outro é o Zork que ataca a base.
 function montaBestiario() {
   const docs = [];
-  const pCriaturas = folderDoc("Bestiário", "Actor", "sd-bestiario");
-  const pExemplos = folderDoc("Personagens de Exemplo", "Actor", "sd-exemplos");
+  const pCriaturas = folderDoc("Bestiário", "Actor", "sd-bestiario", { sort: 1 });
+  const pExemplos = folderDoc("Personagens de Exemplo", "Actor", "sd-exemplos", { sort: 2 });
   docs.push(pCriaturas, pExemplos);
 
   CRIATURAS.forEach((c, i) => {
@@ -565,90 +594,57 @@ function conferePonteiros() {
 // module/testes.js; a macro apenas chama. Assim atualizar o módulo atualiza a
 // regra, inclusive para as macros que já foram arrastadas para a barra.
 function montaMacros() {
-  const docs = [];
-  const pasta = folderDoc("Testes de porcentagem", "Macro", "sd-macros");
-  docs.push(pasta);
+  // Três pastas pelo USO, e não uma "Testes de porcentagem" com os críticos e
+  // o PV dentro. Os nomes das macros não mudam: o id é semeado por eles.
+  const pTestes = folderDoc("Testes de porcentagem", "Macro", "sd-macros", { sort: 1 });
+  const pMesa = folderDoc("Ferramentas da mesa", "Macro", "sd-macros-mesa", { sort: 2 });
+  const pTabelas = folderDoc("Tabelas do livro", "Macro", "sd-macros-tabelas", { sort: 3 });
+  const docs = [pTestes, pMesa, pTabelas];
+  const macro = (pasta, sort, nome, comando, img) => docs.push(macroDoc({ nome, comando, img }, pasta._id, sort));
 
-  docs.push(macroDoc({
-    nome: "Teste de porcentagem",
-    comando: "game.spacedragon.teste();",
-    img: "icons/svg/d20-highlight.svg",
-  }, pasta._id, 0));
-
-  docs.push(macroDoc({
-    nome: "Pontos de Vida do nível",
-    comando: "game.spacedragon.pv();",
-    img: "icons/svg/heal.svg",
-  }, pasta._id, 10));
-
-  docs.push(macroDoc({
-    nome: "Dia novo (alcance mental)",
-    comando: "game.spacedragon.descansar();",
-    img: "icons/svg/sun.svg",
-  }, pasta._id, 25));
-
-  docs.push(macroDoc({
-    nome: "Ordem de Ação",
-    comando: "game.spacedragon.ordem();",
-    img: "icons/svg/clockwork.svg",
-  }, pasta._id, 30));
-
-  docs.push(macroDoc({
-    nome: "T7-4: Acerto Crítico",
-    comando: "game.spacedragon.acertoCritico();",
-    img: "icons/svg/target.svg",
-  }, pasta._id, 40));
-
-  docs.push(macroDoc({
-    nome: "T7-5: Falha Crítica",
-    comando: "game.spacedragon.falhaCritica();",
-    img: "icons/svg/downgrade.svg",
-  }, pasta._id, 50));
-
-  docs.push(macroDoc({
-    nome: "T10-6: Acerto Crítico de Espaçonave",
-    comando: "game.spacedragon.acertoCriticoNave();",
-    img: "icons/svg/explosion.svg",
-  }, pasta._id, 60));
-
-  docs.push(macroDoc({
-    nome: "T10-6: Falha Crítica de Espaçonave",
-    comando: "game.spacedragon.falhaCriticaNave();",
-    img: "icons/svg/hazard.svg",
-  }, pasta._id, 70));
-
-  docs.push(macroDoc({
-    nome: "T11-3: Relíquia Tecnológica",
-    comando: "game.spacedragon.reliquia();",
-    img: "icons/svg/item-bag.svg",
-  }, pasta._id, 80));
-
-  docs.push(macroDoc({
-    nome: "T11-4: Defeito de Relíquia",
-    comando: "game.spacedragon.defeitoDeReliquia();",
-    img: "icons/svg/hazard.svg",
-  }, pasta._id, 90));
-
-  docs.push(macroDoc({
-    nome: "Desativar Robôs (T3-2)",
-    comando: "game.spacedragon.desativarRobos();",
-    img: "icons/svg/combat.svg",
-  }, pasta._id, 35));
-
-  docs.push(macroDoc({
-    nome: "Dano Crítico (Cosmonauta)",
-    comando: "game.spacedragon.critico();",
-    img: "icons/svg/explosion.svg",
-  }, pasta._id, 20));
-
+  macro(pTestes, 0, "Teste de porcentagem", "game.spacedragon.teste();", "icons/svg/d20-highlight.svg");
   TESTES.forEach((t, i) => {
     docs.push(macroDoc({
       nome: t.classe ? `${t.nome} (${t.classe})` : t.nome,
       comando: `game.spacedragon.teste("${t.chave}");`,
-    }, pasta._id, (i + 1) * 100));
+    }, pTestes._id, (i + 1) * 100));
   });
+
+  macro(pMesa, 10, "Pontos de Vida do nível", "game.spacedragon.pv();", "icons/svg/heal.svg");
+  macro(pMesa, 20, "Dano Crítico (Cosmonauta)", "game.spacedragon.critico();", "icons/svg/explosion.svg");
+  macro(pMesa, 30, "Dia novo (alcance mental)", "game.spacedragon.descansar();", "icons/svg/sun.svg");
+  macro(pMesa, 40, "Ordem de Ação", "game.spacedragon.ordem();", "icons/svg/clockwork.svg");
+  macro(pMesa, 50, "Desativar Robôs (T3-2)", "game.spacedragon.desativarRobos();", "icons/svg/combat.svg");
+
+  macro(pTabelas, 10, "T7-4: Acerto Crítico", "game.spacedragon.acertoCritico();", "icons/svg/target.svg");
+  macro(pTabelas, 20, "T7-5: Falha Crítica", "game.spacedragon.falhaCritica();", "icons/svg/downgrade.svg");
+  macro(pTabelas, 30, "T10-6: Acerto Crítico de Espaçonave", "game.spacedragon.acertoCriticoNave();", "icons/svg/explosion.svg");
+  macro(pTabelas, 40, "T10-6: Falha Crítica de Espaçonave", "game.spacedragon.falhaCriticaNave();", "icons/svg/hazard.svg");
+  macro(pTabelas, 50, "T11-3: Relíquia Tecnológica", "game.spacedragon.reliquia();", "icons/svg/item-bag.svg");
+  macro(pTabelas, 60, "T11-4: Defeito de Relíquia", "game.spacedragon.defeitoDeReliquia();", "icons/svg/hazard.svg");
   return docs;
 }
+
+// ── Os journals, pela ordem dos capítulos ───────────────────────────────────
+//
+// Todos se chamavam "Space Dragon — …", o que dentro do compêndio "Space
+// Dragon — Regras" só repetia o nome dez vezes. O capítulo no começo diz onde
+// cada um fica no livro e ordena a lista.
+//
+// A chave é o título ORIGINAL, que é a semente do id (ver journalDoc): o UUID
+// de quem já tem o journal no mundo não muda.
+const CAPITULO_DO_JOURNAL = {
+  "Space Dragon — regras de referência": [1, "Cap. 1 — Atributos"],
+  "Space Dragon — Mutações do Homo novus": [2, "Cap. 2 — Mutações do Homo novus"],
+  "Space Dragon — Testes de porcentagem": [3, "Cap. 3 — Testes de porcentagem"],
+  "Space Dragon — Subatributos": [4, "Cap. 4 — Subatributos"],
+  "Space Dragon — Créditos e Equipamento": [5, "Cap. 5 — Créditos e Equipamento"],
+  "Space Dragon — Aventuras Espaciais": [6, "Cap. 6 — Aventuras Espaciais"],
+  "Space Dragon — Combate e Danos": [7, "Cap. 7 — Combate e Danos"],
+  "Space Dragon — Aparatos e Feitos Científicos": [8, "Cap. 8 — Aparatos e Feitos Científicos"],
+  "Space Dragon — Espaçonaves e Estações": [10, "Cap. 10 — Espaçonaves e Estações"],
+  "Space Dragon — Seção do Mestre": [11, "Cap. 11 — Seção do Mestre"],
+};
 
 // ── Compilação ──────────────────────────────────────────────────────────────
 async function compila(nome, docs) {
@@ -697,7 +693,11 @@ async function main() {
   await compila(P_EQUIPAMENTO, eq);
 
   await compila(P_MACROS, montaMacros());
-  await compila(P_JOURNAL, journais.map((e, i) => journalDoc(e, (i + 1) * 1000)));
+  await compila(P_JOURNAL, journais.map((e) => {
+    const cap = CAPITULO_DO_JOURNAL[e.title];
+    if (!cap) throw new Error(`journal "${e.title}" sem capítulo em CAPITULO_DO_JOURNAL`);
+    return journalDoc({ ...e, seedTitle: e.title, title: cap[1] }, cap[0] * 100);
+  }));
   await compila(P_NAVES, buildNavesDocs());
 
   console.log("Concluído.");
@@ -721,13 +721,22 @@ main().catch((e) => {
  */
 function buildNavesDocs() {
   const docs = [];
-  const pasta = (nome, seed) => {
-    const f = folderDoc(nome, "Item", seed);
+  const pasta = (nome, seed, opts = {}) => {
+    const f = folderDoc(nome, "Item", seed, opts);
     docs.push(f);
     return f;
   };
 
-  const fEquip = pasta("Equipamentos adicionais (T10-4)", "nave-equip-pasta");
+  /* ── O QUE SE USA À VISTA, AS PEÇAS NUMA PASTA SÓ ──────────────────────
+   *
+   * O jogador e o Mestre usam três coisas daqui: o tipo de nave, as câmaras
+   * para instalar e os equipamentos. O resto — o perfil de cada tipo, a
+   * classe de cada tipo e os cômodos como habilidade — é engrenagem que o
+   * criador de naves põe na ficha sozinho. Ficava tudo no mesmo nível, com
+   * "Câmaras" e "Cômodos" lado a lado e doze nomes repetidos.
+   */
+  const fPecas = pasta("Peças da ficha de nave (automático)", "nave-pecas-pasta", { sort: 4 });
+  const fEquip = pasta("Equipamentos adicionais (T10-4)", "nave-equip-pasta", { sort: 3 });
   equipamentosDeNave.forEach((e, i) => {
     /* ── AS ARMAS SÃO `weapon`, E NÃO `misc` ──────────────────────────────
      *
@@ -781,9 +790,10 @@ function buildNavesDocs() {
    * a JP (que no sistema vêm da classe) e a fórmula de PV (que a mesa rola).
    */
   {
-    const fTipos = pasta("Tipos de nave (T10-1)", "nave-tipo-pasta");
+    const fTipos = pasta("Tipos de nave (T10-1)", "nave-tipo-pasta", { sort: 1 });
+    const fPerfis = pasta("Perfis dos tipos (T10-1)", "nave-perfil-pasta", { sort: 1, parentId: fPecas._id });
     tiposComoRaca.forEach((t, i) => {
-      const hab = raceAbilityDoc(t.habilidade, fTipos._id, `nave-tipo:${t.chave}`, (i + 1) * 1000);
+      const hab = raceAbilityDoc(t.habilidade, fPerfis._id, `nave-tipo:${t.chave}`, (i + 1) * 1000);
       docs.push(hab);
       const raca = raceDoc({ ...t }, fTipos._id, [itemUuid(NAVES_PACK, hab._id)]);
       raca.sort = (i + 1) * 100000;
@@ -802,14 +812,14 @@ function buildNavesDocs() {
    * ator, não da classe. Um cômodo, uma descrição, um lugar para corrigir.
    */
   {
-    const fComodos = pasta("Cômodos (T10-2)", "nave-comodo-pasta");
+    const fComodos = pasta("Cômodos (T10-2)", "nave-comodo-pasta", { sort: 3, parentId: fPecas._id });
     const uuids = comodosDaNave.map((c, i) => {
       const hab = classAbilityDoc(c, fComodos._id, "nave-comodo", (i + 1) * 1000);
       docs.push(hab);
       return itemUuid(NAVES_PACK, hab._id);
     });
 
-    const fClasses = pasta("Tipos de nave — classe (T10-1)", "nave-classe-pasta");
+    const fClasses = pasta("Classes dos tipos (T10-1)", "nave-classe-pasta", { sort: 2, parentId: fPecas._id });
     classesDeNave.forEach((c, i) => {
       const cls = classDoc(c, fClasses._id, uuids);
       cls.sort = (i + 1) * 100000;
@@ -817,7 +827,7 @@ function buildNavesDocs() {
     });
   }
 
-  const fCamaras = pasta("Câmaras (T10-2)", "nave-camara-pasta");
+  const fCamaras = pasta("Câmaras (T10-2)", "nave-camara-pasta", { sort: 2 });
   camarasDeNave.forEach((c, i) => {
     const doc = miscDoc({ nome: c.nome, desc: c.desc, img: c.img, cost: `${c.obra}` },
       fCamaras._id, "nave-camara", (i + 1) * 100000);

@@ -522,10 +522,13 @@ function destacaAvisos(html) {
 }
 
 export function journalDoc(entry, sort) {
-  const id = makeId(`journal:${entry.title}`);
+  // `seedTitle`: o título que GEROU o id. Renomear um journal para pôr o
+  // capítulo no nome não pode trocar o UUID de quem já o tem no mundo.
+  const semente = entry.seedTitle ?? entry.title;
+  const id = makeId(`journal:${semente}`);
   const pages = (entry.pages || [{ title: entry.title, content: entry.content }]).map(
     (p, i) => {
-      const pid = makeId(`journal-page:${entry.title}:${p.title}:${i}`);
+      const pid = makeId(`journal-page:${semente}:${p.title}:${i}`);
       return {
         sort: (i + 1) * 100000,
         name: p.title,

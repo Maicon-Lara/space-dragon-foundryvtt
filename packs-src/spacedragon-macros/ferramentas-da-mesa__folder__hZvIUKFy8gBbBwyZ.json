@@ -1,0 +1,22 @@
+{
+  "name": "Ferramentas da mesa",
+  "sorting": "m",
+  "folder": null,
+  "type": "Macro",
+  "_id": "hZvIUKFy8gBbBwyZ",
+  "description": "",
+  "sort": 2,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!hZvIUKFy8gBbBwyZ"
+}
