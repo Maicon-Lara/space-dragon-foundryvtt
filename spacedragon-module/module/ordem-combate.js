@@ -26,6 +26,7 @@
 
 import { MODOS } from "./ordem.js";
 import { opcoesDeOrdem } from "./ordem-ficha.js";
+import { envolver } from "./envelope.js";
 
 const ID = "spacedragon";
 // Marca de que já envolvemos o protótipo: um segundo envoltório sobre o nosso
@@ -201,8 +202,8 @@ export function registrarOpcaoDeCombate() {
  *
  * ── O QUE ISTO CUSTA, DITO EM VOZ ALTA ──────────────────────────────────────
  *
- * É um patch no protótipo de `Combat`, e o cabeçalho de ordem.js diz que este
- * módulo não reescreve a iniciativa de um sistema alheio. A diferença é o
+ * É um envelope no protótipo de `Combat`, e o cabeçalho de ordem.js diz que
+ * este módulo não reescreve a iniciativa de um sistema alheio. A diferença é o
  * consentimento: isto só entra com a opção LIGADA, e a opção existe justamente
  * para quem decidiu jogar a T7-2. Com ela desligada, o original roda intacto e
  * nada neste arquivo toca em nada.
@@ -213,16 +214,17 @@ export function registrarOpcaoDeCombate() {
 export function envolverRollInitiative() {
   const Base = CONFIG.Combat?.documentClass;
   if (!Base?.prototype || Base.prototype[MARCA_PATCH]) return;
-  const original = Base.prototype.rollInitiative;
-  if (typeof original !== "function") return;
+  if (typeof Base.prototype.rollInitiative !== "function") return;
 
-  Base.prototype.rollInitiative = async function (ids, options) {
-    if (!ligada()) return original.call(this, ids, options);
+  // Pelo libWrapper (envelope.js): outro módulo que também envolva
+  // `rollInitiative` é encadeado, e não atropelado.
+  const ok = envolver("CONFIG.Combat.documentClass.prototype.rollInitiative", async function (wrapped, ids, options) {
+    if (!ligada()) return wrapped(ids, options);
     const lista = Array.isArray(ids) ? ids : ids ? [ids] : null;
     await perguntar(this, lista);
     return this;
-  };
-  Base.prototype[MARCA_PATCH] = true;
+  });
+  if (ok) Base.prototype[MARCA_PATCH] = true;
 }
 
 export function ligarOrdemNoCombate() {

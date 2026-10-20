@@ -27,6 +27,7 @@
  */
 
 import { atorUsaFichaSD } from "./ficha.js";
+import { envolver, MODELO_PERSONAGEM } from "./envelope.js";
 
 const ID = "spacedragon";
 
@@ -48,25 +49,22 @@ export function modificadorDaJP(sistema, qual) {
  * pelo mínimo no d20, para quem usa a ficha do Space Dragon. O personagem de
  * Old Dragon 2 no mesmo mundo continua com a conta do sistema.
  */
-let originais = null;
+let jpEnvolvida = false;
 
 export function aplicarJP() {
   const proto = CONFIG.Actor?.dataModels?.character?.prototype;
-  if (!proto || originais) return !!originais;
-  originais = {};
+  if (!proto || jpEnvolvida) return jpEnvolvida;
+  jpEnvolvida = true;
   for (const qual of Object.keys(JPS)) {
     const desc = Object.getOwnPropertyDescriptor(proto, `${qual}_total`);
     if (!desc?.get) {
       console.warn(`${ID} | ${qual}_total não é getter — a JP fica a do sistema`);
       continue;
     }
-    originais[qual] = desc.get;
-    Object.defineProperty(proto, `${qual}_total`, {
-      configurable: true,
-      get() {
-        if (!atorUsaFichaSD(this.parent)) return originais[qual].call(this);
-        return (Number(this.jp) || 0) - modificadorDaJP(this, qual);
-      },
+    // Pelo libWrapper (envelope.js).
+    envolver(`${MODELO_PERSONAGEM}.${qual}_total`, function (wrapped) {
+      if (!atorUsaFichaSD(this.parent)) return wrapped();
+      return (Number(this.jp) || 0) - modificadorDaJP(this, qual);
     });
   }
   return true;

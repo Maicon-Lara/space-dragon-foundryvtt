@@ -8,6 +8,14 @@
     "verified": "13"
   },
   "relationships": {
+    "recommends": [
+      {
+        "id": "lib-wrapper",
+        "type": "module",
+        "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
+        "reason": "Encadeia com segurança as alterações que o módulo faz no sistema (modificadores, CP, JP, poderes, iniciativa). Sem ele, uma implementação reserva é usada."
+      }
+    ],
     "systems": [
       {
         "id": "olddragon2e",
