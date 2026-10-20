@@ -30,7 +30,13 @@
     }
   },
   "effects": [],
-  "flags": {},
+  "flags": {
+    "spacedragon": {
+      "camaraDeNave": {
+        "chave": "corredores"
+      }
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

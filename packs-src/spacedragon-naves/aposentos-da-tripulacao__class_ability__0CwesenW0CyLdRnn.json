@@ -30,7 +30,13 @@
     }
   },
   "effects": [],
-  "flags": {},
+  "flags": {
+    "spacedragon": {
+      "camaraDeNave": {
+        "chave": "aposentos"
+      }
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

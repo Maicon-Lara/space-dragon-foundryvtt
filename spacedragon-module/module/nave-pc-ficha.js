@@ -595,7 +595,10 @@ export const MARCA_CAMARAS = "sd-painel-camaras";
  * e as que a nave não tinha só ficavam um pouco mais claras.
  */
 export function painelDasCamaras(ator, nave) {
-  const r = resumoDasCamaras(nave, { cp: ator?.system?.ac_total ?? nave?.cp ?? null });
+  const r = resumoDasCamaras(nave, {
+    cp: ator?.system?.ac_total ?? nave?.cp ?? null,
+    raca: ator?.system?.race?.name ?? "",
+  });
   const marca = (e) => (e === "instalada" ? "✔" : e === "danificada" ? "⚠" : "✘");
   const fabrica = r.fabrica
     .map((l) => `<li class="camara-${l.estado}">${marca(l.estado)} ${l.rotulo}` +
@@ -936,7 +939,7 @@ export function registrarFichaDeNavePC() {
           : txt("spacedragon.aviso.camaraJaInstalada", { camara: dados.camara, nave: dados.nave }));
         return null;
       }
-      const compra = compraDeCamara(chave, nave);
+      const compra = compraDeCamara(chave, nave, this.actor?.system?.race?.name ?? "");
       if (!compra) return null;
 
       const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
@@ -1030,11 +1033,13 @@ export function registrarFichaDeNavePC() {
      * compra do botão, e nenhum item é criado. O resto segue para o sistema.
      */
     async _onDropItem(event, data) {
-      let item = null;
+      // Qualquer falha AQUI devolve o item ao sistema: reconhecer câmara é um
+      // extra, e não pode custar o arrastar do tipo, da classe ou de uma arma.
+      let chave = null;
       try {
-        item = await globalThis.Item?.implementation?.fromDropData?.(data);
-      } catch { /* não é item que reconhecemos: o sistema decide */ }
-      const chave = flagDeNave(item, "camaraDeNave", ID)?.chave;
+        const item = await globalThis.Item?.implementation?.fromDropData?.(data);
+        chave = flagDeNave(item, "camaraDeNave", ID)?.chave ?? null;
+      } catch { chave = null; }
       if (!chave || !CAMARAS[chave]) return super._onDropItem(event, data);
       event?.preventDefault?.();
       return this.#comprarCamara(chave);

@@ -380,7 +380,9 @@ export function classAbilityDoc(ability, folderId, seedPrefix, sort) {
       daily_uses: dailyUses(ability),
     },
     effects: [],
-    flags: {},
+    // as flags que os dados declaram — os cômodos de nave levam
+    // `spacedragon.camaraDeNave`, e um `{}` fixo aqui as jogava fora
+    flags: ability.flags ?? {},
     _stats: stats(),
     sort: sort,
     ownership: { default: 0 },

@@ -98,6 +98,21 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
   confere(flagDeNave(vivo, "camaraDeNave")?.chave === "ponte",
     "a leitura não usa getFlag() — no Foundry o item é um documento, e `flags` cru só " +
     "aparece nos objetos do pack");
+  // O Foundry de verdade: getFlag LANÇA para escopo de pacote inativo. Sem o
+  // módulo de Star Wars na mesa, ler o id antigo de um item comum (o tipo, a
+  // classe, uma arma) não pode quebrar nada — foi assim que o arrastar parou.
+  const doFoundry = {
+    flags: {},
+    getFlag: (quem) => {
+      if (quem !== ID) throw new Error(`Flag scope "${quem}" is not valid or not currently active`);
+      return undefined;
+    },
+  };
+  let lancou = false;
+  try { flagDeNave(doFoundry, "camaraDeNave"); } catch { lancou = true; }
+  confere(!lancou, "ler a flag de um item sem ela LANÇA quando o módulo antigo não está ativo — " +
+    "o arrastar de qualquer item na Ficha de Nave para no meio");
+  confere(flagDeNave(doFoundry, "camaraDeNave") === null, "item comum, sem flag, devia dar null");
   confere(flagDeNave({}, "camaraDeNave") === null,
     "um item SEM flag de nave devolve algo em vez de null — e aí toda linha da ficha " +
     "viraria um cômodo");
@@ -200,6 +215,19 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
   const runner = fs.readFileSync(path.join(RAIZ, "tools", "roda-testes.mjs"), "utf8");
   for (const padrao of [String.raw`/^teste-.*\.mjs$/`, 'n === "verifica.mjs"', 'n === "fumaca.mjs"']) {
     confere(runner.includes(padrao), `o runner não procura ${padrao}`);
+  }
+}
+
+/* ── 5. NINGUÉM CHAMA getFlag NO ID ANTIGO ────────────────────────────────── */
+//
+// getFlag("starwars-sd", …) lança sem o módulo de Star Wars ativo. A leitura
+// do id antigo passa por lerFlag (nave-pc-dados.js), que nunca lança.
+{
+  const pasta = path.join(RAIZ, "spacedragon-module", "module");
+  for (const nome of fs.readdirSync(pasta).filter((n) => n.endsWith(".js"))) {
+    const fonte = fs.readFileSync(path.join(pasta, nome), "utf8");
+    confere(!/getFlag\??\.?\(\s*ID_ANTIGO/.test(fonte),
+      `${nome} chama getFlag(ID_ANTIGO, …) — lança quando o módulo antigo não está ativo; use lerFlag`);
   }
 }
 

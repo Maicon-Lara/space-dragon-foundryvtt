@@ -35,6 +35,7 @@
  */
 
 import { t as txt } from "./i18n.js";
+import { lerFlag } from "./nave-pc-dados.js";
 
 const ID = "spacedragon";
 const ID_ANTIGO = "starwars-sd";
@@ -48,9 +49,11 @@ export function navesPorMigrar() {
   const todos = globalThis.game?.actors ?? [];
   return [...todos].filter((a) => {
     try {
-      const velha = a.getFlag?.(ID_ANTIGO, FLAG);
+      // lerFlag, e não getFlag: sem o módulo de Star Wars ativo, getFlag no id
+      // antigo LANÇA, o catch abaixo devolvia false, e nenhuma nave migrava
+      const velha = lerFlag(a, ID_ANTIGO, FLAG);
       if (!velha || typeof velha !== "object") return false;
-      const nova = a.getFlag?.(ID, FLAG);
+      const nova = lerFlag(a, ID, FLAG);
       // já migrada: não refaz. Refazer sobrescreveria o que a mesa mexeu depois
       // da migração, que é o jeito mais discreto de perder trabalho.
       return !nova || typeof nova !== "object";
@@ -94,10 +97,10 @@ export function itensPorMigrar(ator) {
 export async function migrarNave(ator) {
   const mudancas = {};
 
-  const velha = ator.getFlag(ID_ANTIGO, FLAG);
-  if (velha && !ator.getFlag(ID, FLAG)) mudancas[`flags.${ID}.${FLAG}`] = velha;
+  const velha = lerFlag(ator, ID_ANTIGO, FLAG);
+  if (velha && !lerFlag(ator, ID, FLAG)) mudancas[`flags.${ID}.${FLAG}`] = velha;
 
-  const ficha = ator.getFlag("core", "sheetClass");
+  const ficha = lerFlag(ator, "core", "sheetClass");
   if (ficha === `${ID_ANTIGO}.NaveSheet`) {
     mudancas["flags.core.sheetClass"] = `${ID}.NaveSheet`;
   }

@@ -22,7 +22,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   naveVazia, resumoDasCamaras, compraDeCamara, CAMARAS_BASE, CHAVES_DAS_CAMARAS,
-  reparoDeCamara, metadeDoPrazo,
+  reparoDeCamara, metadeDoPrazo, tamanhoDaNave,
 } from "../spacedragon-module/module/nave-pc-dados.js";
 import * as camarasJs from "../spacedragon-module/module/camaras.js";
 import { botaoDoComodo, painelDasCamaras } from "../spacedragon-module/module/nave-pc-ficha.js";
@@ -88,6 +88,29 @@ const nave = (tamanho, camaras = {}) => ({ ...naveVazia(), tamanho, camaras });
   confere(/1 de 0/.test(html) && /passou do que o tamanho comporta/.test(html),
     "a nave Pequena com Aposentos devia acusar 1 de 0, acima do limite");
   confere(/Compradas: Aposentos da Tripulação/.test(html), "o painel não lista o que foi comprado");
+}
+
+/* ── O tamanho, mesmo quando a nave não o gravou ───────────────────────── */
+{
+  confere(tamanhoDaNave({ tamanho: "Média" }) === "Média", "o tamanho gravado tem de valer");
+  confere(tamanhoDaNave({ tipo: "cargueiro" }) === "Gigantesca",
+    "nave criada só com o tipo (como o criador fazia) devia ter o tamanho do tipo");
+  confere(tamanhoDaNave({}, "Caça") === "Pequena", "sem tipo gravado, o nome da raça dá o tamanho");
+  confere(tamanhoDaNave({}, "Outra coisa") === "", "raça que não é tipo de nave não inventa tamanho");
+  const r = resumoDasCamaras({ ...naveVazia(), tipo: "particular" });
+  confere(r.conhecido && r.orcamento.livres === 2, "a nave do criador (só tipo) não mostrou o limite da Média");
+
+  // os cômodos do compêndio levam a flag de câmara (o build a jogava fora)
+  const pasta = path.join(RAIZ, "packs-src", "spacedragon-naves");
+  if (fs.existsSync(pasta)) {
+    const comodos = fs.readdirSync(pasta).filter((f) => f.includes("__class_ability__"))
+      .map((f) => JSON.parse(fs.readFileSync(path.join(pasta, f), "utf8")));
+    const semFlag = comodos.filter((d) => !d.flags?.spacedragon?.camaraDeNave?.chave).map((d) => d.name);
+    confere(comodos.length === 12 && semFlag.length === 0,
+      `cômodos sem a flag de câmara no compêndio: ${semFlag.join(", ") || `(${comodos.length} cômodos)`}`);
+  }
+  const criador = fs.readFileSync(path.join(RAIZ, "spacedragon-module", "module", "nave-nova.js"), "utf8");
+  confere(/aplicarTipo\(tipo\)/.test(criador), "o criador de naves voltou a gravar só a chave do tipo, sem o tamanho");
 }
 
 /* ── O reparo da danificada: 25% da obra, metade do prazo ──────────────── */

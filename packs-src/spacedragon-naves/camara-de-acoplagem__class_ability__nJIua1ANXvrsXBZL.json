@@ -30,7 +30,13 @@
     }
   },
   "effects": [],
-  "flags": {},
+  "flags": {
+    "spacedragon": {
+      "camaraDeNave": {
+        "chave": "acoplagem"
+      }
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

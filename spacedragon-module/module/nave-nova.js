@@ -22,7 +22,7 @@
  * leva um tiro.
  */
 
-import { naveVazia, FLAG } from "./nave-pc-dados.js";
+import { naveVazia, FLAG, aplicarTipo } from "./nave-pc-dados.js";
 import { TIPOS } from "./tipos-de-nave.js";
 
 import { t as txt } from "./i18n.js";
@@ -90,7 +90,8 @@ export async function criarNave({ nome, tipo } = {}) {
     type: "character",
     system: { hp: { value: 0, max: 0 } },
     flags: {
-      [ID]: { [FLAG]: { ...naveVazia(), tipo } },
+      // o tipo INTEIRO: sem o tamanho, o limite de câmaras extras não aparecia
+      [ID]: { [FLAG]: { ...naveVazia(), ...(aplicarTipo(tipo)?.flag ?? { tipo }) } },
       core: { sheetClass: `${ID}.NaveSheet` },
     },
   });
