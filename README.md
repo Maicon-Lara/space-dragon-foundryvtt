@@ -96,7 +96,22 @@ npm install
 npm run publicar    # build + zip
 ```
 
-`packs-src/` e os LevelDB **nunca na mão**: são saída do build.
+`packs-src/` e os LevelDB **nunca na mão**: são saída do build. Os LevelDB e o
+`spacedragon.zip` **não entram no git**: quem os gera é o build, local ou na
+release.
+
+## Como sai uma versão
+
+1. Suba a versão em `spacedragon-module/module.json` e faça o commit.
+2. Crie a release no GitHub com a tag `v<versão>` (ex.: `v1.27.0`) e as notas.
+3. O workflow `.github/workflows/release.yml` confere que a tag bate com o
+   `module.json`, roda o build e os testes, e anexa `spacedragon.zip` e
+   `module.json` à release. O `download` do manifesto publicado aponta para o
+   zip daquela versão, então dá para instalar uma versão antiga pela URL dela.
+
+Se a tag não bater com a versão, a release fica sem os anexos e o workflow
+acusa o erro. Todo push também roda o build completo em
+`.github/workflows/testes.yml`.
 
 ## O livro, capítulo a capítulo
 

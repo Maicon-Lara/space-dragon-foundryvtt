@@ -1,0 +1,72 @@
+# Publica o módulo quando uma release é PUBLICADA no GitHub.
+#
+# O fluxo continua o de hoje: crie a release no site (tag v1.27.0, título e
+# notas). Este workflow então:
+#   1. confere que a tag bate com a versão do module.json;
+#   2. aponta o `download` do manifesto para o zip DESTA versão, e não para
+#      "latest" — assim quem precisar voltar instala a 1.26.4 pela URL dela;
+#   3. roda o build e os testes, empacota e anexa spacedragon.zip e
+#      module.json à release.
+#
+# O zip e os LevelDB não ficam mais no git: são gerados aqui, a partir de
+# tools/data, que é a fonte de verdade.
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: A tag precisa bater com o module.json
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          VERSAO="$(node -p "require('./spacedragon-module/module.json').version")"
+          echo "tag=$TAG  module.json=$VERSAO"
+          if [ "$TAG" != "v$VERSAO" ]; then
+            echo "::error::a tag $TAG não bate com a versão $VERSAO do module.json"
+            exit 1
+          fi
+
+      - name: O manifesto aponta para o zip desta versão
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          node -e '
+            const fs = require("node:fs");
+            const p = "spacedragon-module/module.json";
+            const m = JSON.parse(fs.readFileSync(p, "utf8"));
+            m.download = `https://github.com/${process.env.REPO}/releases/download/${process.env.TAG}/spacedragon.zip`;
+            fs.writeFileSync(p, JSON.stringify(m, null, 2) + "\n");
+            console.log("download =", m.download);
+          '
+        env:
+          REPO: ${{ github.repository }}
+          TAG: ${{ github.event.release.tag_name }}
+
+      - run: npm ci
+
+      - run: npm run publicar
+
+      - name: Anexa o zip e o manifesto à release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: |
+            spacedragon.zip
+            spacedragon-module/module.json

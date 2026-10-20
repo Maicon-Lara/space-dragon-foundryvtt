@@ -1,0 +1,25 @@
+# Roda o build completo (gera-dados, compilação dos packs, verificação e os
+# testes) a cada push e pull request. É o mesmo `npm run build` de sempre; a
+# diferença é que ele passa a rodar numa máquina limpa, onde um arquivo que só
+# existe no seu disco aparece como erro.
+name: Testes
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build

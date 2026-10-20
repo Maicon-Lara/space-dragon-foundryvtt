@@ -1,1 +1,6 @@
 node_modules/
+
+# Saída do build: gerada por `npm run publicar` e, nas releases, pelo
+# workflow .github/workflows/release.yml. A fonte de verdade é tools/data.
+spacedragon-module/packs/
+spacedragon.zip
