@@ -38,7 +38,7 @@
 
 import {
   naveDe, estadoDoComodo, proximoEstado, comodosInstalados, FLAG, updateDaNave,
-  orcamentoDeCamaras, CAMARAS_BASE, flagDeNave,
+  CAMARAS_BASE, flagDeNave, resumoDasCamaras, compraDeCamara, creditos,
 } from "./nave-pc-dados.js";
 import { linhasDoVoo, CUSTOS } from "./nave-voo.js";
 import {
@@ -457,8 +457,9 @@ export function guiaDeMontagem(ator) {
       "Ela traz a BA, a JP e as doze câmaras." +
       (temRaca ? "" : " <em>O sistema recusa a classe enquanto não houver raça.</em>")) +
     `</ol>` +
-    `<p class="guia-nota">As câmaras não se arrastam soltas: elas vêm com a classe, ` +
-    `e você liga ou desliga cada uma na aba <em>Câmaras</em>.</p>` +
+    `<p class="guia-nota">A nave sai de fábrica só com a Ponte, a Sala de Máquinas e o casco. ` +
+    `As outras câmaras se compram: clique em <em>comprar</em> na aba <em>Câmaras</em>, ou ` +
+    `arraste a câmara do compêndio para a nave.</p>` +
     `</section>`
   );
 }
@@ -557,8 +558,11 @@ export const CLASSE_SELETOR = "sw-comodo-estado";
 const ROTULO_DO_ESTADO = {
   instalada: "instalada",
   danificada: "danificada",
-  ausente: "não tem",
+  // regra da casa: o que a nave não tem se COMPRA, e o botão diz isso
+  ausente: "comprar",
 };
+
+const escapaAtributo = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
 /**
  * O seletor de um cômodo, dizendo o estado e o que o PRÓXIMO clique faz.
@@ -572,17 +576,75 @@ const ROTULO_DO_ESTADO = {
 export function botaoDoComodo(chave, estado) {
   const rotulo = ROTULO_DO_ESTADO[estado] ?? estado;
   const seguinte = proximoEstado(estado);
-  const acao = {
-    danificada: "marcar como danificada",
-    ausente: "desinstalar",
-    instalada: "instalar de volta",
-  }[seguinte] ?? `mudar para ${seguinte}`;
+  const c = CAMARAS[chave];
+  const titulo = estado === "ausente"
+    ? `A nave não tem esta câmara. Clique para comprar: obra de ${creditos(c?.obra)} créditos, ` +
+      `${c?.prazo ?? "prazo do Mestre"}. ${c?.efeito ?? ""}`
+    : `Está ${rotulo}. Clique para ${{
+        danificada: "marcar como danificada",
+        ausente: "desinstalar",
+      }[seguinte] ?? `mudar para ${seguinte}`}. ` +
+      `Consertar uma danificada custa 25% da obra e metade do prazo (T10-2).`;
   return (
     `<button type="button" class="${CLASSE_SELETOR} estado-${estado}" ` +
     `data-comodo="${chave}" data-proximo="${seguinte}" ` +
-    `title="Está ${rotulo}. Clique para ${acao}. ` +
-    `Consertar uma danificada custa 25% da obra e metade do prazo (T10-2).">${rotulo}</button>`
+    `title="${escapaAtributo(titulo)}">${rotulo}</button>`
   );
+}
+
+/* ── O PAINEL DAS CÂMARAS (regra da casa: a nave é modular) ─────────────── */
+
+export const MARCA_CAMARAS = "sd-painel-camaras";
+
+/**
+ * O topo da aba Câmaras: o que veio de fábrica, o que foi comprado, e quanto
+ * o tamanho ainda comporta. Sem isto a aba mostrava as doze câmaras em fila,
+ * e as que a nave não tinha só ficavam um pouco mais claras.
+ */
+export function painelDasCamaras(ator, nave) {
+  const r = resumoDasCamaras(nave, { cp: ator?.system?.ac_total ?? nave?.cp ?? null });
+  const marca = (e) => (e === "instalada" ? "✔" : e === "danificada" ? "⚠" : "✘");
+  const fabrica = r.fabrica
+    .map((l) => `<li class="camara-${l.estado}">${marca(l.estado)} ${l.rotulo}` +
+      (l.estado === "instalada" ? "" : ` <em>(${l.estado === "danificada" ? "danificada" : "arrancada — reinstalar custa a obra"})</em>`) +
+      `</li>`)
+    .join("");
+  const casco = `<li class="camara-instalada">✔ Casco e suporte de vida` +
+    (r.casco.cp != null && r.casco.cp !== "" ? ` <em>(CP ${r.casco.cp}, do tipo de nave)</em>` : "") + `</li>`;
+
+  const o = r.orcamento;
+  const limite = r.conhecido
+    ? `<p class="camaras-limite${o.excedeu ? " excedeu" : ""}">Câmaras extras: <strong>${o.usadas} de ${o.livres}</strong> ` +
+      `(nave ${r.tamanho})` +
+      (o.excedeu ? ` — <strong>passou do que o tamanho comporta</strong>; o Mestre decide se fica.` : "") +
+      (o.livres === 0 && !o.usadas ? ` — nave pequena: só cabine e motor.` : "") +
+      `</p>`
+    : `<p class="camaras-limite">Defina o tipo da nave para ver quantas câmaras extras cabem.</p>`;
+
+  const compradas = r.compradas.length
+    ? `<p class="camaras-compradas">Compradas: ${r.compradas.map((l) => l.rotulo + (l.estado === "danificada" ? " (danificada)" : "")).join(", ")}</p>`
+    : "";
+
+  return (
+    `<section class="${MARCA_CAMARAS}">` +
+    `<strong>De fábrica</strong> <small>(o mínimo para voar e manter todos vivos)</small>` +
+    `<ul>${fabrica}${casco}</ul>` +
+    limite + compradas +
+    `<p class="camaras-dica">Para comprar uma câmara, clique em <em>comprar</em> na lista abaixo ` +
+    `ou arraste-a da pasta <em>Câmaras (T10-2)</em> do compêndio de naves.</p>` +
+    `</section>`
+  );
+}
+
+/** Põe o painel no alto da aba Câmaras (a aba de classe), sem duplicar. */
+export function porPainelDasCamaras(raiz, ator) {
+  if (!raiz?.querySelector || !ator) return false;
+  const aba = raiz.querySelector(".character-tab-class") ??
+              raiz.querySelector('[data-tab="class"]:not(nav [data-tab="class"])');
+  if (!aba) return false;
+  aba.querySelector(`.${MARCA_CAMARAS}`)?.remove();
+  aba.insertAdjacentHTML("afterbegin", painelDasCamaras(ator, naveDe(ator, ID)));
+  return true;
 }
 
 /* ── O PLANO B: O NOME ESCRITO NA FICHA ─────────────────────────────── */
@@ -848,12 +910,83 @@ export function registrarFichaDeNavePC() {
         if (!this.isEditable) return;
         const nave = naveDe(this.actor, ID);
         const chave = b.dataset.comodo;
+        if (estadoDoComodo(nave, chave) === "ausente") return this.#comprarCamara(chave);
         const novo = proximoEstado(estadoDoComodo(nave, chave));
         await this.#gravarNave(nave, {
           ...nave,
           camaras: { ...(nave.camaras ?? {}), [chave]: novo },
         });
       });
+    }
+
+    /**
+     * Regra da casa: comprar uma câmara.
+     *
+     * Confirma com o preço, o prazo e o que ela faz — e avisa se passa do que
+     * o tamanho comporta, sem impedir. Confirmado, a câmara entra instalada e
+     * a obra vai para o chat, que é o registro que a mesa consulta depois.
+     * O dinheiro sai de quem paga, à mão: a nave não tem carteira.
+     */
+    async #comprarCamara(chave) {
+      if (!this.isEditable) return null;
+      const nave = naveDe(this.actor, ID);
+      const est = estadoDoComodo(nave, chave);
+      if (est !== "ausente") {
+        const dados = { camara: CAMARAS[chave]?.rotulo ?? chave, nave: this.actor.name };
+        globalThis.ui?.notifications?.info?.(est === "danificada"
+          ? txt("spacedragon.aviso.camaraDanificada", { camara: dados.camara, nave: dados.nave })
+          : txt("spacedragon.aviso.camaraJaInstalada", { camara: dados.camara, nave: dados.nave }));
+        return null;
+      }
+      const compra = compraDeCamara(chave, nave);
+      if (!compra) return null;
+
+      const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+      const conteudo =
+        `<p><strong>${esc(compra.rotulo)}</strong> em ${esc(this.actor.name)}</p>` +
+        `<p>Obra: <strong>${creditos(compra.obra)} créditos</strong>, ${esc(compra.prazo)}.</p>` +
+        `<p><em>${esc(compra.efeito)}</em></p>` +
+        (compra.excede
+          ? `<p class="camaras-excede">⚠ A nave ${esc(compra.tamanho)} comporta ${compra.livres} câmara(s) extra(s) ` +
+            `e já tem ${compra.usadas}. Esta passa do limite; confirme só se o Mestre autorizou.</p>`
+          : "") +
+        `<p>Os créditos saem de quem paga, à mão.</p>`;
+
+      const V2 = globalThis.foundry?.applications?.api?.DialogV2;
+      const ok = V2
+        ? await V2.confirm({ window: { title: txt("spacedragon.janela.comprarCamara") }, content: conteudo, rejectClose: false })
+        : globalThis.confirm?.(`${compra.rotulo}: ${creditos(compra.obra)} créditos, ${compra.prazo}. Comprar?`);
+      if (!ok) return null;
+
+      await this.#gravarNave(nave, { ...nave, camaras: { ...(nave.camaras ?? {}), [chave]: "instalada" } });
+      await globalThis.ChatMessage?.create?.({
+        speaker: globalThis.ChatMessage.getSpeaker?.({ actor: this.actor }),
+        content:
+          `<div class="sd-teste"><div class="title">${esc(txt("spacedragon.janela.comprarCamara"))}</div>` +
+          `<p><strong>${esc(compra.rotulo)}</strong> instalada em <strong>${esc(this.actor.name)}</strong>.</p>` +
+          `<p>Obra: ${creditos(compra.obra)} créditos, ${esc(compra.prazo)}.</p>` +
+          (compra.excede ? `<p>⚠ Acima do limite de câmaras da nave ${esc(compra.tamanho)}.</p>` : "") +
+          `</div>`,
+      });
+      return chave;
+    }
+
+    /**
+     * Arrastar uma câmara do compêndio para a nave é COMPRÁ-LA.
+     *
+     * Antes o item caía no inventário como objeto solto, e nada mudava na nave.
+     * Agora a câmara (reconhecida pela flag `camaraDeNave`) passa pela mesma
+     * compra do botão, e nenhum item é criado. O resto segue para o sistema.
+     */
+    async _onDropItem(event, data) {
+      let item = null;
+      try {
+        item = await globalThis.Item?.implementation?.fromDropData?.(data);
+      } catch { /* não é item que reconhecemos: o sistema decide */ }
+      const chave = flagDeNave(item, "camaraDeNave", ID)?.chave;
+      if (!chave || !CAMARAS[chave]) return super._onDropItem(event, data);
+      event?.preventDefault?.();
+      return this.#comprarCamara(chave);
     }
 
     /**
@@ -889,6 +1022,7 @@ export function registrarFichaDeNavePC() {
       try {
         renomearAbas(raiz);
         marcarComodos(raiz, this.actor);
+        porPainelDasCamaras(raiz, this.actor);
         ocultarOQueNaveNaoUsa(raiz);
         porPainelDeVoo(raiz, this.actor);
         porPainelDaTripulacao(raiz, this.actor);

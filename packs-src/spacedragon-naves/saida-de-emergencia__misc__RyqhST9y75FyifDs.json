@@ -6,7 +6,7 @@
   "img": "systems/olddragon2e/assets/icons/misc.svg",
   "system": {
     "odo_id": "saida-de-emergencia",
-    "description": "As cápsulas de evacuação, com suporte de vida independente. A 0 PV, durante a contagem regressiva para a explosão — 1 segundo por PV do total —, é por ela que a tripulação escapa. Obra: 90.000 créditos, 1 semana. Reparo em campo: 22.500 créditos, metade do prazo.",
+    "description": "As cápsulas de evacuação, com suporte de vida independente. A 0 PV, durante a contagem regressiva para a explosão — 1 segundo por PV do total —, é por ela que a tripulação escapa. Obra: 90.000 créditos, 1 semana. Reparo em campo: 22.500 créditos, metade do prazo. Regra da casa: a nave sai de fábrica só com a Ponte, a Sala de Máquinas e o casco. Arraste esta câmara para a ficha da nave para comprá-la; a ficha confirma o preço e registra a obra no chat.",
     "quantity": 1,
     "cost": "90000",
     "weight_in_load": 0,

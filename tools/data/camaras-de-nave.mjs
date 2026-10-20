@@ -15,6 +15,7 @@
 // compêndio está decidindo se compra, e o preço é a primeira coisa que pesa.
 
 import { CAMARAS } from "../../spacedragon-module/module/camaras.js";
+import { CAMARAS_BASE } from "../../spacedragon-module/module/nave-pc-dados.js";
 
 const OD2I = "systems/olddragon2e/assets/icons";
 
@@ -31,10 +32,18 @@ export function descricaoDaCamara(c) {
   return partes.filter(Boolean).join(" ");
 }
 
+// Regra da casa: a nave é modular. A frase final diz a quem olha o compêndio
+// se esta câmara vem de fábrica ou se compra — e como se compra.
+const fraseDaRegra = (chave) =>
+  CAMARAS_BASE.includes(chave)
+    ? "Vem de fábrica em toda nave: sem ela a nave não voa."
+    : "Regra da casa: a nave sai de fábrica só com a Ponte, a Sala de Máquinas e o casco. " +
+      "Arraste esta câmara para a ficha da nave para comprá-la; a ficha confirma o preço e registra a obra no chat.";
+
 export const camarasDeNave = Object.entries(CAMARAS).map(([chave, c]) => ({
   chave,
   nome: c.rotulo,
   obra: c.obra,
   img: `${OD2I}/misc.svg`,
-  desc: descricaoDaCamara(c),
+  desc: `${descricaoDaCamara(c)} ${fraseDaRegra(chave)}`,
 }));

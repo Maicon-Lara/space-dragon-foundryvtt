@@ -61,6 +61,35 @@
   opacity: .55;
 }
 
+/* Regra da casa: a nave é modular. A câmara que ela NÃO tem mostra só o nome
+ * e o botão "comprar" — a descrição inteira fazia parecer que a nave a tinha.
+ * O que a câmara faz está na dica do botão e na confirmação da compra. */
+.spacedragon-nave-pc .comodo-ausente > :not(.ability):not(.sw-comodo-estado) {
+  display: none;
+}
+
+/* O painel do alto da aba Câmaras: de fábrica, compradas e o limite. */
+.spacedragon-nave-pc .sd-painel-camaras {
+  margin: 0 0 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-size: var(--font-size-12, 0.8rem);
+}
+.spacedragon-nave-pc .sd-painel-camaras ul {
+  margin: 0.2rem 0;
+  padding-left: 0.4rem;
+  list-style: none;
+}
+.spacedragon-nave-pc .sd-painel-camaras p {
+  margin: 0.25rem 0 0;
+}
+.spacedragon-nave-pc .sd-painel-camaras .excedeu,
+.spacedragon-nave-pc .sd-painel-camaras .camara-ausente,
+.spacedragon-nave-pc .sd-painel-camaras .camara-danificada {
+  font-weight: bold;
+}
+
 .spacedragon-nave-pc .comodo-danificada {
   text-decoration: line-through dotted;
 }

@@ -77,6 +77,9 @@ export const classesDeNave = Object.entries(TIPOS).map(([chave, t]) => ({
     `número; o campo de PV da classe é dado POR NÍVEL, que é outra regra.</p>` +
     `<p>As habilidades são os <strong>cômodos</strong> (T10-2). Todos aparecem; quais estão ` +
     `instalados é estado da nave, não da classe.</p>` +
+    `<p><strong>Regra da casa:</strong> a nave sai de fábrica só com a Ponte de Comando, a Sala de ` +
+    `Máquinas e o casco com suporte de vida. As outras câmaras se compram na aba <em>Câmaras</em>, ` +
+    `dentro do que o tamanho comporta.</p>` +
     // A ORDEM DO ARRASTO, dita onde ela é lida. O sistema recusa uma classe num
     // ator sem raça (`class_requires_race`) com uma notificação vermelha e nada
     // mais — e quem arrasta a classe primeiro conclui que o item está quebrado.
