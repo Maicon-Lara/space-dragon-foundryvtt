@@ -1,7 +1,6 @@
-# Roda o build completo (gera-dados, compilação dos packs, verificação e os
-# testes) a cada push e pull request. É o mesmo `npm run build` de sempre; a
-# diferença é que ele passa a rodar numa máquina limpa, onde um arquivo que só
-# existe no seu disco aparece como erro.
+# Roda o build (gera-dados e compilação dos packs) e os testes (`npm test`) a
+# cada push e pull request, numa máquina limpa, onde um arquivo que só existe
+# no seu disco aparece como erro.
 name: Testes
 
 on:
@@ -23,3 +22,5 @@ jobs:
       - run: npm ci
 
       - run: npm run build
+
+      - run: npm test

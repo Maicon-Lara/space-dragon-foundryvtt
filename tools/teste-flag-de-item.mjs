@@ -184,16 +184,23 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
 // `teste-equipamentos-nave`. Os dois estavam vermelhos e fora do
 // `npm run build`, então ninguém os rodava. Um teste que não está na linha de
 // validação é documentação, não rede.
+//
+// Hoje quem roda os testes é tools/roda-testes.mjs, que descobre todo
+// `teste-*.mjs` sozinho. A guarda, então, é dupla: o `npm test` tem de chamar
+// o runner, e o `npm run publicar` tem de chamar o `npm test` — senão o runner
+// existe e ninguém o roda, que é o mesmo buraco de antes com outro nome.
 {
   const pkg = JSON.parse(fs.readFileSync(path.join(RAIZ, "package.json"), "utf8"));
-  const linha = Object.values(pkg.scripts ?? {}).join(" && ");
-  const existentes = fs.readdirSync(path.join(RAIZ, "tools"))
-    .filter((f) => f.startsWith("teste-") && f.endsWith(".mjs"));
-  const orfaos = existentes.filter((f) => !linha.includes(f));
-  confere(orfaos.length === 0,
-    `${orfaos.length} teste(s) existem e nenhum script do package.json os roda: ` +
-    `${orfaos.join(", ")} — foi assim que dois testes já vermelhos não impediram o bug ` +
-    `de chegar à mesa`);
+  const scripts = pkg.scripts ?? {};
+  confere(/tools\/roda-testes\.mjs/.test(scripts.test ?? ""),
+    "o script `test` do package.json não chama tools/roda-testes.mjs");
+  confere(/npm test/.test(scripts.publicar ?? ""),
+    "o script `publicar` não roda `npm test` — o zip sairia sem os testes");
+  // E o runner precisa enxergar os três tipos de arquivo que ele promete.
+  const runner = fs.readFileSync(path.join(RAIZ, "tools", "roda-testes.mjs"), "utf8");
+  for (const padrao of [String.raw`/^teste-.*\.mjs$/`, 'n === "verifica.mjs"', 'n === "fumaca.mjs"']) {
+    confere(runner.includes(padrao), `o runner não procura ${padrao}`);
+  }
 }
 
 function fim() {
@@ -204,7 +211,7 @@ function fim() {
   console.log(
     "  ✔ flag dos itens de nave: o build grava sob \"spacedragon\" e nenhum item ficou no id " +
       "antigo, a leitura aceita os dois (em flags cru e em getFlag), a migração alcança os " +
-      "itens das naves cujo ator já estava migrado — numa chamada só —, e nenhum teste de " +
-      "nave está fora do build"
+      "itens das naves cujo ator já estava migrado — numa chamada só —, e o runner de " +
+      "testes está no npm test e no publicar"
   );
 }
