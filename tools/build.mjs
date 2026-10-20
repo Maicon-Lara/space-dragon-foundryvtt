@@ -17,7 +17,7 @@ import { compilePack } from "@foundryvtt/foundryvtt-cli";
 import {
   folderDoc, raceDoc, raceAbilityDoc, classDoc, classAbilityDoc, journalDoc, rollTableDoc, macroDoc,
   weaponDoc, armorDoc, spellDoc, miscDoc, monsterDoc,
-  itemUuid, writeSource, aninhaPastas, pintaPastas, makeId, stats,
+  itemUuid, writeSource, aninhaPastas, pintaPastas, makeId, stats, tituloDeItem,
 } from "./lib.mjs";
 import { especies } from "./data/especies.mjs";
 import { classes } from "./data/classes.mjs";
@@ -402,7 +402,8 @@ function montaEquipamento() {
     const corpo = ehCorpoACorpo(a);
     const arremesso = soArremesso(a);
     docs.push(weaponDoc({
-      nome: a.nome,
+      nome: tituloDeItem(a.nome),
+      seedNome: a.nome,
       desc: descricaoArma(a),
       damage: a.dano ?? "",
       cost: a.preco === null ? "" : `${a.preco.toLocaleString("pt-BR")} créditos`,
@@ -422,7 +423,8 @@ function montaEquipamento() {
 
   VESTES.forEach((v, i) => {
     docs.push(armorDoc({
-      nome: v.nome,
+      nome: tituloDeItem(v.nome),
+      seedNome: v.nome,
       desc: descricaoVeste(v),
       // O escudo de energia é o único que SOMA. O resto é valor ABSOLUTO — o
       // livro faz CP = proteção das vestes + Destreza + bônus por nível —, e a
@@ -761,7 +763,8 @@ function buildNavesDocs() {
     const doc = dano
       ? weaponDoc(
           {
-            nome: e.nome,
+            nome: tituloDeItem(e.nome),
+            seedNome: e.nome,
             desc: e.desc,
             img: e.img,
             damage: dano,
@@ -773,7 +776,7 @@ function buildNavesDocs() {
             shoot_range: 0,
           },
           fEquip._id, "nave-equip", (i + 1) * 100000)
-      : miscDoc({ nome: e.nome, desc: e.desc, img: e.img },
+      : miscDoc({ nome: tituloDeItem(e.nome), seedNome: e.nome, desc: e.desc, img: e.img },
           fEquip._id, "nave-equip", (i + 1) * 100000);
     doc.flags[ID_MODULO] = { equipamentoDeNave: { chave: e.chave, grupo: e.grupo, cabe: e.cabe } };
     docs.push(doc);

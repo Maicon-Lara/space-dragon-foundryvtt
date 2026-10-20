@@ -14,6 +14,30 @@ const ID_ALPHABET =
 // Determinístico = o mesmo conteúdo sempre gera o mesmo _id, então as
 // referências por UUID permanecem estáveis entre builds (e entre mundos que
 // já importaram o conteúdo).
+/**
+ * O nome de item no padrão do compêndio: iniciais maiúsculas, menos as
+ * palavras de ligação — "Dardo para zarabatana (1)" vira "Dardo para
+ * Zarabatana (1)", "Lança-granadas" vira "Lança-Granadas".
+ *
+ * Aparatos, poderes, criaturas e câmaras já vinham assim; armas, vestes e
+ * equipamentos de nave vinham em minúscula, e a lista misturava os dois.
+ * Usar SEMPRE com `seedNome` = o nome antigo, ou o id muda.
+ */
+const LIGACAO = new Set(["a", "o", "as", "os", "e", "de", "da", "do", "das", "dos", "em", "na", "no", "para", "com", "por"]);
+export function tituloDeItem(nome) {
+  return String(nome)
+    .split(" ")
+    .map((palavra, i) =>
+      palavra
+        .split("-")
+        .map((p, j) => {
+          if ((i > 0 || j > 0) && LIGACAO.has(p.toLowerCase())) return p.toLowerCase();
+          return p ? p[0].toLocaleUpperCase("pt-BR") + p.slice(1) : p;
+        })
+        .join("-"))
+    .join(" ");
+}
+
 export function makeId(seed) {
   const hash = crypto.createHash("sha1").update(String(seed)).digest();
   let id = "";
@@ -619,7 +643,8 @@ function equipmentBase(it) {
 
 // Item do tipo weapon (arma).
 export function weaponDoc(it, folderId, seedPrefix, sort) {
-  const id = makeId(`weapon:${seedPrefix}:${it.nome}`);
+  // `seedNome`: o nome que GEROU o id (ver miscDoc).
+  const id = makeId(`weapon:${seedPrefix}:${it.seedNome ?? it.nome}`);
   return {
     folder: folderId,
     name: it.nome,
@@ -679,7 +704,7 @@ export function weaponDoc(it, folderId, seedPrefix, sort) {
 // escudos e quebraria quem já os tem na ficha. O seed é interno; o tipo é o
 // que a ficha lê.
 export function armorDoc(it, folderId, seedPrefix, sort) {
-  const id = makeId(`armor:${seedPrefix}:${it.nome}`);
+  const id = makeId(`armor:${seedPrefix}:${it.seedNome ?? it.nome}`);
   const ehEscudo = /^escudo$/i.test((it.tipo_armadura ?? "").trim());
   return {
     folder: folderId,
