@@ -23,6 +23,8 @@
  *     npm run fumaca
  */
 
+import { i18n as i18nDeTeste } from "./lang-de-teste.mjs";
+
 const niveisIniciais = Object.fromEntries(
   Array.from({ length: 15 }, (_, i) => [i + 1, `olddragon2e.levels.${i + 1}`])
 );
@@ -101,7 +103,9 @@ globalThis.foundry = {
 };
 const opcoes = new Map();
 globalThis.game = {
-  i18n: { localize: (s) => s },
+  // O lang DE VERDADE: o módulo traduz avisos, títulos e nomes de ficha por
+  // `t()` (module/i18n.js), e o teste tem de ver o texto que o jogador vê.
+  i18n: i18nDeTeste,
   settings: {
     register: (mod, chave, cfg) => opcoes.set(`${mod}.${chave}`, cfg.default),
     get: (mod, chave) => opcoes.get(`${mod}.${chave}`),

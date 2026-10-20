@@ -34,6 +34,8 @@
  * dois lados. O custo é uma flag órfã de alguns kilobytes.
  */
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 const ID_ANTIGO = "starwars-sd";
 const FLAG = "nave";
@@ -168,13 +170,9 @@ export async function migrarNavesNoReady() {
 
   // o aviso nomeia os itens porque é o que a mesa vai NOTAR: os botões de
   // instalar voltando à lista de cômodos
-  const sobreItens = itens
-    ? ` ${itens} cômodo(s) e equipamento(s) voltaram a ser reconhecidos — os botões de instalar estão de volta.`
-    : "";
-  globalThis.ui?.notifications?.info?.(
-    `${ok.length} nave(s) trazida(s) para o Space Dragon.${sobreItens}`
-  );
+  const sobreItens = itens ? txt("spacedragon.aviso.itensReconhecidos", { n: itens }) : "";
+  globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.navesMigradas", { n: ok.length, itens: sobreItens }));
   for (const f of feitas.filter((x) => !x.ok)) {
-    globalThis.ui?.notifications?.error?.(`Não consegui migrar "${f.nome}": ${f.erro}`);
+    globalThis.ui?.notifications?.error?.(txt("spacedragon.aviso.naveNaoMigrada", { nome: f.nome, erro: f.erro }));
   }
 }

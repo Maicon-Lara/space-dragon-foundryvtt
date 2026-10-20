@@ -53,6 +53,8 @@ import { ETAPAS } from "./nave-salto.js";
 import { aplicarAcao, ehAutomatica, limparFimDaRodada } from "./nave-acoes.js";
 import { CAMARAS } from "./camaras.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 export const MARCA_NAVE_PC = "spacedragon-nave-pc";
 export const MARCA_VOO = "sw-painel-voo";
@@ -748,7 +750,7 @@ export function registrarFichaDeNavePC() {
 
         if (fim) {
           await this.#gravarNave(nave, limparFimDaRodada(nave));
-          globalThis.ui?.notifications?.info?.("Fim da rodada: os efeitos temporários saíram.");
+          globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.fimDaRodada"));
           return;
         }
 
@@ -937,7 +939,7 @@ export function registrarFichaDeNavePC() {
 
   foundry.documents.collections.Actors.registerSheet(ID, NaveSheet, {
     types: ["character"],
-    label: "Ficha de Nave (Space Dragon)",
+    label: txt("spacedragon.ficha.nave"),
     // NUNCA padrão: ela é para os atores que são naves, e o mundo é de
     // personagens. Quem cria uma nave escolhe no botão "Sheet" do ator.
     makeDefault: false,

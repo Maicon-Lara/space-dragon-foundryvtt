@@ -32,6 +32,7 @@ import {
   FAIXAS, CAMPO_NA_FICHA, NOME_ATRIBUTO, SIGLA,
   PROGRESSAO, ATRIBUTO, ROTULO_COLUNA, TESTES,
 } from "./dados.js";
+import { t as txt } from "./i18n.js";
 import { chassiDe, celulaDe, progressaoDe } from "./chassi.js";
 
 // Reexportado de propósito: quem quer a regra importa daqui, não do arquivo
@@ -241,7 +242,7 @@ async function pergunta({ titulo, conteudo, rotuloOk }) {
       content: conteudo,
       buttons: [
         { action: "ok", label: rotuloOk, default: true, callback: (_e, botao) => colhe(botao.form) },
-        { action: "nao", label: "Cancelar", callback: () => null },
+        { action: "nao", label: txt("spacedragon.botao.cancelar"), callback: () => null },
       ],
       rejectClose: false,
     });
@@ -252,7 +253,7 @@ async function pergunta({ titulo, conteudo, rotuloOk }) {
       content: conteudo,
       buttons: {
         ok: { label: rotuloOk, callback: (html) => ok(colhe((html[0] ?? html).querySelector("form"))) },
-        nao: { label: "Cancelar", callback: () => ok(null) },
+        nao: { label: txt("spacedragon.botao.cancelar"), callback: () => ok(null) },
       },
       default: "ok",
       close: () => ok(null),
@@ -263,7 +264,7 @@ async function pergunta({ titulo, conteudo, rotuloOk }) {
 function atorDe(alvo) {
   const a = alvo ?? canvas?.tokens?.controlled?.[0]?.actor ?? game.user?.character ?? null;
   if (a && !a.isOwner) {
-    ui.notifications.warn(`Você não tem permissão sobre ${a.name}.`);
+    ui.notifications.warn(txt("spacedragon.aviso.semPermissao", { nome: a.name }));
     return null;
   }
   return a;
@@ -284,7 +285,7 @@ export async function abrirTeste(chave = null, alvo = null) {
   const ator = atorDe(alvo);
   const teste = chave ? porChave(chave) : null;
   if (chave && !teste) {
-    ui.notifications.error(`Teste desconhecido: ${chave}`);
+    ui.notifications.error(txt("spacedragon.aviso.testeDesconhecido", { chave }));
     return null;
   }
 
@@ -345,10 +346,7 @@ ${espec}
   const escolhido = porChave(String(r.chave));
   for (const a of atributosDe(escolhido)) {
     if (!valores[a]) {
-      ui.notifications.warn(
-        `${escolhido.nome} precisa do valor de ${NOME_ATRIBUTO[a]}, ` +
-        `que este módulo anota no campo ${CAMPO_NA_FICHA[a]} da ficha.`
-      );
+      ui.notifications.warn(txt("spacedragon.aviso.faltaAtributo", { teste: escolhido.nome, atributo: NOME_ATRIBUTO[a], campo: CAMPO_NA_FICHA[a] }));
       return null;
     }
   }

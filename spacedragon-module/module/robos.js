@@ -23,6 +23,7 @@
  */
 
 import { FAIXAS, CAMPO_NA_FICHA, COLUNA, TIPOS_DE_ROBO, LETRAS_ROBO, DESATIVAR_ROBOS } from "./dados.js";
+import { t as txt } from "./i18n.js";
 
 export const HABILIDADE_ROBOS = "Desativar Robôs";
 
@@ -121,14 +122,14 @@ export async function abrirDesativar(ator, tipo = TIPOS_DE_ROBO[0]) {
   const nivel = limita(ator?.system?.level);
   const opcoes = TIPOS_DE_ROBO.map((t) => `<option value="${t}"${t === tipo ? " selected" : ""}>${nomeDoTipo(t)}</option>`).join("");
   const r = await V2.wait({
-    window: { title: "Desativar Robôs — T3-2" },
+    window: { title: txt("spacedragon.janela.robos") },
     content:
       `<p class="sd-explica">1d20, passa com <strong>igual ou maior</strong>. A linha é o nível do disruptor.</p>` +
       `<div class="form-group"><label>Tipo de robô</label><select name="tipo">${opcoes}</select></div>` +
       `<div class="form-group"><label>Nível do disruptor</label><input type="number" name="nivel" value="${nivel}" min="1" max="20"></div>`,
     buttons: [
-      { action: "ok", label: "Rolar", default: true, callback: (_e, botao) => ({ tipo: botao.form.elements.tipo.value, nivel: Number(botao.form.elements.nivel.value) }) },
-      { action: "nao", label: "Cancelar", callback: () => null },
+      { action: "ok", label: txt("spacedragon.botao.rolar"), default: true, callback: (_e, botao) => ({ tipo: botao.form.elements.tipo.value, nivel: Number(botao.form.elements.nivel.value) }) },
+      { action: "nao", label: txt("spacedragon.botao.cancelar"), callback: () => null },
     ],
     rejectClose: false,
   });

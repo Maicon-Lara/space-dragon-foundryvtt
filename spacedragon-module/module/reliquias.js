@@ -29,6 +29,8 @@
 
 import { RELIQUIAS, DEFEITOS } from "./dados.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 
 export const CATEGORIA_POR_LETRA = { O: "Ofensivo", D: "Defensivo", U: "Utilitário" };
@@ -166,7 +168,7 @@ export async function gerarReliquia({ categoria = null, titulo = "Relíquia tecn
 export async function gerarDaCriatura(ator) {
   const letras = letrasDe(ator);
   if (!letras.length) {
-    ui.notifications.info(`${ator?.name ?? "A criatura"} não carrega relíquia nenhuma — o bloco só dá o prêmio em XP.`);
+    ui.notifications.info(txt("spacedragon.aviso.semReliquia", { nome: ator?.name ?? txt("spacedragon.aviso.aCriatura") }));
     return [];
   }
   const saida = [];
@@ -204,13 +206,13 @@ export async function abrirReliquia() {
   const opcoes = ["Sortear no d6", "Ofensivo", "Defensivo", "Utilitário"]
     .map((c) => `<option value="${c === "Sortear no d6" ? "" : c}">${c}</option>`).join("");
   const r = await V2.wait({
-    window: { title: "Relíquia tecnológica — T11-3" },
+    window: { title: txt("spacedragon.janela.reliquia") },
     content:
       `<p class="sd-explica">Sete rolagens montam a relíquia. O cartão vai sussurrado ao Mestre, porque a instabilidade é segredo.</p>` +
       `<div class="form-group"><label>Tipo de aparato</label><select name="cat">${opcoes}</select></div>`,
     buttons: [
-      { action: "ok", label: "Rolar", default: true, callback: (_e, b) => b.form.elements.cat.value || null },
-      { action: "nao", label: "Cancelar", callback: () => undefined },
+      { action: "ok", label: txt("spacedragon.botao.rolar"), default: true, callback: (_e, b) => b.form.elements.cat.value || null },
+      { action: "nao", label: txt("spacedragon.botao.cancelar"), callback: () => undefined },
     ],
     rejectClose: false,
   });

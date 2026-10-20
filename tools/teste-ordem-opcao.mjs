@@ -29,6 +29,7 @@ const MOD = path.join(RAIZ, "spacedragon-module", "module");
 const problemas = [];
 const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
 
+import { comTextos } from "./lang-de-teste.mjs";
 const ficha = fs.readFileSync(path.join(MOD, "ordem-ficha.js"), "utf8");
 const inversao = fs.readFileSync(path.join(MOD, "ordem-inversao.js"), "utf8");
 
@@ -37,7 +38,8 @@ const inversao = fs.readFileSync(path.join(MOD, "ordem-inversao.js"), "utf8");
   const i = ficha.indexOf('register(ID, "ordemDeAcao"');
   confere(i > 0, "a opção `ordemDeAcao` não é registrada — não há como ligar a regra");
 
-  const bloco = ficha.slice(i, ficha.indexOf("});", i));
+  // o nome e a dica são chaves do lang: `comTextos` acrescenta o texto delas
+  const bloco = comTextos(ficha.slice(i, ficha.indexOf("});", i)));
   confere(/default:\s*false/.test(bloco),
     "a Ordem de Ação vem LIGADA por padrão — ela inverte a ordem do combate, e quem " +
     "não pediu jogaria a rodada inteira com a fila ao contrário sem notar");

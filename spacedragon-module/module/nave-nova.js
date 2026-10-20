@@ -25,6 +25,8 @@
 import { naveVazia, FLAG } from "./nave-pc-dados.js";
 import { TIPOS } from "./tipos-de-nave.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 const PACK = "spacedragon.spacedragon-naves";
 
@@ -95,7 +97,7 @@ export async function criarNave({ nome, tipo } = {}) {
   if (!ator) return { ator: null, avisos: ["O Foundry recusou criar o ator."] };
 
   const { raca, classe, faltou } = await itensDoTipo(tipo);
-  avisos.push(...faltou.map((f) => `Não achei ${f} no compêndio — arraste à mão.`));
+  avisos.push(...faltou.map((f) => txt("spacedragon.aviso.naoAcheiNoCompendio", { oque: f })));
 
   // A RAÇA PRIMEIRO, e com o sync: é ele que traz a habilidade onde mora o CP.
   if (raca) {
@@ -103,7 +105,7 @@ export async function criarNave({ nome, tipo } = {}) {
     try {
       await ator.system.syncRaceAbilities?.();
     } catch (e) {
-      avisos.push(`A raça entrou, mas as habilidades dela não sincronizaram (${e?.message ?? e}). O CP pode estar em 10.`);
+      avisos.push(txt("spacedragon.aviso.racaSemHabilidades", { erro: e?.message ?? e }));
     }
   }
   // a classe só depois, porque o sistema a recusa num ator sem raça
@@ -112,13 +114,13 @@ export async function criarNave({ nome, tipo } = {}) {
     try {
       await ator.system.syncClassAbilities?.();
     } catch (e) {
-      avisos.push(`A classe entrou, mas as câmaras não sincronizaram (${e?.message ?? e}).`);
+      avisos.push(txt("spacedragon.aviso.classeSemCamaras", { erro: e?.message ?? e }));
     }
   } else if (classe && !raca) {
-    avisos.push("A classe não foi aplicada: o sistema a recusa sem a raça.");
+    avisos.push(txt("spacedragon.aviso.classeRecusada"));
   }
 
-  avisos.push(`PV em 0: role ${t.pv} e anote — a tabela dá o dado, e quem rola é a mesa.`);
+  avisos.push(txt("spacedragon.aviso.pvZero", { pv: t.pv }));
   return { ator, avisos };
 }
 
@@ -145,10 +147,10 @@ export async function dialogoDeNovaNave() {
     `<select name="tipo">${opcoes}</select></div>`;
 
   const dados = await D?.prompt?.({
-    window: { title: "Nova nave" },
+    window: { title: txt("spacedragon.janela.novaNave") },
     content: conteudo,
     ok: {
-      label: "Criar",
+      label: txt("spacedragon.botao.criar"),
       callback: (_ev, botao) => ({
         nome: botao.form.elements.nome.value,
         tipo: botao.form.elements.tipo.value,

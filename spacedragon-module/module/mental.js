@@ -32,6 +32,8 @@ import { ehFichaSD, ligarNaFicha } from "./ficha.js";
 import { PROGRESSAO, COLUNA, FAIXAS, CAMPO_NA_FICHA } from "./dados.js";
 import { chassiDe, celulaDe, progressaoDe } from "./chassi.js";
 
+import { t as txt } from "./i18n.js";
+
 const ID = "spacedragon";
 const MARCA = "spacedragon-mental";
 const FLAG_GASTO = "alcanceGasto";
@@ -87,15 +89,11 @@ export async function gastar(ator, grandeza) {
   const custo = Number(grandeza) || 0;
 
   if (custo > o.limite) {
-    ui.notifications.warn(
-      `${grandeza}ª Grandeza está acima do limite deste mentálico, que é a ${o.limite}ª.`
-    );
+    ui.notifications.warn(txt("spacedragon.aviso.grandezaAcimaDoLimite", { grandeza, limite: o.limite }));
     return null;
   }
   if (custo > o.restante) {
-    ui.notifications.warn(
-      `Faltam ${custo - o.restante}% de alcance mental: restam ${o.restante}% e o poder custa ${custo}%.`
-    );
+    ui.notifications.warn(txt("spacedragon.aviso.alcanceInsuficiente", { falta: custo - o.restante, restante: o.restante, custo }));
     return null;
   }
 
@@ -118,7 +116,7 @@ export async function gastar(ator, grandeza) {
 export async function descansar(ator) {
   ator = ator ?? canvas?.tokens?.controlled?.[0]?.actor ?? game.user?.character ?? null;
   if (!ator) {
-    ui.notifications.warn("Selecione o token do mentálico.");
+    ui.notifications.warn(txt("spacedragon.aviso.selecioneMentalico"));
     return null;
   }
   await ator.setFlag(ID, FLAG_GASTO, 0);
