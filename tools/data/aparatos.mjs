@@ -666,7 +666,7 @@ export const APARATOS = [
     texto: "O cientista é capaz de solidificar virtualmente qualquer tipo de líquido através de manipulação molecular, formando uma espécie de cristal. O líquido solidificado não ferve, evapora ou derrete, e manterá sua forma indefinidamente. Para revertê-lo ao estado normal basta aplicar algumas gotas do mesmo tipo de líquido não solidificado sobre o sólido.",
   },
   {
-    nome: "Decodificar Dna",
+    nome: "Decodificar DNA", seedNome: "Decodificar Dna",
     feito: true,
     categoria: null,
     nt: 4,

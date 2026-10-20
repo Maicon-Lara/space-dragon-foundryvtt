@@ -6,10 +6,11 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 1.16.1 — os onze capítulos portados.** 397 documentos em nove
-> compêndios: 47 de classe, 14 de espécie, 42 de equipamento, 112 poderes mentais,
-> 82 aparatos e feitos, 61 criaturas, 4 tabelas de rolagem, 25 macros e 10 journals
-> de regra.
+> **Estado: 1.27.0 — os onze capítulos portados.** 433 documentos em dez
+> compêndios, agrupados na pasta **Space Dragon** da barra de compêndios: 42 de
+> classe, 10 de espécie, 40 de equipamento, 101 poderes mentais, 80 aparatos e
+> feitos, 59 criaturas e personagens de exemplo, 63 de naves, 4 tabelas de
+> rolagem, 24 macros e 10 journals de regra, um por capítulo.
 
 ## O que ele é
 
@@ -71,6 +72,18 @@ desligar devolve o sistema ao original sem tocar em nada gravado.
 Também: o seletor de nível vai ao 20º, a aba de poderes vai à 10ª Grandeza, as
 moedas do cabeçalho viram Danos Mortais, e os rótulos passam a ser os do Space
 Dragon — Ciência, Intelecto, Comunicação, CP, JPR/JPF/JPM.
+
+**As mutações do Mutante entram sozinhas.** O que é número fixo — atributo ±3,
+teto de Intelecto 10, JPR e JPM, CP, ataque à distância e dado de vida — é
+aplicado assim que a mutação é escolhida no seletor da aba de Espécie. O valor
+digitado no atributo não muda: o módulo calcula o efetivo e mostra o ajuste num
+selo ao lado do campo. O que depende de situação ou de narrativa (XP, descanso,
+doenças, poderes) aparece num resumo no fim da aba. **Quem já tinha somado o +3
+à mão no campo precisa tirar.**
+
+As alterações no sistema passam pelo [libWrapper](https://foundryvtt.com/packages/lib-wrapper),
+recomendado. Sem ele, uma implementação reserva é usada e um aviso aparece para o
+Mestre.
 
 ## As porcentagens
 

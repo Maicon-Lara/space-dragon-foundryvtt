@@ -181,7 +181,7 @@
     "exportSource": null
   },
   "formula": "1d10",
-  "sort": 10,
+  "sort": 200,
   "ownership": {
     "default": 0
   },

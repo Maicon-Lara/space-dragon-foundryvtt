@@ -108,6 +108,8 @@ export const especies = [
           "1d10 e pegue a de número correspondente.</p>" +
           "<p>As duas que mandam rolar 1d6 numa subtabela (<em>Sentido Ampliado</em> e " +
           "<em>Atributo Ampliado</em>) já vêm abertas nas seis variantes, então a escolha é uma só.</p>" +
+          "<p>O que a mutação dá em número — atributo, JP, CP, ataque, dado de vida — entra " +
+          "sozinho na ficha; o resumo no fim desta aba mostra o que entrou e o que fica com a mesa.</p>" +
           "<p>O texto completo de cada mutação — genótipo, fenótipo e funcionamento — está no " +
           "journal <strong>Mutações do Homo novus</strong>.</p>",
         variable_construction: { choices_count: 1, available_options: opcoesDe("aprimoramento") },

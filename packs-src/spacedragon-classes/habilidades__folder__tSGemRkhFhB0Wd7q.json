@@ -1,0 +1,22 @@
+{
+  "name": "Habilidades",
+  "sorting": "m",
+  "folder": "Q7fYRjmsYg6JgmEk",
+  "type": "Item",
+  "_id": "tSGemRkhFhB0Wd7q",
+  "description": "",
+  "sort": 1,
+  "color": "#5a3f7c",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!tSGemRkhFhB0Wd7q"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "9º NT",
+  "sorting": "m",
+  "folder": "pOnkXk3ymR0lKRDm",
+  "type": "Item",
+  "_id": "YU6VVh4lYCrIp2QV",
+  "description": "",
+  "sort": 9,
+  "color": "#7c6b2f",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!YU6VVh4lYCrIp2QV"
+}
