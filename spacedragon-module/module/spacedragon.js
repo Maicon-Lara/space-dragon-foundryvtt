@@ -22,6 +22,10 @@
  * pessoa.
  */
 
+// A shim do libWrapper vem ANTES de tudo: ela se registra no `init`, e os
+// envelopes (envelope.js) a usam no `ready` quando o libWrapper de verdade
+// não está instalado.
+import "./libwrapper-shim.js";
 import { abrirTeste, rolar, preparar, TESTES } from "./testes.js";
 import { ligarPainel, diagnostico } from "./painel.js";
 import { aplicarModificadores, compararEscalas, ordenarHabilidades, aplicarCP, bonusDeCP } from "./atributos.js";

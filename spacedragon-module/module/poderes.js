@@ -16,7 +16,7 @@
  *
  * ── A EMENDA ────────────────────────────────────────────────────────────────
  *
- * Envolvemos o `getData` da ficha: depois que o sistema monta os dados,
+ * Envolvemos o `getData` da ficha (pelo libWrapper): depois que o sistema monta os dados,
  * refazemos `spell_by_circle` com dez faixas em vez de nove. O template não é
  * tocado — ele percorre o que receber, e passa a receber dez.
  *
@@ -24,6 +24,8 @@
  * dados como vieram: a ficha continua funcionando, com a 10ª de volta ao
  * fallback. Ruim, mas não quebrado.
  */
+
+import { envolver, caminhoDaFicha } from "./envelope.js";
 
 const ID = "spacedragon";
 const GRANDEZA_MAXIMA = 10;
@@ -44,14 +46,16 @@ export function ligarGrandezas() {
 
   const registro = CONFIG.Actor?.sheetClasses?.character ?? {};
   const ficha = Object.values(registro).find((e) => e?.cls?.name === "OD2CharacterSheet")?.cls;
-  if (!ficha?.prototype?.getData) {
+  const alvo = caminhoDaFicha("character", "OD2CharacterSheet", "getData");
+  if (!alvo || !ficha?.prototype?.getData) {
     console.warn(`${ID} | ficha de personagem não encontrada — a 10ª Grandeza cai no 1º círculo`);
     return;
   }
 
-  const original = ficha.prototype.getData;
-  ficha.prototype.getData = async function (...args) {
-    const dados = await original.apply(this, args);
+  // Pelo libWrapper (envelope.js), no `getData` da ficha do SISTEMA: vale
+  // também para quem abre um Space Dragon na ficha do Old Dragon 2.
+  envolvido = envolver(alvo, async function (wrapped, ...args) {
+    const dados = await wrapped(...args);
     try {
       if (!dados?.spell_by_circle) return dados;
 
@@ -68,8 +72,7 @@ export function ligarGrandezas() {
       console.warn(`${ID} | não foi possível estender as Grandezas`, e);
     }
     return dados;
-  };
+  });
 
-  envolvido = true;
-  console.log(`${ID} | aba de poderes estendida até a ${GRANDEZA_MAXIMA}ª Grandeza`);
+  if (envolvido) console.log(`${ID} | aba de poderes estendida até a ${GRANDEZA_MAXIMA}ª Grandeza`);
 }

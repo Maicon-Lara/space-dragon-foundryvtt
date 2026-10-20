@@ -22,8 +22,9 @@
  *
  * O sistema expõe os modificadores como GETTERS no modelo de dados do
  * personagem — `get mod_forca() { return calculateAttributeModifier(this.forca) }`
- * e assim por diante. Trocamos os seis getters no protótipo, e tudo o que os lê
- * passa a ver o número certo, sem tocar em nada que o ator guarde em disco.
+ * e assim por diante. Envolvemos os seis getters pelo libWrapper (envelope.js),
+ * e tudo o que os lê passa a ver o número certo, sem tocar em nada que o ator
+ * guarde em disco.
  *
  * Nenhum dado é reescrito. Desligar a opção, ou o módulo, devolve o sistema ao
  * que ele era.
@@ -48,6 +49,7 @@
 
 import { FAIXAS, CAMPO_NA_FICHA, COLUNA_DERIVADA } from "./dados.js";
 import { atorUsaFichaSD } from "./ficha.js";
+import { envolver, MODELO_PERSONAGEM } from "./envelope.js";
 
 const ID = "spacedragon";
 
@@ -59,59 +61,41 @@ function faixaDe(valor) {
   return FAIXAS.findIndex(([min, max]) => v >= min && v <= max);
 }
 
-/** Os seis getters, do nome do campo na ficha para a coluna do livro. */
-function getters() {
-  const saida = {};
-  for (const [atributo, campo] of Object.entries(CAMPO_NA_FICHA)) {
-    const coluna = COLUNA_DERIVADA[atributo];
-    if (!coluna) continue;
-    saida[`mod_${campo}`] = function () {
-      // A escala do Space Dragon vale para QUEM É do Space Dragon. Num mundo
-      // que também tenha o módulo Star Wars, o Jedi ao lado continua na escala
-      // do Old Dragon 2 — e é por isso que o getter original é guardado.
-      if (!atorUsaFichaSD(this.parent)) return originais[`mod_${campo}`]?.get?.call(this) ?? 0;
-      return Number(coluna[faixaDe(this[campo])] ?? 0);
-    };
-  }
-  return saida;
-}
+/**
+ * A opção está ligada? É lida a CADA acesso ao getter, e é isso que permite
+ * ligar e desligar sem recarregar: nada é instalado nem removido, só a chave
+ * vira. Funciona igual com o libWrapper de verdade e com a shim, que não tem
+ * `unregister`.
+ */
+let modificadoresLigados = false;
+let modificadoresEnvolvidos = false;
 
 /**
- * Troca os getters no protótipo do modelo de dados do personagem.
- *
- * Guarda os originais para que a opção possa ser desligada sem recarregar.
+ * Envolve os seis getters do protótipo do modelo de dados do personagem, uma
+ * vez só, pelo libWrapper (ver envelope.js). O envelope decide a cada leitura:
+ * opção ligada E ator na ficha do Space Dragon → a coluna do livro; senão, o
+ * getter do sistema. Num mundo que também tenha o módulo Star Wars, o Jedi ao
+ * lado continua na escala do Old Dragon 2.
  */
-let originais = null;
-
 export function aplicarModificadores(ligado) {
+  modificadoresLigados = !!ligado;
   const proto = CONFIG.Actor?.dataModels?.character?.prototype;
   if (!proto) {
     console.warn(`${ID} | modelo de dados do personagem não encontrado — modificadores ficam os do OD2`);
     return false;
   }
-
-  if (ligado) {
-    // Os originais primeiro: os novos getters CHAMAM eles para quem não é do
-    // Space Dragon, então precisam existir antes de serem instalados.
-    if (!originais) {
-      originais = {};
-      for (const campo of Object.values(CAMPO_NA_FICHA)) {
-        originais[`mod_${campo}`] = Object.getOwnPropertyDescriptor(proto, `mod_${campo}`);
-      }
-    }
-    const novos = getters();
-    for (const [nome, fn] of Object.entries(novos)) {
-      Object.defineProperty(proto, nome, { get: fn, configurable: true });
-    }
-    return true;
-  }
-
-  if (originais) {
-    for (const [nome, desc] of Object.entries(originais)) {
-      if (desc) Object.defineProperty(proto, nome, desc);
+  if (!modificadoresEnvolvidos) {
+    modificadoresEnvolvidos = true;
+    for (const [atributo, campo] of Object.entries(CAMPO_NA_FICHA)) {
+      const coluna = COLUNA_DERIVADA[atributo];
+      if (!coluna) continue;
+      envolver(`${MODELO_PERSONAGEM}.mod_${campo}`, function (wrapped) {
+        if (!modificadoresLigados || !atorUsaFichaSD(this.parent)) return wrapped();
+        return Number(coluna[faixaDe(this[campo])] ?? 0);
+      });
     }
   }
-  return false;
+  return modificadoresLigados;
 }
 
 /**
@@ -140,7 +124,7 @@ export function bonusDeCP(nivel) {
  * Só para quem usa a ficha do Space Dragon: o personagem de Old Dragon 2 ao
  * lado continua com o CA do sistema dele.
  */
-let acOriginal = null;
+let cpEnvolvido = false;
 
 export function aplicarCP() {
   const proto = CONFIG.Actor?.dataModels?.character?.prototype;
@@ -149,16 +133,12 @@ export function aplicarCP() {
     console.warn(`${ID} | ac_total não é getter — o bônus de CP por nível fica de fora`);
     return false;
   }
-  if (acOriginal) return true;
-  acOriginal = desc.get;
-  Object.defineProperty(proto, "ac_total", {
-    configurable: true,
-    get() {
-      const base = acOriginal.call(this);
-      return atorUsaFichaSD(this.parent) ? base + bonusDeCP(this.level) : base;
-    },
+  if (cpEnvolvido) return true;
+  cpEnvolvido = envolver(`${MODELO_PERSONAGEM}.ac_total`, function (wrapped) {
+    const base = wrapped();
+    return atorUsaFichaSD(this.parent) ? base + bonusDeCP(this.level) : base;
   });
-  return true;
+  return cpEnvolvido;
 }
 
 /** Mostra as duas escalas lado a lado, para conferir na mesa. */
@@ -206,6 +186,8 @@ function od2(v) {
  * O desempate é o `sort` do próprio item, que preserva a ordem do livro entre
  * habilidades do mesmo nível.
  */
+let habilidadesEnvolvidas = false;
+
 export function ordenarHabilidades(ligado) {
   const proto = CONFIG.Actor?.dataModels?.character?.prototype;
   if (!proto) return false;
@@ -216,18 +198,15 @@ export function ordenarHabilidades(ligado) {
     return false;
   }
   if (!ligado) return false;
+  if (habilidadesEnvolvidas) return true;
 
-  const original = desc.get;
-  Object.defineProperty(proto, "class_abilities", {
-    configurable: true,
-    get() {
-      const lista = original.call(this) ?? [];
-      return [...lista].sort(
-        (a, b) =>
-          (Number(a.system?.level) || 1) - (Number(b.system?.level) || 1) ||
-          (a.sort ?? 0) - (b.sort ?? 0)
-      );
-    },
+  habilidadesEnvolvidas = envolver(`${MODELO_PERSONAGEM}.class_abilities`, function (wrapped) {
+    const lista = wrapped() ?? [];
+    return [...lista].sort(
+      (a, b) =>
+        (Number(a.system?.level) || 1) - (Number(b.system?.level) || 1) ||
+        (a.sort ?? 0) - (b.sort ?? 0)
+    );
   });
-  return true;
+  return habilidadesEnvolvidas;
 }
