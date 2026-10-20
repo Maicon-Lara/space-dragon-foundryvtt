@@ -247,11 +247,26 @@ export function orcamentoDeCamaras(nave, chaves, tamanho) {
 export const CHAVES_DAS_CAMARAS = Object.keys(CAMARAS);
 
 /**
+ * O tamanho da nave: o gravado; senão o do TIPO gravado; senão o do tipo cujo
+ * nome é o da raça (o tipo arrastado do compêndio).
+ *
+ * O criador de naves gravava só o tipo, sem o tamanho, e o limite de câmaras
+ * extras não aparecia em nenhuma nave criada por ele. Deduzir aqui conserta as
+ * naves que já existem, sem recriar nada.
+ */
+export function tamanhoDaNave(nave, nomeDaRaca = "") {
+  if (nave?.tamanho) return nave.tamanho;
+  if (TIPOS[nave?.tipo]?.tamanho) return TIPOS[nave.tipo].tamanho;
+  const pelaRaca = Object.values(TIPOS).find((t) => t.rotulo === String(nomeDaRaca ?? "").trim());
+  return pelaRaca?.tamanho ?? "";
+}
+
+/**
  * O retrato das câmaras de uma nave, para o painel da aba Câmaras.
  * `cp` é o do casco (o `ac_total` do ator), que a flag não guarda.
  */
-export function resumoDasCamaras(nave, { cp = null } = {}) {
-  const tamanho = nave?.tamanho || "";
+export function resumoDasCamaras(nave, { cp = null, raca = "" } = {}) {
+  const tamanho = tamanhoDaNave(nave, raca);
   const linha = (chave) => ({ chave, rotulo: CAMARAS[chave].rotulo, estado: estadoDoComodo(nave, chave) });
   return {
     tamanho,
@@ -273,10 +288,10 @@ export function resumoDasCamaras(nave, { cp = null } = {}) {
  * Reinstalar uma câmara de fábrica que foi arrancada também custa a obra: a
  * nave sai de fábrica com ela, mas a segunda é comprada.
  */
-export function compraDeCamara(chave, nave) {
+export function compraDeCamara(chave, nave, raca = "") {
   const c = CAMARAS[chave];
   if (!c || estadoDoComodo(nave, chave) !== "ausente") return null;
-  const tamanho = nave?.tamanho || "";
+  const tamanho = tamanhoDaNave(nave, raca);
   const o = orcamentoDeCamaras(nave, CHAVES_DAS_CAMARAS, tamanho);
   const deFabrica = CAMARAS_BASE.includes(chave);
   return {
@@ -412,8 +427,37 @@ export const ID_ANTIGO = "starwars-sd";
  */
 export function flagDeNave(item, nome, id = "spacedragon") {
   for (const quem of [id, ID_ANTIGO]) {
-    const v = item?.flags?.[quem]?.[nome] ?? item?.getFlag?.(quem, nome);
+    const v = lerFlag(item, quem, nome);
     if (v) return v;
   }
   return null;
+}
+
+/**
+ * Lê uma flag sem NUNCA lançar.
+ *
+ * ── O BUG QUE ISTO CONSERTA ───────────────────────────────────────────────
+ *
+ * `documento.getFlag(escopo, chave)` LANÇA quando o escopo não é um pacote
+ * ativo («Flag scope "starwars-sd" is not valid or not currently active»). A
+ * leitura do id antigo usava getFlag, então numa mesa SEM o módulo de Star
+ * Wars toda leitura de item sem a nossa flag explodia:
+ *
+ *   · arrastar qualquer item para a Ficha de Nave parava no meio — inclusive
+ *     o tipo e a classe, depois de apagados (1.28.0, que passou a olhar o item
+ *     arrastado para reconhecer câmara);
+ *   · a lista de equipamentos instalados quebrava o desenho da ficha;
+ *   · a migração das naves antigas descartava todas, em silêncio.
+ *
+ * O objeto `flags` cru serve para os dois ids e não valida escopo. getFlag só
+ * entra como recurso, e dentro de try.
+ */
+export function lerFlag(doc, escopo, nome) {
+  const cru = doc?.flags?.[escopo]?.[nome];
+  if (cru !== undefined) return cru;
+  try {
+    return doc?.getFlag?.(escopo, nome);
+  } catch {
+    return undefined;
+  }
 }
