@@ -21,6 +21,12 @@ SAIDA = os.path.join(RAIZ, "spacedragon.zip")
 
 EXCLUIR = {".DS_Store", "Thumbs.db", "desktop.ini"}
 
+# Do LevelDB só vai o que o Foundry lê: .ldb, .log, CURRENT e MANIFEST. O LOCK
+# é o cadeado do processo que compilou; empacotado, ele chega na mesa de quem
+# instala como "lock already held" na primeira abertura do compêndio. O LOG é
+# o diário da compilação e não tem nada que o Foundry use.
+EXCLUIR_NOS_PACKS = {"LOCK", "LOG"}
+
 
 def main():
     manifesto = json.load(io.open(os.path.join(ORIGEM, "module.json"), encoding="utf-8"))
@@ -30,6 +36,8 @@ def main():
         for pasta, _, nomes in os.walk(ORIGEM):
             for nome in sorted(nomes):
                 if nome in EXCLUIR:
+                    continue
+                if nome in EXCLUIR_NOS_PACKS and os.sep + "packs" + os.sep in pasta + os.sep:
                     continue
                 caminho = os.path.join(pasta, nome)
                 interno = os.path.relpath(caminho, ORIGEM).replace("\\", "/")
