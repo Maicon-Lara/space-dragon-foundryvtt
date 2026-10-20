@@ -74,5 +74,6 @@
   "spacedragon.aviso.camaraDanificada": "{camara} está danificada em {nave}. A T10-2 manda repará-la (25% do valor, metade do prazo), e não comprá-la de novo.",
   "spacedragon.janela.camaraDanificada": "Câmara danificada (T10-2)",
   "spacedragon.botao.reparar": "Reparar",
-  "spacedragon.botao.arrancar": "Arrancar"
+  "spacedragon.botao.arrancar": "Arrancar",
+  "spacedragon.aviso.sistemaNovo": "Space Dragon: o Old Dragon 2 está na versão {atual}, e o módulo foi conferido até a {verificado}. Rótulos, selos e painéis da ficha podem não aparecer até sair uma versão nova do módulo — confira uma ficha antes da sessão."
 }

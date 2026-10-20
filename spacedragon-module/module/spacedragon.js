@@ -43,6 +43,7 @@ import { registrarFichaAmeaca, rolarJPAmeaca, rolarMoral } from "./ameaca.js";
 import { abrirDesativar, rolarDesativar } from "./robos.js";
 import { abrirReliquia, gerarReliquia, gerarDaCriatura, rolarDefeito } from "./reliquias.js";
 import { ligarMutacoes } from "./mutacoes-ficha.js";
+import { registrarOpcaoDeVersao, avisarVersaoDoSistema } from "./versao.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -85,6 +86,7 @@ function estendeNiveis() {
 
 Hooks.once("init", () => {
   registrarOpcoesDaOrdem();
+  registrarOpcaoDeVersao();
   registrarOpcaoDeCombate();
 
   // As fichas são registradas no `ready` (ver lá). Aqui só a opção, que
@@ -157,6 +159,9 @@ Hooks.once("ready", () => {
   // Por último: a aba de Poderes precisa estar desenhada para os rótulos de
   // Grandeza serem trocados.
   ligarRotulos();
+
+  // O Mestre fica sabendo se o Old Dragon 2 passou da versão conferida (versao.js).
+  avisarVersaoDoSistema();
 
   // A API que as macros do compêndio chamam. Fica aqui, e não dentro da macro,
   // para que atualizar o módulo atualize a regra: uma macro já arrastada para
