@@ -20,6 +20,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { LANG } from "./lang-de-teste.mjs";
+import { LANG_PADRAO } from "../spacedragon-module/module/lang-padrao.js";
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const MOD = path.join(AQUI, "..", "spacedragon-module", "module");
@@ -76,6 +77,11 @@ for (const chave of Object.keys(LANG).filter((k) => !k.startsWith("spacedragon."
   confere(/^olddragon2e\.(levels\.(1[6-9]|20)|spell_circle\.10)$/.test(chave),
     `"${chave}" renomeia algo do sistema pelo lang — isso é global e colide com outros módulos (ver rotulos.js)`);
 }
+
+// lang-padrao.js é cópia gerada do JSON, usada fora do Foundry: se divergir,
+// os testes leriam um texto e a mesa outro.
+confere(JSON.stringify(LANG_PADRAO) === JSON.stringify(LANG),
+  "module/lang-padrao.js não bate com lang/pt-BR.json — rode `node tools/gera-dados.mjs`");
 
 if (problemas.length) {
   for (const p of problemas) console.error(`  ✘ ${p}`);

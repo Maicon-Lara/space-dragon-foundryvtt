@@ -225,17 +225,16 @@ export function painelDeVoo(ator, nave) {
     `<span class="voo-valor">${valor}</span></div>`;
 
   const avaria = l.penalidade > 0
-    ? `<div class="voo-avaria" title="§2: 5% de penalidade a cada 10% dos PV perdidos, até 50%.">` +
-      `Avaria: <strong>−${l.penalidade}%</strong> na pilotagem` +
-      (l.pilotagem ? ` — ${l.pilotagem.base}% vira <strong>${l.pilotagem.efetiva}%</strong>` : "") +
+    ? `<div class="voo-avaria" title="${txt("spacedragon.nave.voo.avariaDica")}">` +
+      txt("spacedragon.nave.voo.avaria", { pen: l.penalidade }) +
+      (l.pilotagem ? txt("spacedragon.nave.voo.avariaPilotagem", { base: l.pilotagem.base, efetiva: l.pilotagem.efetiva }) : "") +
       `</div>`
     : "";
 
   const tanque = l.combustivel.fonte
-    ? `<div class="voo-tanque" title="${l.combustivel.fonte.rotulo} · autonomia ` +
-      `${l.combustivel.fonte.autonomia} · um dia de viagem gasta ${l.combustivel.gastoPorDia}">` +
+    ? `<div class="voo-tanque" title="${txt("spacedragon.nave.voo.tanqueDica", { fonte: l.combustivel.fonte.rotulo, autonomia: l.combustivel.fonte.autonomia, gasto: l.combustivel.gastoPorDia })}">` +
       `<div class="voo-tanque-barra"><i style="width:${l.combustivel.porcento}%"></i></div>` +
-      `<span>Combustível ${l.combustivel.porcento}% · ${l.combustivel.gastoPorDia}/dia</span>` +
+      `<span>${txt("spacedragon.nave.voo.tanque", { porcento: l.combustivel.porcento, gasto: l.combustivel.gastoPorDia })}</span>` +
       `</div>`
     : "";
 
@@ -246,7 +245,7 @@ export function painelDeVoo(ator, nave) {
   // duas condições, e o equipamento entra como item arrastado do compêndio
   const extra = bonusDeAtaque(nave, equipamentosDoAtor(ator, ID));
   const ba = extra
-    ? `+${l.ba + extra} <small>(${l.ba} +${extra} balístico)</small>`
+    ? `+${l.ba + extra} <small>${txt("spacedragon.nave.voo.baBalistico", { ba: l.ba, extra })}</small>`
     : `+${l.ba}`;
 
   const avisos = avisosDaNave(nave)
@@ -256,10 +255,10 @@ export function painelDeVoo(ator, nave) {
   return (
     `<section class="${MARCA_VOO}">` +
     `<div class="voo-linha">` +
-      campo("CP", l.cp, "Coeficiente de Proteção — vem do tipo (raça), T10-1") +
-      campo("BA", ba, "Bônus de Ataque da nave (classe, T10-1) + o Computador Balístico da Ponte") +
-      campo("JP", l.jp, "Número-alvo: menor é melhor. O piloto rola antes e modifica (T10-5)") +
-      campo("Mov.", l.movimento) +
+      campo("CP", l.cp, txt("spacedragon.nave.voo.dicaCP")) +
+      campo("BA", ba, txt("spacedragon.nave.voo.dicaBA")) +
+      campo("JP", l.jp, txt("spacedragon.nave.voo.dicaJP")) +
+      campo(txt("spacedragon.nave.voo.mov"), l.movimento) +
     `</div>` +
     avaria + tanque +
     (avisos ? `<ul class="voo-avisos">${avisos}</ul>` : "") +
@@ -373,11 +372,11 @@ export function painelDaTripulacao(ator, nave) {
         // vazia — e some sozinho quando alguém senta.
         `<input type="text" class="${CLASSE_POSTO}" data-posto="${posto.chave}" ` +
         `value="${quemEsta.replace(/"/g, "&quot;")}" placeholder="${posto.quem}" ` +
-        `list="${LISTA_TRIPULACAO}" title="Quem está neste posto. Deixe vazio e o posto não age.">` +
+        `list="${LISTA_TRIPULACAO}" title="${txt("spacedragon.nave.tripulacao.dicaPosto")}">` +
       `</div>` +
       `<div class="posto-faz">${posto.oQueFaz}</div>` +
       (travado
-        ? `<div class="posto-aviso">Sem a Sala de Máquinas operacional, este posto não age (§7).</div>`
+        ? `<div class="posto-aviso">${txt("spacedragon.nave.tripulacao.semMaquinas")}</div>`
         : "") +
       `<ul class="posto-acoes">${acoes}</ul>` +
       `</div>`
@@ -386,8 +385,7 @@ export function painelDaTripulacao(ator, nave) {
 
   return (
     `<section class="${MARCA_TRIPULACAO}">` +
-    `<p class="tripulacao-nota">Cada posto é a ação daquele personagem na rodada. ` +
-    `Posto vazio não age. <em>Em negrito, o que a ficha aplica sozinha.</em></p>` +
+    `<p class="tripulacao-nota">${txt("spacedragon.nave.tripulacao.nota")}</p>` +
     linhas +
     // ── O FIM DA RODADA ──
     //
@@ -396,9 +394,8 @@ export function painelDaTripulacao(ator, nave) {
     // ligados para sempre — e o sintoma é uma nave que nunca sai do Firmar,
     // três sessões depois, sem ninguém ligar a causa.
     `<button type="button" class="${CLASSE_FIM_RODADA}" ` +
-    `title="Apaga o que vale até o fim da rodada: Firmar, Supressão, Interferência, ` +
-    `Aguentem firme e a energia do reator. Não mexe nos relógios nem nas câmaras.">` +
-    `Fim da rodada</button>` +
+    `title="${txt("spacedragon.nave.tripulacao.fimDaRodadaDica")}">` +
+    `${txt("spacedragon.nave.tripulacao.fimDaRodada")}</button>` +
     `<datalist id="${LISTA_TRIPULACAO}">` +
     sugestoesDeTripulacao().map((n) => `<option value="${n.replace(/"/g, "&quot;")}">`).join("") +
     `</datalist>` +
@@ -447,19 +444,14 @@ export function guiaDeMontagem(ator) {
 
   return (
     `<section class="${MARCA_GUIA}">` +
-    `<strong>Montar esta nave</strong>` +
+    `<strong>${txt("spacedragon.nave.guia.titulo")}</strong>` +
     `<ol>` +
-    passo(temRaca,
-      "Arraste o <strong>tipo</strong> (Caça, Cargueiro…) do compêndio " +
-      "<em>Naves</em>. Ele traz o CP e o movimento.") +
+    passo(temRaca, txt("spacedragon.nave.guia.tipo")) +
     passo(temClasse,
-      "Depois arraste a <strong>classe de mesmo nome</strong> (“Nave — Caça”). " +
-      "Ela traz a BA, a JP e as doze câmaras." +
-      (temRaca ? "" : " <em>O sistema recusa a classe enquanto não houver raça.</em>")) +
+      txt("spacedragon.nave.guia.classe") +
+      (temRaca ? "" : txt("spacedragon.nave.guia.recusa"))) +
     `</ol>` +
-    `<p class="guia-nota">A nave sai de fábrica só com a Ponte, a Sala de Máquinas e o casco. ` +
-    `As outras câmaras se compram: clique em <em>comprar</em> na aba <em>Câmaras</em>, ou ` +
-    `arraste a câmara do compêndio para a nave.</p>` +
+    `<p class="guia-nota">${txt("spacedragon.nave.guia.nota")}</p>` +
     `</section>`
   );
 }
@@ -555,12 +547,13 @@ export function renomearAbas(raiz) {
  */
 export const CLASSE_SELETOR = "sw-comodo-estado";
 
-const ROTULO_DO_ESTADO = {
-  instalada: "instalada",
-  danificada: "danificada",
-  // regra da casa: o que a nave não tem se COMPRA, e o botão diz isso
-  ausente: "comprar",
-};
+// regra da casa: o que a nave não tem se COMPRA, e o botão diz isso. Função,
+// e não objeto, para a tradução ser lida na hora de desenhar.
+const ROTULO_DO_ESTADO = (estado) => ({
+  instalada: txt("spacedragon.nave.camara.instalada"),
+  danificada: txt("spacedragon.nave.camara.danificada"),
+  ausente: txt("spacedragon.nave.camara.comprar"),
+})[estado];
 
 const escapaAtributo = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
@@ -574,15 +567,17 @@ const escapaAtributo = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/"/
  * quando o padrão passou a ser "instalada".
  */
 export function botaoDoComodo(chave, estado) {
-  const rotulo = ROTULO_DO_ESTADO[estado] ?? estado;
+  const rotulo = ROTULO_DO_ESTADO(estado) ?? estado;
   const seguinte = proximoEstado(estado);
   const c = CAMARAS[chave];
+  const obra = creditos(c?.obra);
+  const prazo = c?.prazo ?? txt("spacedragon.nave.camara.prazoDoMestre");
+  const efeito = c?.efeito ?? "";
   const titulo = estado === "ausente"
-    ? `A nave não tem esta câmara. Clique para comprar: obra de ${creditos(c?.obra)} créditos, ` +
-      `${c?.prazo ?? "prazo do Mestre"}. ${c?.efeito ?? ""}`
+    ? txt("spacedragon.nave.camara.dicaComprar", { obra, prazo, efeito })
     : estado === "danificada"
-      ? `Está danificada. Clique para reparar (25% da obra, metade do prazo — T10-2) ou arrancar.`
-      : `Está instalada. Clique para marcar como danificada.`;
+      ? txt("spacedragon.nave.camara.dicaDanificada")
+      : txt("spacedragon.nave.camara.dicaInstalada");
   return (
     `<button type="button" class="${CLASSE_SELETOR} estado-${estado}" ` +
     `data-comodo="${chave}" data-proximo="${seguinte}" ` +
@@ -604,32 +599,36 @@ export function painelDasCamaras(ator, nave) {
   const marca = (e) => (e === "instalada" ? "✔" : e === "danificada" ? "⚠" : "✘");
   const fabrica = r.fabrica
     .map((l) => `<li class="camara-${l.estado}">${marca(l.estado)} ${l.rotulo}` +
-      (l.estado === "instalada" ? "" : ` <em>(${l.estado === "danificada" ? "danificada" : "arrancada — reinstalar custa a obra"})</em>`) +
+      (l.estado === "instalada" ? "" : ` <em>(${l.estado === "danificada"
+        ? txt("spacedragon.nave.camaras.estaDanificada")
+        : txt("spacedragon.nave.camaras.arrancada")})</em>`) +
       `</li>`)
     .join("");
-  const casco = `<li class="camara-instalada">✔ Casco e suporte de vida` +
-    (r.casco.cp != null && r.casco.cp !== "" ? ` <em>(CP ${r.casco.cp}, do tipo de nave)</em>` : "") + `</li>`;
+  const cp = r.casco.cp;
+  const casco = `<li class="camara-instalada">✔ ${txt("spacedragon.nave.camaras.casco")}` +
+    (cp != null && cp !== "" ? ` <em>${txt("spacedragon.nave.camaras.cascoCP", { cp })}</em>` : "") + `</li>`;
 
   const o = r.orcamento;
   const limite = r.conhecido
-    ? `<p class="camaras-limite${o.excedeu ? " excedeu" : ""}">Câmaras extras: <strong>${o.usadas} de ${o.livres}</strong> ` +
-      `(nave ${r.tamanho})` +
-      (o.excedeu ? ` — <strong>passou do que o tamanho comporta</strong>; o Mestre decide se fica.` : "") +
-      (o.livres === 0 && !o.usadas ? ` — nave pequena: só cabine e motor.` : "") +
+    ? `<p class="camaras-limite${o.excedeu ? " excedeu" : ""}">` +
+      txt("spacedragon.nave.camaras.limite", { usadas: o.usadas, livres: o.livres, tamanho: r.tamanho }) +
+      (o.excedeu ? txt("spacedragon.nave.camaras.excedeu") : "") +
+      (o.livres === 0 && !o.usadas ? txt("spacedragon.nave.camaras.pequena") : "") +
       `</p>`
-    : `<p class="camaras-limite">Defina o tipo da nave para ver quantas câmaras extras cabem.</p>`;
+    : `<p class="camaras-limite">${txt("spacedragon.nave.camaras.semTipo")}</p>`;
 
+  const danificada = txt("spacedragon.nave.camaras.estaDanificada");
+  const lista = r.compradas.map((l) => l.rotulo + (l.estado === "danificada" ? ` (${danificada})` : "")).join(", ");
   const compradas = r.compradas.length
-    ? `<p class="camaras-compradas">Compradas: ${r.compradas.map((l) => l.rotulo + (l.estado === "danificada" ? " (danificada)" : "")).join(", ")}</p>`
+    ? `<p class="camaras-compradas">${txt("spacedragon.nave.camaras.compradas", { lista })}</p>`
     : "";
 
   return (
     `<section class="${MARCA_CAMARAS}">` +
-    `<strong>De fábrica</strong> <small>(o mínimo para voar e manter todos vivos)</small>` +
+    txt("spacedragon.nave.camaras.deFabrica") +
     `<ul>${fabrica}${casco}</ul>` +
     limite + compradas +
-    `<p class="camaras-dica">Para comprar uma câmara, clique em <em>comprar</em> na lista abaixo ` +
-    `ou arraste-a da pasta <em>Câmaras (T10-2)</em> do compêndio de naves.</p>` +
+    `<p class="camaras-dica">${txt("spacedragon.nave.camaras.dica")}</p>` +
     `</section>`
   );
 }
@@ -941,20 +940,25 @@ export function registrarFichaDeNavePC() {
       if (!compra) return null;
 
       const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+      // tudo que vem da mesa (nome da nave) entra escapado ANTES de ir ao texto
+      const camara = esc(compra.rotulo);
+      const nomeNave = esc(this.actor.name);
+      const obra = creditos(compra.obra);
+      const prazo = esc(compra.prazo);
+      const tamanho = esc(compra.tamanho);
       const conteudo =
-        `<p><strong>${esc(compra.rotulo)}</strong> em ${esc(this.actor.name)}</p>` +
-        `<p>Obra: <strong>${creditos(compra.obra)} créditos</strong>, ${esc(compra.prazo)}.</p>` +
+        `<p>${txt("spacedragon.nave.compra.em", { camara, nave: nomeNave })}</p>` +
+        `<p>${txt("spacedragon.nave.compra.obra", { obra, prazo })}</p>` +
         `<p><em>${esc(compra.efeito)}</em></p>` +
         (compra.excede
-          ? `<p class="camaras-excede">⚠ A nave ${esc(compra.tamanho)} comporta ${compra.livres} câmara(s) extra(s) ` +
-            `e já tem ${compra.usadas}. Esta passa do limite; confirme só se o Mestre autorizou.</p>`
+          ? `<p class="camaras-excede">${txt("spacedragon.nave.compra.excede", { tamanho, livres: compra.livres, usadas: compra.usadas })}</p>`
           : "") +
-        `<p>Os créditos saem de quem paga, à mão.</p>`;
+        `<p>${txt("spacedragon.nave.compra.quemPaga")}</p>`;
 
       const V2 = globalThis.foundry?.applications?.api?.DialogV2;
       const ok = V2
         ? await V2.confirm({ window: { title: txt("spacedragon.janela.comprarCamara") }, content: conteudo, rejectClose: false })
-        : globalThis.confirm?.(`${compra.rotulo}: ${creditos(compra.obra)} créditos, ${compra.prazo}. Comprar?`);
+        : globalThis.confirm?.(txt("spacedragon.nave.compra.confirmar", { camara: compra.rotulo, obra, prazo: compra.prazo }));
       if (!ok) return null;
 
       await this.#gravarNave(nave, { ...nave, camaras: { ...(nave.camaras ?? {}), [chave]: "instalada" } });
@@ -962,9 +966,9 @@ export function registrarFichaDeNavePC() {
         speaker: globalThis.ChatMessage.getSpeaker?.({ actor: this.actor }),
         content:
           `<div class="sd-teste"><div class="title">${esc(txt("spacedragon.janela.comprarCamara"))}</div>` +
-          `<p><strong>${esc(compra.rotulo)}</strong> instalada em <strong>${esc(this.actor.name)}</strong>.</p>` +
-          `<p>Obra: ${creditos(compra.obra)} créditos, ${esc(compra.prazo)}.</p>` +
-          (compra.excede ? `<p>⚠ Acima do limite de câmaras da nave ${esc(compra.tamanho)}.</p>` : "") +
+          `<p>${txt("spacedragon.nave.compra.chatInstalada", { camara, nave: nomeNave })}</p>` +
+          `<p>${txt("spacedragon.nave.compra.chatObra", { obra, prazo })}</p>` +
+          (compra.excede ? `<p>${txt("spacedragon.nave.compra.chatExcede", { tamanho })}</p>` : "") +
           `</div>`,
       });
       return chave;
@@ -982,14 +986,18 @@ export function registrarFichaDeNavePC() {
       const r = reparoDeCamara(chave, nave);
       if (!r) return null;
       const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+      const camara = esc(r.rotulo);
+      const nomeNave = esc(this.actor.name);
+      const custo = creditos(r.custo);
+      const prazo = esc(r.prazo);
 
       const V2 = globalThis.foundry?.applications?.api?.DialogV2;
       const escolha = V2
         ? await V2.wait({
             window: { title: txt("spacedragon.janela.camaraDanificada") },
             content:
-              `<p><strong>${esc(r.rotulo)}</strong> está danificada em ${esc(this.actor.name)}.</p>` +
-              `<p>Reparo: <strong>${creditos(r.custo)} créditos</strong>, ${esc(r.prazo)} (T10-2).</p>`,
+              `<p>${txt("spacedragon.nave.reparo.danificada", { camara, nave: nomeNave })}</p>` +
+              `<p>${txt("spacedragon.nave.reparo.custo", { custo, prazo })}</p>`,
             buttons: [
               { action: "reparar", label: txt("spacedragon.botao.reparar"), default: true },
               { action: "arrancar", label: txt("spacedragon.botao.arrancar") },
@@ -997,7 +1005,7 @@ export function registrarFichaDeNavePC() {
             ],
             rejectClose: false,
           })
-        : (globalThis.confirm?.(`Reparar ${r.rotulo} por ${creditos(r.custo)} créditos?`) ? "reparar" : null);
+        : (globalThis.confirm?.(txt("spacedragon.nave.reparo.confirmar", { camara: r.rotulo, custo })) ? "reparar" : null);
 
       if (escolha !== "reparar" && escolha !== "arrancar") return null;
       const novo = escolha === "reparar" ? "instalada" : "ausente";
@@ -1007,8 +1015,8 @@ export function registrarFichaDeNavePC() {
           speaker: globalThis.ChatMessage.getSpeaker?.({ actor: this.actor }),
           content:
             `<div class="sd-teste"><div class="title">${esc(txt("spacedragon.janela.camaraDanificada"))}</div>` +
-            `<p><strong>${esc(r.rotulo)}</strong> reparada em <strong>${esc(this.actor.name)}</strong>.</p>` +
-            `<p>Reparo: ${creditos(r.custo)} créditos, ${esc(r.prazo)}.</p></div>`,
+            `<p>${txt("spacedragon.nave.reparo.chatReparada", { camara, nave: nomeNave })}</p>` +
+            `<p>${txt("spacedragon.nave.reparo.chatCusto", { custo, prazo })}</p></div>`,
         });
       }
       return escolha;

@@ -20,6 +20,7 @@ import {
   quemFechaPrimeiro,
 } from "./tripulacao.js";
 import { camadaLigada } from "./opcoes.js";
+import { t as txt } from "./i18n.js";
 import { ETAPAS } from "./nave-salto.js";
 
 export const MARCA_CAMADAS = "sw-painel-camadas";
@@ -49,7 +50,7 @@ export function painelDeEnergia(nave, tamanho) {
       `<div class="energia-destino">` +
       `<span class="energia-nome">${d.rotulo}</span>` +
       `<button type="button" class="${CLASSE_ENERGIA}" data-destino="${chave}" data-passo="-1"` +
-      `${n <= 0 ? " disabled" : ""} title="Tirar um ponto">−</button>` +
+      `${n <= 0 ? " disabled" : ""} title="${txt("spacedragon.nave.camadas.tirarPonto")}">−</button>` +
       `<span class="energia-pontos">${n}</span>` +
       `<button type="button" class="${CLASSE_ENERGIA}" data-destino="${chave}" data-passo="1"` +
       `${sobra <= 0 ? " disabled" : ""} title="${d.livro}">+</button>` +
@@ -61,19 +62,19 @@ export function painelDeEnergia(nave, tamanho) {
   const resumo = [
     efeito.jp ? `JP +${efeito.jp}` : null,
     efeito.cp ? `CP +${efeito.cp}` : null,
-    efeito.dadosDeDano ? `+${efeito.dadosDeDano} dado(s) de dano` : null,
+    efeito.dadosDeDano ? txt("spacedragon.nave.camadas.dadosDeDano", { n: efeito.dadosDeDano }) : null,
   ].filter(Boolean).join(" · ");
 
   return (
     `<div class="camada camada-energia">` +
-    `<div class="camada-cabeca"><strong>Energia do reator</strong>` +
+    `<div class="camada-cabeca"><strong>${txt("spacedragon.nave.camadas.energia")}</strong>` +
     // "sobram 2 de 3" e não "2 de 3": o número sozinho é ambíguo entre o que
     // se gastou e o que resta, e quem lê no meio da rodada não vai conferir
     `<span class="camada-sobra${sobra < 0 ? " excedeu" : ""}">` +
-    `${sobra < 0 ? `${-sobra} além do reator` : `sobram ${sobra} de ${total}`}</span></div>` +
+    `${sobra < 0 ? txt("spacedragon.nave.camadas.alemDoReator", { n: -sobra }) : txt("spacedragon.nave.camadas.sobram", { sobra, total })}</span></div>` +
     Object.entries(DESTINOS_DE_ENERGIA).map(destino).join("") +
-    (resumo ? `<div class="camada-resumo">Nesta rodada: ${resumo}</div>` : "") +
-    `<div class="camada-nota">O que sobra não acumula: zera no fim da rodada.</div>` +
+    (resumo ? `<div class="camada-resumo">${txt("spacedragon.nave.camadas.nestaRodada", { resumo })}</div>` : "") +
+    `<div class="camada-nota">${txt("spacedragon.nave.camadas.naoAcumula")}</div>` +
     `</div>`
   );
 }
@@ -100,21 +101,20 @@ export function painelDeAvarias(nave, rodadaAtual) {
       `<li class="${venceu ? "avaria-venceu" : "avaria-corre"}">` +
       `<strong>${a.chave}</strong> — ` +
       (venceu
-        ? `prazo vencido: a câmara fica <em>danificada</em> até a obra (25% do valor)`
-        : `restam <strong>${a.restam}</strong> rodada(s) de ${a.prazo}`) +
+        ? txt("spacedragon.nave.camadas.prazoVencido")
+        : txt("spacedragon.nave.camadas.restam", { restam: a.restam, prazo: a.prazo })) +
       `</li>`
     );
   };
 
   return (
     `<div class="camada camada-avarias">` +
-    `<div class="camada-cabeca"><strong>Controle de avarias</strong>` +
-    `<span class="camada-sobra">rodada ${rodadaAtual ?? "—"}</span></div>` +
+    `<div class="camada-cabeca"><strong>${txt("spacedragon.nave.camadas.avarias")}</strong>` +
+    `<span class="camada-sobra">${txt("spacedragon.nave.camadas.rodada", { rodada: rodadaAtual ?? "—" })}</span></div>` +
     (ativas.length
       ? `<ul class="camada-lista">${ativas.map(linha).join("")}</ul>`
-      : `<div class="camada-nota">Nenhuma avaria em curso.</div>`) +
-    `<div class="camada-nota">Resolver custa a ação de quem está <em>dentro</em> da câmara, ` +
-    `e um teste de Operar Máquinas — ou Pilotar, se for na Ponte.</div>` +
+      : `<div class="camada-nota">${txt("spacedragon.nave.camadas.semAvaria")}</div>`) +
+    `<div class="camada-nota">${txt("spacedragon.nave.camadas.resolver")}</div>` +
     `</div>`
   );
 }
@@ -161,18 +161,17 @@ export function painelDeFuga(nave) {
   };
 
   const veredito = {
-    salto: "A nave salta.",
-    perseguidor: "O perseguidor alcança: raio de tração, abordagem, e o combate continua a pé.",
-  }[quem] ?? "Ninguém fechou ainda.";
+    salto: txt("spacedragon.nave.camadas.salta"),
+    perseguidor: txt("spacedragon.nave.camadas.alcanca"),
+  }[quem] ?? txt("spacedragon.nave.camadas.ninguem");
 
   return (
     `<div class="camada camada-fuga">` +
-    `<div class="camada-cabeca"><strong>Fuga como relógio</strong></div>` +
-    relogio("Salto", etapas, ETAPAS.length, "salto") +
-    relogio("Perseguidor", marcas, MARCAS_DO_PERSEGUIDOR, "perseguidor") +
+    `<div class="camada-cabeca"><strong>${txt("spacedragon.nave.camadas.fuga")}</strong></div>` +
+    relogio(txt("spacedragon.nave.camadas.salto"), etapas, ETAPAS.length, "salto") +
+    relogio(txt("spacedragon.nave.camadas.perseguidor"), marcas, MARCAS_DO_PERSEGUIDOR, "perseguidor") +
     `<div class="camada-resumo">${veredito}</div>` +
-    `<div class="camada-nota">O perseguidor avança <strong>duas</strong> marcas na rodada em ` +
-    `que a nave sofre avaria nova ou escolhe <em>Correr</em>.</div>` +
+    `<div class="camada-nota">${txt("spacedragon.nave.camadas.duasMarcas")}</div>` +
     `</div>`
   );
 }
