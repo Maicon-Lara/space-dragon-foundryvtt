@@ -40,6 +40,21 @@ decide o bônus da nave.</li>
 quem estiver operando a arma.</li>
 </ul>
 
+<h2>Regra da casa: a nave é modular</h2>
+<p>Toda nave sai de fábrica com o <strong>mínimo para voar e manter todos vivos</strong>:</p>
+<ul>
+<li><strong>Ponte de Comando</strong> — sem ela, não se pilota nem se opera arma ou escudo;</li>
+<li><strong>Sala de Máquinas</strong> — motor, gerador e tanques;</li>
+<li><strong>casco e suporte de vida</strong> — a defesa contra o vácuo, que é o CP do tipo de nave.</li>
+</ul>
+<p>As outras câmaras da T10-2 — Aposentos, Arsenal, Laboratório e as demais — <strong>se
+compram</strong>, pelo preço e prazo de obra da tabela. O tamanho limita quantas cabem além
+das de fábrica: <strong>Pequena 0, Média 2, Gigantesca 4, Colossal 6</strong>. Passar do
+limite é decisão do Mestre (nave de enredo, reforma), e a ficha avisa.</p>
+<p>Na ficha, a aba <em>Câmaras</em> mostra o que veio de fábrica, o que foi comprado e o
+limite. Para comprar, clique em <em>comprar</em> na câmara ou arraste-a do compêndio; a
+ficha confirma o preço e registra a obra no chat. Os créditos saem de quem paga, à mão.</p>
+
 <h2>T10-1: Tipos de Espaçonaves</h2>
 ${tab(COLS, NAVES.map(linhaVeiculo).join(""))}
 

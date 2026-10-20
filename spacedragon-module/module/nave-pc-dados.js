@@ -28,6 +28,7 @@
    dependa da T10-1 poderia ser testado sem fingir metade do Foundry. */
 import { POSTOS } from "./tripulacao.js";
 import { TIPOS } from "./tipos-de-nave.js";
+import { CAMARAS } from "./camaras.js";
 
 export const FLAG = "nave";
 
@@ -225,6 +226,76 @@ export function orcamentoDeCamaras(nave, chaves, tamanho) {
   const usadas = opcionais.filter((c) => estadoDoComodo(nave, c) !== "ausente").length;
   return { livres, usadas, saldo: livres - usadas, excedeu: usadas > livres };
 }
+
+/* ── REGRA DA CASA: A NAVE É MODULAR ───────────────────────────────────────
+ *
+ * Toda nave sai de fábrica com o MÍNIMO para atravessar o espaço sem matar
+ * quem está dentro:
+ *
+ *   · Ponte de Comando  — sem ela não se pilota nem se atira;
+ *   · Sala de Máquinas  — o motor, o gerador e os tanques;
+ *   · casco e suporte de vida — a defesa contra o vácuo. Não é câmara: é o
+ *     CP que o TIPO de nave dá (a raça, na T10-1), e por isso não se compra
+ *     nem se desinstala. A ficha só o nomeia, para ninguém achar que falta.
+ *
+ * Todo o resto — Aposentos, Arsenal, Laboratório… — se COMPRA, pelo preço e
+ * prazo de obra da T10-2, dentro do que o tamanho comporta. O limite é aviso,
+ * não trava (ver orcamentoDeCamaras).
+ */
+
+/** Todas as câmaras, na ordem da T10-2. */
+export const CHAVES_DAS_CAMARAS = Object.keys(CAMARAS);
+
+/**
+ * O retrato das câmaras de uma nave, para o painel da aba Câmaras.
+ * `cp` é o do casco (o `ac_total` do ator), que a flag não guarda.
+ */
+export function resumoDasCamaras(nave, { cp = null } = {}) {
+  const tamanho = nave?.tamanho || "";
+  const linha = (chave) => ({ chave, rotulo: CAMARAS[chave].rotulo, estado: estadoDoComodo(nave, chave) });
+  return {
+    tamanho,
+    conhecido: tamanho in LIVRES_POR_TAMANHO,
+    fabrica: CAMARAS_BASE.map(linha),
+    casco: { cp },
+    compradas: CHAVES_DAS_CAMARAS
+      .filter((c) => !CAMARAS_BASE.includes(c))
+      .map(linha)
+      .filter((l) => l.estado !== "ausente"),
+    orcamento: orcamentoDeCamaras(nave, CHAVES_DAS_CAMARAS, tamanho),
+  };
+}
+
+/**
+ * O que significa instalar esta câmara agora: preço, prazo, o que ela faz e
+ * se passa do limite do tamanho. Null se a câmara não existe ou já está lá.
+ *
+ * Reinstalar uma câmara de fábrica que foi arrancada também custa a obra: a
+ * nave sai de fábrica com ela, mas a segunda é comprada.
+ */
+export function compraDeCamara(chave, nave) {
+  const c = CAMARAS[chave];
+  if (!c || estadoDoComodo(nave, chave) !== "ausente") return null;
+  const tamanho = nave?.tamanho || "";
+  const o = orcamentoDeCamaras(nave, CHAVES_DAS_CAMARAS, tamanho);
+  const deFabrica = CAMARAS_BASE.includes(chave);
+  return {
+    chave,
+    rotulo: c.rotulo,
+    obra: c.obra,
+    prazo: c.prazo,
+    efeito: c.efeito,
+    deFabrica,
+    tamanho,
+    livres: o.livres,
+    usadas: o.usadas,
+    // a de fábrica não conta contra o limite; as outras contam
+    excede: !deFabrica && tamanho in LIVRES_POR_TAMANHO && o.usadas + 1 > o.livres,
+  };
+}
+
+/** Créditos no formato da mesa: 120.000. */
+export const creditos = (n) => Number(n || 0).toLocaleString("pt-BR");
 
 /* ── ESCRITA SEM ATROPELO ──────────────────────────────────────────────────
  *

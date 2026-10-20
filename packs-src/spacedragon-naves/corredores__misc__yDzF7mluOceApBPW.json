@@ -6,7 +6,7 @@
   "img": "systems/olddragon2e/assets/icons/misc.svg",
   "system": {
     "odo_id": "corredores",
-    "description": "Ligam as câmaras. As portas blindadas podem ser seladas numa invasão, exigindo Sabotagem ou um cortador laser para abrir. Obra: 20.000 créditos, 3 dias. Reparo em campo: 5.000 créditos, metade do prazo.",
+    "description": "Ligam as câmaras. As portas blindadas podem ser seladas numa invasão, exigindo Sabotagem ou um cortador laser para abrir. Obra: 20.000 créditos, 3 dias. Reparo em campo: 5.000 créditos, metade do prazo. Regra da casa: a nave sai de fábrica só com a Ponte, a Sala de Máquinas e o casco. Arraste esta câmara para a ficha da nave para comprá-la; a ficha confirma o preço e registra a obra no chat.",
     "quantity": 1,
     "cost": "20000",
     "weight_in_load": 0,

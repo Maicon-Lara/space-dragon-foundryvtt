@@ -365,8 +365,8 @@ function no(tag, name, filhos = []) {
     "com a raça posta, o aviso da recusa não faz mais sentido e devia sumir");
 
   // e o guia diz o que NÃO se arrasta: o cômodo solto é a segunda recusa
-  confere(/não se arrastam soltas/.test(guiaDeMontagem(comItens())),
-    "o guia precisa dizer que as câmaras não se arrastam — é a segunda recusa silenciosa");
+  confere(/se compram/.test(guiaDeMontagem(comItens())),
+    "o guia precisa dizer que as câmaras extras se compram — senão a nave parece incompleta");
 
   confere(guiaDeMontagem(null) === "" || typeof guiaDeMontagem(null) === "string",
     "ator ausente não pode quebrar a ficha");

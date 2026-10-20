@@ -6,7 +6,7 @@
   "img": "systems/olddragon2e/assets/icons/misc.svg",
   "system": {
     "odo_id": "sala-de-maquinas",
-    "description": "Propulsão e geradores primários. É o que permite ao Técnico testar Operar e Consertar Máquinas para reativar a energia ou reparar a nave em combate. Espaço obrigatório do acelerador hiperespacial, e onde se gerenciam os tanques de combustível. Obra: 200.000 créditos, 3 semanas. Reparo em campo: 50.000 créditos, metade do prazo.",
+    "description": "Propulsão e geradores primários. É o que permite ao Técnico testar Operar e Consertar Máquinas para reativar a energia ou reparar a nave em combate. Espaço obrigatório do acelerador hiperespacial, e onde se gerenciam os tanques de combustível. Obra: 200.000 créditos, 3 semanas. Reparo em campo: 50.000 créditos, metade do prazo. Vem de fábrica em toda nave: sem ela a nave não voa.",
     "quantity": 1,
     "cost": "200000",
     "weight_in_load": 0,
