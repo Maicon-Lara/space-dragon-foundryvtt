@@ -1,7 +1,29 @@
 /* Space Dragon — só o cartão de teste e o diálogo.
  *
  * O módulo NÃO repinta a ficha do Old Dragon 2. Tudo aqui está escopado em
- * .sd-*, que só existe no que este módulo cria. */
+ * .sd-*, que só existe no que este módulo cria.
+ *
+ * ── SOBRE OS `!important` ──────────────────────────────────────────────────
+ *
+ * São 22, e todos foram revistos contra o CSS compilado do olddragon2e 2.6.0.
+ * Ficam, por dois motivos distintos:
+ *
+ * 1. `display: none` em elemento DO SISTEMA (a escola de magia, os espaços e
+ *    usos da aba de magias, os degraus acima do nível, o que a nave não usa).
+ *    O sistema os mostra com seletores de sete classes e dois elementos, como
+ *    `.olddragon2e.sheet.character .character-tab-spells .spell ol li
+ *    .spell-school .spell-school-tag`. Vencer isso sem `!important` exigiria
+ *    copiar a cadeia inteira do sistema — e aí qualquer mudança no template
+ *    dele faria o elemento REAPARECER em silêncio. Com `!important` e um
+ *    seletor curto, a regra sobrevive ao template.
+ *
+ * 2. Largura e altura do campo e do botão da Ordem de Ação, que a ficha impõe
+ *    a todo input e button dela. Descoberto na mesa, não no papel: sem isso o
+ *    campo vira um risco e o botão engole a linha. tools/teste-ordem-ficha.mjs
+ *    quebra se alguém tirar.
+ *
+ * O mesmo teste garante que nenhum `!important` vale fora de .sd-* ou
+ * .spacedragon-*: a ficha do sistema nunca é atingida. */
 
 .sd-teste .sd-parcelas {
   list-style: none;
