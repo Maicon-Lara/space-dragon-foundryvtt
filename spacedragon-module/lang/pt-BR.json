@@ -149,5 +149,19 @@
   "spacedragon.nave.camadas.duasMarcas": "O perseguidor avança <strong>duas</strong> marcas na rodada em que a nave sofre avaria nova ou escolhe <em>Correr</em>.",
   "spacedragon.aviso.passosFalharam": "Space Dragon: parte do módulo não carregou ({passos}). O resto funciona. Abra o console (F12) e envie as linhas vermelhas com \"spacedragon\" para o mantenedor.",
   "spacedragon.nave.botaoNovaNave": "Nova nave",
-  "spacedragon.aviso.virouNave": "{nome} recebeu o tipo {tipo} e passou para a Ficha de Nave. Arraste agora a classe de mesmo nome."
+  "spacedragon.aviso.virouNave": "{nome} recebeu o tipo {tipo} e passou para a Ficha de Nave. Arraste agora a classe de mesmo nome.",
+  "spacedragon.aviso.semDV": "{nome} não tem DV que dê para rolar: \"{valor}\".",
+  "spacedragon.ameaca.dvDica": "PV pelo DV do livro: d8 e o bônus do bloco (\"3+1\" é 3d8+1). Grava em PV atual e máximo.",
+  "spacedragon.ameaca.pvTitulo": "PV — {nome}",
+  "spacedragon.ameaca.pvRolado": "{formula} = <strong>{total}</strong> PV",
+  "spacedragon.ameaca.pvFixo": "<strong>{total}</strong> PV fixo, como o bloco manda.",
+  "spacedragon.ameaca.pvNota": "Do bloco: {nota}. Ajuste o DV ao tamanho antes de rolar.",
+  "spacedragon.ameaca.int0": "INT 0: irracional, imune a poderes mentais.",
+  "spacedragon.ameaca.cie0": "CIE 0: espécie totalmente primitiva.",
+  "spacedragon.ameaca.com0": "COM 0: incapaz de se comunicar.",
+  "spacedragon.ameaca.premio": "Prêmio como vilão: {xp} XP",
+  "spacedragon.ameaca.premioDica": "Derrotar um inimigo com classe dá 10% do XP que a tabela da classe pede para o nível dele, no mínimo 100 (Cap. 11). Só o Mestre vê.",
+  "spacedragon.ameaca.moralTitulo": "Moral do grupo",
+  "spacedragon.ameaca.moralCaiu": "<strong>{caidos} de {total}</strong> {nome} caíram: metade ou mais do grupo. Os sobreviventes rolam Moral (d% ≤ Moral para ficar).",
+  "spacedragon.ameaca.moralBotao": "Rolar a Moral dos {vivos} sobreviventes"
 }

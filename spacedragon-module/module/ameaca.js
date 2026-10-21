@@ -27,6 +27,7 @@
  */
 
 import { t as txt } from "./i18n.js";
+import { rolarPVAmeaca, significadoDosZeros } from "./ameaca-regras.js";
 
 const ID = "spacedragon";
 export const MARCA_AMEACA = "spacedragon-ameaca";
@@ -209,6 +210,8 @@ function rotular(app, elemento) {
       texto(jp, "JP");
       jp.setAttribute("title", "Jogada de Proteção: 1d20 igual ou maior que a JP, sem modificador. Shift: situação");
     }
+    const dvRoll = raiz.querySelector(".dv-roll");
+    if (dvRoll) dvRoll.setAttribute("title", txt("spacedragon.ameaca.dvDica"));
     const mo = raiz.querySelector(".mo-roll");
     if (mo) {
       texto(mo, "Moral");
@@ -249,8 +252,19 @@ export function painelAmeaca(dados = {}) {
     `<div class="sd-ameaca-defesas">` +
     `<div class="sd-ameaca-defesa" title="Resistência Mental"><input name="flags.${ID}.ameaca.rm" type="text" value="${esc(dados.rm)}" data-dtype="String" placeholder="—"><label class="text-xs font-bold">RM</label></div>` +
     `<div class="sd-ameaca-defesa" title="Redução de Dano"><input name="flags.${ID}.ameaca.rd" type="text" value="${esc(dados.rd)}" data-dtype="String" placeholder="—"><label class="text-xs font-bold">RD</label></div>` +
-    `</div></div>`
+    `</div>` +
+    // O atributo 0 é regra, e não ausência: INT 0 é irracional e imune a
+    // poderes mentais, CIE 0 é primitivo, COM 0 não se comunica.
+    zerosDoBloco(at) +
+    `</div>`
   );
+}
+
+function zerosDoBloco(atributos) {
+  const notas = significadoDosZeros(atributos);
+  return notas.length
+    ? `<ul class="sd-ameaca-zeros">${notas.map((n) => `<li>${esc(n)}</li>`).join("")}</ul>`
+    : "";
 }
 
 export function campoCientifico(dados = {}) {
@@ -419,6 +433,15 @@ export function registrarFichaAmeaca(padrao = true) {
         const sit = shift ? await perguntarSituacao("JP") : 0;
         if (sit !== null) await rolarJPAmeaca(this.actor, sit);
       })();
+    }
+
+    /**
+     * O PV pelo DV do livro: d8 e o bônus do bloco ("3+1" é 3d8+1). O sistema
+     * lia o DV com isNaN, caía no padrão 1, e toda criatura rolava 1d8.
+     */
+    _onDVRoll(event) {
+      event.preventDefault?.();
+      rolarPVAmeaca(this.actor);
     }
 
     _onMORoll(event) {

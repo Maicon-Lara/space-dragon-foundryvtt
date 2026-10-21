@@ -667,6 +667,20 @@
   font-weight: bold;
 }
 
+/* ── Ficha de Ameaça: o que um atributo 0 significa, e o prêmio de vilão ────
+ * (module/ameaca-regras.js) */
+.spacedragon-ameaca .sd-ameaca-zeros {
+  margin: 0.3rem 0 0;
+  padding-left: 1rem;
+  font-size: var(--font-size-11, 0.75rem);
+  font-style: italic;
+}
+.spacedragon-ficha .sd-premio-vilao {
+  font-size: var(--font-size-11, 0.75rem);
+  font-style: italic;
+  cursor: help;
+}
+
 /* ── OS PAINÉIS ENCOLHENDO ─────────────────────────────────────────────────
  *
  * Por CONTÊINER, não por tela: a ficha do Foundry é uma janela que se arrasta,
