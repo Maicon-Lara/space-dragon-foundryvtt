@@ -12,7 +12,7 @@
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 18 · <strong>DES</strong> 12 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p></div>",
     "described_attacks": "1 PANCADA +6 (1D10+4) 1 SOPO GÉLIDO (1D6 FRIO, VER TEXTO)",
     "encounters": "1",
-    "xp": "555 XP",
+    "xp": "555",
     "dv": "6+2 (26/50)",
     "ca": "15 (CORPO DE GELO +4)",
     "jp": "14 (+4 CONTRA FOGO,",

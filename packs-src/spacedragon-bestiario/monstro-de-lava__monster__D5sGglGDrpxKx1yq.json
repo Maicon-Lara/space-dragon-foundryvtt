@@ -12,7 +12,7 @@
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 20 · <strong>DES</strong> 12 · <strong>CON</strong> 16 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p></div><p>Monstros de lava integram a lista de criaturas sem explicação científica válida. Segundo relatos, eles se formam no interior de vulcões ativos, e nunca se distanciam muito deles. A aparição de monstros de lava é muito rara, e pouco se sabe sobre eles além de sua capacidade de soprar fogo contra seus inimigos. Baforada de chamas esta baforada alcança uma área de até 6 metros à frente da criatura, e todos devem fazer uma JPR para evitar os efeitos. Uma vítima afetada tem 25% de chance de pegar fogo e sofrer 1d10 de dano a cada rodada subsequente.</p>",
     "described_attacks": "1 PANCADA +8 (1D10+6 FOGO) 1 BAFORADA DE CHAMAS (1D6 FOGO, VER TEXTO)",
     "encounters": "1",
-    "xp": "735 XP",
+    "xp": "735",
     "dv": "7+3 (31/59)",
     "ca": "15 (CORPO DE LAVA +4)",
     "jp": "14  (+4 CONTRA GELO,",

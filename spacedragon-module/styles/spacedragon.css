@@ -675,6 +675,12 @@
   font-size: var(--font-size-11, 0.75rem);
   font-style: italic;
 }
+/* O gerador de tesouro do "Qualidade de Vida" lê a notação de tesouro do Old
+ * Dragon 2; na Ficha de Ameaça o campo guarda as letras de relíquia O, D, U, e
+ * quem gera é o nosso botão (T11-3). Ver module/integracao-qdv.js. */
+.spacedragon-ameaca .od2qdv-monster-treasure-action {
+  display: none;
+}
 .spacedragon-ficha .sd-premio-vilao {
   font-size: var(--font-size-11, 0.75rem);
   font-style: italic;

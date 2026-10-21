@@ -126,15 +126,18 @@ const { ataquesDoBloco, monsterDoc, premiosDe, encontrosDe } = await import("./l
 // covil do seu jeito.
 {
   const CASOS = [
-    ["Zork", { xp: "37 XP", treasure: "O, D" }, { encounters: "3D6", encounters_lair: "10D6", rotulos: { grupo: "BANDO", covil: "BASE" } }, "pág. 243"],
-    ["Aranha Gigante", { xp: "205 XP" }, { encounters: "1D4", encounters_lair: "2D6", rotulos: { grupo: "GRUPO", covil: "NINHO" } }, "pág. 210"],
-    ["Cientista (Nível 1)", { xp: "100 XP", treasure: "O, D, U" }, { encounters: "1D4" }, "pág. 202"],
+    ["Zork", { xp: "37", treasure: "O, D" }, { encounters: "3D6", encounters_lair: "10D6", rotulos: { grupo: "BANDO", covil: "BASE" } }, "pág. 243"],
+    ["Aranha Gigante", { xp: "205" }, { encounters: "1D4", encounters_lair: "2D6", rotulos: { grupo: "GRUPO", covil: "NINHO" } }, "pág. 210"],
+    ["Cientista (Nível 1)", { xp: "100", treasure: "O, D, U" }, { encounters: "1D4" }, "pág. 202"],
+    // o milhar sem ponto: "7.250 XP" lido como número dava 7 no fim de combate
+    // do "Qualidade de Vida" (ver xpSemMilhar em tools/lib.mjs)
+    ["Gigantossauro", { xp: "7250" }, null, "bestiário"],
   ];
   let falhasP = 0;
   for (const [nome, premio, encontro, onde] of CASOS) {
     const p = premiosDe(criatura(nome)?.premios);
     const e = encontrosDe(criatura(nome)?.encontros);
-    const ok = JSON.stringify(p) === JSON.stringify(premio) && JSON.stringify(e) === JSON.stringify(encontro);
+    const ok = JSON.stringify(p) === JSON.stringify(premio) && (encontro === null || JSON.stringify(e) === JSON.stringify(encontro));
     if (!ok) falhasP += 1;
     console.log(`  ${ok ? "✔" : "✘"} ${nome.padEnd(22)} prêmio e encontros  ${onde}${ok ? "" : ` — ${JSON.stringify(p)} ${JSON.stringify(e)}`}`);
   }

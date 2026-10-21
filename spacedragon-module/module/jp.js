@@ -58,9 +58,45 @@ export function modificadorDaJP(sistema, qual) {
  */
 let jpEnvolvida = false;
 
-export function aplicarJP() {
+/**
+ * O que OUTRO módulo somou à JP, na escala do Old Dragon 2.
+ *
+ * O gerenciador de efeitos do "Old Dragon 2: Qualidade de Vida" troca
+ * `jpd_total` e companhia no protótipo e soma o efeito ("+2 na JPD") ao total
+ * do sistema — que no OD2 é bom quanto MAIOR, porque lá se passa com d20 ≤
+ * total. Esse total chega aqui como `wrapped()`. A conta pura do sistema é
+ * JP + espécie + modificador; o que sobra é o efeito.
+ *
+ * No Space Dragon a JP é o mínimo no d20 (1d20 + mod ≥ JP): o mesmo +2 é +2 na
+ * rolagem, e a JP mostrada desce 2. Antes, este envelope recalculava a JP do
+ * zero e o efeito sumia.
+ */
+export function bonusExterno(sistema, qual, totalDeBaixo) {
+  const j = JPS[qual];
+  const puro = (Number(sistema.jp) || 0) + (Number(sistema[`${qual}_race_bonus`]) || 0) + (Number(sistema[j.mod]) || 0);
+  const delta = Number(totalDeBaixo) - puro;
+  return Number.isFinite(delta) ? delta : 0;
+}
+
+/**
+ * A ordem dos envelopes importa: o nosso tem de ficar POR FORA do do Qualidade
+ * de Vida, para receber o total dele como `wrapped()`. Ele troca os getters no
+ * `ready` dele; se o nosso `ready` rodou antes (a ordem de carga não é nossa),
+ * esperamos o fim do `ready` para envolver.
+ */
+const QDV = "old-dragon-2-qualidade-de-vida";
+function qdvAindaVaiEnvolver(proto) {
+  const qdv = globalThis.game?.modules?.get?.(QDV);
+  return !!qdv?.active && !Object.prototype.hasOwnProperty.call(proto, "__od2QdvEffect_jpd_total");
+}
+
+export function aplicarJP({ adiado = false } = {}) {
   const proto = CONFIG.Actor?.dataModels?.character?.prototype;
   if (!proto || jpEnvolvida) return jpEnvolvida;
+  if (!adiado && qdvAindaVaiEnvolver(proto)) {
+    setTimeout(() => aplicarJP({ adiado: true }), 0);
+    return false;
+  }
   jpEnvolvida = true;
   for (const qual of Object.keys(JPS)) {
     const desc = Object.getOwnPropertyDescriptor(proto, `${qual}_total`);
@@ -70,8 +106,9 @@ export function aplicarJP() {
     }
     // Pelo libWrapper (envelope.js).
     envolver(`${MODELO_PERSONAGEM}.${qual}_total`, function (wrapped) {
-      if (!atorUsaFichaSD(this.parent)) return wrapped();
-      return (Number(this.jp) || 0) - modificadorDaJP(this, qual);
+      const deBaixo = wrapped();
+      if (!atorUsaFichaSD(this.parent)) return deBaixo;
+      return (Number(this.jp) || 0) - modificadorDaJP(this, qual) - bonusExterno(this, qual, deBaixo);
     });
   }
   return true;
@@ -83,7 +120,11 @@ export async function rolarJP(ator, qual, situacional = 0) {
   if (!j) return null;
   const s = ator.system;
   const alvo = Number(s.jp) || 0;
-  const mod = modificadorDaJP(s, qual);
+  // O modificador inteiro sai da JP mostrada (JP − total): atributo, espécie,
+  // mutações e os efeitos de outros módulos, numa conta só com a ficha.
+  const total = Number(s[`${qual}_total`]);
+  const mod = Number.isFinite(total) ? alvo - total : modificadorDaJP(s, qual);
+  const efeitos = mod - modificadorDaJP(s, qual);
   const sit = Number(situacional) || 0;
 
   const roll = await new Roll(`1d20 + ${mod + sit}`).evaluate();
@@ -94,7 +135,7 @@ export async function rolarJP(ator, qual, situacional = 0) {
     content:
       `<div class="title">${j.rotulo} — ${j.nome}</div>` +
       `<div class="sd-teste">` +
-      `<p>1d20 <strong>${roll.total - mod - sit}</strong> ${sinal(mod)} (${j.atributo}${s[`${qual}_race_bonus`] ? " e espécie" : ""})` +
+      `<p>1d20 <strong>${roll.total - mod - sit}</strong> ${sinal(mod)} (${j.atributo}${s[`${qual}_race_bonus`] ? " e espécie" : ""}${efeitos ? `, ${sinal(efeitos)} de efeitos` : ""})` +
       (sit ? ` ${sinal(sit)} (situação)` : "") +
       ` = <strong>${roll.total}</strong> contra JP <strong>${alvo}</strong></p>` +
       `<p class="result"><strong class="${passou ? "success" : "failure"}">${passou ? "Sucesso" : "Falha"}</strong></p>` +
