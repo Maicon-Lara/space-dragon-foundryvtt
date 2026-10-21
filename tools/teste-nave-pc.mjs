@@ -116,6 +116,15 @@ confere(renomearAbas(null) === 0, "raiz ausente não quebra");
   const i = css.indexOf(`.${MARCA_NAVE_PC}`);
   const trecho = css.slice(i, i + 600);
   confere(/attributes/.test(trecho), "a aba de atributos não é escondida");
+  // No olddragon2e 2.6 os atributos ficam na barra lateral, e não numa aba:
+  // a regra tem de mirar o bloco .stats, com especificidade maior que a do
+  // sistema (.olddragon2e.sheet.character .sheet-container .sidebar .stats).
+  const stats = css.match(/([^{}]*\.sidebar\s+\.stats)\s*\{([^}]*)\}/);
+  confere(stats && /spacedragon-nave-pc/.test(stats[1]) && /display:\s*none/.test(stats[2]),
+    "os atributos da barra lateral (.sidebar .stats) não somem na Ficha de Nave");
+  const classes = (sel) => (sel.match(/\.[\w-]+/g) ?? []).length;
+  confere(stats && classes(stats[1].trim()) > 5,
+    "a regra que esconde .stats não vence a do sistema (5 classes) — o bloco continuaria visível");
   confere(/display:\s*none/.test(trecho), "o CSS não esconde nada");
 
   // Esconder, e não remover: o sistema redesenha a ficha a cada alteração, e o

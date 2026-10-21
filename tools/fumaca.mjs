@@ -336,6 +336,28 @@ for (const [nivel, bonus] of T4_1) {
   if (bonusDeCP(nivel) !== bonus) erros.push(`T4-1: nível ${nivel} deu +${bonusDeCP(nivel)}, esperava +${bonus}`);
 }
 
+// ── Nave não tem atributo: os modificadores valem 0 ──
+// Os campos nascem em 0 no sistema, e 0 na escala do Space Dragon é −5 (e −25%
+// em Ciência e Comunicação). Toda nave perdia 5 de CP, de BA e de JPR.
+{
+  const zerados = { forca: 0, destreza: 0, constituicao: 0, inteligencia: 0, sabedoria: 0, carisma: 0 };
+  const naveFicha = Object.assign(new CONFIG.Actor.dataModels.character(), zerados, {
+    parent: { flags: { core: { sheetClass: "spacedragon.NaveSheet" } } },
+  });
+  const navePelaFlag = Object.assign(new CONFIG.Actor.dataModels.character(), zerados, {
+    parent: { flags: { spacedragon: { nave: { tipo: "caca" } } } },
+  });
+  for (const [nome, n] of [["pela ficha", naveFicha], ["pela flag do tipo", navePelaFlag]]) {
+    for (const m of ["mod_forca", "mod_destreza", "mod_constituicao", "mod_inteligencia", "mod_sabedoria", "mod_carisma"]) {
+      if (n[m] !== 0) erros.push(`nave (${nome}) com ${m} = ${n[m]}, devia ser 0 — nave não tem atributo`);
+    }
+  }
+  const pessoa = Object.assign(new CONFIG.Actor.dataModels.character(), zerados, {
+    parent: { flags: { core: { sheetClass: "spacedragon.SDCharacterSheet" } } },
+  });
+  if (pessoa.mod_destreza === 0) erros.push("o zero da nave vazou para personagem: Destreza 0 devia dar a pior faixa");
+}
+
 // ── As mutações do Mutante chegam aos getters ──
 // Força 9 com Atributo Ampliado (+3) tem de dar o modificador de Força 12, e
 // Intelecto 17 com Mente Simplificada (teto 10) o de Intelecto 10 — sem que

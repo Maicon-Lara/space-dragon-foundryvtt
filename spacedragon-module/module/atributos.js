@@ -51,6 +51,7 @@ import { FAIXAS, CAMPO_NA_FICHA, COLUNA_DERIVADA } from "./dados.js";
 import { atorUsaFichaSD } from "./ficha.js";
 import { envolver, MODELO_PERSONAGEM } from "./envelope.js";
 import { atributoEfetivo, efeitosDe } from "./mutacoes.js";
+import { ehNave } from "./nave-marca.js";
 
 const ID = "spacedragon";
 
@@ -91,6 +92,12 @@ export function aplicarModificadores(ligado) {
       const coluna = COLUNA_DERIVADA[atributo];
       if (!coluna) continue;
       envolver(`${MODELO_PERSONAGEM}.mod_${campo}`, function (wrapped) {
+        // NAVE NÃO TEM ATRIBUTO. Os campos nascem em 0 no sistema, e a nave
+        // nunca os preenche: na escala do Space Dragon, 0 é a pior faixa (−5,
+        // e −25% em Ciência e Comunicação), e toda nave perdia 5 de CP, 5 no
+        // ataque à distância e 5 na JPR. Vale com a opção ligada ou não — na
+        // escala do OD2, 0 dá −4.
+        if (ehNave(this.parent)) return 0;
         if (!modificadoresLigados || !atorUsaFichaSD(this.parent)) return wrapped();
         // O atributo EFETIVO: o campo mais as mutações do Mutante (mutacoes.js).
         return Number(coluna[faixaDe(atributoEfetivo(this.parent, atributo, this[campo]))] ?? 0);
