@@ -104,7 +104,7 @@ export const ROTULOS = {
  * sobrevive ao redesenho sem uma linha de JS.
  */
 export const ESCONDIDOS = [
-  "a aba de atributos (por CSS, pelo seletor da aba)",
+  "os seis atributos da barra lateral (por CSS, no bloco .stats) — e os modificadores valem 0 (atributos.js)",
   "XP, alinhamento e idiomas (marcados pela ficha, pelo caminho do schema)",
 ];
 

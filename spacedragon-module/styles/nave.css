@@ -33,6 +33,20 @@
   display: none;
 }
 
+/* ── OS ATRIBUTOS DA BARRA LATERAL ───────────────────────────────────────────
+ *
+ * No olddragon2e 2.6 os seis atributos NÃO são uma aba: ficam na barra
+ * lateral, no bloco `.stats`, acima das Jogadas de Proteção. A regra acima
+ * mirava uma aba que não existe, e os atributos continuavam na ficha da nave.
+ *
+ * O caminho é o mesmo da regra do sistema (`.olddragon2e.sheet.character
+ * .sheet-container .sidebar .stats`, que dá `display: flex`) com a classe da
+ * Ficha de Nave a mais: seis classes contra cinco, e vence sem `!important`.
+ * As JP ficam — a nave tem JP pela T10-1. */
+.olddragon2e.sheet.character.spacedragon-nave-pc .sheet-container .sidebar .stats {
+  display: none;
+}
+
 /* ── O SELETOR DE CÔMODOS, NA ABA DE CLASSE ────────────────────────────────
  *
  * A classe entrega os doze cômodos a toda nave. O seletor diz quais ela tem de
