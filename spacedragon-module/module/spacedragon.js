@@ -133,35 +133,82 @@ Hooks.once("ready", () => {
     };
   }
 
+  /* ── CADA PASSO ISOLADO ──────────────────────────────────────────────────
+   *
+   * Os passos abaixo rodavam em fila, sem proteção, e as naves vinham por
+   * último. Um erro em QUALQUER um — num envelope, num gancho, numa leitura —
+   * parava o `ready` ali: a Ficha de Nave nunca era registrada, o botão de
+   * criar nave sumia, e a nave abria na ficha do sistema com as doze câmaras
+   * sem botão. O sintoma aparecia longe da causa, e o console era o único
+   * lugar que dizia qual passo tinha caído.
+   *
+   * Agora cada passo roda sozinho: o que falha avisa o Mestre NA TELA, com o
+   * nome do passo, e os outros seguem. E as naves vêm logo depois da ficha do
+   * Space Dragon, que é a única coisa de que elas dependem.
+   */
+  const falhas = [];
+  const passo = (nome, fn) => {
+    try {
+      return fn();
+    } catch (e) {
+      falhas.push(nome);
+      console.error(`${ID} | o passo "${nome}" falhou`, e);
+      return undefined;
+    }
+  };
+
   // No `ready`, e não no `init`: no Foundry 13.351 o registro de fichas é uma
   // fila processada depois do `init` e do `setup`. No `init` a ficha do
-  // sistema ainda não estava lá para ser estendida, e as fichas do módulo
-  // nunca eram registradas. Ver ficha.js.
-  const padrao = game.settings.get(ID, "fichasPadrao");
-  registrarFicha(padrao);
-  registrarFichaAmeaca(padrao);
-  estendeNiveis();
-  aplicarModificadores(game.settings.get(ID, "modificadores"));
+  // sistema ainda não estava lá para ser estendida. Ver ficha.js.
+  const padrao = passo("opção de fichas padrão", () => game.settings.get(ID, "fichasPadrao")) ?? true;
+  passo("Ficha Space Dragon", () => registrarFicha(padrao));
+  passo("Ficha de Ameaça", () => registrarFichaAmeaca(padrao));
+
+  /* ── AS NAVES, LOGO DEPOIS DA FICHA DE QUE DEPENDEM ──────────────────────
+   *
+   * A Ficha de Nave ESTENDE a ficha do Space Dragon: entra depois dela, e
+   * antes de todo o resto, para que nenhum outro passo a leve junto ao cair.
+   */
+  passo("Ficha de Nave", () => registrarFichaDeNavePC());
+  passo("botão de criar nave", () => ligarBotaoDeNovaNave());
+  // a migração das naves criadas quando as regras moravam no Star Wars: sem
+  // ela a nave abre VAZIA, que parece apagada
+  passo("migração das naves", () => migrarNavesNoReady());
+  passo("naves do tipo antigo", () => {
+    // Mais velhas que a migração acima: são de quando a nave era um tipo de
+    // ator próprio. Elas não carregam mais, e o aviso tem de aparecer na TELA.
+    const antigas = navesAntigas().length;
+    if (antigas > 0) {
+      console.log(
+        `${ID} | ${antigas} nave(s) no tipo de ator antigo. Para converter: ` +
+        `game.modules.get("${ID}").api.converterTodas()`
+      );
+      globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.navesAntigas", { n: antigas }));
+    }
+  });
+
+  passo("níveis até o 20º", () => estendeNiveis());
+  passo("modificadores de atributo", () => aplicarModificadores(game.settings.get(ID, "modificadores")));
   // O bônus de CP por nível (T4-1) é regra do livro, não opção: vale sempre
   // para quem usa a ficha do Space Dragon.
-  aplicarCP();
+  passo("CP por nível", () => aplicarCP());
   // A JP também é regra do livro: 1d20 + mod ≥ JP, e não d20 ≤ JP + mod.
-  aplicarJP();
-  ordenarHabilidades(true);
-  ligarPainel();
-  ligarCabecalho();
-  ligarGrandezas();
-  ligarMental();
-  ligarMutacoes();
-  ligarDegraus();
-  ligarOrdemNaFicha();
-  ligarOrdemNoCombate();
+  passo("jogadas de proteção", () => aplicarJP());
+  passo("ordem das habilidades", () => ordenarHabilidades(true));
+  passo("painel de testes", () => ligarPainel());
+  passo("cabeçalho", () => ligarCabecalho());
+  passo("Grandezas", () => ligarGrandezas());
+  passo("alcance mental", () => ligarMental());
+  passo("mutações", () => ligarMutacoes());
+  passo("degraus", () => ligarDegraus());
+  passo("Ordem de Ação na ficha", () => ligarOrdemNaFicha());
+  passo("Ordem de Ação no combate", () => ligarOrdemNoCombate());
   // Por último: a aba de Poderes precisa estar desenhada para os rótulos de
   // Grandeza serem trocados.
-  ligarRotulos();
+  passo("rótulos", () => ligarRotulos());
 
   // O Mestre fica sabendo se o Old Dragon 2 passou da versão conferida (versao.js).
-  avisarVersaoDoSistema();
+  passo("aviso de versão", () => avisarVersaoDoSistema());
 
   // A API que as macros do compêndio chamam. Fica aqui, e não dentro da macro,
   // para que atualizar o módulo atualize a regra: uma macro já arrastada para
@@ -183,45 +230,10 @@ Hooks.once("ready", () => {
 
   console.log(`${ID} | ${TESTES.length} testes prontos, nível até o ${NIVEL_MAXIMO}º`);
 
-  /* ── AS NAVES ENTRAM POR ÚLTIMO ──────────────────────────────────────────
-   *
-   * A Ficha de Nave ESTENDE a ficha do Space Dragon, e a ficha do Space Dragon
-   * é registrada mais acima neste mesmo `ready`. Registrada antes, a Ficha de
-   * Nave não achava a classe-base e caía na do sistema — e o painel de testes
-   * parava de injetar, com o sintoma aparecendo longe da causa.
-   *
-   * Ordem de dependência, e não gosto: quem estende entra depois de quem é
-   * estendido.
-   */
-  /* ── AS NAVES, ISOLADAS DO RESTO ─────────────────────────────────────────
-   *
-   * Tudo do capítulo 10 vai dentro de um try. As naves são UMA parte do módulo,
-   * e um erro nelas não pode levar junto os testes de atributo, os poderes e a
-   * ficha — que é o que acontecia: a primeira linha lançava e o resto do
-   * `ready` nunca rodava, com o sintoma aparecendo longe da causa.
-   */
-  try {
-    registrarFichaDeNavePC();
-    ligarBotaoDeNovaNave();
-    // a migração das naves criadas quando as regras moravam no Star Wars: sem
-    // ela a nave abre VAZIA, que parece apagada
-    migrarNavesNoReady();
-
-    // ── As naves do TIPO de ator antigo ──
-    //
-    // Mais velhas que a migração acima: são de quando a nave era um tipo de
-    // ator próprio. Elas não carregam mais, e por isso o aviso tem de aparecer
-    // na TELA — no console ninguém olha sem motivo.
-    const antigas = navesAntigas().length;
-    if (antigas > 0) {
-      console.log(
-        `${ID} | ${antigas} nave(s) no tipo de ator antigo. Para converter: ` +
-        `game.modules.get("${ID}").api.converterTodas()`
-      );
-      globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.navesAntigas", { n: antigas }));
-    }
-  } catch (e) {
-    console.warn(`${ID} | as naves não puderam ser ligadas`, e);
+  // O que falhou vai para a TELA do Mestre, com o nome do passo: é o que ele
+  // copia para o relato, e o console ninguém abre sem motivo.
+  if (falhas.length && globalThis.game?.user?.isGM) {
+    const passos = falhas.join(", ");
+    globalThis.ui?.notifications?.error?.(txt("spacedragon.aviso.passosFalharam", { passos }), { permanent: true });
   }
-
 });

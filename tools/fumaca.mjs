@@ -178,6 +178,12 @@ const niveis = Object.keys(CONFIG.olddragon2e.levels).map(Number);
 const teto = Math.max(...niveis);
 if (teto !== 20) falhas.push(`o seletor de nível parou no ${teto}º, devia ir ao 20º`);
 
+// A Ficha de Nave tem de estar registrada: foi ela que sumiu quando um passo
+// anterior do `ready` caiu, e com ela o botão de criar nave.
+if (!fichasRegistradas.some((f) => f.cfg?.label === "Ficha de Nave (Space Dragon)")) {
+  falhas.push("a Ficha de Nave não foi registrada no ready");
+}
+
 if (!ganchos.some((g) => g.nome === "renderOD2CharacterSheet")) {
   falhas.push("ninguém se registrou em renderOD2CharacterSheet");
 }
