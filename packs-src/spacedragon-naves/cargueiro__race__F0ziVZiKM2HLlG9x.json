@@ -19,7 +19,11 @@
     ]
   },
   "effects": [],
-  "flags": {},
+  "flags": {
+    "spacedragon": {
+      "tipoDeNave": "cargueiro"
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

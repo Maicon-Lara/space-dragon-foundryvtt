@@ -22,7 +22,7 @@
  * leva um tiro.
  */
 
-import { naveVazia, FLAG, aplicarTipo } from "./nave-pc-dados.js";
+import { naveVazia, FLAG, aplicarTipo, lerFlag, naveDe } from "./nave-pc-dados.js";
 import { TIPOS } from "./tipos-de-nave.js";
 
 import { t as txt } from "./i18n.js";
@@ -172,21 +172,89 @@ export async function dialogoDeNovaNave() {
   return ator;
 }
 
-/** Põe o botão "Nova nave" no cabeçalho da aba de Atores. */
+/** Põe o botão "Nova nave" no cabeçalho de uma aba de Atores já desenhada. */
+export function porBotaoDeNovaNave(raiz) {
+  try {
+    const el = raiz instanceof HTMLElement ? raiz : raiz?.[0] ?? raiz;
+    const cabeca = el?.querySelector?.(".header-actions, .directory-header .action-buttons");
+    if (!cabeca || cabeca.querySelector(".sw-nova-nave")) return false;
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "sw-nova-nave";
+    b.innerHTML = `<i class="fa-solid fa-rocket"></i> ${txt("spacedragon.nave.botaoNovaNave")}`;
+    b.addEventListener("click", () => dialogoDeNovaNave());
+    cabeca.append(b);
+    return true;
+  } catch (e) {
+    console.warn("spacedragon | não pude pôr o botão de nova nave", e);
+    return false;
+  }
+}
+
+/**
+ * Põe o botão "Nova nave" na aba de Atores.
+ *
+ * ── POR QUE TAMBÉM AGORA, E NÃO SÓ NO GANCHO ────────────────────────────
+ *
+ * Isto roda no `ready`, e a aba de Atores já foi desenhada antes dele. O
+ * gancho `renderActorDirectory` só pega o PRÓXIMO desenho — criar ou apagar um
+ * ator —, e até lá o botão não existia: a mesa abria o mundo, não via o botão,
+ * criava a nave pelo "Criar Ator" do Foundry, e ela nascia personagem.
+ */
 export function ligarBotaoDeNovaNave() {
-  globalThis.Hooks?.on?.("renderActorDirectory", (_app, html) => {
+  globalThis.Hooks?.on?.("renderActorDirectory", (_app, html) => porBotaoDeNovaNave(html));
+  const jaDesenhada = globalThis.ui?.actors?.element;
+  if (jaDesenhada) porBotaoDeNovaNave(jaDesenhada);
+}
+
+/* ── O TIPO DE NAVE ARRASTADO TRANSFORMA O ATOR EM NAVE ────────────────────
+ *
+ * O caminho que a mesa usa sem pensar: "Criar Ator", escolher Personagem, e
+ * arrastar o Caça do compêndio. O ator nascia na ficha de personagem, e o tipo
+ * e a classe de nave entravam como raça e classe comuns — as doze câmaras como
+ * habilidades, sem botão nenhum.
+ *
+ * Agora, quando um tipo de nave entra num personagem, o ator passa para a
+ * Ficha de Nave e ganha a flag com o tipo e o tamanho. Só quem fez a mudança
+ * grava (o gancho dispara em todos os clientes).
+ */
+
+/** A chave do tipo de nave deste item de raça, ou null se não for nave. */
+export function tipoDeNaveDoItem(item) {
+  if (item?.type !== "race") return null;
+  const marcado = lerFlag(item, ID, "tipoDeNave");
+  if (marcado && TIPOS[marcado]) return marcado;
+  // itens copiados antes da flag existir: pelo nome do tipo
+  const nome = String(item?.name ?? "").trim();
+  return Object.entries(TIPOS).find(([, t]) => t.rotulo === nome)?.[0] ?? null;
+}
+
+/** O update que transforma o ator em nave, ou null se já é nave desse tipo. */
+export function viraNave(ator, chave) {
+  if (!ator || ator.type !== "character" || !TIPOS[chave]) return null;
+  const update = {};
+  const ficha = `${ID}.NaveSheet`;
+  if (lerFlag(ator, "core", "sheetClass") !== ficha) update["flags.core.sheetClass"] = ficha;
+  const atual = naveDe(ator, ID);
+  if (atual.tipo !== chave || !atual.tamanho) {
+    update[`flags.${ID}.${FLAG}`] = { ...atual, ...(aplicarTipo(chave)?.flag ?? { tipo: chave }) };
+  }
+  return Object.keys(update).length ? update : null;
+}
+
+export function ligarTipoQueViraNave() {
+  globalThis.Hooks?.on?.("createItem", async (item, _opcoes, idDoUsuario) => {
     try {
-      const raiz = html instanceof HTMLElement ? html : html?.[0];
-      const cabeca = raiz?.querySelector?.(".header-actions, .directory-header .action-buttons");
-      if (!cabeca || cabeca.querySelector(".sw-nova-nave")) return;
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "sw-nova-nave";
-      b.innerHTML = `<i class="fa-solid fa-rocket"></i> Nova nave`;
-      b.addEventListener("click", () => dialogoDeNovaNave());
-      cabeca.append(b);
+      if (idDoUsuario !== globalThis.game?.user?.id) return;
+      const chave = tipoDeNaveDoItem(item);
+      const ator = item?.parent;
+      if (!chave || !ator) return;
+      const update = viraNave(ator, chave);
+      if (!update) return;
+      await ator.update(update);
+      globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.virouNave", { nome: ator.name, tipo: TIPOS[chave].rotulo }));
     } catch (e) {
-      console.warn("spacedragon | não pude pôr o botão de nova nave", e);
+      console.warn("spacedragon | não pude transformar o ator em nave", e);
     }
   });
 }

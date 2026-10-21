@@ -799,6 +799,8 @@ function buildNavesDocs() {
       const hab = raceAbilityDoc(t.habilidade, fPerfis._id, `nave-tipo:${t.chave}`, (i + 1) * 1000);
       docs.push(hab);
       const raca = raceDoc({ ...t }, fTipos._id, [itemUuid(NAVES_PACK, hab._id)]);
+      // a marca que faz o ator virar nave ao receber este tipo (nave-nova.js)
+      raca.flags[ID_MODULO] = { tipoDeNave: t.chave };
       raca.sort = (i + 1) * 100000;
       docs.push(raca);
     });
