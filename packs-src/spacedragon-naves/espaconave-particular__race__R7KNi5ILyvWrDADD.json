@@ -19,7 +19,11 @@
     ]
   },
   "effects": [],
-  "flags": {},
+  "flags": {
+    "spacedragon": {
+      "tipoDeNave": "particular"
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,

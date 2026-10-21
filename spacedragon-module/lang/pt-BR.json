@@ -147,5 +147,7 @@
   "spacedragon.nave.camadas.salto": "Salto",
   "spacedragon.nave.camadas.perseguidor": "Perseguidor",
   "spacedragon.nave.camadas.duasMarcas": "O perseguidor avança <strong>duas</strong> marcas na rodada em que a nave sofre avaria nova ou escolhe <em>Correr</em>.",
-  "spacedragon.aviso.passosFalharam": "Space Dragon: parte do módulo não carregou ({passos}). O resto funciona. Abra o console (F12) e envie as linhas vermelhas com \"spacedragon\" para o mantenedor."
+  "spacedragon.aviso.passosFalharam": "Space Dragon: parte do módulo não carregou ({passos}). O resto funciona. Abra o console (F12) e envie as linhas vermelhas com \"spacedragon\" para o mantenedor.",
+  "spacedragon.nave.botaoNovaNave": "Nova nave",
+  "spacedragon.aviso.virouNave": "{nome} recebeu o tipo {tipo} e passou para a Ficha de Nave. Arraste agora a classe de mesmo nome."
 }
