@@ -1065,12 +1065,23 @@ export function encontrosDe(texto) {
  * não parte do número. Juntas num campo só, a ficha mostrava "OD 37 XP" onde
  * se lê o prêmio, e o campo de tesouro ficava vazio.
  */
+/**
+ * "7.250 XP" → "7250". O livro escreve o milhar com ponto, e quem lê o campo
+ * como número pega o primeiro inteiro: o fim de combate do "Qualidade de Vida"
+ * dava 7 XP pelo Gigantossauro. Só os dígitos, e o rótulo "Prêmio" diz o que é.
+ */
+export function xpSemMilhar(texto) {
+  const s = String(texto ?? "").trim();
+  const m = s.match(/^(\d{1,3}(?:\.\d{3})+|\d+)\s*XP\b/i);
+  return m ? m[1].replace(/\./g, "") : s;
+}
+
 export function premiosDe(texto) {
   const s = String(texto ?? "").trim();
   const m = s.match(/^([ODU](?:\s*,\s*[ODU]|\s*[ODU])*)\s+(.*)$/i);
-  if (!m) return { xp: s };
+  if (!m) return { xp: xpSemMilhar(s) };
   const letras = m[1].toUpperCase().replace(/[^ODU]/g, "").split("").join(", ");
-  return { xp: m[2].trim(), treasure: letras };
+  return { xp: xpSemMilhar(m[2]), treasure: letras };
 }
 
 export function monsterDoc(c, folderId, seedPrefix, sort) {

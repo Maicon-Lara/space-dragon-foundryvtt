@@ -44,6 +44,7 @@ import { abrirDesativar, rolarDesativar } from "./robos.js";
 import { abrirReliquia, gerarReliquia, gerarDaCriatura, rolarDefeito } from "./reliquias.js";
 import { ligarMutacoes } from "./mutacoes-ficha.js";
 import { ligarRegrasDeAmeaca, xpDeVilaoDoAtor } from "./ameaca-regras.js";
+import { ligarIntegracaoQdV } from "./integracao-qdv.js";
 import { registrarOpcaoDeVersao, avisarVersaoDoSistema } from "./versao.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
@@ -203,6 +204,7 @@ Hooks.once("ready", () => {
   passo("alcance mental", () => ligarMental());
   passo("mutações", () => ligarMutacoes());
   passo("regras de ameaça (PV, Moral, prêmio de vilão)", () => ligarRegrasDeAmeaca());
+  passo("convivência com o Qualidade de Vida", () => ligarIntegracaoQdV());
   passo("degraus", () => ligarDegraus());
   passo("Ordem de Ação na ficha", () => ligarOrdemNaFicha());
   passo("Ordem de Ação no combate", () => ligarOrdemNoCombate());

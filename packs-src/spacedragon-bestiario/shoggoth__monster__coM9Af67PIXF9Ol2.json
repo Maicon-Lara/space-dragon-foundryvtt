@@ -13,7 +13,7 @@
     "described_attacks": "1 PANCADA +2 POR METRO (1D4/M) 1 MORDIDA +1 POR METRO (1D6/M) ENVOLVER (VER TEXTO)",
     "encounters": "1D4",
     "encounters_lair": "2D6",
-    "xp": "125 XP PARA CADA 2M",
+    "xp": "125",
     "dv": "2+2 (10/18) PARA CADA 2M",
     "ca": "10   |   JP 16",
     "jp": "",

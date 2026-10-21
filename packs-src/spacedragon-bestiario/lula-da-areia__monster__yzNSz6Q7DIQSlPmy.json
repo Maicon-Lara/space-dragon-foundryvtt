@@ -12,7 +12,7 @@
     "description": "<div class=\"sd-bloco-extra\"><p><em>Moluscus arena</em></p><p><strong>FOR</strong> 20 · <strong>DES</strong> 14 · <strong>CON</strong> 14 · <strong>INT</strong> 4 · <strong>CIE</strong> 0 · <strong>COM</strong> 0</p></div><p>As lulas da areia são reminiscentes de oceanos desertificados que se adaptaram à vida sob a areia. Costumam ficar enterradas até que vítimas desavisadas passem por perto, quando atacarão com seus tentáculos e tentarão engoli-las. Há diversos relatos de pessoas que foram arrastadas para baixo da areia por essas criaturas e nunca mais foram vistas. Agarrar em um ataque bem-sucedido com um tentáculo, a lula da areia pode prender uma vítima, que falhe em uma JPR. Uma vítima envolta por um tentáculo pode tentar um teste resistido de Força para soltar-se, ou corre o risco de ser arrastada para baixo da areia.</p>",
     "described_attacks": "2 TENTÁCULOS +8 (1D6+6+AGARRAR)",
     "encounters": "1",
-    "xp": "1.390 XP",
+    "xp": "1390",
     "dv": "10+2 (42/82)",
     "ca": "12",
     "jp": "12",

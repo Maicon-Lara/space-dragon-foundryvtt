@@ -85,6 +85,43 @@ As alterações no sistema passam pelo [libWrapper](https://foundryvtt.com/packa
 recomendado. Sem ele, uma implementação reserva é usada e um aviso aparece para o
 Mestre.
 
+## Com o "Old Dragon 2: Qualidade de Vida"
+
+Os dois convivem. O Qualidade de Vida é feito para o Old Dragon 2, e em alguns
+pontos a regra do Space Dragon é outra. O Space Dragon acerta o que dá do lado
+dele; o resto é opção do Qualidade de Vida que a mesa liga ou desliga.
+
+**O que o Space Dragon já acerta sozinho**
+
+- Os efeitos de JP do gerenciador de efeitos ("+2 na JPD") valem na ficha do
+  Space Dragon como bônus na rolagem de 1d20, no sentido da regra do livro.
+- O pedido de agonização a 0 PV vira o lembrete do Space Dragon: em 0 PV o
+  personagem está inconsciente e estável; abaixo de 0, JPF por rodada; morte
+  nos Danos Mortais.
+- Os botões de tesouro do Old Dragon 2 não aparecem na Ficha de Ameaça, onde o
+  campo guarda as relíquias O, D, U.
+- O XP do bestiário vai sem ponto de milhar, para o fim de combate do
+  Qualidade de Vida ler 7250, e não 7.
+
+**As opções do Qualidade de Vida numa mesa de Space Dragon**
+
+| Opção | Recomendação |
+|---|---|
+| Automação de combate | Pode usar, com **Aplicar dano automático desligado**: ele trava o PV em 0, e o Space Dragon tem PV negativos, Danos Mortais e Redução de Dano. Os críticos dele são os do Old Dragon 2; use "Perguntar" e role a T7-4 e a T7-5 pelas macros do Space Dragon. |
+| Gerenciador de efeitos | Recomendado: é como um monstro causa efeito. |
+| Monstros carregam itens | Pode usar; a Ficha de Ameaça cede a aba de equipamento a ele. |
+| Tomo de Magia, Gerador de pergaminhos, Gerador de tesouros, Gerador de personagens, Habilidades de classe e raça | Desligar: são magias, classes e tesouros do Old Dragon 2. |
+
+**Monstros que causam efeitos**
+
+Monte o efeito no gerenciador de efeitos do Qualidade de Vida, no próprio
+monstro, com gatilho de ataque ou de dano e cópia para o alvo atingido.
+Exemplos: o veneno que tira 1d6 PV por rodada durante 3 rodadas; o choque que
+deixa o alvo paralisado por 1d4 rodadas. Quando o livro manda resistir com JP,
+o jogador rola a JP pela ficha do Space Dragon (1d20 + mod ≥ JP) e o Mestre
+mantém ou remove o efeito: as condicionais de JP do Qualidade de Vida comparam
+no sentido do Old Dragon 2.
+
 ## As porcentagens
 
 Subjugar, furtividade, clonagem, aptidão tecnológica e a chance de poder mental

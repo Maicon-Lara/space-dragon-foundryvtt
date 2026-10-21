@@ -165,5 +165,6 @@ export const LANG_PADRAO = {
   "spacedragon.ameaca.premioDica": "Derrotar um inimigo com classe dá 10% do XP que a tabela da classe pede para o nível dele, no mínimo 100 (Cap. 11). Só o Mestre vê.",
   "spacedragon.ameaca.moralTitulo": "Moral do grupo",
   "spacedragon.ameaca.moralCaiu": "<strong>{caidos} de {total}</strong> {nome} caíram: metade ou mais do grupo. Os sobreviventes rolam Moral (d% ≤ Moral para ficar).",
-  "spacedragon.ameaca.moralBotao": "Rolar a Moral dos {vivos} sobreviventes"
+  "spacedragon.ameaca.moralBotao": "Rolar a Moral dos {vivos} sobreviventes",
+  "spacedragon.qdv.zeroPV": "<strong>{nome}</strong> está em 0 PV: inconsciente, porém <strong>estável</strong> (Space Dragon). Não há teste agora. Abaixo de 0, faz uma JPF por rodada (falha: −1d4 PV); morre em {mortais}."
 };

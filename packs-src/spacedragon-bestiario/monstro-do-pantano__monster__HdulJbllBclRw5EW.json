@@ -12,7 +12,7 @@
     "description": "<div class=\"sd-bloco-extra\"><p><strong>FOR</strong> 18 · <strong>DES</strong> 12 · <strong>CON</strong> 18 · <strong>INT</strong> 6 · <strong>CIE</strong> 0 · <strong>COM</strong> 4</p></div><p>Monstros do pântano, integrantes do grupo de seres inexplicáveis cientificamente, são criaturas humanoides inteiramente feitas de lama, lodo e material orgânico em decomposição encontrado em pântanos. Relatos de aparições são raros, mas muitos desaparecimentos em regiões pantanosas são atribuídos à ação de uma destas criaturas. Pouco se sabe sobre seus hábitos, mas especula-se que vivam sob a água, camuflando-se na lama.</p>",
     "described_attacks": "1 PANCADA+10 (2D8+4)",
     "encounters": "1",
-    "xp": "875 XP",
+    "xp": "875",
     "dv": "8+4 (36/68)",
     "ca": "14 (COBERTURA DE MUSGO +3)",
     "jp": "13",
