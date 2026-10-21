@@ -32,12 +32,13 @@ function enxuga() {
 
   // Colunas que o cliente usa fora dos testes: o dado de vida por nível e o
   // multiplicador de crítico do Cosmonauta.
+  // O XP por nível é o prêmio do vilão com classe: 10% dele (ameaca-regras.js).
   const EXTRA = {
-    CIENTISTA: ["dv"], COSMONAUTA: ["dv", "danoCritico"],
-    GATUNO: ["dv"],
+    CIENTISTA: ["dv", "xp"], COSMONAUTA: ["dv", "danoCritico", "xp"],
+    GATUNO: ["dv", "xp"],
     // O Mentálico precisa das duas colunas dele no cliente: o alcance é o
     // orçamento diário, e a grandeza limite corta o que ele pode tentar.
-    MENTALICO: ["dv", "alcanceMental", "grandezaMental"],
+    MENTALICO: ["dv", "alcanceMental", "grandezaMental", "xp"],
   };
   for (const [tabela, colunas] of Object.entries(EXTRA)) {
     prog[tabela] ??= {};

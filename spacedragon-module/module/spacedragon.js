@@ -43,6 +43,7 @@ import { registrarFichaAmeaca, rolarJPAmeaca, rolarMoral } from "./ameaca.js";
 import { abrirDesativar, rolarDesativar } from "./robos.js";
 import { abrirReliquia, gerarReliquia, gerarDaCriatura, rolarDefeito } from "./reliquias.js";
 import { ligarMutacoes } from "./mutacoes-ficha.js";
+import { ligarRegrasDeAmeaca, xpDeVilaoDoAtor } from "./ameaca-regras.js";
 import { registrarOpcaoDeVersao, avisarVersaoDoSistema } from "./versao.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
@@ -201,6 +202,7 @@ Hooks.once("ready", () => {
   passo("Grandezas", () => ligarGrandezas());
   passo("alcance mental", () => ligarMental());
   passo("mutações", () => ligarMutacoes());
+  passo("regras de ameaça (PV, Moral, prêmio de vilão)", () => ligarRegrasDeAmeaca());
   passo("degraus", () => ligarDegraus());
   passo("Ordem de Ação na ficha", () => ligarOrdemNaFicha());
   passo("Ordem de Ação no combate", () => ligarOrdemNoCombate());
@@ -218,7 +220,7 @@ Hooks.once("ready", () => {
     teste: abrirTeste, rolar, preparar, TESTES,
     pv: rolarPV, critico: rolarCritico, multiplicadorCritico,
     compararEscalas, diagnostico, danosMortais, bonusDeCP, jp: rolarJP,
-    jpAmeaca: rolarJPAmeaca, moral: rolarMoral,
+    jpAmeaca: rolarJPAmeaca, moral: rolarMoral, xpDeVilao: xpDeVilaoDoAtor,
     desativarRobos: abrirDesativar, rolarDesativar,
     reliquia: abrirReliquia, gerarReliquia, reliquiasDaCriatura: gerarDaCriatura, defeitoDeReliquia: rolarDefeito,
     ordem: abrirOrdem,
