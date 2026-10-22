@@ -4,8 +4,8 @@
  * ── O BUG QUE ISTO CONSERTA ─────────────────────────────────────────────────
  *
  * O getter do sistema (OD2EquipmentDataModel) faz `cost.match(/\d+/)[0]` sem
- * olhar se achou alguma coisa. Custo sem nenhum dígito — "Variável", "Nenhum",
- * "Indefinido", que são doze itens do Cap. 8 — dá TypeError no meio do
+ * olhar se achou alguma coisa. Custo sem nenhum dígito — "Sem custo" e "A
+ * critério do Mestre", oito feitos do Cap. 8 — dá TypeError no meio do
  * Handlebars, porque a ficha desenha `system.total_cost` em cada linha do
  * inventário (misc-card.hbs).
  *
@@ -28,6 +28,9 @@ import { envolver } from "./envelope.js";
 /** O protótipo onde o sistema define `total_cost`. Armas, vestes e escudos herdam dele. */
 export const ALVO_CUSTO = "CONFIG.Item.dataModels.misc.prototype.total_cost";
 
+/** "$180.000", "$ 40000", "80.000 créditos": um preço só, que pode ser multiplicado. */
+const PRECO_FECHADO = /^(?:\$\s*(?:\d{1,3}(?:\.\d{3})+|\d+)|(?:\d{1,3}(?:\.\d{3})+|\d+)\s*cr[eé]ditos?)$/i;
+
 /** 1234567 → "1.234.567", sem depender do ICU do navegador. */
 export function milhar(n) {
   return String(Math.trunc(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -39,6 +42,7 @@ export function milhar(n) {
  *   "Variável" ×1           → "Variável"        (o sistema quebraria)
  *   "$180.000" ×2           → "$360.000"        (o sistema diria "180 PO")
  *   "80.000 créditos" ×1    → "80.000 créditos" (o sistema diria "80 PO")
+ *   "$10.000 por NT" ×3     → "$10.000 por NT"  (regra de preço: não multiplica)
  *   "10 PO", "", 0          → null              (a conta do sistema)
  */
 export function custoTotal(custo, quantidade = 1) {
@@ -50,6 +54,9 @@ export function custoTotal(custo, quantidade = 1) {
   const dolar = texto.includes("$");
   const creditos = /cr[eé]dito/i.test(texto);
   if (!dolar && !creditos) return null;
+  // "$10.000 por NT", "$200.000 + $20.000 por 1d12 extra": é regra de preço, não
+  // preço fechado; multiplicar pela quantidade apagaria o "por".
+  if (!PRECO_FECHADO.test(texto)) return texto;
 
   const achado = texto.match(/\d{1,3}(?:\.\d{3})+|\d+/);
   const valor = Number(achado[0].replace(/\./g, ""));

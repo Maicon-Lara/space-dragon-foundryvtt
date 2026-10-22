@@ -6,9 +6,9 @@
   "img": "systems/olddragon2e/assets/icons/brain.svg",
   "system": {
     "odo_id": "explosivo-remotamente-controlado",
-    "description": "Aparato ofensivo de 3º nível tecnológico. Operam: Cientista. Custo Variável. Tempo de construção 1d4 horas. Este explosivo pode ser controlado remotamente por um radiocomunicador ou videocomunicador a até 500 metros do local onde for plantado. Ele pode ser usado para escavações, infiltrações ou como arma. O custo inicial é de $200.000, fazendo com que o explosivo cause 3d12 pontos de dano a todos em uma área de 20 m² – um sucesso em uma JPR reduz o dano pela metade. O dano pode ser aumentado em 1d12 adicional por mais $20.000, adicionando 1 NT ao aparato. Desta forma, um cientista com acesso ao 6º NT poderia criar um explosivo remotamente controlado de 6d12 de dano.",
+    "description": "Aparato ofensivo de 3º nível tecnológico. Operam: Cientista. Custo $200.000 + $20.000 por 1d12 extra. Tempo de construção 1d4 horas. Este explosivo pode ser controlado remotamente por um radiocomunicador ou videocomunicador a até 500 metros do local onde for plantado. Ele pode ser usado para escavações, infiltrações ou como arma. O custo inicial é de $200.000, fazendo com que o explosivo cause 3d12 pontos de dano a todos em uma área de 20 m² – um sucesso em uma JPR reduz o dano pela metade. O dano pode ser aumentado em 1d12 adicional por mais $20.000, adicionando 1 NT ao aparato. Desta forma, um cientista com acesso ao 6º NT poderia criar um explosivo remotamente controlado de 6d12 de dano.",
     "quantity": 1,
-    "cost": "Variável",
+    "cost": "$200.000 + $20.000 por 1d12 extra",
     "weight_in_load": 0,
     "weight_in_grams": 0,
     "magic_item": false,

@@ -73,6 +73,9 @@ const { custoTotal, milhar, ligarCusto } = await import("../spacedragon-module/m
     ["", 1, null],
     [undefined, 1, null],
     ["$180.000", 0, "$180.000"],
+    ["$10.000 por NT", 3, "$10.000 por NT"],
+    ["$200.000 + $20.000 por 1d12 extra", 2, "$200.000 + $20.000 por 1d12 extra"],
+    ["A critério do Mestre", 1, "A critério do Mestre"],
   ];
   for (const [custo, qtd, esperado] of casos) {
     const deu = custoTotal(custo, qtd);
@@ -120,7 +123,12 @@ confere(ligarCusto() === true, "ligarCusto() não registrou o envelope");
 {
   const { APARATOS } = await import("./data/aparatos.mjs");
   for (const a of APARATOS) {
-    if (/\d/.test(a.custo)) confere(/^\$\d{1,3}(\.\d{3})+$/.test(a.custo), `${a.nome}: custo "${a.custo}" fora do formato $000.000`);
+    // a mesa leu "Variável"/"Nenhum"/"Indefinido" como item sem preço
+    confere(!/^(Variável|Nenhum|Indefinido)$/i.test(a.custo), `${a.nome}: custo "${a.custo}" parece item sem preço — diga a regra da entrada`);
+    // todo valor em $, solto ou dentro de uma regra de preço, com o milhar inteiro
+    for (const v of a.custo.match(/\$[\d.]+/g) ?? []) {
+      confere(/^\$\d{1,3}(\.\d{3})+$/.test(v), `${a.nome}: valor "${v}" fora do formato $000.000`);
+    }
   }
 }
 
