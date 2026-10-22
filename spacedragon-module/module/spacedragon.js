@@ -46,6 +46,7 @@ import { ligarMutacoes } from "./mutacoes-ficha.js";
 import { ligarRegrasDeAmeaca, xpDeVilaoDoAtor } from "./ameaca-regras.js";
 import { ligarIntegracaoQdV } from "./integracao-qdv.js";
 import { registrarOpcaoDeVersao, avisarVersaoDoSistema } from "./versao.js";
+import { ligarCusto } from "./custo.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
@@ -165,6 +166,9 @@ Hooks.once("ready", () => {
   const padrao = passo("opção de fichas padrão", () => game.settings.get(ID, "fichasPadrao")) ?? true;
   passo("Ficha Space Dragon", () => registrarFicha(padrao));
   passo("Ficha de Ameaça", () => registrarFichaAmeaca(padrao));
+  // Antes de qualquer ficha desenhar um item: o `total_cost` do sistema quebra
+  // com custo sem dígito ("Variável"), e a ficha para de redesenhar. custo.js.
+  passo("custo dos itens", () => ligarCusto());
 
   /* ── AS NAVES, LOGO DEPOIS DA FICHA DE QUE DEPENDEM ──────────────────────
    *

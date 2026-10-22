@@ -325,7 +325,7 @@ export const APARATOS = [
     feito: false,
     categoria: "Utilitário",
     nt: 4,
-    custo: "$300.00",
+    custo: "$300.000",
     tempo: "1d4 dias",
     texto: "Através dos raios X emitidos por esses óculos é possível enxergar através de um único obstáculo, como uma parede ou porta, embora o chumbo bloqueie os raios X, impossibilitando a visualização. A imagem tem qualidade razoável, mas confere uma penalidade de -2 aos ataques do usuário, conforme a tabela T7-3. O cientista pode optar por criar binóculos com esta mesma capacidade pelo dobro do custo e tempo.",
   },
