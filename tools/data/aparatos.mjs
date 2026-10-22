@@ -31,6 +31,17 @@
 //   · Dispositivo rastreador — a T8-1 lista no 5º NT e a entrada diz 2º. O
 //     custo de $60.000 é de item baixo, o que reforça o 2º.
 //
+// ── CUSTO QUE O LIVRO NÃO FIXA ──────────────────────────────────────────────
+//
+// Doze entradas trazem custo "Variável", "Nenhum" ou "Indefinido" no cabeçalho.
+// Na ficha isso parecia item sem preço. O campo agora diz o que a própria
+// entrada explica no texto: "$10.000 por NT" (injeção, reparos), "$50.000 por
+// categoria" (cérebro positrônico), "$200.000 + $20.000 por 1d12 extra"
+// (explosivo). Onde o livro deixa a conta com o mestre (curar doença, imunizar,
+// construir robô), "A critério do Mestre"; os feitos de diagnóstico e
+// identificação, que não gastam nada, "Sem custo". Preço com "por" ou "+" não é
+// multiplicado pela quantidade (module/custo.js).
+//
 // ── ARMADILHAS DA TRANSCRIÇÃO ───────────────────────────────────────────────
 //
 // O livro mistura o ORDINAL MASCULINO (º) com o SINAL DE GRAU (°), que são
@@ -228,7 +239,7 @@ export const APARATOS = [
     feito: false,
     categoria: "Ofensivo",
     nt: 3,
-    custo: "Variável",
+    custo: "$200.000 + $20.000 por 1d12 extra",
     tempo: "1d4 horas",
     texto: "Este explosivo pode ser controlado remotamente por um radiocomunicador ou videocomunicador a até 500 metros do local onde for plantado. Ele pode ser usado para escavações, infiltrações ou como arma. O custo inicial é de $200.000, fazendo com que o explosivo cause 3d12 pontos de dano a todos em uma área de 20 m² – um sucesso em uma JPR reduz o dano pela metade. O dano pode ser aumentado em 1d12 adicional por mais $20.000, adicionando 1 NT ao aparato. Desta forma, um cientista com acesso ao 6º NT poderia criar um explosivo remotamente controlado de 6d12 de dano.",
   },
@@ -589,7 +600,7 @@ export const APARATOS = [
     feito: false,
     categoria: "Utilitário",
     nt: null,
-    custo: "Variável",
+    custo: "$10.000 por NT",
     tempo: "1d4 horas",
     texto: "Esta seringa descartável pode ser aplicada a um personagem não-androide, fazendo com que ele recupere pontos de vida instantaneamente. O cientista pode escolher o NT da injeção, que pode ser até o seu NT limite, e quanto maior ele for mais dados serão rolados para recuperar pontos de vida. Cada NT custa $10.000 e recupera 1d4+1 pontos de vida. O uso de mais de uma injeção por dia pede uma JPF com penalidade cumulativa de -1, com uma falha resultando em um ataque cardíaco com efeitos similares à descompressão. Um resultado de 1 no dado nesta JPF faz o coração do personagem parar imediatamente, significando morte automática.",
   },
@@ -598,7 +609,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 1,
-    custo: "Variável",
+    custo: "A critério do Mestre",
     tempo: "Variável",
     texto: "Após diagnosticar uma doença e os agentes causadores, o cientista pode iniciar o processo de cura da mesma. O procedimento necessário, seu custo e duração dependerão do mestre. Ele também pode pedir testes de Ciência por parte do cientista que esteja realizando o tratamento e de Constituição por parte do paciente. Em casos de doenças causadas por micro-organismos, pode ser necessário identificá-los antes de efetuar o tratamento e debilitações provocadas por venenos precisam que o cientista providencie o antídoto.",
   },
@@ -607,7 +618,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 1,
-    custo: "Nenhum",
+    custo: "Sem custo",
     tempo: "1d10 minutos",
     texto: "O cientista consegue diagnosticar doenças contraídas por outros personagens. Doenças comuns não pedem nenhum tipo de teste, mas doenças raras ou inéditas podem necessitar de um teste bem-sucedido de Ciência, a critério do mestre. O diagnóstico apenas acusa o que causa a doença, como micro-organismos ou veneno, mas o cientista ainda precisará identificá-los com os feitos apropriados antes de curar a doença. Se tais identificações forem impossíveis ainda é possível tentar aplicar um tratamento, mas com apenas 20% de chance de sucesso.",
   },
@@ -616,7 +627,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 2,
-    custo: "Indefinido",
+    custo: "A critério do Mestre",
     tempo: "Variável",
     texto: "O cientista é capaz de construir robôs que o terão como seu mestre. A tabela T3-2 é usada para a progressão desse feito, iniciando com a construção de protótipos simples e terminando com androides, visto que sucatas são simplesmente versões deterioradas dos demais tipos de robô. A construção de um robô pede três sucessos consecutivos em rolagens de 1d20 com a dificuldade expressa na tabela para a desativação do tipo de robô sendo construído de acordo com o nível do cientista. Cada rolagem é feita após 1 mês de trabalho, o que significa que o período mínimo para a construção é geralmente de 3 meses. Um “A” na tabela indica que a rolagem é automaticamente bem-sucedida, embora o mínimo de 3 meses ainda deva ser respeitado. Já um “D” significa que o procedimento pode ser feito em apenas 1 mês. O robô criado é exatamente igual ao descrito para sua categoria no capítulo 11 e obedecerá ao cientista incondicionalmente, exceto os androides. Um cientista que deseje criar um Homo machina deve estar ciente das implicações morais e sociais de seu feito. Além disso, androides precisam de um cérebro positrônico para serem ativados, criado com o feito específico. Nesse caso, o transplante do cérebro já faz parte da construção, dispensando o uso do feito de transplante de cérebros positrônicos. O custo deste feito dependerá do mestre. Cientistas que não tenham uma maneira de construir um cérebro positrônico podem conseguir um de outros meios, talvez no mercado negro de uma grande cidade, em um ferro velho ou desmontando um outro robô – neste caso, a categoria do robô construído para fins de desativação deve ser considerada a mesma do portador original do cérebro positrônico.",
   },
@@ -625,7 +636,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 2,
-    custo: "Nenhum",
+    custo: "Sem custo",
     tempo: "Variável",
     texto: "O cientista é capaz de determinar a espécie de uma forma de vida não microbiana que encontrar, através de análise em laboratório ou identificação visual. A identificação permite ao cientista saber o nome biológico do espécime e suas características mais básicas como hábitos alimentares e sociais. De acordo com o nível do cientista, o mestre pode fornecer mais informações como, os ataques do alienígena ou estimativas de seus atributos, mas também pode vetar informações se essa for uma espécie rara ou nova.",
   },
@@ -652,7 +663,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 3,
-    custo: "Nenhum",
+    custo: "Sem custo",
     tempo: "1d4 horas",
     texto: "Através de uma amostra de um determinado veneno conseguido diretamente com a espécie inoculadora ou no diagnóstico de uma doença, o cientista é capaz de identificar como ele age no organismo, tornando possível destilar um antídoto e combatê-lo.",
   },
@@ -679,7 +690,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 4,
-    custo: "Nenhum",
+    custo: "Sem custo",
     tempo: "1d8 horas",
     texto: "O cientista consegue identificar um micro-organismo existente através de uma amostra de material contaminado, ou determinar se trata-se de uma nova variedade de micróbio. A identificação aponta o nome científico do micro-organismo e a forma como é comumente combatido, caso seja possível.",
   },
@@ -733,7 +744,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 6,
-    custo: "Variável",
+    custo: "A critério do Mestre",
     tempo: "Variável",
     texto: "Este feito pode ser realizado junto a um tratamento de cura de uma doença, seja ela provocada por micro-organismos, veneno ou qualquer outro meio. Ao ser curado da enfermidade o paciente estará imune a ela para sempre e pode apresentar certa resistência a outras doenças similares. Como é realizado paralelamente ao tratamento da doença, o tempo e custo empregados dependem do mestre, conforme expresso no feito em questão.",
   },
@@ -742,7 +753,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 6,
-    custo: "Nenhum",
+    custo: "Sem custo",
     tempo: "1d8 horas",
     texto: "Este feito envolve transplantar um cérebro positrônico de um corpo robótico para outro, mas não sua construção ou reparo. Ao final do processo o cientista deve ser bem-sucedido em um teste de Ciência, caso contrário o procedimento deve ser repetido. O cérebro passará a funcionar no novo corpo robótico, mas o personagem embutido nele terá -2 em quaisquer rolagens que fizer por 1d4 semanas de adaptação.",
   },
@@ -778,7 +789,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: 8,
-    custo: "Variável",
+    custo: "$50.000 por categoria",
     tempo: "1d4 meses",
     texto: "O cientista constrói um cérebro artificial para ser implantado em um Homo machina. A construção de androides em particular precisa de um cérebro positrônico para estar completa e sua construção deste pode ser feita paralelamente à do corpo robótico. O custo é de $50.000 para cada categoria de cérebro, desde protótipo até androide. Este mesmo feito pode ser usado para reparos em cérebros positrônicos danificados de acordo com a regra de consertos.",
   },
@@ -823,7 +834,7 @@ export const APARATOS = [
     feito: true,
     categoria: null,
     nt: null,
-    custo: "Variável",
+    custo: "$10.000 por NT",
     tempo: "Variável",
     texto: "O cientista efetua reparos em corpos robóticos, como autômatos ou androides. É possível realizar reparos mais superficiais ou aprofundados, dependendo do nível tecnológico. Ao realizar o feito escolhe-se o NT correspondente, que deve estar dentro das capacidades do cientista. Cada nível recupera 1d10 PV do robô e custa $10.000. A duração é 1d10 minutos, por nível tecnológico. Este feito não é aplicável a reparos em cérebros positrônicos, que são realizados com o feito de construção.",
   },
