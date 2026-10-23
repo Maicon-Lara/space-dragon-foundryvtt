@@ -771,9 +771,10 @@ function buildNavesDocs() {
             ranged: true,
             melee: false,
             two_handed: true,
-            // o alcance é o do combate espacial, que o §10.6 não mede em
-            // metros: quem decide se a nave alvo está ao alcance é o Mestre
-            shoot_range: 0,
+            // a faixa CURTA da regra da casa (o livro não dá alcance às armas de
+            // nave): é o que o cartão de ataque do sistema mostra. As três
+            // faixas estão na descrição, e o disparo da Ficha de Nave as aplica.
+            shoot_range: e.alcance?.[0] ?? 0,
           },
           fEquip._id, "nave-equip", (i + 1) * 100000)
       : miscDoc({ nome: tituloDeItem(e.nome), seedNome: e.nome, desc: e.desc, img: e.img },

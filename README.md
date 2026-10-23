@@ -106,6 +106,24 @@ só marca o que a nave tem, sem compra nem limite. As camadas só aparecem com a
 Regras Compiladas ligadas. Trocar uma opção redesenha as Fichas de Nave abertas,
 e nada gravado na nave se perde: religar devolve tudo como estava.
 
+**O alcance das armas de nave é regra da casa.** A T10-4 não dá alcance; o
+módulo usa três faixas, como as da T5-1 (média −2, longa −4):
+
+| Arma | Curta | Média (−2) | Longa (−4) |
+|---|---|---|---|
+| Metralhadora de energia | 100 m | 200 m | 300 m |
+| Disparadores laser | 150 m | 300 m | 450 m |
+| Canhões de energia | 300 m | 600 m | 900 m |
+| Mísseis teleguiados | 600 m | 1.200 m | 1.800 m |
+
+O ataque de uma arma de nave é rolado pela Ficha de Nave: ela mede a distância
+até o alvo marcado no mapa, escolhe a faixa (ou avisa que está fora de alcance),
+preenche o BA à distância de quem está na Artilharia e rola 1d20 + BA da nave +
+Computador Balístico + artilheiro. Com alvo, compara com o CP dele e rola o
+dano no acerto. Isso também dispensa a munição que a automação de combate do
+Qualidade de Vida exige de toda arma à distância e que travava o disparo. Os
+outros ataques continuam com o sistema e o Qualidade de Vida.
+
 ## Com o "Old Dragon 2: Qualidade de Vida"
 
 Os dois convivem. O Qualidade de Vida é feito para o Old Dragon 2, e em alguns

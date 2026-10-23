@@ -53,6 +53,10 @@ import { ETAPAS } from "./nave-salto.js";
 import { aplicarAcao, ehAutomatica, limparFimDaRodada } from "./nave-acoes.js";
 import { CAMARAS } from "./camaras.js";
 import { combateCompilado, naveModular } from "./opcoes.js";
+import {
+  armaDoEquipamento, alcanceEscrito, faixaDoAlcance, penalidadeDaFaixa, formulaDoDisparo,
+  resultadoDoDisparo, FAIXAS,
+} from "./nave-disparo.js";
 
 import { t as txt } from "./i18n.js";
 
@@ -504,6 +508,59 @@ export function porPainelDasCamadas(raiz, ator) {
   return !!html;
 }
 
+/* ── O DISPARO DAS ARMAS DE NAVE ──────────────────────────────────────────── */
+
+/** O botão de ataque que o sistema desenha para cada arma. */
+export const SELETOR_ATAQUE = ".attack-roll";
+
+/**
+ * A arma de nave por trás de um botão de ataque, ou null.
+ *
+ * Null quer dizer "não é nossa": o clique segue para o sistema e para o
+ * Qualidade de Vida como sempre. Só a arma com a flag de equipamento da T10-4
+ * e dano declarado é disparada pela Ficha de Nave.
+ */
+export function armaDoBotao(botao, ator) {
+  const linha = botao?.closest?.("[data-item-id]");
+  const item = linha ? ator?.items?.get?.(linha.dataset?.itemId) : null;
+  const chave = flagDeNave(item, "equipamentoDeNave", ID)?.chave ?? null;
+  const arma = chave ? armaDoEquipamento(chave) : null;
+  return arma ? { item, chave, arma } : null;
+}
+
+/** Distância em metros da nave ao alvo marcado, pelo mapa. Null sem os dois. */
+function distanciaAoAlvo(ator, alvo) {
+  try {
+    const origem = ator?.getActiveTokens?.()?.[0];
+    const grade = globalThis.canvas?.grid;
+    if (!origem || !alvo || !grade?.measurePath) return null;
+    const d = grade.measurePath([origem.center, alvo.center])?.distance;
+    return Number.isFinite(d) ? Math.round(d) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Quem está na Artilharia e o BA à distância dele, se ele tem ficha no mundo.
+ * Sem ficha (um NPC só de nome), o campo vem vazio e a mesa digita.
+ */
+function artilheiroDaNave(nave) {
+  const nome = String(nave?.postos?.artilharia ?? "").trim();
+  if (!nome) return null;
+  const bad = Number(globalThis.game?.actors?.getName?.(nome)?.system?.bad);
+  return { nome, bad: Number.isFinite(bad) ? bad : null };
+}
+
+/** O rótulo de cada faixa, com a chave por extenso para o teste de idioma. */
+const ROTULO_DA_FAIXA = {
+  curta: () => txt("spacedragon.nave.disparo.curta"),
+  media: () => txt("spacedragon.nave.disparo.media"),
+  longa: () => txt("spacedragon.nave.disparo.longa"),
+};
+
+const escapa = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+
 let Registrada = null;
 
 /** Esta ficha é a de Nave sobre personagem? */
@@ -909,6 +966,122 @@ export function registrarFichaDeNavePC() {
       });
     }
 
+    /**
+     * O clique no ataque de uma arma de nave é da Ficha de Nave.
+     *
+     * Em CAPTURA, na raiz: o Qualidade de Vida também ouve ali, em captura, mas
+     * liga o ouvinte dele depois, no gancho de render — e o nosso, ligado aqui,
+     * roda primeiro. Parar o evento impede que ele cancele o tiro por falta de
+     * munição e que o sistema role o ataque comum. Qualquer outro ataque
+     * (armas pessoais, desarmado) passa direto.
+     */
+    #ligarDisparo(raiz) {
+      if (!raiz?.dataset || raiz.dataset.swDisparo === "1") return;
+      raiz.dataset.swDisparo = "1";
+      raiz.addEventListener("click", (ev) => {
+        const botao = ev.target?.closest?.(SELETOR_ATAQUE);
+        if (!botao) return;
+        const achada = armaDoBotao(botao, this.actor);
+        if (!achada) return;
+        ev.preventDefault();
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+        this.#disparar(achada).catch((e) => console.error(`${ID} | o disparo falhou`, e));
+      }, true);
+    }
+
+    /**
+     * O disparo: «1d20 + BA da nave + BA à distância de quem opera a arma», mais
+     * o Computador Balístico e a faixa de alcance (regra da casa).
+     */
+    async #disparar({ item, arma }) {
+      const ator = this.actor;
+      const nave = naveDe(ator, ID);
+      const alvo = [...(globalThis.game?.user?.targets ?? [])][0] ?? null;
+      const nomeAlvo = escapa(alvo?.name ?? alvo?.actor?.name ?? "");
+      const nomeArma = escapa(item?.name ?? arma.nome);
+      const alcance = alcanceEscrito(arma.alcance);
+      const metros = distanciaAoAlvo(ator, alvo);
+      const auto = faixaDoAlcance(arma.alcance, metros);
+
+      if (auto?.fora) {
+        globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.fora", { alvo: nomeAlvo, metros, arma: nomeArma, alcance }));
+        return null;
+      }
+
+      const art = artilheiroDaNave(nave);
+      const faixaInicial = auto?.chave ?? "curta";
+      const opcoes = FAIXAS.map((f) =>
+        `<option value="${f.chave}"${f.chave === faixaInicial ? " selected" : ""}>${ROTULO_DA_FAIXA[f.chave]()}</option>`).join("");
+      const rotuloArt = art
+        ? txt("spacedragon.nave.disparo.artilheiroNome", { nome: escapa(art.nome) })
+        : txt("spacedragon.nave.disparo.artilheiro");
+      const conteudo =
+        (alcance ? `<p>${txt("spacedragon.nave.disparo.alcance", { alcance })}</p>` : "") +
+        `<p>${metros !== null
+          ? txt("spacedragon.nave.disparo.distancia", { alvo: nomeAlvo, metros })
+          : txt("spacedragon.nave.disparo.semDistancia")}</p>` +
+        `<div class="form-group"><label>${txt("spacedragon.nave.disparo.faixa")}</label>` +
+        `<select name="faixa">${opcoes}</select></div>` +
+        `<div class="form-group"><label>${rotuloArt}</label>` +
+        `<input type="number" name="artilheiro" value="${art?.bad ?? ""}"></div>` +
+        `<div class="form-group"><label>${txt("spacedragon.nave.disparo.situacao")}</label>` +
+        `<input type="number" name="situacao" value="0"></div>`;
+
+      const V2 = globalThis.foundry?.applications?.api?.DialogV2;
+      if (!V2) return null;
+      const escolha = await V2.wait({
+        window: { title: txt("spacedragon.janela.disparo", { arma: nomeArma }) },
+        content: conteudo,
+        buttons: [
+          {
+            action: "rolar", label: txt("spacedragon.botao.rolar"), default: true,
+            callback: (_ev, botao) => Object.fromEntries(new FormData(botao.form)),
+          },
+          { action: "cancelar", label: txt("spacedragon.botao.cancelar") },
+        ],
+        rejectClose: false,
+      });
+      if (!escolha || typeof escolha !== "object") return null;
+
+      const faixa = escolha.faixa in ROTULO_DA_FAIXA ? escolha.faixa : "curta";
+      const formula = formulaDoDisparo({
+        baNave: ator.system?.ba ?? 0,
+        balistico: bonusDeAtaque(nave, equipamentosDoAtor(ator, ID)),
+        artilheiro: escolha.artilheiro,
+        penalidade: penalidadeDaFaixa(faixa),
+        situacao: escolha.situacao,
+      });
+      const ataque = await new globalThis.Roll(formula).evaluate();
+      const natural = ataque.dice?.[0]?.total;
+      const cp = alvo?.actor?.system?.ac_total ?? alvo?.actor?.system?.ac ?? null;
+      const resultado = resultadoDoDisparo(ataque.total, cp);
+
+      const linhas = [txt("spacedragon.nave.disparo.chat", { arma: nomeArma, faixa: ROTULO_DA_FAIXA[faixa]() })];
+      if (resultado) {
+        linhas.push(txt("spacedragon.nave.disparo.contra", {
+          alvo: nomeAlvo, cp,
+          resultado: resultado === "acerto" ? txt("spacedragon.nave.disparo.acerto") : txt("spacedragon.nave.disparo.erro"),
+        }));
+      } else {
+        linhas.push(txt("spacedragon.nave.disparo.semAlvo"));
+      }
+      if (natural === 20) linhas.push(txt("spacedragon.nave.disparo.critico"));
+      if (natural === 1) linhas.push(txt("spacedragon.nave.disparo.falha"));
+      if ((arma.ataques ?? 1) > 1) linhas.push(txt("spacedragon.nave.disparo.varios", { n: arma.ataques }));
+      if (arma.jpDoAlvo) linhas.push(txt("spacedragon.nave.disparo.missil", { rodadas: arma.perseguePor ?? "?" }));
+
+      const falante = globalThis.ChatMessage?.getSpeaker?.({ actor: ator });
+      await ataque.toMessage({ speaker: falante, flavor: linhas.map((l) => `<p>${l}</p>`).join("") });
+
+      // o dano sai junto quando o tiro acertou, ou quando não há CP para comparar
+      if (resultado !== "erro" && arma.dano) {
+        const dano = await new globalThis.Roll(arma.dano).evaluate();
+        await dano.toMessage({ speaker: falante, flavor: txt("spacedragon.nave.disparo.dano", { arma: nomeArma }) });
+      }
+      return { formula, total: ataque.total, resultado, faixa };
+    }
+
     #ligarCamadas(raiz) {
       if (!raiz?.dataset || raiz.dataset.swCamadas === "1") return;
       raiz.dataset.swCamadas = "1";
@@ -1156,6 +1329,7 @@ export function registrarFichaDeNavePC() {
         this.#ligarPostos(raiz);
         this.#ligarCamadas(raiz);
         this.#ligarAcoes(raiz);
+        this.#ligarDisparo(raiz);
       } catch (e) {
         console.warn(`${ID} | não pude preparar a Ficha de Nave`, e);
       }

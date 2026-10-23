@@ -88,18 +88,23 @@ export const EQUIPAMENTOS_DE_NAVE = {
   },
 
   // ── COMBATE ─────────────────────────────────────────────────────────────
+  //
+  // `alcance` é REGRA DA CASA: a T10-4 não dá alcance às armas de nave. São
+  // três faixas em metros, como as da T5-1 (média −2, longa −4), na escala
+  // do movimento das naves (caça 150 m por rodada, cruzador 20 m). Quem as
+  // aplica é o disparo da Ficha de Nave (nave-disparo.js).
   disparadores: {
     rotulo: "Disparadores laser",
     grupo: "combate",
     cabe: { Pequena: true, "Média": true, Gigantesca: true, Colossal: true },
-    efeito: { arma: { nome: "Disparadores laser", dano: "2d10" } },
+    efeito: { arma: { nome: "Disparadores laser", dano: "2d10", alcance: [150, 300, 450] } },
     nota: "A arma mais comum em espaçonaves. Causa 2d10 de dano.",
   },
   canhoes: {
     rotulo: "Canhões de energia",
     grupo: "combate",
     cabe: { Pequena: false, "Média": false, Gigantesca: true, Colossal: true },
-    efeito: { arma: { nome: "Canhões de energia", dano: "5d10" } },
+    efeito: { arma: { nome: "Canhões de energia", dano: "5d10", alcance: [300, 600, 900] } },
     // A nota é o que a MESA lê ao abrir o item: o que a arma faz, e nada do
     // histórico de como chegamos nesse número. Esta linha já carregou "o módulo
     // trazia 3d10… as Regras Compiladas fixam 5d10" — conversa de
@@ -114,7 +119,7 @@ export const EQUIPAMENTOS_DE_NAVE = {
     // `ataques` fica DENTRO de `arma`: é propriedade da arma, não do
     // equipamento. Fora dali ninguém o lia — `armasInstaladas` devolvia 1
     // ataque, e os quatro disparos por rodada da T10-4 sumiam em silêncio.
-    efeito: { arma: { nome: "Metralhadora de energia", dano: "1d10", ataques: 4 } },
+    efeito: { arma: { nome: "Metralhadora de energia", dano: "1d10", ataques: 4, alcance: [100, 200, 300] } },
     nota: "Versão automática dos disparadores. Permite 4 ataques por rodada, de 1d10 cada.",
   },
   misseis: {
@@ -129,6 +134,7 @@ export const EQUIPAMENTOS_DE_NAVE = {
       arma: {
         nome: "Mísseis teleguiados", dano: "4d10",
         jpDoAlvo: true, perseguePor: "1d4+1",
+        alcance: [600, 1200, 1800],
       },
     },
     nota: "Um míssil que segue o alvo por 1d4+1 rodadas, causando 4d10 no impacto.",
