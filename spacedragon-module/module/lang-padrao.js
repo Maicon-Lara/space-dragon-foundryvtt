@@ -142,6 +142,8 @@ export const LANG_PADRAO = {
   "spacedragon.nave.disparo.varios": "Esta arma faz {n} ataques por rodada: clique de novo para cada um.",
   "spacedragon.nave.disparo.missil": "Míssil: só causa o dano se o alvo FALHAR numa JP; persegue por {rodadas} rodadas.",
   "spacedragon.nave.disparo.dano": "Dano de {arma}",
+  "spacedragon.nave.xp.rotulo": "XP ao ser abatida",
+  "spacedragon.nave.xp.dica": "Regra da casa: o livro não dá XP a naves. Em branco, vale a tabela do tipo ({tabela} XP). Só o Mestre vê este campo.",
   "spacedragon.nave.camaras.deFabrica": "<strong>De fábrica</strong> <small>(o mínimo para voar e manter todos vivos)</small>",
   "spacedragon.nave.camaras.estaDanificada": "danificada",
   "spacedragon.nave.camaras.arrancada": "arrancada — reinstalar custa a obra",
@@ -206,5 +208,8 @@ export const LANG_PADRAO = {
   "spacedragon.ameaca.moralTitulo": "Moral do grupo",
   "spacedragon.ameaca.moralCaiu": "<strong>{caidos} de {total}</strong> {nome} caíram: metade ou mais do grupo. Os sobreviventes rolam Moral (d% ≤ Moral para ficar).",
   "spacedragon.ameaca.moralBotao": "Rolar a Moral dos {vivos} sobreviventes",
-  "spacedragon.qdv.zeroPV": "<strong>{nome}</strong> está em 0 PV: inconsciente, porém <strong>estável</strong> (Space Dragon). Não há teste agora. Abaixo de 0, faz uma JPF por rodada (falha: −1d4 PV); morre em {mortais}."
+  "spacedragon.qdv.zeroPV": "<strong>{nome}</strong> está em 0 PV: inconsciente, porém <strong>estável</strong> (Space Dragon). Não há teste agora. Abaixo de 0, faz uma JPF por rodada (falha: −1d4 PV); morre em {mortais}.",
+  "spacedragon.qdv.naveAbatida": "<strong>{nome}</strong>: {xp} XP <em>(nave abatida, regra da casa)</em>",
+  "spacedragon.qdv.xpTotal": "XP total",
+  "spacedragon.qdv.distribuir": "Distribuir XP"
 };

@@ -131,6 +131,23 @@ dano da arma, ativar equipamento vale o BA da nave, manobra evasiva vale a JP.
 Com a iniciativa padrão do Old Dragon 2, a nave testa com a Destreza e a
 Sabedoria de quem está no **Leme**; sem piloto com ficha, contra 10.
 
+**XP de nave abatida (regra da casa).** O livro não dá XP a naves. O módulo usa
+uma tabela por tipo, na escala do bestiário:
+
+| Tipo | XP | | Tipo | XP |
+|---|---|---|---|---|
+| Cápsula | 100 | | Transuniversal | 1.390 |
+| Caça | 405 | | Cargueiro | 1.390 |
+| Escolta | 555 | | Cruzador | 2.615 |
+| Espaçonave particular | 875 | | Nave-mãe | 7.250 |
+
+O Mestre troca o valor de uma nave no Painel de Voo dela (campo *XP ao ser
+abatida*, que só ele vê). No fim do combate, o cartão do Qualidade de Vida passa
+a listar as naves inimigas entre os derrotados, e quem recebe a XP é a
+tripulação: os personagens do combate, os que estão nos postos das naves dos
+jogadores e, sem ninguém nos postos, os personagens dos donos. A nave nunca
+recebe XP. Os derrotados que contam continuam sendo escolhidos no diálogo dele.
+
 ## Com o "Old Dragon 2: Qualidade de Vida"
 
 Os dois convivem. O Qualidade de Vida é feito para o Old Dragon 2, e em alguns

@@ -53,6 +53,7 @@ import { ETAPAS } from "./nave-salto.js";
 import { aplicarAcao, ehAutomatica, limparFimDaRodada } from "./nave-acoes.js";
 import { CAMARAS } from "./camaras.js";
 import { combateCompilado, naveModular } from "./opcoes.js";
+import { xpDaNave, XP_POR_TIPO, tipoDaNave } from "./nave-xp.js";
 import {
   armaDoEquipamento, alcanceEscrito, faixaDoAlcance, penalidadeDaFaixa, formulaDoDisparo,
   resultadoDoDisparo, FAIXAS,
@@ -63,6 +64,7 @@ import { t as txt } from "./i18n.js";
 const ID = "spacedragon";
 export const MARCA_NAVE_PC = "spacedragon-nave-pc";
 export const MARCA_VOO = "sw-painel-voo";
+export const CLASSE_XP = "sw-nave-xp";
 
 /**
  * A classe-base: a Ficha Space Dragon, se o módulo vizinho a registrou; senão a
@@ -259,6 +261,16 @@ export function painelDeVoo(ator, nave) {
     ? avisosDaNave(nave).map((a) => `<li class="voo-${a.grau}">${a.texto}</li>`).join("")
     : "";
 
+  // A XP ao ser abatida (regra da casa, nave-xp.js): só o Mestre vê e edita.
+  // Em branco vale a tabela do tipo, que aparece como sugestão no campo.
+  const daTabela = XP_POR_TIPO[tipoDaNave(nave, ator?.system?.race?.name ?? "")] ?? 0;
+  const xp = globalThis.game?.user?.isGM
+    ? `<label class="voo-xp" title="${txt("spacedragon.nave.xp.dica", { tabela: daTabela })}">` +
+      `${txt("spacedragon.nave.xp.rotulo")} ` +
+      `<input type="number" min="0" step="1" class="${CLASSE_XP}" ` +
+      `value="${nave?.xp ?? ""}" placeholder="${daTabela}"></label>`
+    : "";
+
   return (
     `<section class="${MARCA_VOO}">` +
     `<div class="voo-linha">` +
@@ -267,7 +279,7 @@ export function painelDeVoo(ator, nave) {
       campo("JP", l.jp, txt("spacedragon.nave.voo.dicaJP")) +
       campo(txt("spacedragon.nave.voo.mov"), l.movimento) +
     `</div>` +
-    avaria + tanque +
+    avaria + tanque + xp +
     (avisos ? `<ul class="voo-avisos">${avisos}</ul>` : "") +
     `</section>`
   );
@@ -1082,6 +1094,20 @@ export function registrarFichaDeNavePC() {
       return { formula, total: ataque.total, resultado, faixa };
     }
 
+    /** Grava a XP da nave abatida; em branco volta à tabela do tipo. */
+    #ligarXP(raiz) {
+      if (!raiz?.dataset || raiz.dataset.swXp === "1") return;
+      raiz.dataset.swXp = "1";
+      raiz.addEventListener("change", async (ev) => {
+        const campo = ev.target?.closest?.(`.${CLASSE_XP}`);
+        if (!campo || !this.isEditable) return;
+        const nave = naveDe(this.actor, ID);
+        const bruto = String(campo.value ?? "").trim();
+        const xp = bruto === "" ? null : Math.max(0, Math.trunc(Number(bruto) || 0));
+        await this.#gravarNave(nave, { ...nave, xp });
+      });
+    }
+
     #ligarCamadas(raiz) {
       if (!raiz?.dataset || raiz.dataset.swCamadas === "1") return;
       raiz.dataset.swCamadas = "1";
@@ -1330,6 +1356,7 @@ export function registrarFichaDeNavePC() {
         this.#ligarCamadas(raiz);
         this.#ligarAcoes(raiz);
         this.#ligarDisparo(raiz);
+        this.#ligarXP(raiz);
       } catch (e) {
         console.warn(`${ID} | não pude preparar a Ficha de Nave`, e);
       }
