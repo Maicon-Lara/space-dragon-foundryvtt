@@ -34,6 +34,7 @@
  */
 
 import { MODOS } from "./ordem.js";
+import { ehNave } from "./nave-marca.js";
 import { ligarNaFicha } from "./ficha.js";
 
 const ID = "spacedragon";
@@ -84,7 +85,49 @@ export function abaDeAtaques(raiz) {
  * Depois as três formas da T7-2, para o que não é arma: aparato ou poder (valor
  * fixo), e movimentação ou outra ação (10 − Destreza).
  */
+/**
+ * As ações da NAVE, pela T10-6 — que não é a T7-2 e não usa atributo:
+ * disparo vale a rolagem do dano da arma, ativar equipamento vale o BA da
+ * nave, manobra evasiva ou movimentação dupla vale a JP. O menor age primeiro,
+ * como nos personagens.
+ *
+ * Sem isto a nave recebia as ações de personagem, e a última delas pedia um
+ * modificador de Destreza que a nave não tem.
+ */
+export function opcoesDaNave(ator) {
+  const numero = (v) => String(Math.trunc(Number(v) || 0));
+  const armas = (ator?.items ?? [])
+    .filter((i) => i.type === "weapon" && String(i.system?.damage ?? "").trim());
+  const lista = armas.map((a) => ({
+    chave: `arma:${a.id}`,
+    modo: "ataque",
+    campo: String(a.system.damage).trim(),
+    rotulo: `Disparar ${a.name} — ${String(a.system.damage).trim()}`,
+  }));
+  lista.push({
+    chave: "ataque",
+    modo: "ataque",
+    campo: armas.length ? String(armas[0].system.damage).trim() : MODOS.ataque.campo,
+    rotulo: "Disparo de armas — dado de dano da arma",
+  });
+  lista.push({
+    chave: "equipamento",
+    modo: "fixo",
+    campo: numero(ator?.system?.ba),
+    rotulo: "Ativar equipamento — BA da nave",
+  });
+  lista.push({
+    chave: "manobra",
+    modo: "fixo",
+    // a JP que a ficha mostra (o getter do sistema), como no Painel de Voo
+    campo: numero(ator?.system?.jpd_total ?? ator?.system?.jpd),
+    rotulo: "Manobra evasiva ou movimentação dupla — JP da nave",
+  });
+  return lista;
+}
+
 export function opcoesDeOrdem(ator) {
+  if (ehNave(ator)) return opcoesDaNave(ator);
   // `weapon` é do personagem; `monster_attack` é da criatura — o sistema usa
   // tipos diferentes para a mesma ideia, e a T7-2 não distingue: o que entra na
   // ordem é o DADO DE DANO, venha ele de uma arma empunhada ou de uma garra.

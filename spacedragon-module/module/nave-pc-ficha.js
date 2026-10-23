@@ -52,12 +52,19 @@ import { MARCAS_DO_PERSEGUIDOR } from "./tripulacao.js";
 import { ETAPAS } from "./nave-salto.js";
 import { aplicarAcao, ehAutomatica, limparFimDaRodada } from "./nave-acoes.js";
 import { CAMARAS } from "./camaras.js";
+import { combateCompilado, naveModular } from "./opcoes.js";
+import { xpDaNave, XP_POR_TIPO, tipoDaNave } from "./nave-xp.js";
+import {
+  armaDoEquipamento, alcanceEscrito, faixaDoAlcance, penalidadeDaFaixa, formulaDoDisparo,
+  resultadoDoDisparo, FAIXAS, unidadeEmMetros,
+} from "./nave-disparo.js";
 
 import { t as txt } from "./i18n.js";
 
 const ID = "spacedragon";
 export const MARCA_NAVE_PC = "spacedragon-nave-pc";
 export const MARCA_VOO = "sw-painel-voo";
+export const CLASSE_XP = "sw-nave-xp";
 
 /**
  * A classe-base: a Ficha Space Dragon, se o módulo vizinho a registrou; senão a
@@ -248,9 +255,21 @@ export function painelDeVoo(ator, nave) {
     ? `+${l.ba + extra} <small>${txt("spacedragon.nave.voo.baBalistico", { ba: l.ba, extra })}</small>`
     : `+${l.ba}`;
 
-  const avisos = avisosDaNave(nave)
-    .map((a) => `<li class="voo-${a.grau}">${a.texto}</li>`)
-    .join("");
+  // Os avisos dizem o que a câmara danificada ou ausente tira da nave: é a
+  // espiral das Regras Compiladas. Só pelo livro, câmara não cala a nave.
+  const avisos = combateCompilado()
+    ? avisosDaNave(nave).map((a) => `<li class="voo-${a.grau}">${a.texto}</li>`).join("")
+    : "";
+
+  // A XP ao ser abatida (regra da casa, nave-xp.js): só o Mestre vê e edita.
+  // Em branco vale a tabela do tipo, que aparece como sugestão no campo.
+  const daTabela = XP_POR_TIPO[tipoDaNave(nave, ator?.system?.race?.name ?? "")] ?? 0;
+  const xp = globalThis.game?.user?.isGM
+    ? `<label class="voo-xp" title="${txt("spacedragon.nave.xp.dica", { tabela: daTabela })}">` +
+      `${txt("spacedragon.nave.xp.rotulo")} ` +
+      `<input type="number" min="0" step="1" class="${CLASSE_XP}" ` +
+      `value="${nave?.xp ?? ""}" placeholder="${daTabela}"></label>`
+    : "";
 
   return (
     `<section class="${MARCA_VOO}">` +
@@ -260,7 +279,7 @@ export function painelDeVoo(ator, nave) {
       campo("JP", l.jp, txt("spacedragon.nave.voo.dicaJP")) +
       campo(txt("spacedragon.nave.voo.mov"), l.movimento) +
     `</div>` +
-    avaria + tanque +
+    avaria + tanque + xp +
     (avisos ? `<ul class="voo-avisos">${avisos}</ul>` : "") +
     `</section>`
   );
@@ -403,6 +422,16 @@ export function painelDaTripulacao(ator, nave) {
   );
 }
 
+/**
+ * O combate do LIVRO, para a mesa que desligou as Regras Compiladas.
+ *
+ * A aba não fica vazia: quem a abre procurando os postos encontra o que o
+ * Cap. 10 diz, e o lugar onde a outra regra se liga.
+ */
+export function painelDoLivro() {
+  return `<section class="${MARCA_TRIPULACAO} tripulacao-livro">${txt("spacedragon.nave.livro.combate")}</section>`;
+}
+
 /** Põe o painel na aba de Tripulação (a de poderes, renomeada). */
 export function porPainelDaTripulacao(raiz, ator) {
   if (!raiz?.querySelector || !ator) return false;
@@ -410,7 +439,8 @@ export function porPainelDaTripulacao(raiz, ator) {
               raiz.querySelector('[data-tab="spells"]:not(nav [data-tab="spells"])');
   if (!aba) return false;
   aba.querySelector(`.${MARCA_TRIPULACAO}`)?.remove();
-  aba.insertAdjacentHTML("afterbegin", painelDaTripulacao(ator, naveDe(ator, ID)));
+  const html = combateCompilado() ? painelDaTripulacao(ator, naveDe(ator, ID)) : painelDoLivro();
+  aba.insertAdjacentHTML("afterbegin", html);
   return true;
 }
 
@@ -478,6 +508,9 @@ export function porPainelDasCamadas(raiz, ator) {
               raiz.querySelector('[data-tab="spells"]:not(nav [data-tab="spells"])');
   if (!aba) return false;
   aba.querySelector(`.${MARCA_CAMADAS}`)?.remove();
+  // as camadas estendem os postos do §7: sem as Regras Compiladas, não há o
+  // que estender, mesmo que a camada esteja ligada
+  if (!combateCompilado()) return false;
   const nave = naveDe(ator, ID);
   const html = painelDasCamadas(nave, {
     tamanho: nave?.tamanho,
@@ -486,6 +519,59 @@ export function porPainelDasCamadas(raiz, ator) {
   if (html) aba.insertAdjacentHTML("beforeend", html);
   return !!html;
 }
+
+/* ── O DISPARO DAS ARMAS DE NAVE ──────────────────────────────────────────── */
+
+/** O botão de ataque que o sistema desenha para cada arma. */
+export const SELETOR_ATAQUE = ".attack-roll";
+
+/**
+ * A arma de nave por trás de um botão de ataque, ou null.
+ *
+ * Null quer dizer "não é nossa": o clique segue para o sistema e para o
+ * Qualidade de Vida como sempre. Só a arma com a flag de equipamento da T10-4
+ * e dano declarado é disparada pela Ficha de Nave.
+ */
+export function armaDoBotao(botao, ator) {
+  const linha = botao?.closest?.("[data-item-id]");
+  const item = linha ? ator?.items?.get?.(linha.dataset?.itemId) : null;
+  const chave = flagDeNave(item, "equipamentoDeNave", ID)?.chave ?? null;
+  const arma = chave ? armaDoEquipamento(chave) : null;
+  return arma ? { item, chave, arma } : null;
+}
+
+/** Distância em metros da nave ao alvo marcado, pelo mapa. Null sem os dois. */
+function distanciaAoAlvo(ator, alvo) {
+  try {
+    const origem = ator?.getActiveTokens?.()?.[0];
+    const grade = globalThis.canvas?.grid;
+    if (!origem || !alvo || !grade?.measurePath) return null;
+    const d = grade.measurePath([origem.center, alvo.center])?.distance;
+    return Number.isFinite(d) ? Math.round(d) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Quem está na Artilharia e o BA à distância dele, se ele tem ficha no mundo.
+ * Sem ficha (um NPC só de nome), o campo vem vazio e a mesa digita.
+ */
+function artilheiroDaNave(nave) {
+  const nome = String(nave?.postos?.artilharia ?? "").trim();
+  if (!nome) return null;
+  const bad = Number(globalThis.game?.actors?.getName?.(nome)?.system?.bad);
+  return { nome, bad: Number.isFinite(bad) ? bad : null };
+}
+
+/** O rótulo de cada faixa, com a chave por extenso para o teste de idioma. */
+const ROTULO_DA_FAIXA = {
+  curta: () => txt("spacedragon.nave.disparo.curta"),
+  media: () => txt("spacedragon.nave.disparo.media"),
+  longa: () => txt("spacedragon.nave.disparo.longa"),
+};
+
+const escapa = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 
 let Registrada = null;
 
@@ -566,18 +652,42 @@ const escapaAtributo = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/"/
  * direto — e deixa claro que desinstalar é possível, que foi a dúvida da mesa
  * quando o padrão passou a ser "instalada".
  */
-export function botaoDoComodo(chave, estado) {
-  const rotulo = ROTULO_DO_ESTADO(estado) ?? estado;
-  const seguinte = proximoEstado(estado);
+/** As duas regras opcionais que mudam o seletor, lidas na hora de desenhar. */
+export const regrasDaFicha = () => ({ modular: naveModular(), compilado: combateCompilado() });
+
+/**
+ * O estado seguinte, conforme as regras ligadas.
+ *
+ * Com as Regras Compiladas, o ciclo tem a câmara danificada. Sem elas, câmara
+ * não se danifica (o livro não tem essa regra): a nave tem ou não tem, e uma
+ * danificada que sobrou de antes volta a instalada no primeiro clique.
+ */
+export function seguinteNaFicha(estado, { compilado = true } = {}) {
+  if (compilado) return proximoEstado(estado);
+  return estado === "instalada" ? "ausente" : "instalada";
+}
+
+export function botaoDoComodo(chave, estado, regras = regrasDaFicha()) {
+  const { modular = true, compilado = true } = regras;
+  const rotulo = (estado === "ausente" && !modular)
+    ? txt("spacedragon.nave.camara.naoTem")
+    : (ROTULO_DO_ESTADO(estado) ?? estado);
+  const seguinte = seguinteNaFicha(estado, { compilado });
   const c = CAMARAS[chave];
   const obra = creditos(c?.obra);
   const prazo = c?.prazo ?? txt("spacedragon.nave.camara.prazoDoMestre");
   const efeito = c?.efeito ?? "";
   const titulo = estado === "ausente"
-    ? txt("spacedragon.nave.camara.dicaComprar", { obra, prazo, efeito })
+    ? (modular
+        ? txt("spacedragon.nave.camara.dicaComprar", { obra, prazo, efeito })
+        : txt("spacedragon.nave.camara.dicaMarcar", { efeito }))
     : estado === "danificada"
-      ? txt("spacedragon.nave.camara.dicaDanificada")
-      : txt("spacedragon.nave.camara.dicaInstalada");
+      ? (compilado
+          ? txt("spacedragon.nave.camara.dicaDanificada")
+          : txt("spacedragon.nave.camara.dicaDanificadaLivro"))
+      : (compilado
+          ? txt("spacedragon.nave.camara.dicaInstalada")
+          : txt("spacedragon.nave.camara.dicaInstaladaLivro"));
   return (
     `<button type="button" class="${CLASSE_SELETOR} estado-${estado}" ` +
     `data-comodo="${chave}" data-proximo="${seguinte}" ` +
@@ -594,7 +704,8 @@ export const MARCA_CAMARAS = "sd-painel-camaras";
  * o tamanho ainda comporta. Sem isto a aba mostrava as doze câmaras em fila,
  * e as que a nave não tinha só ficavam um pouco mais claras.
  */
-export function painelDasCamaras(ator, nave) {
+export function painelDasCamaras(ator, nave, regras = regrasDaFicha()) {
+  if (regras.modular === false) return painelDeReferencia(nave);
   const r = resumoDasCamaras(nave, {
     cp: ator?.system?.ac_total ?? nave?.cp ?? null,
     raca: ator?.system?.race?.name ?? "",
@@ -632,6 +743,23 @@ export function painelDasCamaras(ator, nave) {
     `<ul>${fabrica}${casco}</ul>` +
     limite + compradas +
     `<p class="camaras-dica">${txt("spacedragon.nave.camaras.dica")}</p>` +
+    `</section>`
+  );
+}
+
+/**
+ * A aba Câmaras sem a regra da casa: nada de fábrica, compra nem limite. A
+ * T10-2 fica como referência, e o seletor só marca o que a nave tem.
+ */
+export function painelDeReferencia(nave) {
+  const tem = Object.keys(CAMARAS)
+    .filter((c) => estadoDoComodo(nave, c) !== "ausente")
+    .map((c) => CAMARAS[c].rotulo);
+  const lista = tem.length ? tem.join(", ") : txt("spacedragon.nave.camaras.nenhuma");
+  return (
+    `<section class="${MARCA_CAMARAS} camaras-referencia">` +
+    `<p>${txt("spacedragon.nave.camaras.referencia")}</p>` +
+    `<p class="camaras-compradas">${txt("spacedragon.nave.camaras.tem", { lista })}</p>` +
     `</section>`
   );
 }
@@ -692,6 +820,7 @@ function chavePeloNome(linha) {
 export function marcarComodos(raiz, ator) {
   if (!raiz || !ator) return 0;
   const nave = naveDe(ator, ID);
+  const regras = regrasDaFicha();
   let achados = 0;
 
   for (const linha of raiz.querySelectorAll("[data-item-id]")) {
@@ -706,7 +835,7 @@ export function marcarComodos(raiz, ator) {
     linha.classList.add(`comodo-${estado}`);
 
     linha.querySelectorAll(`.${CLASSE_SELETOR}`).forEach((n) => n.remove());
-    linha.insertAdjacentHTML("beforeend", botaoDoComodo(chave, estado));
+    linha.insertAdjacentHTML("beforeend", botaoDoComodo(chave, estado, regras));
   }
   return achados;
 }
@@ -849,6 +978,144 @@ export function registrarFichaDeNavePC() {
       });
     }
 
+    /**
+     * O clique no ataque de uma arma de nave é da Ficha de Nave.
+     *
+     * Em CAPTURA, na raiz: o Qualidade de Vida também ouve ali, em captura, mas
+     * liga o ouvinte dele depois, no gancho de render — e o nosso, ligado aqui,
+     * roda primeiro. Parar o evento impede que ele cancele o tiro por falta de
+     * munição e que o sistema role o ataque comum. Qualquer outro ataque
+     * (armas pessoais, desarmado) passa direto.
+     */
+    #ligarDisparo(raiz) {
+      if (!raiz?.dataset || raiz.dataset.swDisparo === "1") return;
+      raiz.dataset.swDisparo = "1";
+      raiz.addEventListener("click", (ev) => {
+        const botao = ev.target?.closest?.(SELETOR_ATAQUE);
+        if (!botao) return;
+        const achada = armaDoBotao(botao, this.actor);
+        if (!achada) return;
+        ev.preventDefault();
+        ev.stopPropagation();
+        ev.stopImmediatePropagation();
+        this.#disparar(achada).catch((e) => console.error(`${ID} | o disparo falhou`, e));
+      }, true);
+    }
+
+    /**
+     * O disparo: «1d20 + BA da nave + BA à distância de quem opera a arma», mais
+     * o Computador Balístico e a faixa de alcance (regra da casa).
+     */
+    async #disparar({ item, arma }) {
+      const ator = this.actor;
+      const nave = naveDe(ator, ID);
+      const alvo = [...(globalThis.game?.user?.targets ?? [])][0] ?? null;
+      const nomeAlvo = escapa(alvo?.name ?? alvo?.actor?.name ?? "");
+      const nomeArma = escapa(item?.name ?? arma.nome);
+      const alcance = alcanceEscrito(arma.alcance);
+      // A distância só vale em METROS: numa cena de personagem (1,5 m) ou em
+      // pés, a régua é outra, e a faixa escolhida sozinha sairia errada sem
+      // ninguém notar. Fora de metros, a mesa escolhe a faixa.
+      const unidade = String(globalThis.canvas?.scene?.grid?.units ?? "").trim();
+      const medida = distanciaAoAlvo(ator, alvo);
+      const emMetros = unidadeEmMetros(unidade);
+      const metros = emMetros ? medida : null;
+      const auto = faixaDoAlcance(arma.alcance, metros);
+
+      if (auto?.fora) {
+        globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.fora", { alvo: nomeAlvo, metros, arma: nomeArma, alcance }));
+        return null;
+      }
+
+      const art = artilheiroDaNave(nave);
+      const faixaInicial = auto?.chave ?? "curta";
+      const opcoes = FAIXAS.map((f) =>
+        `<option value="${f.chave}"${f.chave === faixaInicial ? " selected" : ""}>${ROTULO_DA_FAIXA[f.chave]()}</option>`).join("");
+      const rotuloArt = art
+        ? txt("spacedragon.nave.disparo.artilheiroNome", { nome: escapa(art.nome) })
+        : txt("spacedragon.nave.disparo.artilheiro");
+      const conteudo =
+        (alcance ? `<p>${txt("spacedragon.nave.disparo.alcance", { alcance })}</p>` : "") +
+        `<p>${metros !== null
+          ? txt("spacedragon.nave.disparo.distancia", { alvo: nomeAlvo, metros })
+          : medida !== null && !emMetros
+            ? txt("spacedragon.nave.disparo.escala", { unidade: escapa(unidade || "?") })
+            : txt("spacedragon.nave.disparo.semDistancia")}</p>` +
+        `<div class="form-group"><label>${txt("spacedragon.nave.disparo.faixa")}</label>` +
+        `<select name="faixa">${opcoes}</select></div>` +
+        `<div class="form-group"><label>${rotuloArt}</label>` +
+        `<input type="number" name="artilheiro" value="${art?.bad ?? ""}"></div>` +
+        `<div class="form-group"><label>${txt("spacedragon.nave.disparo.situacao")}</label>` +
+        `<input type="number" name="situacao" value="0"></div>`;
+
+      const V2 = globalThis.foundry?.applications?.api?.DialogV2;
+      if (!V2) return null;
+      const escolha = await V2.wait({
+        window: { title: txt("spacedragon.janela.disparo", { arma: nomeArma }) },
+        content: conteudo,
+        buttons: [
+          {
+            action: "rolar", label: txt("spacedragon.botao.rolar"), default: true,
+            callback: (_ev, botao) => Object.fromEntries(new FormData(botao.form)),
+          },
+          { action: "cancelar", label: txt("spacedragon.botao.cancelar") },
+        ],
+        rejectClose: false,
+      });
+      if (!escolha || typeof escolha !== "object") return null;
+
+      const faixa = escolha.faixa in ROTULO_DA_FAIXA ? escolha.faixa : "curta";
+      const formula = formulaDoDisparo({
+        baNave: ator.system?.ba ?? 0,
+        balistico: bonusDeAtaque(nave, equipamentosDoAtor(ator, ID)),
+        artilheiro: escolha.artilheiro,
+        penalidade: penalidadeDaFaixa(faixa),
+        situacao: escolha.situacao,
+      });
+      const ataque = await new globalThis.Roll(formula).evaluate();
+      const natural = ataque.dice?.[0]?.total;
+      const cp = alvo?.actor?.system?.ac_total ?? alvo?.actor?.system?.ac ?? null;
+      const resultado = resultadoDoDisparo(ataque.total, cp);
+
+      const linhas = [txt("spacedragon.nave.disparo.chat", { arma: nomeArma, faixa: ROTULO_DA_FAIXA[faixa]() })];
+      if (resultado) {
+        linhas.push(txt("spacedragon.nave.disparo.contra", {
+          alvo: nomeAlvo, cp,
+          resultado: resultado === "acerto" ? txt("spacedragon.nave.disparo.acerto") : txt("spacedragon.nave.disparo.erro"),
+        }));
+      } else {
+        linhas.push(txt("spacedragon.nave.disparo.semAlvo"));
+      }
+      if (natural === 20) linhas.push(txt("spacedragon.nave.disparo.critico"));
+      if (natural === 1) linhas.push(txt("spacedragon.nave.disparo.falha"));
+      if ((arma.ataques ?? 1) > 1) linhas.push(txt("spacedragon.nave.disparo.varios", { n: arma.ataques }));
+      if (arma.jpDoAlvo) linhas.push(txt("spacedragon.nave.disparo.missil", { rodadas: arma.perseguePor ?? "?" }));
+
+      const falante = globalThis.ChatMessage?.getSpeaker?.({ actor: ator });
+      await ataque.toMessage({ speaker: falante, flavor: linhas.map((l) => `<p>${l}</p>`).join("") });
+
+      // o dano sai junto quando o tiro acertou, ou quando não há CP para comparar
+      if (resultado !== "erro" && arma.dano) {
+        const dano = await new globalThis.Roll(arma.dano).evaluate();
+        await dano.toMessage({ speaker: falante, flavor: txt("spacedragon.nave.disparo.dano", { arma: nomeArma }) });
+      }
+      return { formula, total: ataque.total, resultado, faixa };
+    }
+
+    /** Grava a XP da nave abatida; em branco volta à tabela do tipo. */
+    #ligarXP(raiz) {
+      if (!raiz?.dataset || raiz.dataset.swXp === "1") return;
+      raiz.dataset.swXp = "1";
+      raiz.addEventListener("change", async (ev) => {
+        const campo = ev.target?.closest?.(`.${CLASSE_XP}`);
+        if (!campo || !this.isEditable) return;
+        const nave = naveDe(this.actor, ID);
+        const bruto = String(campo.value ?? "").trim();
+        const xp = bruto === "" ? null : Math.max(0, Math.trunc(Number(bruto) || 0));
+        await this.#gravarNave(nave, { ...nave, xp });
+      });
+    }
+
     #ligarCamadas(raiz) {
       if (!raiz?.dataset || raiz.dataset.swCamadas === "1") return;
       raiz.dataset.swCamadas = "1";
@@ -910,9 +1177,12 @@ export function registrarFichaDeNavePC() {
         if (!this.isEditable) return;
         const nave = naveDe(this.actor, ID);
         const chave = b.dataset.comodo;
-        if (estadoDoComodo(nave, chave) === "ausente") return this.#comprarCamara(chave);
-        if (estadoDoComodo(nave, chave) === "danificada") return this.#repararOuArrancar(chave);
-        const novo = proximoEstado(estadoDoComodo(nave, chave));
+        const { modular, compilado } = regrasDaFicha();
+        const atual = estadoDoComodo(nave, chave);
+        // compra e reparo são das regras opcionais; sem elas, o clique só marca
+        if (atual === "ausente" && modular) return this.#comprarCamara(chave);
+        if (atual === "danificada" && compilado) return this.#repararOuArrancar(chave);
+        const novo = seguinteNaFicha(atual, { compilado });
         await this.#gravarNave(nave, {
           ...nave,
           camaras: { ...(nave.camaras ?? {}), [chave]: novo },
@@ -1042,7 +1312,12 @@ export function registrarFichaDeNavePC() {
       } catch { chave = null; }
       if (!chave || !CAMARAS[chave]) return super._onDropItem(event, data);
       event?.preventDefault?.();
-      return this.#comprarCamara(chave);
+      if (naveModular()) return this.#comprarCamara(chave);
+      // sem a regra da casa, arrastar a câmara é dizer que a nave a tem
+      const nave = naveDe(this.actor, ID);
+      if (estadoDoComodo(nave, chave) === "instalada") return chave;
+      await this.#gravarNave(nave, { ...nave, camaras: { ...(nave.camaras ?? {}), [chave]: "instalada" } });
+      return chave;
     }
 
     /**
@@ -1088,6 +1363,8 @@ export function registrarFichaDeNavePC() {
         this.#ligarPostos(raiz);
         this.#ligarCamadas(raiz);
         this.#ligarAcoes(raiz);
+        this.#ligarDisparo(raiz);
+        this.#ligarXP(raiz);
       } catch (e) {
         console.warn(`${ID} | não pude preparar a Ficha de Nave`, e);
       }

@@ -5,6 +5,35 @@ import {
   T10_6_ORDEM, T10_6_CRITICOS, T10_6_FALHAS,
   PILOTAGEM_IMPROVISADA, SERVICOS_ESTACAO,
 } from "./naves.mjs";
+import { EQUIPAMENTOS_DE_NAVE } from "../../spacedragon-module/module/equipamentos-nave.js";
+import { LADO_POR_TAMANHO } from "../../spacedragon-module/module/nave-token.js";
+import { XP_POR_TIPO } from "../../spacedragon-module/module/nave-xp.js";
+import { TIPOS } from "../../spacedragon-module/module/tipos-de-nave.js";
+
+/* ── O GUIA RÁPIDO: os números vêm das mesmas fontes que a ficha usa ───────── */
+
+/** Uma cena de combate espacial: quantos metros vale um quadrado. */
+const METROS_POR_QUADRADO = 10;
+const quadrados = (m) => (Math.round((m / METROS_POR_QUADRADO) * 10) / 10).toLocaleString("pt-BR");
+const metrosDe = (mov) => Number(String(mov ?? "").match(/\d+/)?.[0] ?? 0);
+
+const linhasDeMovimento = Object.values(TIPOS)
+  .map((t) => `<tr><td>${t.rotulo}</td><td>${t.tamanho}</td><td>${t.mov}</td>` +
+    `<td>${quadrados(metrosDe(t.mov))}</td><td>${LADO_POR_TAMANHO[t.tamanho]}×${LADO_POR_TAMANHO[t.tamanho]}</td></tr>`)
+  .join("");
+
+const linhasDeAlcance = Object.values(EQUIPAMENTOS_DE_NAVE)
+  .filter((e) => e.efeito?.arma?.alcance)
+  .map((e) => {
+    const [c, m, l] = e.efeito.arma.alcance;
+    return `<tr><td>${e.rotulo}</td><td>${e.efeito.arma.dano}</td>` +
+      `<td>${c} m · ${quadrados(c)}</td><td>${m} m · ${quadrados(m)}</td><td>${l} m · ${quadrados(l)}</td></tr>`;
+  })
+  .join("");
+
+const linhasDeXP = Object.entries(TIPOS)
+  .map(([chave, t]) => `<tr><td>${t.rotulo}</td><td>${XP_POR_TIPO[chave].toLocaleString("pt-BR")}</td></tr>`)
+  .join("");
 
 const tab = (cab, linhas) =>
   `<table><thead><tr>${cab.map((c) => `<th>${c}</th>`).join("")}</tr></thead>` +
@@ -41,6 +70,7 @@ quem estiver operando a arma.</li>
 </ul>
 
 <h2>Regra da casa: a nave é modular</h2>
+<p><em>Opcional, ligada por padrão: desligue em <strong>Configurações › Space Dragon › Nave modular</strong> para jogar só com o livro. Desligada, a aba Câmaras só marca o que a nave tem.</em></p>
 <p>Toda nave sai de fábrica com o <strong>mínimo para voar e manter todos vivos</strong>:</p>
 <ul>
 <li><strong>Ponte de Comando</strong> — sem ela, não se pilota nem se opera arma ou escudo;</li>
@@ -153,6 +183,7 @@ diferentes dos personagens:</p>
 ${tab(["ação", "valor"], T10_6_ORDEM.map((l) => `<tr><td>${l.acao}</td><td>${l.valor}</td></tr>`).join(""))}
 
 <p>Continua valendo o resto: age primeiro o <strong>menor</strong> resultado.</p>
+<p><em>Os cinco postos da tripulação, as quinze ações e a câmara danificada que cala a nave não são do livro: vêm das Regras Compiladas. Ficam ligados por padrão e se desligam em <strong>Configurações › Space Dragon › Combate de naves das Regras Compiladas</strong>.</em></p>
 
 <h2>As ações</h2>
 <ul>
@@ -198,6 +229,56 @@ os mortos-vivos são robôs, e o enigma mágico vira senha de acesso.</p>
 
 <p>E dá para inverter: se os inimigos acoplarem a nave deles à do grupo, são os
 personagens que defendem a própria masmorra dos invasores.</p>
+`,
+    },
+    // Por último, de propósito: o id da página leva a posição dela (lib.mjs
+    // › journalDoc), e uma página no meio trocaria o id das que vêm depois.
+    {
+      title: "Guia rápido de combate espacial",
+      content: `
+<p>O resumo da mesa para o combate de naves. O que é do <strong>livro</strong> está
+marcado assim; o que é <strong>regra da casa</strong> também. Os críticos e as falhas
+estão na página <em>Combate espacial</em>.</p>
+
+<h2>O mapa (regra da casa)</h2>
+<p>Uma cena só para naves, com <strong>${METROS_POR_QUADRADO} m por quadrado</strong>. Em
+<em>Configurar Cena › Grid</em>: distância <strong>${METROS_POR_QUADRADO}</strong>, unidade
+<strong>m</strong>. O disparo da Ficha de Nave mede a distância pela escala da cena; fora de
+metros, ele avisa e a faixa é escolhida à mão.</p>
+${tab(["tipo", "tamanho", "movimento (livro)", "quadrados por turno", "token"], linhasDeMovimento)}
+<p>Movimentação dupla dobra o movimento. O token é posto no tamanho do tipo ao criar a
+nave ou trocar o tipo; o Mestre pode redimensionar à mão depois.</p>
+
+<h2>Alcance das armas (regra da casa)</h2>
+<p>A T10-4 dá só o dano. As faixas seguem as armas pessoais (T5-1): curta sem
+penalidade, média <strong>−2</strong>, longa <strong>−4</strong>; além da longa, fora de alcance.</p>
+${tab(["arma", "dano", "curta", "média (−2)", "longa (−4)"], linhasDeAlcance)}
+
+<h2>A rodada (livro)</h2>
+<p>A ordem de ação é a <strong>T10-6</strong>, e age primeiro o <strong>menor</strong> valor:</p>
+${tab(["ação", "valor"], T10_6_ORDEM.map((l) => `<tr><td>${l.acao}</td><td>${l.valor}</td></tr>`).join(""))}
+<ul>
+<li><strong>Disparo de armas</strong> — 1d20 + BA da nave + BA à distância de quem opera,
+contra o CP do alvo. Uma vez por arma instalada, com alguém em cada uma. O Computador
+Balístico dá +2, com a Ponte operacional.</li>
+<li><strong>Ativar equipamento</strong> — escudos, defletores. O Mestre pode pedir Operar
+Máquinas, com penalidade se houver avaria.</li>
+<li><strong>Manobra evasiva</strong> — só naves pequenas, uma vez a cada 5 rodadas, com teste
+de pilotagem: a nave usa a <strong>JP no lugar do CP</strong> para evitar um ataque. Falhar
+o teste é não poder fazer a JP. Costuma gastar combustível.</li>
+</ul>
+
+<h2>A JP da nave (livro, T10-5)</h2>
+<p>Antes de qualquer JP da nave, o piloto testa pilotagem, e o resultado vira o
+modificador do d20:</p>
+${tab(["resultado do teste", "modificador na JP"],
+  T10_5.map((l) => `<tr><td>${l.resultado}</td><td>${l.mod > 0 ? `+${l.mod}` : l.mod}</td></tr>`).join(""))}
+
+<h2>XP de nave abatida (regra da casa)</h2>
+<p>O livro não dá XP a naves. No fim do combate, as naves inimigas entram nos derrotados
+do cartão do Qualidade de Vida com estes valores, e a XP vai para a tripulação. O Mestre
+troca o valor de uma nave no Painel de Voo dela.</p>
+${tab(["tipo", "XP"], linhasDeXP)}
 `,
     },
   ],

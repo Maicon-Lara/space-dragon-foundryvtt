@@ -6,7 +6,7 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 1.29.2 — os onze capítulos portados.** 433 documentos em dez
+> **Estado: 1.30.0 — os onze capítulos portados.** 433 documentos em dez
 > compêndios, agrupados na pasta **Space Dragon** da barra de compêndios: 42 de
 > classe, 10 de espécie, 40 de equipamento, 101 poderes mentais, 80 aparatos e
 > feitos, 59 criaturas e personagens de exemplo, 63 de naves, 4 tabelas de
@@ -84,6 +84,77 @@ doenças, poderes) aparece num resumo no fim da aba. **Quem já tinha somado o +
 As alterações no sistema passam pelo [libWrapper](https://foundryvtt.com/packages/lib-wrapper),
 recomendado. Sem ele, uma implementação reserva é usada e um aviso aparece para o
 Mestre.
+
+## Só o livro base, ou com as regras a mais nas naves
+
+O combate de naves do Cap. 10 vale sempre: T10-6, disparo, ativar equipamento,
+manobra evasiva, T10-5 e penalidade por avaria. Duas coisas que a Ficha de Nave
+faz **não são do livro**, e cada uma tem a sua opção em *Configurações › Space
+Dragon*:
+
+| Opção | O que liga | Padrão |
+|---|---|---|
+| **Combate de naves das Regras Compiladas** | os cinco postos com as quinze ações, a câmara danificada que cala a nave (Ponte avariada: sem armas nem escudos) e as três camadas | ligada |
+| **Nave modular (regra da casa)** | de fábrica só Ponte, Sala de Máquinas e casco; o resto se compra pela T10-2, com limite por tamanho | ligada |
+| Camada: energia do reator | §7 das Regras Compiladas | desligada |
+| Camada: controle de avarias | §7 das Regras Compiladas | desligada |
+| Camada: fuga como relógio | §7 das Regras Compiladas | desligada |
+
+Para jogar **só com o livro**, desligue as duas primeiras. A aba Tripulação passa
+a mostrar o combate do Cap. 10, a câmara deixa de se danificar e a aba Câmaras
+só marca o que a nave tem, sem compra nem limite. As camadas só aparecem com as
+Regras Compiladas ligadas. Trocar uma opção redesenha as Fichas de Nave abertas,
+e nada gravado na nave se perde: religar devolve tudo como estava.
+
+**O alcance das armas de nave é regra da casa.** A T10-4 não dá alcance; o
+módulo usa três faixas, como as da T5-1 (média −2, longa −4):
+
+| Arma | Curta | Média (−2) | Longa (−4) |
+|---|---|---|---|
+| Metralhadora de energia | 80 m | 160 m | 240 m |
+| Disparadores laser | 100 m | 200 m | 300 m |
+| Canhões de energia | 150 m | 300 m | 450 m |
+| Mísseis teleguiados | 200 m | 400 m | 600 m |
+
+**O mapa do combate espacial (regra da casa):** uma cena só para naves, com
+distância **10** e unidade **m** no grid (10 m por quadrado). O disparo mede
+pela escala da cena e, fora de metros, avisa e deixa a faixa para a mesa. O
+token da nave toma o tamanho do tipo — Pequena 1×1, Média 2×2, Gigantesca 4×4,
+Colossal 6×6 — ao criar a nave, ao trocar o tipo e, uma vez, nas naves que já
+existiam. O journal do Cap. 10 tem a página *Guia rápido de combate espacial*,
+com movimento em quadrados, alcances, a rodada, a T10-5 e a XP.
+
+O ataque de uma arma de nave é rolado pela Ficha de Nave: ela mede a distância
+até o alvo marcado no mapa, escolhe a faixa (ou avisa que está fora de alcance),
+preenche o BA à distância de quem está na Artilharia e rola 1d20 + BA da nave +
+Computador Balístico + artilheiro. Com alvo, compara com o CP dele e rola o
+dano no acerto. Isso também dispensa a munição que a automação de combate do
+Qualidade de Vida exige de toda arma à distância e que travava o disparo. Os
+outros ataques continuam com o sistema e o Qualidade de Vida.
+
+**A iniciativa da nave.** A nave não tem atributo, e a iniciativa padrão do Old
+Dragon 2 (1d20 contra Destreza ou Sabedoria) a punha em "atributos inválidos".
+Com a Ordem de Ação do módulo, a nave declara pela **T10-6**: disparo vale o
+dano da arma, ativar equipamento vale o BA da nave, manobra evasiva vale a JP.
+Com a iniciativa padrão do Old Dragon 2, a nave testa com a Destreza e a
+Sabedoria de quem está no **Leme**; sem piloto com ficha, contra 10.
+
+**XP de nave abatida (regra da casa).** O livro não dá XP a naves. O módulo usa
+uma tabela por tipo, na escala do bestiário:
+
+| Tipo | XP | | Tipo | XP |
+|---|---|---|---|---|
+| Cápsula | 100 | | Transuniversal | 1.390 |
+| Caça | 405 | | Cargueiro | 1.390 |
+| Escolta | 555 | | Cruzador | 2.615 |
+| Espaçonave particular | 875 | | Nave-mãe | 7.250 |
+
+O Mestre troca o valor de uma nave no Painel de Voo dela (campo *XP ao ser
+abatida*, que só ele vê). No fim do combate, o cartão do Qualidade de Vida passa
+a listar as naves inimigas entre os derrotados, e quem recebe a XP é a
+tripulação: os personagens do combate, os que estão nos postos das naves dos
+jogadores e, sem ninguém nos postos, os personagens dos donos. A nave nunca
+recebe XP. Os derrotados que contam continuam sendo escolhidos no diálogo dele.
 
 ## Com o "Old Dragon 2: Qualidade de Vida"
 

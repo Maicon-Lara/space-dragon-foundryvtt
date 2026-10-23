@@ -6,7 +6,7 @@
   "img": "systems/olddragon2e/assets/icons/weapon.svg",
   "system": {
     "odo_id": "disparadores-laser",
-    "description": "A arma mais comum em espaçonaves. Causa 2d10 de dano. Qualquer tamanho de nave.",
+    "description": "A arma mais comum em espaçonaves. Causa 2d10 de dano. Qualquer tamanho de nave. Alcance (regra da casa): 100 / 200 / 300 m — média −2, longa −4; além disso, fora de alcance.",
     "quantity": 1,
     "cost": "",
     "weight_in_load": 0,
@@ -19,7 +19,7 @@
     "bonus_damage": 0,
     "bonus_ba": 0,
     "bonus_ca": 0,
-    "shoot_range": 0,
+    "shoot_range": 100,
     "throw_range": 0,
     "arrow": false,
     "bolt": false,

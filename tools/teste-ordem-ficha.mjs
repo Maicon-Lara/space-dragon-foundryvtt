@@ -31,7 +31,9 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
 // Uma fonte só: o painel usa os MESMOS MODOS da janela do Mestre. Duas cópias
 // da regra em dois arquivos é como ela passa a divergir sem ninguém notar.
 
-confere(Object.keys(MODOS).length === 3, `${Object.keys(MODOS).length} modos, a T7-2 tem 3`);
+// o modo `fixo` é da T10-6 (naves) e fica de fora da conta da T7-2
+const DA_T7_2 = Object.entries(MODOS).filter(([, m]) => !m.soNave).length;
+confere(DA_T7_2 === 3, `${DA_T7_2} modos de personagem, a T7-2 tem 3`);
 {
   const { n, como, roll } = await MODOS.aparato.valor("4");
   confere(n === 4 && roll === null, "o aparato vale o NT, sem rolar");

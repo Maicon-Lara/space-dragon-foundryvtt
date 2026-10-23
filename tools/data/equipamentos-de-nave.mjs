@@ -24,6 +24,7 @@
 // do arrasto, antes de instalar — e não depois, num painel de conflitos.
 
 import { EQUIPAMENTOS_DE_NAVE, TAMANHOS } from "../../spacedragon-module/module/equipamentos-nave.js";
+import { alcanceEscrito } from "../../spacedragon-module/module/nave-disparo.js";
 
 const OD2I = "systems/olddragon2e/assets/icons";
 
@@ -84,6 +85,10 @@ export function descricaoDoEquipamento(e) {
     if (a.perseguePor) {
       linhas.push(`Segue o alvo por ${a.perseguePor} rodadas antes do impacto.`);
     }
+    // regra da casa: a T10-4 não dá alcance; a Ficha de Nave aplica a faixa
+    if (a.alcance) {
+      linhas.push(`Alcance (regra da casa): ${alcanceEscrito(a.alcance)} — média −2, longa −4; além disso, fora de alcance.`);
+    }
   }
 
   if (ef.redireciona) {
@@ -126,4 +131,5 @@ export const equipamentosDeNave = Object.entries(EQUIPAMENTOS_DE_NAVE).map(([cha
   // atacar, que foi o que a mesa relatou.
   dano: e.efeito?.arma?.dano ?? null,
   ataques: e.efeito?.arma?.ataques ?? 1,
+  alcance: e.efeito?.arma?.alcance ?? null,
 }));
