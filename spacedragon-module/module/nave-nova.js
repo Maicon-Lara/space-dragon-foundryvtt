@@ -23,6 +23,7 @@
  */
 
 import { naveVazia, FLAG, aplicarTipo, lerFlag, naveDe } from "./nave-pc-dados.js";
+import { LADO_POR_TAMANHO, ajustarToken } from "./nave-token.js";
 import { TIPOS } from "./tipos-de-nave.js";
 
 import { t as txt } from "./i18n.js";
@@ -85,13 +86,16 @@ export async function criarNave({ nome, tipo } = {}) {
   if (!t) return { ator: null, avisos: [`Tipo de nave desconhecido: ${tipo}`] };
 
   const avisos = [];
+  // o token no tamanho do tipo (regra da casa, nave-token.js)
+  const lado = LADO_POR_TAMANHO[t.tamanho] ?? 1;
   const ator = await globalThis.Actor?.create?.({
     name: nome?.trim() || t.rotulo,
     type: "character",
     system: { hp: { value: 0, max: 0 } },
+    prototypeToken: { width: lado, height: lado },
     flags: {
       // o tipo INTEIRO: sem o tamanho, o limite de câmaras extras não aparecia
-      [ID]: { [FLAG]: { ...naveVazia(), ...(aplicarTipo(tipo)?.flag ?? { tipo }) } },
+      [ID]: { [FLAG]: { ...naveVazia(), ...(aplicarTipo(tipo)?.flag ?? { tipo }), tokenLado: lado } },
       core: { sheetClass: `${ID}.NaveSheet` },
     },
   });
@@ -252,6 +256,8 @@ export function ligarTipoQueViraNave() {
       const update = viraNave(ator, chave);
       if (!update) return;
       await ator.update(update);
+      // o tipo trocou o tamanho: o token acompanha (nave-token.js)
+      await ajustarToken(ator);
       globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.virouNave", { nome: ator.name, tipo: TIPOS[chave].rotulo }));
     } catch (e) {
       console.warn("spacedragon | não pude transformar o ator em nave", e);

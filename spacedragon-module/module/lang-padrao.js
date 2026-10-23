@@ -124,6 +124,7 @@ export const LANG_PADRAO = {
   "spacedragon.nave.disparo.alcance": "Alcance: {alcance} (regra da casa: o livro não dá alcance às armas de nave).",
   "spacedragon.nave.disparo.distancia": "Distância até {alvo}: <strong>{metros} m</strong>. A faixa abaixo veio do mapa.",
   "spacedragon.nave.disparo.semDistancia": "Sem alvo marcado ou sem a nave no mapa: escolha a faixa.",
+  "spacedragon.nave.disparo.escala": "A cena está em “{unidade}”, não em metros: escolha a faixa. Para a ficha medir sozinha, configure a cena com distância 10 e unidade m.",
   "spacedragon.nave.disparo.faixa": "Faixa de alcance",
   "spacedragon.nave.disparo.curta": "Curta (sem penalidade)",
   "spacedragon.nave.disparo.media": "Média (−2)",

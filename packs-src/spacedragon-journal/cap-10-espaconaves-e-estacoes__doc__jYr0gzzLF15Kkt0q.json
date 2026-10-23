@@ -187,6 +187,43 @@
         "exportSource": null
       },
       "_key": "!journal.pages!jYr0gzzLF15Kkt0q.TMUXhrtABRGllAj2"
+    },
+    {
+      "sort": 600000,
+      "name": "Guia rápido de combate espacial",
+      "type": "text",
+      "_id": "6vRahWIBRrm27HOz",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<p>O resumo da mesa para o combate de naves. O que é do <strong>livro</strong> está\nmarcado assim; o que é <strong>regra da casa</strong> também. Os críticos e as falhas\nestão na página <em>Combate espacial</em>.</p>\n\n<h2>O mapa (regra da casa)</h2>\n<p>Uma cena só para naves, com <strong>10 m por quadrado</strong>. Em\n<em>Configurar Cena › Grid</em>: distância <strong>10</strong>, unidade\n<strong>m</strong>. O disparo da Ficha de Nave mede a distância pela escala da cena; fora de\nmetros, ele avisa e a faixa é escolhida à mão.</p>\n<table><thead><tr><th>tipo</th><th>tamanho</th><th>movimento (livro)</th><th>quadrados por turno</th><th>token</th></tr></thead><tbody><tr><td>Caça</td><td>Pequena</td><td>150 m</td><td>15</td><td>1×1</td></tr><tr><td>Escolta</td><td>Pequena</td><td>120 m</td><td>12</td><td>1×1</td></tr><tr><td>Cápsula</td><td>Pequena</td><td>120 m</td><td>12</td><td>1×1</td></tr><tr><td>Espaçonave particular</td><td>Média</td><td>100 m</td><td>10</td><td>2×2</td></tr><tr><td>Cargueiro</td><td>Gigantesca</td><td>40 m</td><td>4</td><td>4×4</td></tr><tr><td>Transuniversal</td><td>Gigantesca</td><td>40 m</td><td>4</td><td>4×4</td></tr><tr><td>Cruzador</td><td>Colossal</td><td>20 m</td><td>2</td><td>6×6</td></tr><tr><td>Nave-mãe</td><td>Colossal</td><td>20 m</td><td>2</td><td>6×6</td></tr></tbody></table>\n<p>Movimentação dupla dobra o movimento. O token é posto no tamanho do tipo ao criar a\nnave ou trocar o tipo; o Mestre pode redimensionar à mão depois.</p>\n\n<h2>Alcance das armas (regra da casa)</h2>\n<p>A T10-4 dá só o dano. As faixas seguem as armas pessoais (T5-1): curta sem\npenalidade, média <strong>−2</strong>, longa <strong>−4</strong>; além da longa, fora de alcance.</p>\n<table><thead><tr><th>arma</th><th>dano</th><th>curta</th><th>média (−2)</th><th>longa (−4)</th></tr></thead><tbody><tr><td>Disparadores laser</td><td>2d10</td><td>100 m · 10</td><td>200 m · 20</td><td>300 m · 30</td></tr><tr><td>Canhões de energia</td><td>5d10</td><td>150 m · 15</td><td>300 m · 30</td><td>450 m · 45</td></tr><tr><td>Metralhadora de energia</td><td>1d10</td><td>80 m · 8</td><td>160 m · 16</td><td>240 m · 24</td></tr><tr><td>Mísseis teleguiados</td><td>4d10</td><td>200 m · 20</td><td>400 m · 40</td><td>600 m · 60</td></tr></tbody></table>\n\n<h2>A rodada (livro)</h2>\n<p>A ordem de ação é a <strong>T10-6</strong>, e age primeiro o <strong>menor</strong> valor:</p>\n<table><thead><tr><th>ação</th><th>valor</th></tr></thead><tbody><tr><td>Disparo de armas</td><td>Rolagem dos dados de dano da arma</td></tr><tr><td>Ativar equipamento</td><td>Bônus de ataque da nave</td></tr><tr><td>Manobras evasivas e movimentação dupla</td><td>Valor da jogada de proteção</td></tr></tbody></table>\n<ul>\n<li><strong>Disparo de armas</strong> — 1d20 + BA da nave + BA à distância de quem opera,\ncontra o CP do alvo. Uma vez por arma instalada, com alguém em cada uma. O Computador\nBalístico dá +2, com a Ponte operacional.</li>\n<li><strong>Ativar equipamento</strong> — escudos, defletores. O Mestre pode pedir Operar\nMáquinas, com penalidade se houver avaria.</li>\n<li><strong>Manobra evasiva</strong> — só naves pequenas, uma vez a cada 5 rodadas, com teste\nde pilotagem: a nave usa a <strong>JP no lugar do CP</strong> para evitar um ataque. Falhar\no teste é não poder fazer a JP. Costuma gastar combustível.</li>\n</ul>\n\n<h2>A JP da nave (livro, T10-5)</h2>\n<p>Antes de qualquer JP da nave, o piloto testa pilotagem, e o resultado vira o\nmodificador do d20:</p>\n<table><thead><tr><th>resultado do teste</th><th>modificador na JP</th></tr></thead><tbody><tr><td>Falha crítica (rolou 100)</td><td>-8</td></tr><tr><td>Falha acima de 80</td><td>-4</td></tr><tr><td>Falha</td><td>-2</td></tr><tr><td>Sucesso</td><td>+2</td></tr><tr><td>Sucesso abaixo de 20</td><td>+4</td></tr><tr><td>Sucesso crítico (rolou 1)</td><td>+8</td></tr></tbody></table>\n\n<h2>XP de nave abatida (regra da casa)</h2>\n<p>O livro não dá XP a naves. No fim do combate, as naves inimigas entram nos derrotados\ndo cartão do Qualidade de Vida com estes valores, e a XP vai para a tripulação. O Mestre\ntroca o valor de uma nave no Painel de Voo dela.</p>\n<table><thead><tr><th>tipo</th><th>XP</th></tr></thead><tbody><tr><td>Caça</td><td>405</td></tr><tr><td>Escolta</td><td>555</td></tr><tr><td>Cápsula</td><td>100</td></tr><tr><td>Espaçonave particular</td><td>875</td></tr><tr><td>Cargueiro</td><td>1.390</td></tr><tr><td>Transuniversal</td><td>1.390</td></tr><tr><td>Cruzador</td><td>2.615</td></tr><tr><td>Nave-mãe</td><td>7.250</td></tr></tbody></table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!jYr0gzzLF15Kkt0q.6vRahWIBRrm27HOz"
     }
   ],
   "flags": {},

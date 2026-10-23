@@ -56,6 +56,15 @@ export function faixaDoAlcance(alcance, distancia) {
   return { ...FAIXAS[i], fora: false };
 }
 
+/**
+ * A unidade da cena é metro? O disparo só escolhe a faixa sozinho quando é:
+ * uma cena em pés, ou em "quadrados", daria uma distância em outra régua, e o
+ * alcance da arma é em metros. Vazio conta como não sabido.
+ */
+export function unidadeEmMetros(unidade) {
+  return /^\s*(m|metros?|meters?|metres?)\.?\s*$/i.test(String(unidade ?? ""));
+}
+
 /** A penalidade de uma faixa escolhida pelo nome. Desconhecida conta como curta. */
 export function penalidadeDaFaixa(chave) {
   return FAIXAS.find((f) => f.chave === chave)?.penalidade ?? 0;

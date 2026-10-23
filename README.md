@@ -111,10 +111,18 @@ módulo usa três faixas, como as da T5-1 (média −2, longa −4):
 
 | Arma | Curta | Média (−2) | Longa (−4) |
 |---|---|---|---|
-| Metralhadora de energia | 100 m | 200 m | 300 m |
-| Disparadores laser | 150 m | 300 m | 450 m |
-| Canhões de energia | 300 m | 600 m | 900 m |
-| Mísseis teleguiados | 600 m | 1.200 m | 1.800 m |
+| Metralhadora de energia | 80 m | 160 m | 240 m |
+| Disparadores laser | 100 m | 200 m | 300 m |
+| Canhões de energia | 150 m | 300 m | 450 m |
+| Mísseis teleguiados | 200 m | 400 m | 600 m |
+
+**O mapa do combate espacial (regra da casa):** uma cena só para naves, com
+distância **10** e unidade **m** no grid (10 m por quadrado). O disparo mede
+pela escala da cena e, fora de metros, avisa e deixa a faixa para a mesa. O
+token da nave toma o tamanho do tipo — Pequena 1×1, Média 2×2, Gigantesca 4×4,
+Colossal 6×6 — ao criar a nave, ao trocar o tipo e, uma vez, nas naves que já
+existiam. O journal do Cap. 10 tem a página *Guia rápido de combate espacial*,
+com movimento em quadrados, alcances, a rodada, a T10-5 e a XP.
 
 O ataque de uma arma de nave é rolado pela Ficha de Nave: ela mede a distância
 até o alvo marcado no mapa, escolhe a faixa (ou avisa que está fora de alcance),

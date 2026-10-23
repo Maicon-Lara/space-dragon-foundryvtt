@@ -56,7 +56,7 @@ import { combateCompilado, naveModular } from "./opcoes.js";
 import { xpDaNave, XP_POR_TIPO, tipoDaNave } from "./nave-xp.js";
 import {
   armaDoEquipamento, alcanceEscrito, faixaDoAlcance, penalidadeDaFaixa, formulaDoDisparo,
-  resultadoDoDisparo, FAIXAS,
+  resultadoDoDisparo, FAIXAS, unidadeEmMetros,
 } from "./nave-disparo.js";
 
 import { t as txt } from "./i18n.js";
@@ -1013,7 +1013,13 @@ export function registrarFichaDeNavePC() {
       const nomeAlvo = escapa(alvo?.name ?? alvo?.actor?.name ?? "");
       const nomeArma = escapa(item?.name ?? arma.nome);
       const alcance = alcanceEscrito(arma.alcance);
-      const metros = distanciaAoAlvo(ator, alvo);
+      // A distância só vale em METROS: numa cena de personagem (1,5 m) ou em
+      // pés, a régua é outra, e a faixa escolhida sozinha sairia errada sem
+      // ninguém notar. Fora de metros, a mesa escolhe a faixa.
+      const unidade = String(globalThis.canvas?.scene?.grid?.units ?? "").trim();
+      const medida = distanciaAoAlvo(ator, alvo);
+      const emMetros = unidadeEmMetros(unidade);
+      const metros = emMetros ? medida : null;
       const auto = faixaDoAlcance(arma.alcance, metros);
 
       if (auto?.fora) {
@@ -1032,7 +1038,9 @@ export function registrarFichaDeNavePC() {
         (alcance ? `<p>${txt("spacedragon.nave.disparo.alcance", { alcance })}</p>` : "") +
         `<p>${metros !== null
           ? txt("spacedragon.nave.disparo.distancia", { alvo: nomeAlvo, metros })
-          : txt("spacedragon.nave.disparo.semDistancia")}</p>` +
+          : medida !== null && !emMetros
+            ? txt("spacedragon.nave.disparo.escala", { unidade: escapa(unidade || "?") })
+            : txt("spacedragon.nave.disparo.semDistancia")}</p>` +
         `<div class="form-group"><label>${txt("spacedragon.nave.disparo.faixa")}</label>` +
         `<select name="faixa">${opcoes}</select></div>` +
         `<div class="form-group"><label>${rotuloArt}</label>` +

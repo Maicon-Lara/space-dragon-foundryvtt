@@ -21,6 +21,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   armaDoEquipamento, alcanceEscrito, faixaDoAlcance, penalidadeDaFaixa, formulaDoDisparo, resultadoDoDisparo,
+  unidadeEmMetros,
 } from "../spacedragon-module/module/nave-disparo.js";
 import { EQUIPAMENTOS_DE_NAVE } from "../spacedragon-module/module/equipamentos-nave.js";
 import { equipamentosDeNave } from "./data/equipamentos-de-nave.mjs";
@@ -42,9 +43,14 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
     confere(item?.alcance?.[0] === a?.[0], `${chave}: o item do compêndio não leva a faixa curta`);
     confere(/Alcance \(regra da casa\)/.test(item?.desc ?? ""), `${chave}: a descrição não traz o alcance marcado como da casa`);
   }
-  confere(JSON.stringify(armaDoEquipamento("disparadores")?.alcance) === "[150,300,450]", "disparadores com alcance diferente do combinado");
+  confere(JSON.stringify(armaDoEquipamento("disparadores")?.alcance) === "[100,200,300]", "disparadores com alcance diferente do combinado");
+  confere(JSON.stringify(armaDoEquipamento("metralhadora")?.alcance) === "[80,160,240]", "metralhadora com alcance diferente do combinado");
+  confere(JSON.stringify(armaDoEquipamento("canhoes")?.alcance) === "[150,300,450]", "canhões com alcance diferente do combinado");
+  confere(JSON.stringify(armaDoEquipamento("misseis")?.alcance) === "[200,400,600]", "mísseis com alcance diferente do combinado");
   confere(armaDoEquipamento("balistico") === null, "o Computador Balístico não atira");
   confere(alcanceEscrito([600, 1200, 1800]) === "600 / 1.200 / 1.800 m", `alcance escrito: ${alcanceEscrito([600, 1200, 1800])}`);
+  for (const u of ["m", "M", "metros", "metro", "meters", " m. "]) confere(unidadeEmMetros(u), `"${u}" devia contar como metro`);
+  for (const u of ["ft", "pés", "quadrados", "", null, "km"]) confere(!unidadeEmMetros(u), `"${u}" não é metro`);
 }
 
 /* ── A faixa pela distância ───────────────────────────────────────────────── */

@@ -69,6 +69,7 @@ import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaR
 import { t as txt } from "./i18n.js";
 import { registrarOpcoesDeNave } from "./opcoes.js";
 import { ligarIniciativaDasNaves } from "./nave-iniciativa.js";
+import { ajustarTokensNoReady } from "./nave-token.js";
 
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
@@ -189,6 +190,9 @@ Hooks.once("ready", () => {
   // a migração das naves criadas quando as regras moravam no Star Wars: sem
   // ela a nave abre VAZIA, que parece apagada
   passo("migração das naves", () => migrarNavesNoReady());
+  // o token no tamanho do tipo, uma vez por nave (nave-token.js); a promessa
+  // não é esperada, e cada nave que falha avisa sozinha no console
+  passo("tamanho do token das naves", () => { ajustarTokensNoReady(); });
   passo("naves do tipo antigo", () => {
     // Mais velhas que a migração acima: são de quando a nave era um tipo de
     // ator próprio. Elas não carregam mais, e o aviso tem de aparecer na TELA.
