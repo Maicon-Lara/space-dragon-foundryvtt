@@ -68,6 +68,7 @@ import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaR
 
 import { t as txt } from "./i18n.js";
 import { registrarOpcoesDeNave } from "./opcoes.js";
+import { ligarIniciativaDasNaves } from "./nave-iniciativa.js";
 
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
@@ -95,6 +96,9 @@ Hooks.once("init", () => {
   // o combate de naves das Regras Compiladas, a nave modular e as três
   // camadas: opções de mundo, e a Ficha de Nave aberta se redesenha ao trocar
   registrarOpcoesDeNave(() => redesenharFichasDeNave());
+  // no `init`, e não no `ready`: os ganchos de iniciativa do sistema entram no
+  // `ready`, e os nossos têm de rodar antes deles (nave-iniciativa.js)
+  ligarIniciativaDasNaves();
 
   // As fichas são registradas no `ready` (ver lá). Aqui só a opção, que
   // precisa existir antes de ser lida.

@@ -124,8 +124,8 @@ async function perguntar(combat, ids = null) {
   if (!V2) return;
 
   const corpo =
-    `<p class="sd-explica">A ordem de ação sai da <strong>T7-2</strong>: o valor vem da ` +
-    `ação escolhida, e <strong>o menor age primeiro</strong>. Declare de novo a cada rodada.</p>` +
+    `<p class="sd-explica">A ordem de ação sai da <strong>T7-2</strong> (naves: <strong>T10-6</strong>): ` +
+    `o valor vem da ação escolhida, e <strong>o menor age primeiro</strong>. Declare de novo a cada rodada.</p>` +
     `<div class="sd-ordem-combate">${meus.map(linha).join("")}</div>`;
 
   const escolhas = await V2.wait({
@@ -164,7 +164,7 @@ async function perguntar(combat, ids = null) {
     content:
       `<div class="title">Ordem de Ação — rodada ${combat.round}</div>` +
       `<div class="sd-teste"><ol class="sd-testes">${linhas}</ol>` +
-      `<p class="sd-nota"><em>Age primeiro o menor resultado, pela T7-2.</em></p></div>`,
+      `<p class="sd-nota"><em>Age primeiro o menor resultado, pela T7-2 (naves: T10-6).</em></p></div>`,
     rolls: ditos.map((d) => d.roll).filter(Boolean),
     ...(ditos.some((d) => d.roll) ? { sound: CONFIG.sounds?.dice } : {}),
   });

@@ -124,6 +124,13 @@ dano no acerto. Isso também dispensa a munição que a automação de combate d
 Qualidade de Vida exige de toda arma à distância e que travava o disparo. Os
 outros ataques continuam com o sistema e o Qualidade de Vida.
 
+**A iniciativa da nave.** A nave não tem atributo, e a iniciativa padrão do Old
+Dragon 2 (1d20 contra Destreza ou Sabedoria) a punha em "atributos inválidos".
+Com a Ordem de Ação do módulo, a nave declara pela **T10-6**: disparo vale o
+dano da arma, ativar equipamento vale o BA da nave, manobra evasiva vale a JP.
+Com a iniciativa padrão do Old Dragon 2, a nave testa com a Destreza e a
+Sabedoria de quem está no **Leme**; sem piloto com ficha, contra 10.
+
 ## Com o "Old Dragon 2: Qualidade de Vida"
 
 Os dois convivem. O Qualidade de Vida é feito para o Old Dragon 2, e em alguns

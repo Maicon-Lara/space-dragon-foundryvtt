@@ -66,6 +66,19 @@ export const MODOS = {
       return { n, como: `NT ou grandeza ${n} — não se rola`, roll: null };
     },
   },
+  // T10-6: na nave, ativar equipamento vale o BA dela e a manobra vale a JP —
+  // números que a ficha já sabe e que não se rolam. `soNave` o tira do
+  // formulário da macro, que é de personagens.
+  fixo: {
+    rotulo: "Valor da nave",
+    dica: "BA ou JP da nave (T10-6)",
+    campo: "0",
+    soNave: true,
+    async valor(entrada) {
+      const n = Number(entrada) || 0;
+      return { n, como: `${n}, pela T10-6 — não se rola`, roll: null };
+    },
+  },
   movimento: {
     rotulo: "Movimentação dupla ou outra ação",
     dica: "modificador de Destreza",
@@ -79,6 +92,7 @@ export const MODOS = {
 
 function formulario(linhas) {
   const opcoes = Object.entries(MODOS)
+    .filter(([, m]) => !m.soNave)
     .map(([k, m]) => `<option value="${k}">${m.rotulo}</option>`)
     .join("");
 
