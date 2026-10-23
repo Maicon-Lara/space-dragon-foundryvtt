@@ -52,6 +52,7 @@ import { MARCAS_DO_PERSEGUIDOR } from "./tripulacao.js";
 import { ETAPAS } from "./nave-salto.js";
 import { aplicarAcao, ehAutomatica, limparFimDaRodada } from "./nave-acoes.js";
 import { CAMARAS } from "./camaras.js";
+import { combateCompilado, naveModular } from "./opcoes.js";
 
 import { t as txt } from "./i18n.js";
 
@@ -248,9 +249,11 @@ export function painelDeVoo(ator, nave) {
     ? `+${l.ba + extra} <small>${txt("spacedragon.nave.voo.baBalistico", { ba: l.ba, extra })}</small>`
     : `+${l.ba}`;
 
-  const avisos = avisosDaNave(nave)
-    .map((a) => `<li class="voo-${a.grau}">${a.texto}</li>`)
-    .join("");
+  // Os avisos dizem o que a câmara danificada ou ausente tira da nave: é a
+  // espiral das Regras Compiladas. Só pelo livro, câmara não cala a nave.
+  const avisos = combateCompilado()
+    ? avisosDaNave(nave).map((a) => `<li class="voo-${a.grau}">${a.texto}</li>`).join("")
+    : "";
 
   return (
     `<section class="${MARCA_VOO}">` +
@@ -403,6 +406,16 @@ export function painelDaTripulacao(ator, nave) {
   );
 }
 
+/**
+ * O combate do LIVRO, para a mesa que desligou as Regras Compiladas.
+ *
+ * A aba não fica vazia: quem a abre procurando os postos encontra o que o
+ * Cap. 10 diz, e o lugar onde a outra regra se liga.
+ */
+export function painelDoLivro() {
+  return `<section class="${MARCA_TRIPULACAO} tripulacao-livro">${txt("spacedragon.nave.livro.combate")}</section>`;
+}
+
 /** Põe o painel na aba de Tripulação (a de poderes, renomeada). */
 export function porPainelDaTripulacao(raiz, ator) {
   if (!raiz?.querySelector || !ator) return false;
@@ -410,7 +423,8 @@ export function porPainelDaTripulacao(raiz, ator) {
               raiz.querySelector('[data-tab="spells"]:not(nav [data-tab="spells"])');
   if (!aba) return false;
   aba.querySelector(`.${MARCA_TRIPULACAO}`)?.remove();
-  aba.insertAdjacentHTML("afterbegin", painelDaTripulacao(ator, naveDe(ator, ID)));
+  const html = combateCompilado() ? painelDaTripulacao(ator, naveDe(ator, ID)) : painelDoLivro();
+  aba.insertAdjacentHTML("afterbegin", html);
   return true;
 }
 
@@ -478,6 +492,9 @@ export function porPainelDasCamadas(raiz, ator) {
               raiz.querySelector('[data-tab="spells"]:not(nav [data-tab="spells"])');
   if (!aba) return false;
   aba.querySelector(`.${MARCA_CAMADAS}`)?.remove();
+  // as camadas estendem os postos do §7: sem as Regras Compiladas, não há o
+  // que estender, mesmo que a camada esteja ligada
+  if (!combateCompilado()) return false;
   const nave = naveDe(ator, ID);
   const html = painelDasCamadas(nave, {
     tamanho: nave?.tamanho,
@@ -566,18 +583,42 @@ const escapaAtributo = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/"/
  * direto — e deixa claro que desinstalar é possível, que foi a dúvida da mesa
  * quando o padrão passou a ser "instalada".
  */
-export function botaoDoComodo(chave, estado) {
-  const rotulo = ROTULO_DO_ESTADO(estado) ?? estado;
-  const seguinte = proximoEstado(estado);
+/** As duas regras opcionais que mudam o seletor, lidas na hora de desenhar. */
+export const regrasDaFicha = () => ({ modular: naveModular(), compilado: combateCompilado() });
+
+/**
+ * O estado seguinte, conforme as regras ligadas.
+ *
+ * Com as Regras Compiladas, o ciclo tem a câmara danificada. Sem elas, câmara
+ * não se danifica (o livro não tem essa regra): a nave tem ou não tem, e uma
+ * danificada que sobrou de antes volta a instalada no primeiro clique.
+ */
+export function seguinteNaFicha(estado, { compilado = true } = {}) {
+  if (compilado) return proximoEstado(estado);
+  return estado === "instalada" ? "ausente" : "instalada";
+}
+
+export function botaoDoComodo(chave, estado, regras = regrasDaFicha()) {
+  const { modular = true, compilado = true } = regras;
+  const rotulo = (estado === "ausente" && !modular)
+    ? txt("spacedragon.nave.camara.naoTem")
+    : (ROTULO_DO_ESTADO(estado) ?? estado);
+  const seguinte = seguinteNaFicha(estado, { compilado });
   const c = CAMARAS[chave];
   const obra = creditos(c?.obra);
   const prazo = c?.prazo ?? txt("spacedragon.nave.camara.prazoDoMestre");
   const efeito = c?.efeito ?? "";
   const titulo = estado === "ausente"
-    ? txt("spacedragon.nave.camara.dicaComprar", { obra, prazo, efeito })
+    ? (modular
+        ? txt("spacedragon.nave.camara.dicaComprar", { obra, prazo, efeito })
+        : txt("spacedragon.nave.camara.dicaMarcar", { efeito }))
     : estado === "danificada"
-      ? txt("spacedragon.nave.camara.dicaDanificada")
-      : txt("spacedragon.nave.camara.dicaInstalada");
+      ? (compilado
+          ? txt("spacedragon.nave.camara.dicaDanificada")
+          : txt("spacedragon.nave.camara.dicaDanificadaLivro"))
+      : (compilado
+          ? txt("spacedragon.nave.camara.dicaInstalada")
+          : txt("spacedragon.nave.camara.dicaInstaladaLivro"));
   return (
     `<button type="button" class="${CLASSE_SELETOR} estado-${estado}" ` +
     `data-comodo="${chave}" data-proximo="${seguinte}" ` +
@@ -594,7 +635,8 @@ export const MARCA_CAMARAS = "sd-painel-camaras";
  * o tamanho ainda comporta. Sem isto a aba mostrava as doze câmaras em fila,
  * e as que a nave não tinha só ficavam um pouco mais claras.
  */
-export function painelDasCamaras(ator, nave) {
+export function painelDasCamaras(ator, nave, regras = regrasDaFicha()) {
+  if (regras.modular === false) return painelDeReferencia(nave);
   const r = resumoDasCamaras(nave, {
     cp: ator?.system?.ac_total ?? nave?.cp ?? null,
     raca: ator?.system?.race?.name ?? "",
@@ -632,6 +674,23 @@ export function painelDasCamaras(ator, nave) {
     `<ul>${fabrica}${casco}</ul>` +
     limite + compradas +
     `<p class="camaras-dica">${txt("spacedragon.nave.camaras.dica")}</p>` +
+    `</section>`
+  );
+}
+
+/**
+ * A aba Câmaras sem a regra da casa: nada de fábrica, compra nem limite. A
+ * T10-2 fica como referência, e o seletor só marca o que a nave tem.
+ */
+export function painelDeReferencia(nave) {
+  const tem = Object.keys(CAMARAS)
+    .filter((c) => estadoDoComodo(nave, c) !== "ausente")
+    .map((c) => CAMARAS[c].rotulo);
+  const lista = tem.length ? tem.join(", ") : txt("spacedragon.nave.camaras.nenhuma");
+  return (
+    `<section class="${MARCA_CAMARAS} camaras-referencia">` +
+    `<p>${txt("spacedragon.nave.camaras.referencia")}</p>` +
+    `<p class="camaras-compradas">${txt("spacedragon.nave.camaras.tem", { lista })}</p>` +
     `</section>`
   );
 }
@@ -692,6 +751,7 @@ function chavePeloNome(linha) {
 export function marcarComodos(raiz, ator) {
   if (!raiz || !ator) return 0;
   const nave = naveDe(ator, ID);
+  const regras = regrasDaFicha();
   let achados = 0;
 
   for (const linha of raiz.querySelectorAll("[data-item-id]")) {
@@ -706,7 +766,7 @@ export function marcarComodos(raiz, ator) {
     linha.classList.add(`comodo-${estado}`);
 
     linha.querySelectorAll(`.${CLASSE_SELETOR}`).forEach((n) => n.remove());
-    linha.insertAdjacentHTML("beforeend", botaoDoComodo(chave, estado));
+    linha.insertAdjacentHTML("beforeend", botaoDoComodo(chave, estado, regras));
   }
   return achados;
 }
@@ -910,9 +970,12 @@ export function registrarFichaDeNavePC() {
         if (!this.isEditable) return;
         const nave = naveDe(this.actor, ID);
         const chave = b.dataset.comodo;
-        if (estadoDoComodo(nave, chave) === "ausente") return this.#comprarCamara(chave);
-        if (estadoDoComodo(nave, chave) === "danificada") return this.#repararOuArrancar(chave);
-        const novo = proximoEstado(estadoDoComodo(nave, chave));
+        const { modular, compilado } = regrasDaFicha();
+        const atual = estadoDoComodo(nave, chave);
+        // compra e reparo são das regras opcionais; sem elas, o clique só marca
+        if (atual === "ausente" && modular) return this.#comprarCamara(chave);
+        if (atual === "danificada" && compilado) return this.#repararOuArrancar(chave);
+        const novo = seguinteNaFicha(atual, { compilado });
         await this.#gravarNave(nave, {
           ...nave,
           camaras: { ...(nave.camaras ?? {}), [chave]: novo },
@@ -1042,7 +1105,12 @@ export function registrarFichaDeNavePC() {
       } catch { chave = null; }
       if (!chave || !CAMARAS[chave]) return super._onDropItem(event, data);
       event?.preventDefault?.();
-      return this.#comprarCamara(chave);
+      if (naveModular()) return this.#comprarCamara(chave);
+      // sem a regra da casa, arrastar a câmara é dizer que a nave a tem
+      const nave = naveDe(this.actor, ID);
+      if (estadoDoComodo(nave, chave) === "instalada") return chave;
+      await this.#gravarNave(nave, { ...nave, camaras: { ...(nave.camaras ?? {}), [chave]: "instalada" } });
+      return chave;
     }
 
     /**

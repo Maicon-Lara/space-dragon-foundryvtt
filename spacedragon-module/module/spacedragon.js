@@ -67,6 +67,7 @@ import { migrarNavesNoReady, migrarNaves, navesPorMigrar, porMigrar } from "./na
 import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaRodada } from "./ordem-inversao.js";
 
 import { t as txt } from "./i18n.js";
+import { registrarOpcoesDeNave } from "./opcoes.js";
 
 const ID = "spacedragon";
 const NIVEL_MAXIMO = 20;
@@ -91,6 +92,9 @@ Hooks.once("init", () => {
   registrarOpcoesDaOrdem();
   registrarOpcaoDeVersao();
   registrarOpcaoDeCombate();
+  // o combate de naves das Regras Compiladas, a nave modular e as três
+  // camadas: opções de mundo, e a Ficha de Nave aberta se redesenha ao trocar
+  registrarOpcoesDeNave(() => redesenharFichasDeNave());
 
   // As fichas são registradas no `ready` (ver lá). Aqui só a opção, que
   // precisa existir antes de ser lida.

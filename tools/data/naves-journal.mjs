@@ -41,6 +41,7 @@ quem estiver operando a arma.</li>
 </ul>
 
 <h2>Regra da casa: a nave é modular</h2>
+<p><em>Opcional, ligada por padrão: desligue em <strong>Configurações › Space Dragon › Nave modular</strong> para jogar só com o livro. Desligada, a aba Câmaras só marca o que a nave tem.</em></p>
 <p>Toda nave sai de fábrica com o <strong>mínimo para voar e manter todos vivos</strong>:</p>
 <ul>
 <li><strong>Ponte de Comando</strong> — sem ela, não se pilota nem se opera arma ou escudo;</li>
@@ -153,6 +154,7 @@ diferentes dos personagens:</p>
 ${tab(["ação", "valor"], T10_6_ORDEM.map((l) => `<tr><td>${l.acao}</td><td>${l.valor}</td></tr>`).join(""))}
 
 <p>Continua valendo o resto: age primeiro o <strong>menor</strong> resultado.</p>
+<p><em>Os cinco postos da tripulação, as quinze ações e a câmara danificada que cala a nave não são do livro: vêm das Regras Compiladas. Ficam ligados por padrão e se desligam em <strong>Configurações › Space Dragon › Combate de naves das Regras Compiladas</strong>.</em></p>
 
 <h2>As ações</h2>
 <ul>

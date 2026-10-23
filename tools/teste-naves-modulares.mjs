@@ -131,13 +131,15 @@ const nave = (tamanho, camaras = {}) => ({ ...naveVazia(), tamanho, camaras });
 /* ── A ficha liga o clique e o arrastar à compra ───────────────────────── */
 {
   const fonte = fs.readFileSync(path.join(RAIZ, "spacedragon-module", "module", "nave-pc-ficha.js"), "utf8");
-  confere(/=== "ausente"\) return this\.#comprarCamara\(chave\)/.test(fonte),
+  // com a nave modular ligada (opcoes.js); desligada, o clique só marca
+  confere(/=== "ausente" && modular\) return this\.#comprarCamara\(chave\)/.test(fonte),
     "o clique em uma câmara ausente não passa pela compra");
   confere(/async _onDropItem\(event, data\)/.test(fonte) && /camaraDeNave/.test(fonte.slice(fonte.indexOf("async _onDropItem"))),
     "a ficha não intercepta a câmara arrastada do compêndio");
   confere(/super\._onDropItem\(event, data\)/.test(fonte), "o arrastar de outros itens deixou de ir para o sistema");
   confere(/porPainelDasCamaras\(raiz, this\.actor\)/.test(fonte), "o painel das câmaras não é desenhado na ficha");
-  confere(/=== "danificada"\) return this\.#repararOuArrancar\(chave\)/.test(fonte),
+  // com as Regras Compiladas ligadas; desligadas, a câmara não se danifica
+  confere(/=== "danificada" && compilado\) return this\.#repararOuArrancar\(chave\)/.test(fonte),
     "o clique numa câmara danificada não oferece o reparo");
 }
 

@@ -6,7 +6,7 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 1.29.2 — os onze capítulos portados.** 433 documentos em dez
+> **Estado: 1.30.0 — os onze capítulos portados.** 433 documentos em dez
 > compêndios, agrupados na pasta **Space Dragon** da barra de compêndios: 42 de
 > classe, 10 de espécie, 40 de equipamento, 101 poderes mentais, 80 aparatos e
 > feitos, 59 criaturas e personagens de exemplo, 63 de naves, 4 tabelas de
@@ -84,6 +84,27 @@ doenças, poderes) aparece num resumo no fim da aba. **Quem já tinha somado o +
 As alterações no sistema passam pelo [libWrapper](https://foundryvtt.com/packages/lib-wrapper),
 recomendado. Sem ele, uma implementação reserva é usada e um aviso aparece para o
 Mestre.
+
+## Só o livro base, ou com as regras a mais nas naves
+
+O combate de naves do Cap. 10 vale sempre: T10-6, disparo, ativar equipamento,
+manobra evasiva, T10-5 e penalidade por avaria. Duas coisas que a Ficha de Nave
+faz **não são do livro**, e cada uma tem a sua opção em *Configurações › Space
+Dragon*:
+
+| Opção | O que liga | Padrão |
+|---|---|---|
+| **Combate de naves das Regras Compiladas** | os cinco postos com as quinze ações, a câmara danificada que cala a nave (Ponte avariada: sem armas nem escudos) e as três camadas | ligada |
+| **Nave modular (regra da casa)** | de fábrica só Ponte, Sala de Máquinas e casco; o resto se compra pela T10-2, com limite por tamanho | ligada |
+| Camada: energia do reator | §7 das Regras Compiladas | desligada |
+| Camada: controle de avarias | §7 das Regras Compiladas | desligada |
+| Camada: fuga como relógio | §7 das Regras Compiladas | desligada |
+
+Para jogar **só com o livro**, desligue as duas primeiras. A aba Tripulação passa
+a mostrar o combate do Cap. 10, a câmara deixa de se danificar e a aba Câmaras
+só marca o que a nave tem, sem compra nem limite. As camadas só aparecem com as
+Regras Compiladas ligadas. Trocar uma opção redesenha as Fichas de Nave abertas,
+e nada gravado na nave se perde: religar devolve tudo como estava.
 
 ## Com o "Old Dragon 2: Qualidade de Vida"
 
