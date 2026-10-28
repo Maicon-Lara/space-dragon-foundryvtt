@@ -251,5 +251,7 @@ export const LANG_PADRAO = {
   "spacedragon.opcao.naveEscudoReserva.nome": "Escudo de força como reserva (regra da casa)",
   "spacedragon.opcao.naveEscudoReserva.dica": "Em vez de +10 no CP, o Escudo de força absorve dano por combate: 20 (Média), 50 (Gigantesca), 100 (Colossal). Cada ponto de energia nos Escudos absorve +5 na rodada. Desligada: o +10 no CP do livro.",
   "spacedragon.opcao.naveMultiplicadorDano.nome": "Multiplicador de dano de nave (regra da casa)",
-  "spacedragon.opcao.naveMultiplicadorDano.dica": "Multiplica o dano das armas de nave. ×1 é o livro; ×2 deixa um duelo entre naves médias em 5 a 8 rodadas."
+  "spacedragon.opcao.naveMultiplicadorDano.dica": "Multiplica o dano das armas de nave. ×1 é o livro; ×2 deixa um duelo entre naves médias em 5 a 8 rodadas.",
+  "spacedragon.nave.camadas.escudosReserva": "+{n} de absorção no escudo nesta rodada",
+  "spacedragon.nave.camadas.absorve": "escudo +{n} de absorção"
 };

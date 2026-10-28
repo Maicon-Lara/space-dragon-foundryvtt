@@ -19,10 +19,10 @@ import {
   energiaGasta, PRAZO_DE_AVARIA, prazoDaAvaria, MARCAS_DO_PERSEGUIDOR,
   quemFechaPrimeiro,
 } from "./tripulacao.js";
-import { camadaLigada } from "./opcoes.js";
+import { camadaLigada, escudoComoReserva } from "./opcoes.js";
 import { t as txt } from "./i18n.js";
 import { ETAPAS } from "./nave-salto.js";
-import { AVARIAS, lerAvaria, calorNoFimDaRodada } from "./nave-combate.js";
+import { AVARIAS, lerAvaria, calorNoFimDaRodada, ESCUDO_POR_PONTO } from "./nave-combate.js";
 
 export const MARCA_CAMADAS = "sw-painel-camadas";
 export const CLASSE_ENERGIA = "sw-energia-btn";
@@ -46,6 +46,12 @@ export function painelDeEnergia(nave, tamanho) {
   const gasto = energiaGasta(atual);
   const sobra = total - gasto;
   const efeito = efeitoDaEnergia(atual, true);
+  // com o escudo como reserva, o ponto nos Escudos absorve dano em vez de subir
+  // o CP — e o painel tem de dizer o que a conta do disparo de fato faz
+  const reserva = escudoComoReserva();
+  const textoDe = (chave, d) => (chave === "escudos" && reserva
+    ? txt("spacedragon.nave.camadas.escudosReserva", { n: ESCUDO_POR_PONTO })
+    : d.livro);
 
   const destino = ([chave, d]) => {
     const n = Number(atual[chave]) || 0;
@@ -57,15 +63,16 @@ export function painelDeEnergia(nave, tamanho) {
       `${n <= 0 ? " disabled" : ""} title="${txt("spacedragon.nave.camadas.tirarPonto")}">−</button>` +
       `<span class="energia-pontos">${n}</span>` +
       `<button type="button" class="${CLASSE_ENERGIA}" data-destino="${chave}" data-passo="1"` +
-      `${sobra < custo ? " disabled" : ""} title="${d.livro}">+</button>` +
-      `<span class="energia-efeito">${d.livro}</span>` +
+      `${sobra < custo ? " disabled" : ""} title="${textoDe(chave, d)}">+</button>` +
+      `<span class="energia-efeito">${textoDe(chave, d)}</span>` +
       `</div>`
     );
   };
 
   const resumo = [
     efeito.jp ? `JP +${efeito.jp}` : null,
-    efeito.cp ? `CP +${efeito.cp}` : null,
+    efeito.cp && !reserva ? `CP +${efeito.cp}` : null,
+    efeito.cp && reserva ? txt("spacedragon.nave.camadas.absorve", { n: (efeito.cp / 2) * ESCUDO_POR_PONTO }) : null,
     efeito.dadosDeDano ? txt("spacedragon.nave.camadas.dadosDeDano", { n: efeito.dadosDeDano }) : null,
     efeito.acoesExtras ? txt("spacedragon.nave.camadas.acoesExtras", { n: efeito.acoesExtras }) : null,
   ].filter(Boolean).join(" · ");

@@ -59,7 +59,8 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
   // o efeito fica à vista: a mesa não precisa lembrar que ponto em motor é +2 JP
   const cheia = painelDeEnergia({ energia: { motores: 1, escudos: 2 } }, "Média");
   confere(/JP \+2/.test(cheia), "o efeito dos motores não aparece");
-  confere(/CP \+4/.test(cheia), "o efeito dos escudos (2 pontos = +4) não aparece");
+  // fora do Foundry vale o padrão das opções: escudo como reserva, e o ponto absorve 5
+  confere(/escudo \+10 de absorção/.test(cheia), "o efeito dos escudos (2 pontos = +10 de absorção) não aparece");
 
   // gastar além do reator é possível (Forçar o reator dá +2), e tem de APARECER
   const demais = painelDeEnergia({ energia: { motores: 3, escudos: 3 } }, "Pequena");
