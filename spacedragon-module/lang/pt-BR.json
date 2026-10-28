@@ -210,5 +210,18 @@
   "spacedragon.qdv.zeroPV": "<strong>{nome}</strong> está em 0 PV: inconsciente, porém <strong>estável</strong> (Space Dragon). Não há teste agora. Abaixo de 0, faz uma JPF por rodada (falha: −1d4 PV); morre em {mortais}.",
   "spacedragon.qdv.naveAbatida": "<strong>{nome}</strong>: {xp} XP <em>(nave abatida, regra da casa)</em>",
   "spacedragon.qdv.xpTotal": "XP total",
-  "spacedragon.qdv.distribuir": "Distribuir XP"
+  "spacedragon.qdv.distribuir": "Distribuir XP",
+  "spacedragon.iniciativa.botao": "Rolar iniciativa",
+  "spacedragon.iniciativa.dicaPadrao": "Old Dragon 2: 1d20 ≤ maior entre Destreza e Intelecto. Passou, age antes dos PNJs; falhou, depois. Vale o combate inteiro.",
+  "spacedragon.iniciativa.dicaNave": "Old Dragon 2, pelo piloto: 1d20 ≤ maior entre Destreza e Intelecto de quem está no Leme (10 sem piloto com ficha).",
+  "spacedragon.iniciativa.dicaIndividual": "Old Dragon 2, individual: 1d12, maior age primeiro.",
+  "spacedragon.iniciativa.teste": "Iniciativa (Old Dragon 2): 1d20 ≤ {alvo}",
+  "spacedragon.iniciativa.testePiloto": "Iniciativa (Old Dragon 2) pelo piloto {piloto}: 1d20 ≤ {alvo}",
+  "spacedragon.iniciativa.sucesso": "Sucesso: age antes dos PNJs.",
+  "spacedragon.iniciativa.falha": "Falha: age depois dos PNJs.",
+  "spacedragon.iniciativa.individual": "Iniciativa individual (Old Dragon 2)",
+  "spacedragon.iniciativa.semCombate": "Não há combate ativo: o Mestre precisa criar o encontro antes.",
+  "spacedragon.iniciativa.foraDoCombate": "{nome} não está no combate. Adicione o token ao rastreador antes de rolar.",
+  "spacedragon.iniciativa.jaRolou": "A iniciativa do Old Dragon 2 vale o combate inteiro, e já foi rolada. Só o Mestre rola de novo.",
+  "spacedragon.iniciativa.semAtributos": "{nome} está sem Destreza ou Intelecto na ficha: o teste de iniciativa precisa dos dois."
 }

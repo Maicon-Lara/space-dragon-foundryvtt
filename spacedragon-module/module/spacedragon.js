@@ -34,6 +34,7 @@ import { ligarCabecalho, danosMortais } from "./cabecalho.js";
 import { ligarGrandezas } from "./poderes.js";
 import { abrirOrdem, rolarCriticoTabela } from "./ordem.js";
 import { ligarOrdemNaFicha, registrarOpcoes as registrarOpcoesDaOrdem } from "./ordem-ficha.js";
+import { ligarIniciativaNaFicha } from "./iniciativa-od2.js";
 import { ligarOrdemNoCombate, registrarOpcaoDeCombate } from "./ordem-combate.js";
 import { registrarFicha } from "./ficha.js";
 import { ligarRotulos } from "./rotulos.js";
@@ -223,6 +224,9 @@ Hooks.once("ready", () => {
   passo("convivência com o Qualidade de Vida", () => ligarIntegracaoQdV());
   passo("degraus", () => ligarDegraus());
   passo("Ordem de Ação na ficha", () => ligarOrdemNaFicha());
+  // o botão de iniciativa do OD2, na ficha de personagem e na de nave; some
+  // quando a Ordem de Ação está ligada (iniciativa-od2.js)
+  passo("botão de iniciativa na ficha", () => ligarIniciativaNaFicha());
   passo("Ordem de Ação no combate", () => ligarOrdemNoCombate());
   // Por último: a aba de Poderes precisa estar desenhada para os rótulos de
   // Grandeza serem trocados.
