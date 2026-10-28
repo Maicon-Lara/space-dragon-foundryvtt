@@ -86,6 +86,20 @@ export const EQUIPAMENTOS_DE_NAVE = {
     efeito: { movimento: 1.5 },
     nota: "Aumentam a movimentação da nave em 50%, mas consomem combustível rapidamente.",
   },
+  // Os cinco abaixo faltavam até a 1.31: a T10-4 do livro tem vinte
+  // equipamentos, e o módulo trazia quinze.
+  simulador: {
+    rotulo: "Simulador de gravidade",
+    grupo: "utilitario",
+    cabe: { Pequena: true, "Média": true, Gigantesca: true, Colossal: true },
+    nota: "Simula a gravidade padrão de 100%. Vem instalado de fábrica em qualquer nave ou estação.",
+  },
+  videocomunicador: {
+    rotulo: "Videocomunicador",
+    grupo: "utilitario",
+    cabe: { Pequena: false, "Média": true, Gigantesca: true, Colossal: true },
+    nota: "Permite a transmissão de imagem e som entre naves.",
+  },
 
   // ── COMBATE ─────────────────────────────────────────────────────────────
   //
@@ -164,6 +178,24 @@ export const EQUIPAMENTOS_DE_NAVE = {
     cabe: { Pequena: false, "Média": true, Gigantesca: true, Colossal: true },
     efeito: { cp: 10 },
     nota: "Campo de força que repele a maioria dos ataques enquanto durar. Garante +10 no CP, mas gasta combustível a cada rodada de combate — o Mestre faz as rolagens.",
+  },
+  radar: {
+    rotulo: "Radar de inimigos",
+    grupo: "combate",
+    cabe: { Pequena: false, "Média": true, Gigantesca: true, Colossal: true },
+    nota: "Detecta distância, quantidade e movimentação dos inimigos.",
+  },
+  tracao: {
+    rotulo: "Raio de tração",
+    grupo: "combate",
+    cabe: { Pequena: false, "Média": false, Gigantesca: true, Colossal: true },
+    nota: "Raio que prende naves menores e as leva para dentro da nave maior. A nave menor evita com uma JP.",
+  },
+  camuflagem: {
+    rotulo: "Sistema de camuflagem",
+    grupo: "combate",
+    cabe: { Pequena: true, "Média": true, Gigantesca: false, Colossal: false },
+    nota: "Deixa a nave invisível por 1d6 rodadas.",
   },
 };
 

@@ -2,7 +2,7 @@
 //
 // ── POR QUE ITENS, SE A FICHA JÁ OS TEM ─────────────────────────────────────
 //
-// A ficha de Nave já mostra os quinze equipamentos como botões de liga-desliga,
+// A ficha de Nave já mostra os vinte equipamentos como botões de liga-desliga,
 // filtrados pelo tamanho, com os conflitos e os efeitos calculados — e isso tudo
 // tem teste. Trocar aquilo por uma lista de itens significaria reescrever a
 // validação de tamanho, os conflitos e os efeitos, perdendo a cobertura.

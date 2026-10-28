@@ -45,6 +45,12 @@ const T10_4 = {
   balistico: ["Pequena", "Média", "Gigantesca", "Colossal"],
   defletores: ["Pequena", "Média"],
   escudo: ["Média", "Gigantesca", "Colossal"],
+  // os cinco que faltavam até a 1.31, conferidos na p. 179 do livro
+  simulador: ["Pequena", "Média", "Gigantesca", "Colossal"],
+  videocomunicador: ["Média", "Gigantesca", "Colossal"],
+  radar: ["Média", "Gigantesca", "Colossal"],
+  tracao: ["Gigantesca", "Colossal"],
+  camuflagem: ["Pequena", "Média"],
 };
 
 confere(Object.keys(EQUIPAMENTOS_DE_NAVE).length === Object.keys(T10_4).length,
@@ -201,7 +207,7 @@ confere(penalidadeNaJPR(0) === 0 && penalidadeNaJPR(-5) === 0,
 
 // ── INSTALAR ARRASTANDO ───────────────────────────────────────────────────
 //
-// O compêndio de Equipamentos traz os quinze da T10-4 como itens, e arrastar um
+// O compêndio de Equipamentos traz os vinte da T10-4 como itens, e arrastar um
 // deles para a nave o instala. A decisão é a mesma do botão — a matriz da T10-4
 // decidindo o que cabe em que tamanho —, e é por isso que ela mora aqui e não na
 // ficha: a regra num lugar só, testável sem o Foundry em volta.
@@ -230,7 +236,7 @@ confere(penalidadeNaJPR(0) === 0 && penalidadeNaJPR(-5) === 0,
     "item desconhecido não pode virar instalação");
   confere(decidirInstalacao(undefined, {}).acao === "desconhecido", "chave ausente não quebra");
 
-  // E a decisão vale para TODOS os quinze, nos quatro tamanhos: o que a matriz
+  // E a decisão vale para TODOS os vinte, nos quatro tamanhos: o que a matriz
   // diz é o que a função faz, sem exceção escrita à mão.
   for (const [chave, e] of Object.entries(EQUIPAMENTOS_DE_NAVE)) {
     for (const t of TAMANHOS) {

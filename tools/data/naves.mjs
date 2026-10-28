@@ -113,5 +113,6 @@ export const SERVICOS_ESTACAO = [
   { servico: "Abastecimento de espaçonave", preco: "Variável", desc: "Pela T10-3, conforme o combustível e o tamanho da nave." },
   { servico: "Estadia da tripulação", preco: "$5.000", desc: "Por pessoa e por dia, com refeições inclusas." },
   { servico: "Manutenção de rotina", preco: "$10.000 / $25.000 / $75.000", desc: "Reparo do que o tempo ou os acidentes danificaram, por tamanho (P, M, G)." },
+  { servico: "Reparos mecânicos", preco: "$1.000", desc: "Por PV reparado." },
   { servico: "Pouso e estadia no hangar", preco: "$10.000 / $50.000 / $100.000", desc: "Por tamanho de nave." },
 ];
