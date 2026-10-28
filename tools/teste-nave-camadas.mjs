@@ -21,6 +21,7 @@ import {
   ENERGIA_POR_TAMANHO, MARCAS_DO_PERSEGUIDOR, PRAZO_DE_AVARIA,
 } from "../spacedragon-module/module/tripulacao.js";
 import { ETAPAS } from "../spacedragon-module/module/nave-salto.js";
+import { AVARIAS } from "../spacedragon-module/module/nave-combate.js";
 
 const problemas = [];
 const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
@@ -92,8 +93,9 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
   confere(/25%/.test(vencida), "falta o custo do conserto, que é o que a mesa vai pagar");
 
   // os prazos vêm da tabela
+  // o painel diz o NOME da avaria e o efeito dela, e não a chave interna
   for (const chave of Object.keys(PRAZO_DE_AVARIA)) {
-    confere(painelDeAvarias({ avarias: { [chave]: 1 } }, 1).includes(chave),
+    confere(painelDeAvarias({ avarias: { [chave]: 1 } }, 1).includes(AVARIAS[chave].rotulo),
       `a avaria "${chave}" não aparece no painel`);
   }
   // uma avaria que a T10-6 não tem é ignorada, e não vira linha fantasma

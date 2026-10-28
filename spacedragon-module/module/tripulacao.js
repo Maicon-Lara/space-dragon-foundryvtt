@@ -24,6 +24,9 @@
  * posto escolheu na rodada.
  */
 
+// a lista única de avarias (com o prazo de cada uma) mora em nave-combate.js
+import { AVARIAS } from "./nave-combate.js";
+
 /* ── OS CINCO POSTOS (§7) ──────────────────────────────────────────────────
  *
  * Os nomes são os do documento: Leme, Artilharia, Engenharia, Sensores,
@@ -93,19 +96,20 @@ export const ACOES_DE_POSTO = {
     },
     {
       chave: "rajada", rotulo: "Rajada",
-      efeito: { ataque: -5, dadosDeDano: 1 },
-      nota: "−5 no ataque, +1 dado de dano se acertar.",
+      efeito: { ataque: -5, dadosDeDano: 1, rajada: true },
+      nota: "−5 no ataque, +1 dado de dano se acertar. Vale no próximo disparo da rodada: a janela de disparo já vem marcada.",
     },
     {
       chave: "supressao", rotulo: "Supressão",
-      efeito: { semDano: true, ataqueDoAlvo: -2, bloqueiaEvasivaDoAlvo: true },
-      nota: "Não causa dano. O alvo leva −2 no próximo ataque dele, e não pode fazer manobra evasiva nesta rodada.",
+      efeito: { semDano: true, ataqueDoAlvo: -2, bloqueiaEvasivaDoAlvo: true, exigeAlvo: true },
+      nota: "Não causa dano. O alvo marcado leva −2 nos ataques dele e não pode fazer manobra evasiva, até o fim da rodada.",
     },
   ],
   engenharia: [
     {
       chave: "reparar", rotulo: "Reparar",
-      nota: "Remove uma avaria ou recupera 1d10 PV. É o botão de Engenharia que já existia.",
+      efeito: { reparar: true },
+      nota: "Remove uma avaria (a que mais trava a nave primeiro) ou, sem avaria, recupera 1d10 PV. Exige a Sala de Máquinas.",
     },
     {
       chave: "energia", rotulo: "Distribuir energia",
@@ -113,15 +117,20 @@ export const ACOES_DE_POSTO = {
     },
     {
       chave: "forcar", rotulo: "Forçar o reator",
-      efeito: { energiaExtra: 2, riscoEm1d6: 1, avariaSe: "maquinas" },
-      nota: "+2 pontos de energia nesta rodada. Role 1d6: num 1, a Sala de Máquinas pega uma avaria.",
+      efeito: { energiaExtra: 2 },
+      nota: "+2 pontos de energia nesta rodada, e +2 de Calor no fim dela. O Calor acumula: no fim de cada rodada, 1d6 ≤ Calor dá avaria na Sala de Máquinas.",
+    },
+    {
+      chave: "ventilar", rotulo: "Ventilar",
+      efeito: { calor: -2 },
+      nota: "−2 de Calor no reator. Gasta a ação da Engenharia.",
     },
   ],
   sensores: [
     {
       chave: "travar", rotulo: "Travar alvo",
-      efeito: { trava: true },
-      nota: "+2 no próximo ataque aliado contra ele. Informa alcances e o estado dele.",
+      efeito: { trava: true, exigeAlvo: true },
+      nota: "+2 nos ataques desta nave contra o alvo marcado, até o fim da rodada. Informa alcances e o estado dele.",
     },
     {
       chave: "varredura", rotulo: "Varredura",
@@ -130,7 +139,7 @@ export const ACOES_DE_POSTO = {
     {
       chave: "interferencia", rotulo: "Interferência",
       efeito: { ataqueInimigo: -2 },
-      nota: "−2 no próximo ataque inimigo contra esta nave.",
+      nota: "−2 nos ataques inimigos contra esta nave, até o fim da rodada.",
     },
   ],
   comando: [
@@ -160,8 +169,8 @@ export const ACOES_DE_POSTO = {
  * intenção da mesa, e erraria.
  */
 export const AUTOMATIZA = new Set([
-  "firmar", "correr", "rajada", "supressao", "forcar", "travar",
-  "interferencia", "aguentem",
+  "firmar", "correr", "rajada", "supressao", "forcar", "ventilar", "reparar",
+  "travar", "interferencia", "aguentem",
 ]);
 
 /** A ação escolhida por um posto, ou null. */
@@ -201,6 +210,14 @@ export const DESTINOS_DE_ENERGIA = {
     livro: "+1 dado de dano numa arma",
     tatico: "+1 dado de dano numa arma",
   },
+  // regra da casa (1.31): a energia também compra AÇÃO. É o que transforma a
+  // distribuição numa troca — escudo ou uma segunda rajada?
+  acoes: {
+    rotulo: "Ação extra",
+    livro: "um posto age de novo (2 pontos, +1 de Calor)",
+    tatico: "um posto age de novo (2 pontos, +1 de Calor)",
+    custo: 2,
+  },
 };
 
 /** Quantos pontos o reator dá, pelo tamanho do tipo de nave. */
@@ -214,19 +231,21 @@ export function energiaDoReator(tamanho) {
  * Devolve sempre os quatro campos, zerados quando não há ponto — assim quem
  * usa não precisa testar `undefined` a cada soma.
  */
-export function efeitoDaEnergia({ motores = 0, escudos = 0, armas = 0 } = {}, ehLivro = true) {
+export function efeitoDaEnergia({ motores = 0, escudos = 0, armas = 0, acoes = 0 } = {}, ehLivro = true) {
   return {
     jp: ehLivro ? motores * 2 : 0,
     hexes: ehLivro ? 0 : motores,
     cp: ehLivro ? escudos * 2 : 0,
     dadosDeEsquiva: ehLivro ? 0 : escudos,
     dadosDeDano: armas,
+    acoesExtras: acoes,
   };
 }
 
 /** O total gasto, para não deixar repartir mais do que o reator deu. */
 export const energiaGasta = (e = {}) =>
-  (e.motores ?? 0) + (e.escudos ?? 0) + (e.armas ?? 0);
+  (e.motores ?? 0) + (e.escudos ?? 0) + (e.armas ?? 0) +
+  (e.acoes ?? 0) * DESTINOS_DE_ENERGIA.acoes.custo;
 
 /* ── CONTROLE DE AVARIAS ───────────────────────────────────────────────────
  *
@@ -238,12 +257,9 @@ export const energiaGasta = (e = {}) =>
  * avaria na câmara, e o Fim da Rodada já marcava a câmara como danificada. O
  * que entra agora é o RELÓGIO — antes a avaria esperava reparo sem pressa.
  */
-export const PRAZO_DE_AVARIA = {
-  motor: 3,
-  armas: 2,
-  sensores: 2,
-  // o Leme e a Tripulação saem sozinhos no fim da rodada e não têm prazo
-};
+export const PRAZO_DE_AVARIA = Object.fromEntries(
+  Object.entries(AVARIAS).filter(([, a]) => a.prazo).map(([k, a]) => [k, a.prazo]),
+);
 
 /**
  * Em que pé está a emergência de uma avaria.
@@ -337,6 +353,10 @@ export const LIMPA_NO_FIM_DA_RODADA = {
   "system.energia.escudos": 0,
   "system.energia.armas": 0,
   "system.energia.extra": 0,
+  "system.energia.acoes": 0,
+  "system.trava": false,
+  "system.supressao": false,
+  "system.rajada.ativa": false,
   "system.firmar.ativa": false,
   "system.interferencia": false,
   "system.suprimida.ativa": false,

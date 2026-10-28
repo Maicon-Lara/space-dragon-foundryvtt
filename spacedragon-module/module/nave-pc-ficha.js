@@ -39,10 +39,12 @@
 import {
   naveDe, estadoDoComodo, proximoEstado, comodosInstalados, FLAG, updateDaNave,
   CAMARAS_BASE, flagDeNave, resumoDasCamaras, compraDeCamara, creditos, reparoDeCamara,
+  tamanhoDaNave,
 } from "./nave-pc-dados.js";
 import { linhasDoVoo, CUSTOS } from "./nave-voo.js";
 import {
   avisosDaNave, bonusDeAtaque, equipamentosDoAtor, podeAtacar, operacional,
+  podeUsarEscudos, podeRepararEmCombate,
 } from "./nave-sistemas.js";
 import { POSTOS, ACOES_DE_POSTO, AUTOMATIZA } from "./tripulacao.js";
 import {
@@ -52,11 +54,19 @@ import { MARCAS_DO_PERSEGUIDOR } from "./tripulacao.js";
 import { ETAPAS } from "./nave-salto.js";
 import { aplicarAcao, ehAutomatica, limparFimDaRodada } from "./nave-acoes.js";
 import { CAMARAS } from "./camaras.js";
-import { combateCompilado, naveModular } from "./opcoes.js";
+import {
+  combateCompilado, naveModular, camadaLigada, danoPorMargem, escudoComoReserva, multiplicadorDeDano,
+} from "./opcoes.js";
+import { dadosExtrasDeDano } from "./tripulacao.js";
+import {
+  AVARIAS, CRITICO_T10_6, FALHA_T10_6, AVARIA_POR_DANO, causaAvaria, cpDoAlvo, termosDoAtaque,
+  formulaDosTermos, formulaDoDano, dadosPorMargem, danoFinal, aplicarImpacto, fimDaRodada,
+  calorNoFimDaRodada, penalidadesDeAvaria,
+} from "./nave-combate.js";
+import { ehNave } from "./nave-marca.js";
 import { xpDaNave, XP_POR_TIPO, tipoDaNave } from "./nave-xp.js";
 import {
-  armaDoEquipamento, alcanceEscrito, faixaDoAlcance, penalidadeDaFaixa, formulaDoDisparo,
-  resultadoDoDisparo, FAIXAS, unidadeEmMetros,
+  armaDoEquipamento, alcanceEscrito, faixaDoAlcance, penalidadeDaFaixa, FAIXAS, unidadeEmMetros,
 } from "./nave-disparo.js";
 
 import { t as txt } from "./i18n.js";
@@ -573,6 +583,126 @@ const ROTULO_DA_FAIXA = {
 
 const escapa = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 
+/* ── O DISPARO NO CHAT, E O DANO APLICADO PELO MESTRE ────────────────────────
+ *
+ * O jogador não grava na ficha da nave inimiga — ela é do Mestre. Então o tiro
+ * sai como um cartão com o dano e as avarias, e o Mestre aplica com um clique:
+ * o escudo absorve, o PV desce, as avarias entram com a rodada do combate.
+ */
+export const CLASSE_APLICAR = "sd-aplicar-impacto";
+
+/**
+ * Esta nave está suprimida? A Supressão mora na nave que suprime, apontando o
+ * token alvo (nave-acoes.js); aqui se procura, nas naves em cena, quem aponta
+ * para este token.
+ */
+function naveSuprimida(tokenId) {
+  if (!tokenId) return false;
+  try {
+    return (globalThis.canvas?.tokens?.placeables ?? []).some((t) => {
+      const a = t?.actor;
+      return a && ehNave(a) && naveDe(a, ID).supressao?.alvo === tokenId;
+    });
+  } catch {
+    return false;
+  }
+}
+
+/** O cartão do disparo: a conta do ataque, cada tiro, o dano e as avarias. */
+export function cartaoDoDisparo({
+  nomeArma, faixa, nomeAlvo, termos = [], cpInfo = null, tiros = [], total = 0,
+  avarias = [], multiplicador = 1, arma = {}, temAlvo = false,
+}) {
+  const conta = ["1d20", ...termos.map(([r, v]) => `${v > 0 ? "+" : "−"} ${Math.abs(v)} <small>(${r})</small>`)].join(" ");
+  const cp = cpInfo
+    ? txt("spacedragon.nave.disparo.contraCP", {
+      alvo: nomeAlvo || "?", cp: cpInfo.cp,
+      partes: cpInfo.partes?.length
+        ? ` <small>(${cpInfo.base} ${cpInfo.partes.map(([r, v]) => `${v > 0 ? "+" : "−"} ${Math.abs(v)} ${r}`).join(" ")})</small>`
+        : "",
+    })
+    : txt("spacedragon.nave.disparo.semAlvo");
+  const linha = (t, i) => {
+    const res = t.acerto ? txt("spacedragon.nave.disparo.acerto") : txt("spacedragon.nave.disparo.erro");
+    const dano = t.dano !== undefined
+      ? " · " + txt("spacedragon.nave.disparo.dano", { dano: t.dano, formula: t.formulaDano }) +
+        (t.extras?.length ? ` <small>(${t.extras.map(([r, v]) => `+${v} ${r}`).join(", ")})</small>` : "")
+      : "";
+    const notas = t.notas.map((n) => `<br><em>${n}</em>`).join("");
+    return `<li><strong>${t.total}</strong> <small>(d20: ${t.natural})</small> — ${res}${dano}${notas}</li>`;
+  };
+  return (
+    `<div class="spacedragon-cartao sd-disparo">` +
+    `<h4>${txt("spacedragon.nave.disparo.chat", { arma: nomeArma, faixa })}</h4>` +
+    `<p>${conta}</p><p>${cp}</p>` +
+    ((arma.ataques ?? 1) > 1 ? `<p>${txt("spacedragon.nave.disparo.varios", { n: arma.ataques })}</p>` : "") +
+    `<ol>${tiros.map(linha).join("")}</ol>` +
+    (total > 0
+      ? `<p><strong>${txt("spacedragon.nave.disparo.total", { dano: total })}</strong>` +
+        (multiplicador > 1 ? ` <small>${txt("spacedragon.nave.disparo.multiplicador", { n: multiplicador })}</small>` : "") + `</p>`
+      : "") +
+    (avarias.length
+      ? `<p>${txt("spacedragon.nave.disparo.avarias", { lista: avarias.map((k) => `${AVARIAS[k].rotulo} (${AVARIAS[k].efeito})`).join("; ") })}</p>`
+      : "") +
+    (arma.jpDoAlvo ? `<p>${txt("spacedragon.nave.disparo.missil", { rodadas: arma.perseguePor ?? "?" })}</p>` : "") +
+    (temAlvo && (total > 0 || avarias.length)
+      ? `<button type="button" class="${CLASSE_APLICAR}">${txt("spacedragon.nave.disparo.aplicar", { alvo: nomeAlvo || "?" })}</button>`
+      : "") +
+    `</div>`
+  );
+}
+
+/** O clique do Mestre no cartão: aplica o tiro na nave (ou no ator) alvo. */
+async function aplicarImpactoDaMensagem(msg) {
+  const imp = msg?.getFlag?.(ID, "impacto");
+  if (!imp) return;
+  if (!globalThis.game?.user?.isGM) {
+    globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.soMestre"));
+    return;
+  }
+  if (imp.aplicado) {
+    globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.jaAplicado"));
+    return;
+  }
+  const doc = await globalThis.fromUuid?.(imp.alvo);
+  const ator = doc?.actor ?? doc;
+  if (!ator?.update) return;
+  const pv = Number(ator.system?.hp?.value) || 0;
+  const combate = globalThis.game?.combat ?? null;
+  let mudancas = {};
+  let r = { pv: pv - (Number(imp.dano) || 0), absorvido: 0, noPV: Number(imp.dano) || 0 };
+  if (ehNave(ator)) {
+    const nave = naveDe(ator, ID);
+    r = aplicarImpacto(nave, {
+      pv, dano: imp.dano, avarias: imp.avarias ?? [], rodada: combate?.round ?? 0,
+      reserva: escudoComoReserva(), tamanho: tamanhoDaNave(nave), combate: combate?.id ?? null,
+      temEscudo: equipamentosDoAtor(ator, ID).has("escudo"), ponteOk: podeUsarEscudos(nave),
+    });
+    mudancas = updateDaNave(nave, r.nave, ID) ?? {};
+  }
+  await ator.update({ ...mudancas, "system.hp.value": r.pv });
+  await msg.setFlag(ID, "impacto", { ...imp, aplicado: true });
+  const escudo = r.absorvido ? txt("spacedragon.nave.disparo.escudoAbsorveu", { n: r.absorvido }) : "";
+  globalThis.ui?.notifications?.info?.(txt("spacedragon.nave.disparo.aplicado", {
+    alvo: escapa(ator.name), noPV: r.noPV, escudo,
+  }));
+}
+
+/** O botão "Aplicar" dos cartões de disparo. Ligado no `ready`. */
+export function ligarAplicarImpacto() {
+  globalThis.Hooks?.on?.("renderChatMessageHTML", (msg, html) => {
+    const b = html?.querySelector?.(`.${CLASSE_APLICAR}`);
+    if (!b || b.dataset.ligado) return;
+    b.dataset.ligado = "1";
+    if (msg?.getFlag?.(ID, "impacto")?.aplicado) b.disabled = true;
+    b.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      aplicarImpactoDaMensagem(msg).catch((e) => console.error(`${ID} | aplicar o disparo falhou`, e));
+    });
+  });
+  return true;
+}
+
 let Registrada = null;
 
 /** Esta ficha é a de Nave sobre personagem? */
@@ -939,13 +1069,53 @@ export function registrarFichaDeNavePC() {
 
         const nave = naveDe(this.actor, ID);
 
+        const falante = globalThis.ChatMessage?.getSpeaker?.({ actor: this.actor });
+
         if (fim) {
-          await this.#gravarNave(nave, limparFimDaRodada(nave));
+          // ── O FIM DA RODADA COBRA O QUE A RODADA DEVEU (nave-combate.js) ──
+          //
+          // Primeiro o Calor e os prazos, que leem a energia gasta; só depois a
+          // limpeza, que a zera.
+          const rodada = globalThis.game?.combat?.round ?? 0;
+          const comCalor = camadaLigada("camadaEnergia");
+          let d6 = null;
+          const calor = calorNoFimDaRodada(nave);
+          if (comCalor && calor > 0) {
+            const roll = await new globalThis.Roll("1d6").evaluate();
+            d6 = roll.total;
+            await roll.toMessage({
+              speaker: falante,
+              flavor: txt("spacedragon.nave.camadas.calorTeste", {
+                calor, d6,
+                resultado: d6 <= calor ? txt("spacedragon.nave.camadas.calorAvaria") : txt("spacedragon.nave.camadas.calorOk"),
+              }),
+            });
+          }
+          const { nave: depois, eventos } = fimDaRodada(nave, {
+            rodada, prazos: camadaLigada("camadaAvarias"), calor: comCalor, d6,
+          });
+          await this.#gravarNave(nave, limparFimDaRodada(depois));
+          for (const e of eventos.filter((x) => x.tipo === "camara")) {
+            await globalThis.ChatMessage?.create?.({
+              speaker: falante,
+              content: `<p>${txt("spacedragon.nave.camadas.camaraDanificada", {
+                avaria: AVARIAS[e.avaria].rotulo, camara: CAMARAS[e.camara]?.rotulo ?? e.camara,
+              })}</p>`,
+            });
+          }
           globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.fimDaRodada"));
           return;
         }
 
-        const r = aplicarAcao(nave, botao.dataset.posto, botao.dataset.acao);
+        if (botao.dataset.acao === "reparar" && !podeRepararEmCombate(nave)) {
+          globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.tripulacao.semMaquinas"));
+          return;
+        }
+        // Travar e Supressão apontam o token marcado (tecla T)
+        const marcado = [...(globalThis.game?.user?.targets ?? [])][0] ?? null;
+        const r = aplicarAcao(nave, botao.dataset.posto, botao.dataset.acao, {
+          alvo: marcado?.id ?? null, alvoNome: escapa(marcado?.name ?? ""),
+        });
         if (r.erro) {
           globalThis.ui?.notifications?.warn?.(r.erro);
           return;
@@ -967,12 +1137,15 @@ export function registrarFichaDeNavePC() {
         // que alguém digite /r 1d6 no meio da rodada
         for (const rol of r.rolagens) {
           const roll = await new globalThis.Roll(rol.formula).evaluate();
-          const caiu = roll.total <= rol.falhaEm;
+          if (rol.curaPV) {
+            // o casco recupera, sem passar do máximo
+            const hp = this.actor.system?.hp ?? {};
+            const novo = Math.min(Number(hp.max) || Infinity, (Number(hp.value) || 0) + roll.total);
+            await this.actor.update({ "system.hp.value": novo });
+          }
           await roll.toMessage({
-            speaker: globalThis.ChatMessage?.getSpeaker?.({ actor: this.actor }),
-            flavor: caiu
-              ? `${rol.rotulo}: <strong>avaria</strong> na Sala de Máquinas`
-              : `${rol.rotulo}: sem avaria`,
+            speaker: falante,
+            flavor: txt("spacedragon.nave.tripulacao.cura", { pv: roll.total }),
           });
         }
       });
@@ -1027,6 +1200,17 @@ export function registrarFichaDeNavePC() {
         return null;
       }
 
+      // sem Ponte não há armas (T10-2), e em pane geral a nave não dispara:
+      // dizer antes da janela poupa a mesa de preencher um tiro que não sai
+      if (!podeAtacar(nave)) {
+        globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.semPonte", { nave: escapa(ator.name) }));
+        return null;
+      }
+      if (penalidadesDeAvaria(nave).semAtaque) {
+        globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.emPane", { nave: escapa(ator.name) }));
+        return null;
+      }
+
       const art = artilheiroDaNave(nave);
       const faixaInicial = auto?.chave ?? "curta";
       const opcoes = FAIXAS.map((f) =>
@@ -1046,7 +1230,10 @@ export function registrarFichaDeNavePC() {
         `<div class="form-group"><label>${rotuloArt}</label>` +
         `<input type="number" name="artilheiro" value="${art?.bad ?? ""}"></div>` +
         `<div class="form-group"><label>${txt("spacedragon.nave.disparo.situacao")}</label>` +
-        `<input type="number" name="situacao" value="0"></div>`;
+        `<input type="number" name="situacao" value="0"></div>` +
+        // a Rajada do posto de Artilharia já vem marcada; dá para marcar aqui também
+        `<div class="form-group"><label>${txt("spacedragon.nave.disparo.rajada")}</label>` +
+        `<input type="checkbox" name="rajada"${nave.rajada?.ativa ? " checked" : ""}></div>`;
 
       const V2 = globalThis.foundry?.applications?.api?.DialogV2;
       if (!V2) return null;
@@ -1065,41 +1252,107 @@ export function registrarFichaDeNavePC() {
       if (!escolha || typeof escolha !== "object") return null;
 
       const faixa = escolha.faixa in ROTULO_DA_FAIXA ? escolha.faixa : "curta";
-      const formula = formulaDoDisparo({
-        baNave: ator.system?.ba ?? 0,
+      const rajada = escolha.rajada === "on";
+
+      // ── O ESTADO DAS DUAS NAVES ENTRA NA CONTA (nave-combate.js) ──
+      //
+      // Até a 1.30 o tiro só somava BA, Balístico, artilheiro e faixa: Firmar,
+      // Travar, Interferência, a energia, o Escudo de força e as avarias
+      // ficavam no chat e fora do dado.
+      const alvoAtor = alvo?.actor ?? null;
+      const alvoEhNave = Boolean(alvoAtor && ehNave(alvoAtor));
+      const naveAlvo = alvoEhNave ? naveDe(alvoAtor, ID) : {};
+      const alvoToken = alvo?.id ?? alvo?.document?.id ?? null;
+      const meuToken = this.token?.id ?? ator.getActiveTokens?.()?.[0]?.id ?? null;
+      const { termos } = termosDoAtaque({
+        atacante: nave, alvo: naveAlvo, alvoToken, suprimida: naveSuprimida(meuToken), rajada,
+        ba: ator.system?.ba ?? 0,
         balistico: bonusDeAtaque(nave, equipamentosDoAtor(ator, ID)),
         artilheiro: escolha.artilheiro,
-        penalidade: penalidadeDaFaixa(faixa),
+        faixa: penalidadeDaFaixa(faixa),
         situacao: escolha.situacao,
       });
-      const ataque = await new globalThis.Roll(formula).evaluate();
-      const natural = ataque.dice?.[0]?.total;
-      const cp = alvo?.actor?.system?.ac_total ?? alvo?.actor?.system?.ac ?? null;
-      const resultado = resultadoDoDisparo(ataque.total, cp);
+      const cpBase = alvoAtor?.system?.ac_total ?? alvoAtor?.system?.ac ?? null;
+      const cpInfo = alvoEhNave
+        ? cpDoAlvo(naveAlvo, {
+          cpBase,
+          reserva: escudoComoReserva(),
+          temEscudo: equipamentosDoAtor(alvoAtor, ID).has("escudo"),
+          ponteOk: podeUsarEscudos(naveAlvo),
+        })
+        : cpBase !== null && Number.isFinite(Number(cpBase)) ? { cp: Number(cpBase), base: Number(cpBase), partes: [] } : null;
 
-      const linhas = [txt("spacedragon.nave.disparo.chat", { arma: nomeArma, faixa: ROTULO_DA_FAIXA[faixa]() })];
-      if (resultado) {
-        linhas.push(txt("spacedragon.nave.disparo.contra", {
-          alvo: nomeAlvo, cp,
-          resultado: resultado === "acerto" ? txt("spacedragon.nave.disparo.acerto") : txt("spacedragon.nave.disparo.erro"),
-        }));
-      } else {
-        linhas.push(txt("spacedragon.nave.disparo.semAlvo"));
+      const formula = formulaDosTermos(termos);
+      const margemLigada = danoPorMargem();
+      const multiplicador = multiplicadorDeDano();
+      const avariaPorDano = alvoEhNave && camadaLigada("camadaAvarias");
+      const pvMax = Number(alvoAtor?.system?.hp?.max) || 0;
+      // a energia nas Armas vale num acerto só: "+1 dado de dano numa arma"
+      let energia = camadaLigada("camadaEnergia") ? dadosExtrasDeDano(nave) : 0;
+
+      const rolls = [];
+      const tiros = [];
+      const avarias = [];
+      let total = 0;
+      const rolar = async (f) => {
+        const r = await new globalThis.Roll(f).evaluate();
+        rolls.push(r);
+        return r;
+      };
+
+      // a metralhadora rola os QUATRO ataques; até a 1.30 rolava um só
+      for (let i = 0; i < Math.max(1, Number(arma.ataques) || 1); i += 1) {
+        const ataque = await rolar(formula);
+        const natural = ataque.dice?.[0]?.total;
+        const acerto = natural === 20 || (natural !== 1 && (!cpInfo || ataque.total >= cpInfo.cp));
+        const tiro = { total: ataque.total, natural, acerto, notas: [] };
+
+        if (natural === 1) {
+          const d = await rolar("1d6");
+          tiro.notas.push(txt("spacedragon.nave.disparo.falha", { d6: d.total, efeito: FALHA_T10_6[d.total] }));
+        }
+        if (acerto && arma.dano) {
+          let critico = null;
+          if (natural === 20) {
+            const d = await rolar("1d6");
+            critico = CRITICO_T10_6[d.total];
+            tiro.notas.push(txt("spacedragon.nave.disparo.critico", { d6: d.total, efeito: critico.texto }));
+            if (critico.avaria) avarias.push(critico.avaria);
+          }
+          const margem = margemLigada && cpInfo ? dadosPorMargem(ataque.total, cpInfo.cp) : 0;
+          const { formula: fDano, extras } = formulaDoDano(arma, { rajada, energia, margem });
+          energia = 0;
+          const rDano = await rolar(fDano);
+          const dano = danoFinal(rDano.total, { multiplicador, critico });
+          total += dano;
+          Object.assign(tiro, { dano, formulaDano: fDano, extras });
+          if (avariaPorDano && causaAvaria(dano, pvMax)) {
+            const d = await rolar("1d6");
+            const k = AVARIA_POR_DANO[d.total];
+            avarias.push(k);
+            tiro.notas.push(txt("spacedragon.nave.disparo.avariaPorDano", { avaria: AVARIAS[k].rotulo, efeito: AVARIAS[k].efeito }));
+          }
+        }
+        tiros.push(tiro);
       }
-      if (natural === 20) linhas.push(txt("spacedragon.nave.disparo.critico"));
-      if (natural === 1) linhas.push(txt("spacedragon.nave.disparo.falha"));
-      if ((arma.ataques ?? 1) > 1) linhas.push(txt("spacedragon.nave.disparo.varios", { n: arma.ataques }));
-      if (arma.jpDoAlvo) linhas.push(txt("spacedragon.nave.disparo.missil", { rodadas: arma.perseguePor ?? "?" }));
 
-      const falante = globalThis.ChatMessage?.getSpeaker?.({ actor: ator });
-      await ataque.toMessage({ speaker: falante, flavor: linhas.map((l) => `<p>${l}</p>`).join("") });
+      // a Rajada do posto vale um disparo: gasta-se aqui
+      if (nave.rajada?.ativa) await this.#gravarNave(nave, { ...nave, rajada: undefined });
 
-      // o dano sai junto quando o tiro acertou, ou quando não há CP para comparar
-      if (resultado !== "erro" && arma.dano) {
-        const dano = await new globalThis.Roll(arma.dano).evaluate();
-        await dano.toMessage({ speaker: falante, flavor: txt("spacedragon.nave.disparo.dano", { arma: nomeArma }) });
-      }
-      return { formula, total: ataque.total, resultado, faixa };
+      const cartao = cartaoDoDisparo({
+        nomeArma, faixa: ROTULO_DA_FAIXA[faixa](), nomeAlvo, termos, cpInfo, tiros, total,
+        avarias, multiplicador, arma, temAlvo: Boolean(alvo?.document?.uuid),
+      });
+      const impacto = alvo?.document?.uuid && (total > 0 || avarias.length)
+        ? { alvo: alvo.document.uuid, nome: alvo.name ?? alvoAtor?.name ?? "", dano: total, avarias }
+        : null;
+      await globalThis.ChatMessage?.create?.({
+        speaker: globalThis.ChatMessage?.getSpeaker?.({ actor: ator }),
+        content: cartao,
+        rolls,
+        ...(impacto ? { flags: { [ID]: { impacto } } } : {}),
+      });
+      return { formula, tiros, total, avarias, faixa };
     }
 
     /** Grava a XP da nave abatida; em branco volta à tabela do tipo. */

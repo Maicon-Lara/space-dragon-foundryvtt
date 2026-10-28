@@ -36,8 +36,10 @@ confere(Object.keys(ACOES_DE_POSTO).length === 5,
 for (const p of POSTOS) {
   const acoes = ACOES_DE_POSTO[p];
   confere(Array.isArray(acoes), `o posto ${p} não existe`);
-  // o problema original era posto com UMA ação fixa; três é o desenho do cofre
-  confere(acoes?.length === 3, `o posto ${p} tem ${acoes?.length} opções, esperava 3`);
+  // o problema original era posto com UMA ação fixa; três é o desenho do cofre,
+  // e a Engenharia ganhou a quarta na 1.31 (Ventilar, que tira Calor)
+  const esperadas = p === "engenharia" ? 4 : 3;
+  confere(acoes?.length === esperadas, `o posto ${p} tem ${acoes?.length} opções, esperava ${esperadas}`);
   for (const a of acoes ?? []) {
     confere(a.chave && a.rotulo, `opção sem chave ou rótulo em ${p}`);
     // a nota é o que a mesa lê; sem ela a opção não se explica na ficha

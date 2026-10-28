@@ -61,7 +61,7 @@ import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
  *
  * A ordem de ação (T7-2) veio junto pelo mesmo motivo.
  */
-import { registrarFichaDeNavePC, redesenharFichasDeNave } from "./nave-pc-ficha.js";
+import { registrarFichaDeNavePC, redesenharFichasDeNave, ligarAplicarImpacto } from "./nave-pc-ficha.js";
 import { criarNave, dialogoDeNovaNave, ligarBotaoDeNovaNave, ligarTipoQueViraNave } from "./nave-nova.js";
 import { navesAntigas, converterNave, converterTodas } from "./nave-converter.js";
 import { migrarNavesNoReady, migrarNaves, navesPorMigrar, porMigrar } from "./nave-migrar-flag.js";
@@ -187,6 +187,8 @@ Hooks.once("ready", () => {
    */
   passo("Ficha de Nave", () => registrarFichaDeNavePC());
   passo("botão de criar nave", () => ligarBotaoDeNovaNave());
+  // o botão "Aplicar" dos cartões de disparo, para o Mestre (nave-pc-ficha.js)
+  passo("aplicar disparo no alvo", () => ligarAplicarImpacto());
   passo("tipo de nave que vira nave", () => ligarTipoQueViraNave());
   // a migração das naves criadas quando as regras moravam no Star Wars: sem
   // ela a nave abre VAZIA, que parece apagada

@@ -22,6 +22,8 @@
  * danificada custa 25% e leva metade do tempo — a mesma régua do conserto de
  * aparatos do capítulo 8.
  */
+import { AVARIAS } from "./nave-combate.js";
+
 export const ESTADOS_DE_CAMARA = ["instalada", "danificada", "ausente"];
 
 export const CAMARAS = {
@@ -116,12 +118,13 @@ export const TRANCA_DO_ARSENAL = -20;
  *
  * Só as avarias DURADOURAS entram. O Leme e a Tripulação saem sozinhos no fim
  * da rodada, e é de propósito: são sustos, não estrago.
+ *
+ * Desde a 1.31 a lista sai de AVARIAS (nave-combate.js): motor → Sala de
+ * Máquinas, armas → Arsenal, casco → Corredores, sensores e escudos → Ponte.
  */
-export const AVARIA_VIRA_CAMARA = {
-  motor: "maquinas",    // a propulsão é a Sala de Máquinas
-  armas: "arsenal",     // o armamento e a munição são o Arsenal
-  sensores: "ponte",    // o radar fica na Ponte de Comando
-};
+export const AVARIA_VIRA_CAMARA = Object.fromEntries(
+  Object.entries(AVARIAS).filter(([, a]) => a.camara).map(([k, a]) => [k, a.camara]),
+);
 
 /** Reparar custa 25% da obra e leva metade do tempo (a régua do Cap. 8). */
 export const REPARO_DE_CAMARA = 0.25;

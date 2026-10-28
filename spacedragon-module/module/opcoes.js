@@ -70,6 +70,24 @@ export function regraDeNave(qual) {
 export const combateCompilado = () => regraDeNave("naveCombateCompilado");
 export const naveModular = () => regraDeNave("naveModular");
 
+/* ── AS REGRAS DA CASA DO DANO (1.31) ────────────────────────────────────────
+ *
+ * Ligadas por padrão, como o combate das Compiladas: são a resposta ao "as
+ * armas dão pouco dano para o PV das naves" do teste da mesa. Quem quiser o
+ * livro puro desliga — o multiplicador em ×1 já é o livro.
+ */
+export const danoPorMargem = () => regraDeNave("naveDanoPorMargem");
+export const escudoComoReserva = () => regraDeNave("naveEscudoReserva");
+
+export function multiplicadorDeDano() {
+  try {
+    const v = Number(globalThis.game?.settings?.get?.(ID, "naveMultiplicadorDano"));
+    return [1, 2, 3].includes(v) ? v : 1;
+  } catch {
+    return 1;
+  }
+}
+
 /**
  * As cinco opções de nave. `aoMudar` redesenha as Fichas de Nave abertas: quem
  * troca a opção quer ver o efeito sem fechar a ficha.
@@ -96,6 +114,24 @@ export function registrarOpcoesDeNave(aoMudar = () => {}) {
   reg("naveModular", true, {
     name: "spacedragon.opcao.naveModular.nome",
     hint: "spacedragon.opcao.naveModular.dica",
+  });
+  reg("naveDanoPorMargem", true, {
+    name: "spacedragon.opcao.naveDanoPorMargem.nome",
+    hint: "spacedragon.opcao.naveDanoPorMargem.dica",
+  });
+  reg("naveEscudoReserva", true, {
+    name: "spacedragon.opcao.naveEscudoReserva.nome",
+    hint: "spacedragon.opcao.naveEscudoReserva.dica",
+  });
+  globalThis.game.settings.register(ID, "naveMultiplicadorDano", {
+    name: "spacedragon.opcao.naveMultiplicadorDano.nome",
+    hint: "spacedragon.opcao.naveMultiplicadorDano.dica",
+    scope: "world",
+    config: true,
+    type: Number,
+    choices: { 1: "×1", 2: "×2", 3: "×3" },
+    default: 1,
+    onChange: () => aoMudar(),
   });
   reg("camadaEnergia", false, {
     name: "spacedragon.opcao.camadaEnergia.nome",

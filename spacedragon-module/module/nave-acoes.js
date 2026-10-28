@@ -22,6 +22,7 @@
  */
 
 import { ACOES_DE_POSTO, AUTOMATIZA, POSTOS, LIMPA_NO_FIM_DA_RODADA } from "./tripulacao.js";
+import { AVARIAS, avariaParaReparar, repararAvaria, CALOR_POR_VENTILAR } from "./nave-combate.js";
 
 /** A ação de um posto, pela chave. */
 export function acharAcao(posto, chave) {
@@ -74,7 +75,7 @@ export function limparFimDaRodada(nave) {
  * propósito: sortear aqui tiraria o dado da mesa, e é o dado que faz forçar o
  * reator ser uma aposta em vez de uma escolha grátis.
  */
-export function aplicarAcao(nave, posto, chave) {
+export function aplicarAcao(nave, posto, chave, { alvo = null, alvoNome = "", avaria = null } = {}) {
   const acao = acharAcao(posto, chave);
   if (!acao) return { erro: `Ação desconhecida: ${posto}/${chave}` };
   if (!ehAutomatica(chave)) {
@@ -82,6 +83,11 @@ export function aplicarAcao(nave, posto, chave) {
   }
 
   const e = acao.efeito ?? {};
+  // Travar e Supressão valem contra UMA nave: sem alvo marcado, não há a quem
+  // aplicar, e gravar o efeito "no ar" foi o que deixou os dois sem função
+  if (e.exigeAlvo && !alvo) {
+    return { erro: `“${acao.rotulo}” precisa de um alvo: marque a nave inimiga (tecla T) antes.` };
+  }
   const nova = { ...(nave ?? {}) };
   const linhas = [];
   const rolagens = [];
@@ -112,41 +118,54 @@ export function aplicarAcao(nave, posto, chave) {
     linhas.push("o perseguidor avança **duas** marcas (§7)");
   }
 
+  if (e.rajada) nova.rajada = { ativa: true };
   if (e.ataque) linhas.push(`**${e.ataque}** no ataque`);
   if (e.dadosDeDano) linhas.push(`**+${e.dadosDeDano}** dado(s) de dano se acertar`);
+  if (e.rajada) linhas.push("vale no **próximo disparo** desta rodada");
 
   if (e.semDano) linhas.push("**sem dano**");
-  if (e.ataqueDoAlvo) linhas.push(`o alvo leva **${e.ataqueDoAlvo}** no próximo ataque dele`);
-  if (e.bloqueiaEvasivaDoAlvo) {
-    nova.suprimida = { ativa: true };
-    linhas.push("o alvo **não pode** fazer manobra evasiva nesta rodada");
+  // A SUPRESSÃO MORA NA NAVE QUE SUPRIME, apontando o alvo. O jogador não
+  // grava na ficha do inimigo (é do Mestre); o disparo do inimigo procura,
+  // nas naves em cena, quem o está suprimindo.
+  if (e.ataqueDoAlvo) {
+    nova.supressao = { alvo };
+    linhas.push(`${alvoNome || "o alvo"} leva **${e.ataqueDoAlvo}** nos ataques dele até o fim da rodada`);
   }
+  if (e.bloqueiaEvasivaDoAlvo) linhas.push("e **não pode** fazer manobra evasiva nesta rodada");
 
   if (e.energiaExtra) {
     const energia = { ...(nova.energia ?? {}) };
     energia.extra = (Number(energia.extra) || 0) + e.energiaExtra;
     nova.energia = energia;
     linhas.push(`**+${e.energiaExtra}** pontos de energia nesta rodada`);
+    // o risco deixou de ser um 1d6 na hora: virou Calor, que acumula e cobra
+    // no fim da rodada (nave-combate.js). Um risco só, e com memória.
+    linhas.push(`**+${e.energiaExtra}** de Calor no fim da rodada`);
   }
-  if (e.riscoEm1d6) {
-    rolagens.push({
-      formula: "1d6",
-      rotulo: "Risco de forçar o reator",
-      // num 1 a Sala de Máquinas sofre avaria — e é a câmara que habilita o
-      // reparo em combate, então o risco é perder justamente a saída
-      falhaEm: e.riscoEm1d6,
-      camara: e.avariaSe,
-    });
-    linhas.push(`role **1d6**: num **${e.riscoEm1d6}**, a Sala de Máquinas sofre avaria`);
+  if (e.calor) {
+    const antes = Math.max(0, Number(nova.calor) || 0);
+    nova.calor = Math.max(0, antes + (e.calor < 0 ? -CALOR_POR_VENTILAR : e.calor));
+    linhas.push(`Calor do reator: **${antes} → ${nova.calor}**`);
+  }
+  if (e.reparar) {
+    const qual = avariaParaReparar(nova, avaria);
+    if (qual) {
+      Object.assign(nova, repararAvaria(nova, qual));
+      linhas.push(`avaria **${AVARIAS[qual].rotulo}** reparada (${AVARIAS[qual].efeito} deixa de valer)`);
+    } else {
+      // sem avaria, o mesmo gesto recupera casco: quem rola o 1d10 é a ficha
+      rolagens.push({ formula: "1d10", rotulo: "Reparo do casco", curaPV: true });
+      linhas.push("sem avaria a reparar: o casco recupera **1d10 PV**");
+    }
   }
 
   if (e.trava) {
-    nova.trava = true;
-    linhas.push("alvo **travado**: +2 no próximo ataque aliado contra ele");
+    nova.trava = { alvo };
+    linhas.push(`${alvoNome || "alvo"} **travado**: +2 nos ataques desta nave contra ele, até o fim da rodada`);
   }
   if (e.ataqueInimigo) {
     nova.interferencia = true;
-    linhas.push(`o inimigo leva **${e.ataqueInimigo}** no próximo ataque contra esta nave`);
+    linhas.push(`o inimigo leva **${e.ataqueInimigo}** nos ataques contra esta nave, até o fim da rodada`);
   }
 
   if (e.cancelaPenalidadeDeAvaria) {

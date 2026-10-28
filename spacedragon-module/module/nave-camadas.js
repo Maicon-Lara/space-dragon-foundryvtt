@@ -22,6 +22,7 @@ import {
 import { camadaLigada } from "./opcoes.js";
 import { t as txt } from "./i18n.js";
 import { ETAPAS } from "./nave-salto.js";
+import { AVARIAS, lerAvaria, calorNoFimDaRodada } from "./nave-combate.js";
 
 export const MARCA_CAMADAS = "sw-painel-camadas";
 export const CLASSE_ENERGIA = "sw-energia-btn";
@@ -38,14 +39,17 @@ export const CLASSE_RELOGIO = "sw-relogio-btn";
  * isso a sobra aparece como sobra, e não como reserva.
  */
 export function painelDeEnergia(nave, tamanho) {
-  const total = energiaDoReator(tamanho);
   const atual = nave?.energia ?? {};
+  // o "Forçar o reator" soma ao que o reator dá nesta rodada; antes ele gravava
+  // os +2 e o painel não os contava, e a energia forçada não tinha onde entrar
+  const total = energiaDoReator(tamanho) + (Number(atual.extra) || 0);
   const gasto = energiaGasta(atual);
   const sobra = total - gasto;
   const efeito = efeitoDaEnergia(atual, true);
 
   const destino = ([chave, d]) => {
     const n = Number(atual[chave]) || 0;
+    const custo = d.custo ?? 1;
     return (
       `<div class="energia-destino">` +
       `<span class="energia-nome">${d.rotulo}</span>` +
@@ -53,7 +57,7 @@ export function painelDeEnergia(nave, tamanho) {
       `${n <= 0 ? " disabled" : ""} title="${txt("spacedragon.nave.camadas.tirarPonto")}">−</button>` +
       `<span class="energia-pontos">${n}</span>` +
       `<button type="button" class="${CLASSE_ENERGIA}" data-destino="${chave}" data-passo="1"` +
-      `${sobra <= 0 ? " disabled" : ""} title="${d.livro}">+</button>` +
+      `${sobra < custo ? " disabled" : ""} title="${d.livro}">+</button>` +
       `<span class="energia-efeito">${d.livro}</span>` +
       `</div>`
     );
@@ -63,7 +67,12 @@ export function painelDeEnergia(nave, tamanho) {
     efeito.jp ? `JP +${efeito.jp}` : null,
     efeito.cp ? `CP +${efeito.cp}` : null,
     efeito.dadosDeDano ? txt("spacedragon.nave.camadas.dadosDeDano", { n: efeito.dadosDeDano }) : null,
+    efeito.acoesExtras ? txt("spacedragon.nave.camadas.acoesExtras", { n: efeito.acoesExtras }) : null,
   ].filter(Boolean).join(" · ");
+  // o Calor é a única coisa da camada que ACUMULA: mostrar o de agora e o que
+  // ele vai ser no fim da rodada é o que deixa a aposta à vista
+  const calor = Math.max(0, Number(nave?.calor) || 0);
+  const calorDepois = calorNoFimDaRodada(nave);
 
   return (
     `<div class="camada camada-energia">` +
@@ -74,6 +83,8 @@ export function painelDeEnergia(nave, tamanho) {
     `${sobra < 0 ? txt("spacedragon.nave.camadas.alemDoReator", { n: -sobra }) : txt("spacedragon.nave.camadas.sobram", { sobra, total })}</span></div>` +
     Object.entries(DESTINOS_DE_ENERGIA).map(destino).join("") +
     (resumo ? `<div class="camada-resumo">${txt("spacedragon.nave.camadas.nestaRodada", { resumo })}</div>` : "") +
+    `<div class="camada-resumo${calorDepois > 0 ? " calor" : ""}">` +
+    txt("spacedragon.nave.camadas.calor", { calor, depois: calorDepois }) + `</div>` +
     `<div class="camada-nota">${txt("spacedragon.nave.camadas.naoAcumula")}</div>` +
     `</div>`
   );
@@ -91,18 +102,23 @@ export function painelDeEnergia(nave, tamanho) {
 export function painelDeAvarias(nave, rodadaAtual) {
   const avarias = nave?.avarias ?? {};
   const ativas = Object.entries(avarias)
-    .filter(([, r]) => Number.isFinite(Number(r)))
-    .map(([chave, rodada]) => ({ chave, ...prazoDaAvaria(chave, Number(rodada), rodadaAtual) }))
-    .filter((a) => a.prazo != null);
+    .filter(([chave, v]) => AVARIAS[chave] && lerAvaria(v))
+    .map(([chave, v]) => {
+      const a = lerAvaria(v);
+      const p = prazoDaAvaria(chave, a.rodada, rodadaAtual);
+      return { chave, ...(p ?? { prazo: null }), venceu: a.vencida || Boolean(p?.venceu) };
+    });
 
   const linha = (a) => {
-    const venceu = a.venceu;
-    return (
-      `<li class="${venceu ? "avaria-venceu" : "avaria-corre"}">` +
-      `<strong>${a.chave}</strong> — ` +
-      (venceu
+    const d = AVARIAS[a.chave];
+    const estado = a.prazo == null
+      ? txt("spacedragon.nave.camadas.semPrazo")
+      : a.venceu
         ? txt("spacedragon.nave.camadas.prazoVencido")
-        : txt("spacedragon.nave.camadas.restam", { restam: a.restam, prazo: a.prazo })) +
+        : txt("spacedragon.nave.camadas.restam", { restam: a.restam, prazo: a.prazo });
+    return (
+      `<li class="${a.venceu ? "avaria-venceu" : "avaria-corre"}">` +
+      `<strong>${d.rotulo}</strong> (${d.efeito}) — ${estado}` +
       `</li>`
     );
   };

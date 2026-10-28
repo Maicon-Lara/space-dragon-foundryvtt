@@ -31,7 +31,8 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
 {
   for (const [posto, acoes] of Object.entries(ACOES_DE_POSTO)) {
     for (const a of acoes) {
-      const r = aplicarAcao({}, posto, a.chave);
+      // com um alvo marcado, que é como Travar e Supressão são usadas
+      const r = aplicarAcao({}, posto, a.chave, { alvo: "tok1", alvoNome: "TIE" });
       if (AUTOMATIZA.has(a.chave)) {
         confere(!r.erro, `${posto}/${a.chave} é automática e devolveu erro: ${r.erro}`);
         confere(r.cartao?.linhas?.length > 0,
@@ -72,28 +73,30 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
     "Correr numa nave sem relógio de fuga devia começar o relógio do perseguidor");
 }
 
-/* ── FORÇAR O REATOR: A ENERGIA ENTRA, O DADO FICA COM A MESA ──────────────── */
+/* ── FORÇAR O REATOR: A ENERGIA ENTRA, O RISCO VIRA CALOR ─────────────────── */
 {
   const r = aplicarAcao({ energia: { motores: 1 } }, "engenharia", "forcar");
 
   confere(r.nave.energia.extra === 2, `o Forçar devia dar +2 de energia, veio ${r.nave.energia.extra}`);
   confere(r.nave.energia.motores === 1, "o Forçar apagou a energia já distribuída");
-
-  confere(r.rolagens.length === 1, "o Forçar devia pedir uma rolagem");
-  const rolagem = r.rolagens[0];
-  confere(rolagem.formula === "1d6", `a rolagem devia ser 1d6, veio ${rolagem.formula}`);
-  confere(rolagem.falhaEm === 1, "a avaria acontece num 1");
-  confere(rolagem.camara === "maquinas",
-    "a avaria do Forçar é na Sala de Máquinas — a câmara que habilita o reparo em combate, " +
-    "e é isso que faz o risco doer");
-
-  // NÃO rola: nada de resultado no retorno
-  confere(!("resultado" in rolagem) && !("valor" in rolagem),
-    "a função sorteou o dado — isso tira a aposta da mesa e torna o Forçar energia grátis");
-  // duas chamadas dão o mesmo: se sorteasse, não dariam
+  // desde a 1.31 o risco é o Calor (nave-combate.js), cobrado no fim da rodada
+  confere(r.rolagens.length === 0, "o Forçar não rola mais na hora: o risco é o Calor");
   const r2 = aplicarAcao({ energia: { motores: 1 } }, "engenharia", "forcar");
   confere(JSON.stringify(r.nave) === JSON.stringify(r2.nave),
     "duas aplicações iguais deram naves diferentes — alguma coisa aqui está sorteando");
+
+  const ventilou = aplicarAcao({ calor: 3 }, "engenharia", "ventilar");
+  confere(ventilou.nave.calor === 1, `Ventilar devia tirar 2 de Calor (3 → 1), deu ${ventilou.nave.calor}`);
+  confere(aplicarAcao({ calor: 1 }, "engenharia", "ventilar").nave.calor === 0, "o Calor não fica negativo");
+}
+
+/* ── REPARAR: TIRA A AVARIA QUE MAIS TRAVA, OU CURA O CASCO ───────────────── */
+{
+  const r = aplicarAcao({ avarias: { motor: { rodada: 1 }, pane: { rodada: 2 } } }, "engenharia", "reparar");
+  confere(!r.nave.avarias.pane && r.nave.avarias.motor, "o Reparar devia tirar a pane primeiro");
+  const semAvaria = aplicarAcao({}, "engenharia", "reparar");
+  confere(semAvaria.rolagens[0]?.formula === "1d10" && semAvaria.rolagens[0]?.curaPV,
+    "sem avaria, o Reparar devia rolar 1d10 de PV");
 }
 
 /* ── OS EFEITOS QUE DURAM ATÉ O FIM DA RODADA ──────────────────────────────── */
@@ -102,10 +105,14 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
   // a forma do estado é a que LIMPA_NO_FIM_DA_RODADA declara: gravar numa forma
   // e limpar noutra deixaria o efeito ligado para sempre
   confere(firmou.nave.firmar?.ativa === true, "Firmar não marcou o estado na forma que a limpeza espera");
-  const suprimiu = aplicarAcao({}, "artilharia", "supressao");
-  confere(suprimiu.nave.suprimida?.ativa === true, "Supressão não marcou o estado");
-  const travou = aplicarAcao({}, "sensores", "travar");
-  confere(travou.nave.trava === true, "Travar alvo não marcou o estado");
+  // Supressão e Travar apontam UM token: sem alvo, recusam
+  confere(aplicarAcao({}, "artilharia", "supressao").erro, "Supressão sem alvo devia recusar");
+  const suprimiu = aplicarAcao({}, "artilharia", "supressao", { alvo: "tok1" });
+  confere(suprimiu.nave.supressao?.alvo === "tok1", "Supressão não marcou o alvo");
+  const travou = aplicarAcao({}, "sensores", "travar", { alvo: "tok1" });
+  confere(travou.nave.trava?.alvo === "tok1", "Travar alvo não marcou o alvo");
+  const rajou = aplicarAcao({}, "artilharia", "rajada");
+  confere(rajou.nave.rajada?.ativa === true, "Rajada não marcou o próximo disparo");
 
   // ── E A RODADA LIMPA ──
   const suja = {
@@ -119,6 +126,9 @@ const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
 
   confere(!limpa.firmar?.ativa, "o Firmar sobreviveu à rodada");
   confere(!limpa.suprimida?.ativa, "a Supressão sobreviveu à rodada");
+  const limpa2 = limparFimDaRodada({ trava: { alvo: "a" }, supressao: { alvo: "b" }, rajada: { ativa: true }, energia: { acoes: 1 } });
+  confere(!limpa2.trava && !limpa2.supressao && !limpa2.rajada?.ativa && limpa2.energia.acoes === 0,
+    "Travar, Supressão, Rajada e a ação extra deviam sair no fim da rodada");
   confere(!limpa.interferencia, "a Interferência sobreviveu");
   confere(!limpa.aguentem?.ativa, "o Aguentem firme sobreviveu");
   confere(limpa.energia.motores === 0 && limpa.energia.escudos === 0,
@@ -144,8 +154,8 @@ if (problemas.length) {
   process.exit(1);
 }
 console.log(
-  "  ✔ ações de posto: as 8 automáticas produzindo efeito e as 7 de mesa recusadas com o " +
+  "  ✔ ações de posto: as automáticas produzindo efeito e as de mesa recusadas com o " +
     "motivo, Correr apressando o perseguidor em DUAS marcas (§7), o Forçar entregando a " +
-    "energia e deixando o 1d6 com a mesa, e o fim da rodada limpando o que é de rodada — " +
+    "energia e o risco como Calor, Ventilar, Reparar, Travar e Supressão com alvo, e o fim da rodada limpando o que é de rodada — " +
     "sem levar junto o tipo, as câmaras e os relógios"
 );

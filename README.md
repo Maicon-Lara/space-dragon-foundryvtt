@@ -6,7 +6,7 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 1.30.0 — os onze capítulos portados.** 433 documentos em dez
+> **Estado: 1.31.0 — os onze capítulos portados.** 433 documentos em dez
 > compêndios, agrupados na pasta **Space Dragon** da barra de compêndios: 42 de
 > classe, 10 de espécie, 40 de equipamento, 101 poderes mentais, 80 aparatos e
 > feitos, 59 criaturas e personagens de exemplo, 63 de naves, 4 tabelas de
@@ -96,8 +96,11 @@ Dragon*:
 |---|---|---|
 | **Combate de naves das Regras Compiladas** | os cinco postos com as quinze ações, a câmara danificada que cala a nave (Ponte avariada: sem armas nem escudos) e as três camadas | ligada |
 | **Nave modular (regra da casa)** | de fábrica só Ponte, Sala de Máquinas e casco; o resto se compra pela T10-2, com limite por tamanho | ligada |
-| Camada: energia do reator | §7 das Regras Compiladas | desligada |
-| Camada: controle de avarias | §7 das Regras Compiladas | desligada |
+| **Dano de nave por margem (regra da casa)** | +1 dado de dano a cada 5 pontos acima do CP do alvo | ligada |
+| **Escudo de força como reserva (regra da casa)** | o escudo absorve 20 / 50 / 100 de dano por combate (M / G / C), em vez de +10 no CP | ligada |
+| **Multiplicador de dano de nave (regra da casa)** | ×1 (livro), ×2 ou ×3 no dano das armas de nave | ×1 |
+| Camada: energia do reator | §7 das Regras Compiladas; com ela, a ação extra por 2 pontos e o Calor do reator (casa) | desligada |
+| Camada: controle de avarias | §7 das Regras Compiladas; com ela, a avaria por dano pesado, 10% do PV (casa) | desligada |
 | Camada: fuga como relógio | §7 das Regras Compiladas | desligada |
 
 Para jogar **só com o livro**, desligue as duas primeiras. A aba Tripulação passa
@@ -127,10 +130,22 @@ com movimento em quadrados, alcances, a rodada, a T10-5 e a XP.
 O ataque de uma arma de nave é rolado pela Ficha de Nave: ela mede a distância
 até o alvo marcado no mapa, escolhe a faixa (ou avisa que está fora de alcance),
 preenche o BA à distância de quem está na Artilharia e rola 1d20 + BA da nave +
-Computador Balístico + artilheiro. Com alvo, compara com o CP dele e rola o
-dano no acerto. Isso também dispensa a munição que a automação de combate do
-Qualidade de Vida exige de toda arma à distância e que travava o disparo. Os
-outros ataques continuam com o sistema e o Qualidade de Vida.
+Computador Balístico + artilheiro. Isso também dispensa a munição que a automação
+de combate do Qualidade de Vida exige de toda arma à distância e que travava o
+disparo. Os outros ataques continuam com o sistema e o Qualidade de Vida.
+
+**Desde a 1.31 o disparo lê as duas naves** (`module/nave-combate.js`): Firmar,
+Travar, Rajada, Supressão, Interferência, a energia, o Escudo de força e as
+avarias entram na conta, e sem Ponte (ou em pane geral) a nave não atira. O
+crítico e a falha da T10-6 são rolados no cartão, a metralhadora faz os quatro
+ataques, e o Mestre aplica o dano no alvo pelo botão do cartão: o escudo
+absorve, o PV desce e as avarias entram com a rodada. O Fim da Rodada cobra o
+Calor e os prazos de avaria. A regra inteira está na página *Guia rápido de
+combate espacial* do journal do Cap. 10.
+
+**Botão de iniciativa.** Com a Ordem de Ação desligada, a ficha de personagem e
+a de nave têm o botão *Rolar iniciativa* no topo da aba de ataques, pela regra do
+Old Dragon 2 (modo padrão ou individual, o que estiver nas opções do sistema).
 
 **A iniciativa da nave.** A nave não tem atributo, e a iniciativa padrão do Old
 Dragon 2 (1d20 contra Destreza ou Sabedoria) a punha em "atributos inválidos".
@@ -215,7 +230,7 @@ spacedragon-module/   o que o Foundry carrega
 ```
 npm install
 npm run build       # tools/data → packs-src → LevelDB
-npm test            # os 24 testes, em paralelo (node tools/roda-testes.mjs --filtro nave roda só alguns)
+npm test            # os testes, em paralelo (node tools/roda-testes.mjs --filtro nave roda só alguns)
 npm run publicar    # build + testes + zip
 ```
 

@@ -9,6 +9,8 @@ import { EQUIPAMENTOS_DE_NAVE } from "../../spacedragon-module/module/equipament
 import { LADO_POR_TAMANHO } from "../../spacedragon-module/module/nave-token.js";
 import { XP_POR_TIPO } from "../../spacedragon-module/module/nave-xp.js";
 import { TIPOS } from "../../spacedragon-module/module/tipos-de-nave.js";
+import { AVARIAS } from "../../spacedragon-module/module/nave-combate.js";
+import { CAMARAS } from "../../spacedragon-module/module/camaras.js";
 
 /* ── O GUIA RÁPIDO: os números vêm das mesmas fontes que a ficha usa ───────── */
 
@@ -29,6 +31,14 @@ const linhasDeAlcance = Object.values(EQUIPAMENTOS_DE_NAVE)
     return `<tr><td>${e.rotulo}</td><td>${e.efeito.arma.dano}</td>` +
       `<td>${c} m · ${quadrados(c)}</td><td>${m} m · ${quadrados(m)}</td><td>${l} m · ${quadrados(l)}</td></tr>`;
   })
+  .join("");
+
+// as avarias saem da lista única do disparo (nave-combate.js): o guia não
+// pode dizer um prazo e a ficha contar outro
+const AVARIAS_DO_GUIA = Object.values(AVARIAS)
+  .map((a) => `<tr><td>${a.rotulo}</td><td>${a.efeito}</td>` +
+    `<td>${a.prazo ? `${a.prazo} rodada(s)` : "sai no fim da rodada"}</td>` +
+    `<td>${a.camara ? CAMARAS[a.camara].rotulo : "—"}</td></tr>`)
   .join("");
 
 const linhasDeXP = Object.entries(TIPOS)
@@ -273,6 +283,51 @@ o teste é não poder fazer a JP. Costuma gastar combustível.</li>
 modificador do d20:</p>
 ${tab(["resultado do teste", "modificador na JP"],
   T10_5.map((l) => `<tr><td>${l.resultado}</td><td>${l.mod > 0 ? `+${l.mod}` : l.mod}</td></tr>`).join(""))}
+
+<h2>Iniciativa (Old Dragon 2)</h2>
+<p>Com a Ordem de Ação desligada (o padrão), a mesa usa a iniciativa do Old Dragon 2:
+<strong>1d20 ≤ maior entre Destreza e Intelecto</strong>, uma vez por combate; quem passa age
+antes dos PNJs, quem falha, depois. A nave testa com quem está no <strong>Leme</strong>. O botão
+<em>Rolar iniciativa</em> fica no topo da aba de ataques da ficha de personagem e da de nave.</p>
+
+<h2>O disparo, com a tripulação (1.31)</h2>
+<p>A Ficha de Nave soma sozinha tudo o que a rodada pôs em jogo, e o cartão no chat mostra
+cada parte:</p>
+<ul>
+<li><strong>Ataque:</strong> BA da nave + Balístico + artilheiro + faixa, mais Firmar (+2),
+alvo travado pelos Sensores (+2), Rajada (−5), nave suprimida (−2), interferência do alvo (−2)
+e as avarias (armas −5, sensores −2). Sem Ponte, ou em pane geral, a nave não atira.</li>
+<li><strong>CP do alvo:</strong> o da ficha, mais o Escudo de força, a energia nos Escudos
+(+2 por ponto) e o casco avariado (−5).</li>
+<li><strong>Dano:</strong> o dado da arma, +1 dado de energia nas Armas (num acerto),
++1 da Rajada e, <strong>por margem (casa)</strong>, +1 dado a cada 5 pontos acima do CP. Depois o
+multiplicador da mesa (casa, ×1 a ×3) e o ×2 do crítico.</li>
+<li><strong>Crítico e falha:</strong> o 1d6 da T10-6 é rolado no próprio cartão, e as avarias
+do crítico entram no alvo.</li>
+<li><strong>Metralhadora:</strong> os 4 ataques saem no mesmo cartão.</li>
+<li><strong>Aplicar:</strong> o Mestre clica no botão do cartão. O escudo absorve, o PV desce
+e as avarias entram com a rodada do combate.</li>
+</ul>
+
+<h2>Escudo como reserva (regra da casa)</h2>
+<p>Em vez de +10 no CP, o Escudo de força absorve dano por combate: <strong>20</strong> (Média),
+<strong>50</strong> (Gigantesca), <strong>100</strong> (Colossal). Cada ponto de energia nos Escudos
+absorve mais 5 na rodada. Num combate novo ele volta cheio. Desligue em
+<em>Configurações › Space Dragon</em> para usar o +10 do livro.</p>
+
+<h2>Avarias (Controle de avarias)</h2>
+${tab(["avaria", "efeito", "prazo", "câmara se o prazo vencer"], AVARIAS_DO_GUIA)}
+<p>Vêm do crítico da T10-6 e, <strong>na casa</strong>, de todo acerto que tire <strong>10% ou mais do
+PV máximo</strong> do alvo (1d6: motor, armas, casco, sensores, escudos, tripulação). A Engenharia
+<strong>Repara</strong> uma por ação. Prazo vencido: a câmara fica danificada (obra a 25%, metade do
+prazo), e a penalidade continua até o Reparar.</p>
+
+<h2>Energia e Calor (camada de energia)</h2>
+<p>O reator dá <strong>2 / 3 / 4 / 6</strong> pontos por rodada (P / M / G / C). Um ponto compra
++2 na JP, +2 no CP ou +1 dado de dano; <strong>dois pontos compram uma ação extra</strong> para um
+posto. A energia não acumula. O <strong>Calor</strong>, sim: +1 por ponto forçado e por ação extra;
+no fim da rodada a nave perde 1 e o Mestre rola <strong>1d6 ≤ Calor</strong> para avaria na Sala de
+Máquinas. A Engenharia pode <strong>Ventilar</strong> (−2).</p>
 
 <h2>XP de nave abatida (regra da casa)</h2>
 <p>O livro não dá XP a naves. No fim do combate, as naves inimigas entram nos derrotados
