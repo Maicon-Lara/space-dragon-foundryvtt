@@ -143,11 +143,43 @@
       "drawn": false,
       "_id": "2yQjhcTM5nLYjzvb",
       "name": "",
-      "description": "Segredo de estado ou militar",
+      "description": "Segredos sobre o passado dos personagens",
       "documentUuid": null,
       "flags": {},
       "img": "systems/olddragon2e/assets/icons/d6.svg",
       "_key": "!tables.results!8HKCzdiNE0n1OIaH.2yQjhcTM5nLYjzvb"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "XXiDKhnyHK3JYxnJ",
+      "name": "",
+      "description": "Busca por arma capaz de mudar o curso de uma guerra",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.XXiDKhnyHK3JYxnJ"
+    },
+    {
+      "type": "text",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "5AdwYDk8t3fRTomR",
+      "name": "",
+      "description": "Caça a um fugitivo espacial",
+      "documentUuid": null,
+      "flags": {},
+      "img": "systems/olddragon2e/assets/icons/d6.svg",
+      "_key": "!tables.results!8HKCzdiNE0n1OIaH.5AdwYDk8t3fRTomR"
     }
   ],
   "replacement": true,
@@ -164,7 +196,7 @@
     "lastModifiedBy": "spacedragonbld01",
     "exportSource": null
   },
-  "formula": "1d9",
+  "formula": "1d11",
   "sort": 400,
   "ownership": {
     "default": 0

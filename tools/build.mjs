@@ -27,7 +27,7 @@ import { regras } from "./data/regras.mjs";
 import { mutacoesJournal } from "./data/mutacoes-journal.mjs";
 import { TESTES } from "./data/testes.mjs";
 import { testesJournal } from "./data/testes-journal.mjs";
-import { ARMAS, VESTES, TIPOS, PORTES } from "./data/equipamento.mjs";
+import { ARMAS, VESTES, ITENS_GERAIS, TIPOS, PORTES } from "./data/equipamento.mjs";
 import { equipamentoJournal } from "./data/equipamento-journal.mjs";
 import { PODERES } from "./data/poderes.mjs";
 import { APARATOS, CATEGORIAS_POR_CLASSE } from "./data/aparatos.mjs";
@@ -396,7 +396,8 @@ function montaEquipamento() {
   const docs = [];
   const armas = folderDoc("Armas", "Item", "sd-armas", { sort: 1 });
   const vestes = folderDoc("Vestes e Proteção", "Item", "sd-vestes", { sort: 2 });
-  docs.push(armas, vestes);
+  const gerais = folderDoc("Itens Gerais", "Item", "sd-itens-gerais", { sort: 3 });
+  docs.push(armas, vestes, gerais);
 
   ARMAS.forEach((a, i) => {
     const corpo = ehCorpoACorpo(a);
@@ -437,6 +438,18 @@ function montaEquipamento() {
       cost: `${v.preco.toLocaleString("pt-BR")} créditos`,
       weight_in_grams: Math.round((v.peso ?? 0) * 1000),
     }, vestes._id, "sd-veste", i * 10));
+  });
+
+  // T5-4. Os bens (aerocarro, aposentos…) não entram: ninguém os põe na
+  // mochila, e ficam só no journal.
+  ITENS_GERAIS.forEach((g, i) => {
+    docs.push(miscDoc({
+      nome: tituloDeItem(g.nome),
+      seedNome: g.nome,
+      desc: g.desc,
+      cost: `${g.preco.toLocaleString("pt-BR")} créditos`,
+      weight_in_grams: Math.round((g.peso ?? 0) * 1000),
+    }, gerais._id, "sd-item-geral", i * 10));
   });
 
   return docs;

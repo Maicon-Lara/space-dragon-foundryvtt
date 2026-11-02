@@ -6,9 +6,9 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 1.31.0 — os onze capítulos portados.** 438 documentos em dez
+> **Estado: 1.31.0 — os onze capítulos portados.** 462 documentos em dez
 > compêndios, agrupados na pasta **Space Dragon** da barra de compêndios: 42 de
-> classe, 10 de espécie, 40 de equipamento, 101 poderes mentais, 80 aparatos e
+> classe, 10 de espécie, 64 de equipamento, 101 poderes mentais, 80 aparatos e
 > feitos, 59 criaturas e personagens de exemplo, 68 de naves, 4 tabelas de
 > rolagem, 24 macros e 10 journals de regra, um por capítulo.
 
@@ -54,7 +54,7 @@ que os créditos excluem da permissão de reprodução.
 |---|---|
 | **Espécies** | Humano, Androide, Mutante — o Mutante escolhe as duas mutações na própria ficha |
 | **Classes** | as 4 do Cap. 3 e as 13 especializações, cada uma como classe própria que herda a base |
-| **Equipamento** | 32 armas e 8 vestes, do Cap. 5 |
+| **Equipamento** | 32 armas, 8 vestes e 24 itens gerais, do Cap. 5 |
 | **Poderes Mentais** | os 101 do Cap. 9, uma pasta por Grandeza |
 | **Aparatos** | 54 aparatos e 26 feitos científicos, do Cap. 8 |
 | **Bestiário** | 49 criaturas e 8 personagens de exemplo, do Cap. 11 |
@@ -259,7 +259,7 @@ acusa o erro. Todo push também roda o build completo em
 | 2 — Espécies | 15 | ✅ as três, com as 20 mutações |
 | 3 — Classes | 24 | ✅ as quatro, com as 12 especializações |
 | 4 — Subatributos | 6 | ✅ PV, CP, BA, JP, idiomas, Afiliação |
-| 5 — Créditos e Equipamento | 10 | ✅ journal + 42 itens |
+| 5 — Créditos e Equipamento | 10 | ✅ journal (T5-1 a T5-5) + 64 itens |
 | 6 — Aventuras Espaciais | 10 | ✅ journal (gravidade, vácuo, transporte) |
 | 7 — Combate e Danos | 16 | ✅ journal (Ordem de Ação, críticos, cura e morte) |
 | 8 — Aparatos e Feitos Científicos | 34 | ✅ journal + 82 aparatos e feitos, por NT |

@@ -55,7 +55,15 @@ export const T7_3 = {
     { situacao: "Atacando de nível superior", mod: "+2", nota: "Em escadas, rampas, rochas." },
     { situacao: "Pelas costas do alvo", mod: "+2", nota: "Apenas gatunos recebem este bônus." },
     { situacao: "Atacando enquanto pilota ou monta", mod: "−3", nota: "Quando dá para soltar os controles por um instante, ou montado num animal." },
-    { situacao: "Atacando com duas armas", mod: "−4 e −6", nota: "−4 para a arma principal, que precisa ser média, e −6 para a secundária." },
+    { situacao: "Atacando com duas armas", mod: "−4 e −6", nota: "−4 para a arma principal (média) e −6 para a secundária (leve)." },
+    { situacao: "Arma pequena, 2 mãos", mod: "+2", nota: "Empunhando uma arma leve com as duas mãos, para mais estabilidade." },
+    { situacao: "Arma média, 1 mão", mod: "−2", nota: "Empunhando uma arma média com uma mão." },
+  ],
+  "Visibilidade": [
+    { situacao: "Alvo invisível ou atacante cego", mod: "−10", nota: "Apenas um dos casos aplica o modificador." },
+    { situacao: "Cobertura simples", mod: "−2", nota: "Atrás de plantas ralas, grade, pessoas na linha de tiro etc." },
+    { situacao: "Cobertura total", mod: "−10", nota: "Atrás de uma rocha, parede etc." },
+    { situacao: "Pouca luz ou visibilidade", mod: "−4", nota: "Planeta sem muita luz solar e lunar, ou através de névoa ou fumaça densa." },
   ],
   "Distância": [
     { situacao: "Tiro à queima-roupa", mod: "+2", nota: "Arma de fogo contra alvo a até 3 metros. Se o oponente estiver desarmado, é acerto crítico." },

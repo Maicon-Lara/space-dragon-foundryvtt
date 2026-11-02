@@ -29,7 +29,9 @@ export const INTERESSES = [
   "Coleta de amostra vegetal alienígena",
   "Captura de espécime animal alienígena",
   "Relíquia tecnológica valiosa",
-  "Segredo de estado ou militar",
+  "Segredos sobre o passado dos personagens",
+  "Busca por arma capaz de mudar o curso de uma guerra",
+  "Caça a um fugitivo espacial",
 ];
 
 /**

@@ -113,6 +113,80 @@
         "exportSource": null
       },
       "_key": "!journal.pages!lxvBnBiDCx1yUlsQ.BPns1RPRrkCoB3fF"
+    },
+    {
+      "sort": 400000,
+      "name": "Itens gerais e bens",
+      "type": "text",
+      "_id": "9DRCk0pAn912uLfD",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>T5-4: Itens Gerais</h2>\n<p>Itens úteis em expedições espaciais, como cilindros de oxigênio para trajes\nespaciais ou lanternas. Os serviços das estações espaciais e seus preços estão\nno Capítulo 10.</p>\n\n<table>\n<thead><tr><th>item</th><th>descrição</th><th>preço</th><th>peso</th></tr></thead>\n<tbody><tr><td>Arpéu</td><td>Gancho triplo para escaladas.</td><td>$5.000</td><td>1 kg</td></tr><tr><td>Barraca térmica de acampamento</td><td>Para 4 pessoas, com 2x2 metros.</td><td>$100.000</td><td>4 kg</td></tr><tr><td>Bastão de luz descartável</td><td>Dura 1 hora e ilumina uma área de 10 m.</td><td>$500</td><td>0,5 kg</td></tr><tr><td>Bastão extensível</td><td>Estende-se a até 3 metros.</td><td>$1.000</td><td>0,5 kg</td></tr><tr><td>Baterias</td><td>Para lanternas e outros instrumentos.</td><td>$1.000</td><td>—</td></tr><tr><td>Caixote pequeno</td><td>De material resistente, para até 200 kg.</td><td>$2.000</td><td>4 kg</td></tr><tr><td>Cantil pequeno</td><td>Recipiente térmico para 1 litro de líquido.</td><td>$5.000</td><td>1 kg</td></tr><tr><td>Cartão de identificação Galático</td><td>Segunda via, em caso de perda ou extravio.</td><td>$1.000</td><td>—</td></tr><tr><td>Cilindro de oxigênio</td><td>Para trajes pressurizados, com duração aproximada de 6 horas.</td><td>$25.000</td><td>4 kg</td></tr><tr><td>Cobertor de sobrevivência</td><td>Feito de material resistente a calor e frio.</td><td>$1.000</td><td>1 kg</td></tr><tr><td>Corda extensível</td><td>Estende-se a até 18 metros e suporta até 300 kg.</td><td>$10.000</td><td>3 kg</td></tr><tr><td>Corrente</td><td>10 metros, para até 1 tonelada.</td><td>$50.000</td><td>20 kg</td></tr><tr><td>Ferramentas de Gatuno</td><td>Ferramentas para arrombamento e sabotagem.</td><td>$300.000</td><td>1 kg</td></tr><tr><td>Frasco de ácido</td><td>500 ml de ácido fraco, para uso científico ou como arma.</td><td>$10.000</td><td>0,5 kg</td></tr><tr><td>Isqueiro</td><td>Para gerar fogo.</td><td>$100</td><td>—</td></tr><tr><td>Lanterna de mão</td><td>A bateria dura 6 horas; ilumina até 20 metros.</td><td>$5.000</td><td>0,5 kg</td></tr><tr><td>Mochila de expedição</td><td>Impermeável e com compartimentos.</td><td>$20.000</td><td>2 kg</td></tr><tr><td>Papel e caneta</td><td>Pacote com 100 folhas e caneta adaptada à gravidade zero.</td><td>$2.000</td><td>1 kg</td></tr><tr><td>Pá / picareta</td><td>Para escavações.</td><td>$5.000</td><td>1,5 kg</td></tr><tr><td>Pé de cabra</td><td>Para arrombamentos e desobstruções.</td><td>$10.000</td><td>4 kg</td></tr><tr><td>Ração espacial</td><td>Porção individual de alimentos desidratados ou pastosos. Suficiente para 1 dia.</td><td>$10.000</td><td>0,5 kg</td></tr><tr><td>Saco grande</td><td>Para até 15 kg.</td><td>$500</td><td>—</td></tr><tr><td>Sinalizador</td><td>Pistola de sinalização para emergências.</td><td>$2.000</td><td>0,5 kg</td></tr><tr><td>Tranca eletrônica</td><td>Com identificação digital, para portas, correntes etc.</td><td>$50.000</td><td>1,5 kg</td></tr></tbody>\n</table>\n\n<p>Trajes aquáticos e espaciais não trazem oxigênio: o <strong>cilindro de\noxigênio</strong> é comprado à parte.</p>\n\n<h2>T5-4: Itens Gerais (Bens)</h2>\n<table>\n<thead><tr><th>item</th><th>descrição</th><th>preço</th></tr></thead>\n<tbody><tr><td>Aerocarro</td><td>Transporte urbano particular para até 4 pessoas.</td><td>$1.000.000</td></tr><tr><td>Aeromoto</td><td>Transporte urbano individual.</td><td>$600.000</td></tr><tr><td>Aposentos permanentes</td><td>Residência permanente em um planeta ou estação espacial.</td><td>$1.500.000</td></tr><tr><td>Espaçonave</td><td>Nave de porte médio para tripulação de até 10 pessoas.</td><td>$5.000.000</td></tr><tr><td>Hidrocarro</td><td>Transporte aquático particular para até 4 pessoas.</td><td>$1.000.000</td></tr></tbody>\n</table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!lxvBnBiDCx1yUlsQ.9DRCk0pAn912uLfD"
+    },
+    {
+      "sort": 500000,
+      "name": "Serviços científicos",
+      "type": "text",
+      "_id": "AEv9M2WcK3vCpxvR",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Quando não há cientista a bordo</h2>\n<p>Sem um cientista na tripulação, pode ser preciso <strong>contratar um</strong>\npara experiências e análises, para construir aparatos ou para realizar feitos\ncientíficos.</p>\n\n<ul>\n<li><strong>Identificar</strong> ou <strong>reparar</strong> um aparato ou uma\nrelíquia tecnológica custa conforme o <strong>nível tecnológico</strong>.</li>\n<li><strong>Construir</strong> um aparato por encomenda custa o\n<strong>dobro</strong> do custo de construção da lista do Capítulo 8.</li>\n<li><strong>Realizar</strong> um feito científico custa o\n<strong>triplo</strong> do preço normal.</li>\n</ul>\n\n<p>O Mestre decide se o cientista contratado é capaz da operação pedida: a\nconstrução, a análise ou o feito.</p>\n\n<h2>T5-5: Serviços Científicos</h2>\n<table>\n<thead><tr><th>serviço</th><th>preço</th></tr></thead>\n<tbody><tr><td>Identificar aparato ou relíquia tecnológica</td><td>Nível tecnológico × $1.000</td></tr><tr><td>Reparar aparato ou relíquia tecnológica</td><td>Nível tecnológico × $5.000</td></tr><tr><td>Criar aparato tecnológico</td><td>Dobro do preço no Capítulo 8</td></tr><tr><td>Realizar feito científico</td><td>Triplo do preço no Capítulo 8</td></tr></tbody>\n</table>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!lxvBnBiDCx1yUlsQ.AEv9M2WcK3vCpxvR"
     }
   ],
   "flags": {},

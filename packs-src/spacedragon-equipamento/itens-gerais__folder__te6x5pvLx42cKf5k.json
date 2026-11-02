@@ -1,0 +1,22 @@
+{
+  "name": "Itens Gerais",
+  "sorting": "m",
+  "folder": null,
+  "type": "Item",
+  "_id": "te6x5pvLx42cKf5k",
+  "description": "",
+  "sort": 3,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01"
+  },
+  "_key": "!folders!te6x5pvLx42cKf5k"
+}

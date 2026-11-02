@@ -1,0 +1,35 @@
+{
+  "folder": "te6x5pvLx42cKf5k",
+  "name": "Corrente",
+  "type": "misc",
+  "_id": "82ZUIgi0tEQ3SmGc",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "corrente",
+    "description": "10 metros, para até 1 tonelada.",
+    "quantity": 1,
+    "cost": "50.000 créditos",
+    "weight_in_load": 0,
+    "weight_in_grams": 20000,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 110,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!82ZUIgi0tEQ3SmGc"
+}

@@ -3,7 +3,9 @@
 // As armas e as vestes viram itens; o que sobra é regra e preço, e regra e
 // preço se leem, não se arrastam.
 
-import { ARMAS, VESTES, ENCOMENDA, TIPOS, PORTES, CREDITOS_INICIAIS } from "./equipamento.mjs";
+import {
+  ARMAS, VESTES, ENCOMENDA, ITENS_GERAIS, BENS, SERVICOS_CIENTIFICOS, TIPOS, PORTES, CREDITOS_INICIAIS,
+} from "./equipamento.mjs";
 
 const cr = (n) => (n === null ? "—" : `$${n.toLocaleString("pt-BR")}`);
 const kg = (n) => (n === null ? "—" : `${String(n).replace(".", ",")} kg`);
@@ -22,6 +24,18 @@ const linhasVestes = VESTES.map((v) => {
 
 const linhasEncomenda = ENCOMENDA.map((e) =>
   `<tr><td>${e.servico}</td><td>${cr(e.preco)}</td><td>${e.beneficio}</td></tr>`
+).join("");
+
+const linhasGerais = ITENS_GERAIS.map((g) =>
+  `<tr><td>${g.nome}</td><td>${g.desc}</td><td>${cr(g.preco)}</td><td>${kg(g.peso)}</td></tr>`
+).join("");
+
+const linhasBens = BENS.map((b) =>
+  `<tr><td>${b.nome}</td><td>${b.desc}</td><td>${cr(b.preco)}</td></tr>`
+).join("");
+
+const linhasServicos = SERVICOS_CIENTIFICOS.map((s) =>
+  `<tr><td>${s.servico}</td><td>${s.preco}</td></tr>`
 ).join("");
 
 const linhasCreditos = Object.entries(CREDITOS_INICIAIS)
@@ -141,6 +155,64 @@ a penalidade que trazem.</p>
 armadura à CA. Por isso as vestes vão com esse campo <strong>zerado</strong> e o
 valor de proteção só na descrição — senão a ficha somaria duas vezes. Escreva o
 CP à mão, pela fórmula do Capítulo 4.</em></p>
+`,
+    },
+    {
+      title: "Itens gerais e bens",
+      content: `
+<h2>T5-4: Itens Gerais</h2>
+<p>Itens úteis em expedições espaciais, como cilindros de oxigênio para trajes
+espaciais ou lanternas. Os serviços das estações espaciais e seus preços estão
+no Capítulo 10.</p>
+
+<table>
+<thead><tr><th>item</th><th>descrição</th><th>preço</th><th>peso</th></tr></thead>
+<tbody>${linhasGerais}</tbody>
+</table>
+
+<p>Trajes aquáticos e espaciais não trazem oxigênio: o <strong>cilindro de
+oxigênio</strong> é comprado à parte.</p>
+
+<p class='nota-casa'><em>Os itens desta tabela estão no compêndio
+<strong>Equipamento</strong>, na pasta <strong>Itens Gerais</strong>, prontos
+para arrastar. O peso de cada um entra na carga da ficha.</em></p>
+
+<h2>T5-4: Itens Gerais (Bens)</h2>
+<table>
+<thead><tr><th>item</th><th>descrição</th><th>preço</th></tr></thead>
+<tbody>${linhasBens}</tbody>
+</table>
+
+<p class='nota-casa'><em>Bens não vão para a mochila e por isso não viram item.
+Anote a compra na ficha. A espaçonave comprada assim se monta pelas regras do
+Capítulo 10.</em></p>
+`,
+    },
+    {
+      title: "Serviços científicos",
+      content: `
+<h2>Quando não há cientista a bordo</h2>
+<p>Sem um cientista na tripulação, pode ser preciso <strong>contratar um</strong>
+para experiências e análises, para construir aparatos ou para realizar feitos
+científicos.</p>
+
+<ul>
+<li><strong>Identificar</strong> ou <strong>reparar</strong> um aparato ou uma
+relíquia tecnológica custa conforme o <strong>nível tecnológico</strong>.</li>
+<li><strong>Construir</strong> um aparato por encomenda custa o
+<strong>dobro</strong> do custo de construção da lista do Capítulo 8.</li>
+<li><strong>Realizar</strong> um feito científico custa o
+<strong>triplo</strong> do preço normal.</li>
+</ul>
+
+<p>O Mestre decide se o cientista contratado é capaz da operação pedida: a
+construção, a análise ou o feito.</p>
+
+<h2>T5-5: Serviços Científicos</h2>
+<table>
+<thead><tr><th>serviço</th><th>preço</th></tr></thead>
+<tbody>${linhasServicos}</tbody>
+</table>
 `,
     },
   ],

@@ -4,8 +4,10 @@
 //
 // Armas (T5-1) e vestes (T5-2) viram itens arrastáveis, porque a ficha do Old
 // Dragon 2 tem tipos para eles e calcula em cima: a veste alimenta o CP, a arma
-// entra na lista de ataques. Serviços e itens gerais viram journal — não há o
-// que a ficha faça com "Vestes sob medida, $50.000".
+// entra na lista de ataques. Os itens gerais (T5-4) também viram item, `misc`:
+// a ficha não calcula nada com eles, mas soma o peso na carga, e é na mochila
+// que eles vivem. Bens (aerocarro, aposentos…) e serviços (T5-3, T5-5) viram
+// journal — não há o que a ficha faça com "Vestes sob medida, $50.000".
 //
 // ── ONDE OS DOIS JOGOS DIVERGEM ─────────────────────────────────────────────
 //
@@ -110,6 +112,55 @@ export const ENCOMENDA = [
   { servico: "Material mais leve", preco: 40000, beneficio: "Reduz o peso das vestes em 2 kg." },
   { servico: "Reforço de vestes", preco: 60000, beneficio: "Aumenta o valor de proteção em +2." },
   { servico: "Vestes sob medida", preco: 50000, beneficio: "Reduz a penalidade de movimento em 2." },
+];
+
+/**
+ * T5-4: Itens Gerais (p. 69–70).
+ *
+ * `peso` nulo é o "–" do livro: o item não pesa o bastante para contar.
+ */
+export const ITENS_GERAIS = [
+  { nome: "Arpéu", desc: "Gancho triplo para escaladas.", preco: 5000, peso: 1 },
+  { nome: "Barraca térmica de acampamento", desc: "Para 4 pessoas, com 2x2 metros.", preco: 100000, peso: 4 },
+  { nome: "Bastão de luz descartável", desc: "Dura 1 hora e ilumina uma área de 10 m.", preco: 500, peso: 0.5 },
+  { nome: "Bastão extensível", desc: "Estende-se a até 3 metros.", preco: 1000, peso: 0.5 },
+  { nome: "Baterias", desc: "Para lanternas e outros instrumentos.", preco: 1000, peso: null },
+  { nome: "Caixote pequeno", desc: "De material resistente, para até 200 kg.", preco: 2000, peso: 4 },
+  { nome: "Cantil pequeno", desc: "Recipiente térmico para 1 litro de líquido.", preco: 5000, peso: 1 },
+  { nome: "Cartão de identificação Galático", desc: "Segunda via, em caso de perda ou extravio.", preco: 1000, peso: null },
+  { nome: "Cilindro de oxigênio", desc: "Para trajes pressurizados, com duração aproximada de 6 horas.", preco: 25000, peso: 4 },
+  { nome: "Cobertor de sobrevivência", desc: "Feito de material resistente a calor e frio.", preco: 1000, peso: 1 },
+  { nome: "Corda extensível", desc: "Estende-se a até 18 metros e suporta até 300 kg.", preco: 10000, peso: 3 },
+  { nome: "Corrente", desc: "10 metros, para até 1 tonelada.", preco: 50000, peso: 20 },
+  { nome: "Ferramentas de Gatuno", desc: "Ferramentas para arrombamento e sabotagem.", preco: 300000, peso: 1 },
+  { nome: "Frasco de ácido", desc: "500 ml de ácido fraco, para uso científico ou como arma.", preco: 10000, peso: 0.5 },
+  { nome: "Isqueiro", desc: "Para gerar fogo.", preco: 100, peso: null },
+  { nome: "Lanterna de mão", desc: "A bateria dura 6 horas; ilumina até 20 metros.", preco: 5000, peso: 0.5 },
+  { nome: "Mochila de expedição", desc: "Impermeável e com compartimentos.", preco: 20000, peso: 2 },
+  { nome: "Papel e caneta", desc: "Pacote com 100 folhas e caneta adaptada à gravidade zero.", preco: 2000, peso: 1 },
+  { nome: "Pá / picareta", desc: "Para escavações.", preco: 5000, peso: 1.5 },
+  { nome: "Pé de cabra", desc: "Para arrombamentos e desobstruções.", preco: 10000, peso: 4 },
+  { nome: "Ração espacial", desc: "Porção individual de alimentos desidratados ou pastosos. Suficiente para 1 dia.", preco: 10000, peso: 0.5 },
+  { nome: "Saco grande", desc: "Para até 15 kg.", preco: 500, peso: null },
+  { nome: "Sinalizador", desc: "Pistola de sinalização para emergências.", preco: 2000, peso: 0.5 },
+  { nome: "Tranca eletrônica", desc: "Com identificação digital, para portas, correntes etc.", preco: 50000, peso: 1.5 },
+];
+
+/** T5-4: Itens Gerais (Bens) — p. 70. Não se carregam, então não têm peso. */
+export const BENS = [
+  { nome: "Aerocarro", desc: "Transporte urbano particular para até 4 pessoas.", preco: 1000000 },
+  { nome: "Aeromoto", desc: "Transporte urbano individual.", preco: 600000 },
+  { nome: "Aposentos permanentes", desc: "Residência permanente em um planeta ou estação espacial.", preco: 1500000 },
+  { nome: "Espaçonave", desc: "Nave de porte médio para tripulação de até 10 pessoas.", preco: 5000000 },
+  { nome: "Hidrocarro", desc: "Transporte aquático particular para até 4 pessoas.", preco: 1000000 },
+];
+
+/** T5-5: Serviços Científicos (p. 71). O "cap. 8" é o custo da lista de aparatos. */
+export const SERVICOS_CIENTIFICOS = [
+  { servico: "Identificar aparato ou relíquia tecnológica", preco: "Nível tecnológico × $1.000" },
+  { servico: "Reparar aparato ou relíquia tecnológica", preco: "Nível tecnológico × $5.000" },
+  { servico: "Criar aparato tecnológico", preco: "Dobro do preço no Capítulo 8" },
+  { servico: "Realizar feito científico", preco: "Triplo do preço no Capítulo 8" },
 ];
 
 /** Créditos iniciais por classe: rola os dados e multiplica por 10.000. */

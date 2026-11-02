@@ -1,0 +1,35 @@
+{
+  "folder": "te6x5pvLx42cKf5k",
+  "name": "Ferramentas de Gatuno",
+  "type": "misc",
+  "_id": "FmcTJYtB2sDEQQmp",
+  "img": "systems/olddragon2e/assets/icons/misc.svg",
+  "system": {
+    "odo_id": "ferramentas-de-gatuno",
+    "description": "Ferramentas para arrombamento e sabotagem.",
+    "quantity": 1,
+    "cost": "300.000 créditos",
+    "weight_in_load": 0,
+    "weight_in_grams": 1000,
+    "magic_item": false,
+    "is_equipped": false
+  },
+  "effects": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "sort": 120,
+  "ownership": {
+    "default": 0
+  },
+  "_key": "!items!FmcTJYtB2sDEQQmp"
+}
