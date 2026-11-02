@@ -40,6 +40,19 @@
 .sd-teste .sd-parcelas li em {
   opacity: 0.75;
 }
+
+/* Anular e Contra-atacar, no cartão do poder mental (anulacao.js). */
+.sd-teste .sd-reacao-mental {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0.4rem 0 0;
+}
+
+.sd-teste .sd-reacao-mental button {
+  flex: 1 1 auto;
+  line-height: 1.6;
+}
 .sd-teste .sd-ordem-rodada ol {
   margin: 4px 0;
   padding-left: 18px;

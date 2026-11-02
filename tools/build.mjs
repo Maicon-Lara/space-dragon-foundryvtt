@@ -32,6 +32,7 @@ import { equipamentoJournal } from "./data/equipamento-journal.mjs";
 import { PODERES } from "./data/poderes.mjs";
 import { APARATOS, CATEGORIAS_POR_CLASSE } from "./data/aparatos.mjs";
 import { aparatosJournal } from "./data/aparatos-journal.mjs";
+import { poderesJournal } from "./data/poderes-journal.mjs";
 import { combateJournal } from "./data/combate-journal.mjs";
 import { navesJournal } from "./data/naves-journal.mjs";
 import { CRIATURAS } from "./data/bestiario.mjs";
@@ -657,6 +658,7 @@ const CAPITULO_DO_JOURNAL = {
   "Space Dragon — Aventuras Espaciais": [6, "Cap. 6 — Aventuras Espaciais"],
   "Space Dragon — Combate e Danos": [7, "Cap. 7 — Combate e Danos"],
   "Space Dragon — Aparatos e Feitos Científicos": [8, "Cap. 8 — Aparatos e Feitos Científicos"],
+  "Space Dragon — Poderes Mentais": [9, "Cap. 9 — Poderes Mentais"],
   "Space Dragon — Espaçonaves e Estações": [10, "Cap. 10 — Espaçonaves e Estações"],
   "Space Dragon — Seção do Mestre": [11, "Cap. 11 — Seção do Mestre"],
 };
@@ -690,7 +692,7 @@ async function main() {
   await compila(P_ESPECIES, esp);
 
   await compila(P_TABELAS, montaTabelas());
-  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal, combateJournal, navesJournal, mestreJournal, aventurasJournal];
+  const journais = [...regras, mutacoesJournal, testesJournal, equipamentoJournal, aparatosJournal, poderesJournal, combateJournal, navesJournal, mestreJournal, aventurasJournal];
   let best = aninhaPastas(montaBestiario());
   pintaPastas(best, PALETA);
   await compila(P_BESTIARIO, best);

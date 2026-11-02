@@ -798,7 +798,7 @@ export const CRIATURAS = [
     premios: "125 XP PARA CADA 2M",
     movimento: "9M",
     moral: "70%",
-    texto: "Shoggoths são massas protoplásmicas gosmentas que apresentam uma miríade de órgãos primitivamente desenvolvidos, como olhos e bocas. Existem nos mais diversos tamanhos, o que indica o quanto de matéria orgânica o shoggoth conseguiu devorar para se desenvolver. Relatos de shoggoths de dezenas e centenas de metros são tidos como ficção, embora sejam plausíveis cientificamente. Múltiplos membros por não ter morfologia definida o shoggoth é capaz de atacar todos os inimigos a seu redor ao mesmo tempo.",
+    texto: "Shoggoths são massas protoplásmicas gosmentas que apresentam uma miríade de órgãos primitivamente desenvolvidos, como olhos e bocas. Existem nos mais diversos tamanhos, o que indica o quanto de matéria orgânica o shoggoth conseguiu devorar para se desenvolver. Relatos de shoggoths de dezenas e centenas de metros são tidos como ficção, embora sejam plausíveis cientificamente. Múltiplos membros por não ter morfologia definida o shoggoth é capaz de atacar todos os inimigos a seu redor ao mesmo tempo. Envolver um shoggoth que acerte três ataques consecutivos em um alvo pode tentar envolvê-lo. O alvo pode fazer uma JPR para desvencilhar-se, mas caso seja envolto sofrerá 1d6 pontos de dano por rodada até ser libertado, com a morte do shoggoth.",
   },
   {
     nome: "Serviçal Robótico",
@@ -813,7 +813,7 @@ export const CRIATURAS = [
     premios: "ODU 500 XP",
     movimento: "9M",
     moral: "80%",
-    texto: "Serviçais robóticos são robôs programados para obedecer a uma pessoa ou grupo, executando todo tipo de tarefa. Seus cérebros positrônicos são desenvolvidos, embora menos capazes do que os presentes em metahumanos e androides. São capazes de fala e pensamento lógico complexo, mas estão presos à obediência programada em seus cérebros. Desativação serviçais robóticos podem ser desativados por cientistas através de um disruptor positrônico. Envolver um shoggoth que acerte três ataques consecutivos em um alvo pode tentar envolvê-lo. O alvo pode fazer uma JPR para desvencilhar- se, mas caso seja envolto sofrerá 1d6 pontos de dano por rodada até ser libertado, com a morte do shoggoth.",
+    texto: "Serviçais robóticos são robôs programados para obedecer a uma pessoa ou grupo, executando todo tipo de tarefa. Seus cérebros positrônicos são desenvolvidos, embora menos capazes do que os presentes em metahumanos e androides. São capazes de fala e pensamento lógico complexo, mas estão presos à obediência programada em seus cérebros. Desativação serviçais robóticos podem ser desativados por cientistas através de um disruptor positrônico.",
   },
   {
     nome: "Simihomem",

@@ -6,7 +6,7 @@
   "img": "systems/olddragon2e/assets/icons/misc.svg",
   "system": {
     "odo_id": "ponte-de-comando",
-    "description": "Controle central. Abriga o Computador Balístico (+2 nos ataques da nave) e o piloto automático; é onde se rolam os 3 testes de Pilotar do salto hiperespacial. Sem ela operacional, a nave não pode ser pilotada nem operar escudos ou armas. Obra: 120.000 créditos, 2 semanas. Reparo em campo: 30.000 créditos, metade do prazo. Vem de fábrica em toda nave: sem ela a nave não voa.",
+    "description": "Finalidade (T10-2): Abrigar os controles do sistema de navegação da espaçonave. Equipamento (T10-2): Assento do capitão, controles da nave, computador de bordo, controles do piloto automático, tela de radar, videocomunicador, comandos do escudo de energia, janela de observação. Efeito (regra da casa): Controle central. Abriga o Computador Balístico (+2 nos ataques da nave) e o piloto automático; é onde se rolam os 3 testes de pilotagem do salto hiperespacial. Sem ela operacional, a nave não pode ser pilotada nem operar escudos ou armas. Obra (regra da casa): 120.000 créditos, 2 semanas. Reparo em campo (regra da casa): 30.000 créditos, metade do prazo. Vem de fábrica em toda nave: sem ela a nave não voa.",
     "quantity": 1,
     "cost": "120000",
     "weight_in_load": 0,

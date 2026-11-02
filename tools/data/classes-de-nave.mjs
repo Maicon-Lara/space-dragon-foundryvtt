@@ -55,7 +55,7 @@ export const comodosDaNave = Object.entries(CAMARAS).map(([chave, c], i) => ({
     (c.obra
       ? `<p><strong>Obra:</strong> ${Number(c.obra).toLocaleString("pt-BR")} créditos, ${c.prazo}. ` +
         `<strong>Reparo em campo:</strong> ${Math.round(c.obra * 0.25).toLocaleString("pt-BR")} ` +
-        `créditos, metade do prazo (T10-2).</p>`
+        `créditos, metade do prazo (regra da casa).</p>`
       : ""),
   // A mesma flag das câmaras-item: é por ela que a ficha reconhece o cômodo, e o
   // id do módulo é parte do caminho. Ficou em "starwars-sd" depois que as naves

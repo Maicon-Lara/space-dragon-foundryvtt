@@ -1,7 +1,11 @@
 // O journal do Capítulo 6.
+//
+// As regras de dano de falta de oxigênio e de temperatura extrema (6.4.2 e
+// 6.4.4) moram no journal do Capítulo 7, página "Outros perigos". Este aqui
+// só aponta para lá, como o livro faz.
 
 import {
-  TRIPULANTES, TERRENOS, DESLOCAMENTO, CARGA, REACAO,
+  FUNCOES_A_BORDO, TRIPULANTES, TERRENOS, DESLOCAMENTO, CARGA, REACAO,
   MOVIMENTO_BASE, GRAVIDADE,
 } from "./aventuras.mjs";
 
@@ -10,6 +14,9 @@ const tab = (cab, linhas) =>
   `<tbody>${linhas}</tbody></table>`;
 
 const cr = (n) => `$${n.toLocaleString("pt-BR")}`;
+
+const funcoes = tab(["classe", "função a bordo"],
+  FUNCOES_A_BORDO.map((f) => `<tr><td><strong>${f.classe}</strong></td><td>${f.funcao}</td></tr>`).join(""));
 
 const tripulantes = tab(["tripulante", "preço por expedição"],
   TRIPULANTES.map((t) => `<tr><td><strong>${t.funcao}</strong></td><td>${cr(t.preco)}</td></tr>`).join(""));
@@ -39,13 +46,38 @@ export const aventurasJournal = {
 <h2>Um de cada classe, mas não obrigatoriamente</h2>
 <p>Uma expedição costuma ter <strong>um membro de cada classe</strong>, o que
 garante que a maioria das situações caia na especialidade de alguém. Nada impede
-vários da mesma classe, ou nenhum de alguma.</p>
+vários da mesma classe, ou nenhum de alguma, nem um número fixo de membros.
+As tarefas de rotina da nave se dividem entre todos durante a viagem.</p>
+
+<h2>Quem faz o quê</h2>
+<p>O costume, não uma regra:</p>
+
+${funcoes}
 
 <h2>Contratando gente</h2>
 <p>Quando o grupo não basta, contrata-se. Os preços abaixo são por uma
 <strong>expedição de cerca de um mês</strong>.</p>
 
 ${tripulantes}
+
+<p>O Mestre pode mudar os valores e até as funções, para caber na história.</p>
+
+<p><strong>Guarda-costas</strong> — faz a segurança da tripulação e pode ser
+mandado na frente em situações perigosas, como abrir uma porta ou entrar num
+lugar desconhecido. A mortalidade é alta, e é comum contratar vários de uma vez.
+Em geral é um <strong>cosmonauta de 1º nível sem capacidade de
+pilotagem</strong>; a ficha está no Capítulo 11.</p>
+
+<p><strong>Piloto</strong> — comanda a nave principal, as cápsulas de exploração
+ou fica de reserva. Alguns têm nave própria para alugar, mas são minoria: o
+preço acima é <strong>só o serviço</strong>, e o aluguel da nave o Mestre
+decide. Entra em combate se a integridade da nave estiver em jogo, com as
+estatísticas de um <strong>cosmonauta de 1º nível</strong>.</p>
+
+<p><strong>Mecânico</strong> — repara a nave e opera máquinas quando preciso,
+com a porcentagem de operar e consertar máquinas de um <strong>cientista de 1º
+nível</strong>, e nenhuma outra competência da classe. ⚠️ <strong>Não entra em
+combate</strong>, e pode relutar até em sair da nave.</p>
 
 <p><strong>Médico</strong> — pode criar aparatos e realizar feitos da
 especialidade médica, mas a tripulação paga os materiais. O preço acima é para
@@ -136,6 +168,10 @@ criatura pode gostar de um e detestar outro.</p>
 
 <p>Hostilidade pode ser revertida com presentes ou negociação.</p>
 
+<p>Um contato <strong>amigável</strong> pode fazer a criatura virar
+<strong>seguidora</strong> do personagem, se a história permitir. O máximo de
+seguidores é o da <strong>Comunicação</strong>, pela T1-6.</p>
+
 <p class='nota-casa'><em>O compêndio de Macros tem <strong>Reação de criatura
 inteligente</strong>: some a chance-base da afiliação no modificador de
 situação.</em></p>
@@ -155,21 +191,32 @@ falta luz.</p>
 para operar. O <strong>gatuno</strong> resolve com sabotagem. As outras classes
 tentam com a aptidão tecnológica da Ciência.</p>
 
+<p>Para <strong>achar</strong> a máquina, o jogador primeiro diz ao Mestre
+<strong>onde e como</strong> está procurando; só depois se faz o teste. ⚠️ O
+teste de localização é, de preferência, <strong>feito pelo Mestre em
+segredo</strong>, para ficar a dúvida se a coisa existe ou não.</p>
+
 <h2>Acidentes e armadilhas</h2>
 <p>Em geral se resolvem com <strong>jogadas de proteção</strong>, para evitar ou
 amenizar. Podem ser dano direto ou efeito específico, como veneno ou
 imobilização.</p>
 
-<p>O <strong>gatuno</strong> procura e desarma armadilhas com sabotagem; as
-outras classes tentam com a aptidão tecnológica.</p>
+<p>O <strong>gatuno</strong> procura e desarma armadilhas com sabotagem, se
+desconfiar de uma; as outras classes tentam com a aptidão tecnológica, se a
+tiverem. ⚠️ <strong>O teste é do Mestre, em segredo</strong>: não pode ficar
+claro se não há armadilha ou se o personagem não a achou.</p>
 
 <h2>O que o Capítulo 7 resolve</h2>
 <p>Falta de oxigênio e temperaturas extremas são citadas aqui, mas as regras de
-dano estão no capítulo de Combate.</p>
+dano — afogamento e sufocamento, fogo, gelo e temperaturas extremas, e também
+vácuo e descompressão — estão no journal <strong>Combate e Danos</strong>,
+página <strong>Outros perigos</strong>. Os trajes espaciais com cilindros de
+oxigênio são a proteção contra as duas coisas.</p>
 
 <p><strong>Infecções e contaminações</strong> não têm regra fechada: o livro
 sugere perda gradual de PV, dano de atributo em Força ou Constituição, e
-penalidades em rolagens.</p>
+penalidades em rolagens. A contaminação radioativa, essa sim com regra, também
+está em <strong>Outros perigos</strong>.</p>
 `,
     },
   ],

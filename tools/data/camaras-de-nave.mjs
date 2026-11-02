@@ -8,11 +8,15 @@
 //
 // Porque é o que torna a nave montável. Hoje a ficha nasce com as doze câmaras
 // e você desliga as que não tem; arrastando, você parte do casco e constrói o
-// que quiser — que é como a mesa pensa a nave, e como o livro a vende: cada
-// câmara tem preço de obra e prazo.
+// que quiser — que é como a mesa pensa a nave.
 //
-// Esses dois números vão na descrição de propósito. Quem olha a câmara no
-// compêndio está decidindo se compra, e o preço é a primeira coisa que pesa.
+// ── O QUE É DO LIVRO E O QUE É DA CASA ──────────────────────────────────────
+//
+// A T10-2 (p. 176) só dá a câmara, a FINALIDADE e o EQUIPAMENTO que se acha
+// nela; a descrição abre com esses dois, marcados como do livro. Preço de obra,
+// prazo, efeito e o reparo de 25% são da opção "Nave modular (regra da casa)":
+// o livro não põe preço em câmara nenhuma. Vão na descrição mesmo assim, e
+// rotulados, porque quem olha a câmara no compêndio está decidindo se compra.
 
 import { CAMARAS } from "../../spacedragon-module/module/camaras.js";
 import { CAMARAS_BASE } from "../../spacedragon-module/module/nave-pc-dados.js";
@@ -22,12 +26,15 @@ const OD2I = "systems/olddragon2e/assets/icons";
 const creditos = (n) => `${Number(n).toLocaleString("pt-BR")} créditos`;
 
 export function descricaoDaCamara(c) {
-  const partes = [c.efeito];
-  if (c.obra) partes.push(`Obra: ${creditos(c.obra)}, ${c.prazo}.`);
-  // O reparo em campo é 25% do valor e metade do prazo (T10-2) — o número que a
-  // mesa procura quando a câmara já está danificada, e não quando a compra.
+  const partes = [];
+  if (c.finalidade) partes.push(`Finalidade (T10-2): ${c.finalidade}.`);
+  if (c.equipamento) partes.push(`Equipamento (T10-2): ${c.equipamento}.`);
+  if (c.efeito) partes.push(`Efeito (regra da casa): ${c.efeito}`);
+  if (c.obra) partes.push(`Obra (regra da casa): ${creditos(c.obra)}, ${c.prazo}.`);
+  // O reparo em campo é 25% do valor e metade do prazo — regra da casa, não da
+  // T10-2. É o número que a mesa procura quando a câmara já está danificada.
   if (c.obra) {
-    partes.push(`Reparo em campo: ${creditos(Math.round(c.obra * 0.25))}, metade do prazo.`);
+    partes.push(`Reparo em campo (regra da casa): ${creditos(Math.round(c.obra * 0.25))}, metade do prazo.`);
   }
   return partes.filter(Boolean).join(" ");
 }

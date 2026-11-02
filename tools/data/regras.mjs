@@ -3,6 +3,11 @@
 // Tudo aqui sai do *Space Dragon — Livro Básico Aprimorado* e de nenhuma outra
 // fonte. As tabelas são as nativas (T1-1 a T1-6), com a escala do próprio jogo:
 // de 1 a 29, em faixas de dois, com a faixa neutra em 10–11.
+//
+// Os testes de atributo (1.7) e as jogadas resistidas (1.8) ficam aqui, e não
+// no journal de testes de porcentagem: são do Capítulo 1, rolam 1d20 contra o
+// VALOR do atributo, e misturá-los com os testes de 1d100 confundiria as duas
+// comparações.
 
 import { TABELAS, FAIXAS, ROTULOS, ATRIBUTOS } from "./atributos.mjs";
 import { CAMPO_NA_FICHA, NOME } from "./onde-anotar.mjs";
@@ -108,7 +113,38 @@ ${ATRIBUTOS.map(tabelaNativa).join("\n")}
 `,
       },
       {
+        title: "Testes de atributo",
+        content: `
+<h2>Teste de atributo</h2>
+<p>Quando o personagem tenta algo que nenhum talento de classe cobre, o Mestre
+pede um teste do atributo que mais se aplica.</p>
+
+<p>Role <strong>1d20</strong> e compare com o <strong>valor</strong> do atributo
+— o número, não o modificador. <strong>Igual ou menor</strong> é sucesso; maior
+é falha. <strong>Um 20 no dado é sempre falha</strong>, seja qual for o valor.</p>
+
+<blockquote><p>Para identificar um dispositivo estranho numa nave caída, o
+Mestre pede um teste de Ciência. Com Ciência 12, qualquer resultado de 1 a 12 no
+d20 é sucesso.</p></blockquote>
+
+<h2>Jogada resistida</h2>
+<p>Quando dois ou mais personagens disputam a mesma coisa, cada um rola
+<strong>1d20 e soma o valor</strong> do atributo. <strong>Vence o maior
+total.</strong> No empate, vence quem tem o atributo mais alto; se ainda
+empatar, rola-se de novo.</p>
+
+<blockquote><p>Numa partida de spaceball, o Mestre pede uma disputa de
+Destreza. Um jogador tem Destreza 12 e tira 7 (total 19); o outro tem 15 e tira
+8 (total 23). O segundo marca o ponto.</p></blockquote>
+
+<p class='nota-casa'><em>Os testes de 1d100 — talentos, operar máquinas,
+clonagem — são outra regra, e têm o journal <strong>Testes de
+porcentagem</strong>.</em></p>
+`,
+      },
+      {
         title: "O que este módulo é",
+        seedIndice: 2,
         content: `
 <h2>De onde vem o conteúdo</h2>
 <p>Do <strong>Space Dragon — Livro Básico Aprimorado</strong>, de Igor Moreno, e

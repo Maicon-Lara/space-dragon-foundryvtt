@@ -5,7 +5,7 @@
   "_id": "kkpIeim7pGRoHkgJ",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>Habilita os feitos de Operação Cirúrgica, Curar Doença e Diagnosticar Doença, e dobra a recuperação natural de PV em viagem.</p><p><strong>Obra:</strong> 120.000 créditos, 2 semanas. <strong>Reparo em campo:</strong> 30.000 créditos, metade do prazo (T10-2).</p>",
+    "description": "<p>Habilita os feitos científicos de Operação Cirúrgica, Curar Doença e Diagnosticar Doença, e dobra a recuperação natural de PV em viagem.</p><p><strong>Obra:</strong> 120.000 créditos, 2 semanas. <strong>Reparo em campo:</strong> 30.000 créditos, metade do prazo (regra da casa).</p>",
     "level": 1,
     "level3": "",
     "level6": "",

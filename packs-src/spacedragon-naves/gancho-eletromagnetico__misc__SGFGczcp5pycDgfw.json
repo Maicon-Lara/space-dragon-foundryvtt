@@ -6,7 +6,7 @@
   "img": "systems/olddragon2e/assets/icons/misc.svg",
   "system": {
     "odo_id": "gancho-eletromagnetico",
-    "description": "Prende e reboca outra nave ou carga no vácuo. Cabe em nave: pequena, média.",
+    "description": "Poderoso ímã que se prende ao casco de outra nave, possibilitando um reboque. Cabe em nave: pequena, média.",
     "quantity": 1,
     "cost": "",
     "weight_in_load": 0,

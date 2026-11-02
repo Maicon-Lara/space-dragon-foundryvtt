@@ -121,7 +121,7 @@ export function recuperacaoEmViagem(nave) {
   return { recupera: true, multiplicador: dobra ? 2 : 1 };
 }
 
-/* ── O CONSERTO (T10-2) ────────────────────────────────────────────────────── */
+/* ── O CONSERTO (regra da casa) ──────────────────────────────────────────────── */
 
 /**
  * «Consertar uma câmara danificada custa 25% da obra e leva metade do prazo.»

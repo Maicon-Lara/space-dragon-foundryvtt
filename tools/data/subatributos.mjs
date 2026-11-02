@@ -8,6 +8,11 @@
 //   · a Afiliação não é alinhamento — ela decide a ESPECIALIZAÇÃO da classe.
 //
 // Cada seção diz, no fim, o que a ficha do OD2 faz de diferente.
+//
+// Idiomas lidos e escritos: o livro manda dividir a Comunicação por 6,
+// arredondando para baixo, e na frase seguinte diz que "um valor de
+// Comunicação até 6" é analfabeto. As duas coisas não fecham em 6 exato
+// (6 ÷ 6 = 1). O journal transcreve as duas como estão e avisa.
 
 /** T4-1: bônus de CP por nível. NÃO é cumulativo. */
 export const T4_1 = [
@@ -144,10 +149,24 @@ galáxia.</p>
 <strong>T1-6</strong>: nenhum até 11, um com 12–13, e assim por diante até nove
 com 28–29.</p>
 
+<p>Quais idiomas existem no universo de jogo se combina com o Mestre: em geral,
+dialetos de culturas humanas pela galáxia ou de espécies humanoides sapientes
+do Capítulo 11.</p>
+
+<h3>Ler e escrever</h3>
+<p>Falar não é escrever. O número de idiomas que o personagem
+<strong>lê e escreve</strong> é a <strong>Comunicação ÷ 6</strong>, arredondado
+para baixo, escolhidos pelo jogador entre os que ele fala. Comunicação 13 dá
+<strong>2</strong>; 18 dá <strong>3</strong>.</p>
+
 <p>⚠️ <strong>Comunicação até 6 é analfabeto.</strong> O personagem
 <em>fala</em>, mas não lê nem escreve — nem no idioma nativo, nem no espacial.
-Quem não é proficiente na escrita também tem um sotaque que o denuncia como
-estrangeiro.</p>
+Quem não é proficiente na escrita de um idioma não o decifra nem o escreve, e
+tem um sotaque que o denuncia como estrangeiro.</p>
+
+<p class='nota-casa'><em>O livro diz as duas coisas — "Comunicação ÷ 6" e
+"até 6 é analfabeto" —, e em Comunicação 6 exata elas se contradizem (6 ÷ 6 dá
+1). Fica a critério do Mestre.</em></p>
 
 <h2>Afiliação</h2>
 <p>A afiliação é o modo de pensar e agir do personagem. Não limita o que ele
@@ -169,6 +188,12 @@ beneficia enquanto contraparte neutra, e serve bem de mediador.</li>
 declarada a alguma regra. O rebelde pode pensar só em si ou servir a uma causa
 subversiva; em geral é impulsivo e indisciplinado.</li>
 </ul>
+
+<h3>Trocar de afiliação</h3>
+<p>É <strong>desaconselhado</strong>, mas pode acontecer, se refletir uma mudança
+real de pensamento e atitude do personagem durante o jogo. De todo modo, o
+Mestre acompanha se a conduta de cada personagem condiz com a afiliação e
+conversa com o jogador cujo personagem estiver destoando dela.</p>
 
 ${naFicha("o campo de <strong>alinhamento</strong> do OD2 é Ordeiro/Neutro/Caótico, que é outra coisa. Anote a afiliação ali se ajudar, mas ela não é alinhamento — e é ela, não o alinhamento, que abre a especialização.")}
 `,

@@ -6,7 +6,7 @@
   "img": "systems/olddragon2e/assets/icons/misc.svg",
   "system": {
     "odo_id": "laboratorio",
-    "description": "Instalação obrigatória para o Técnico construir aparatos (com o desconto da Aptidão Tecnológica) e fazer Reparos Robóticos em droides. Sem ele, criar aparatos exige alugar oficina externa. Obra: 150.000 créditos, 2 semanas. Reparo em campo: 37.500 créditos, metade do prazo. Regra da casa: a nave sai de fábrica só com a Ponte, a Sala de Máquinas e o casco. Arraste esta câmara para a ficha da nave para comprá-la; a ficha confirma o preço e registra a obra no chat.",
+    "description": "Finalidade (T10-2): Local de trabalho para cientistas durante viagens. Equipamento (T10-2): Materiais e componentes para aparatos tecnológicos, máquina para análise de materiais, ferramentas diversas, braço robótico, mesa de montagem. Efeito (regra da casa): Instalação obrigatória para o cientista construir aparatos (com o desconto da aptidão tecnológica) e fazer Reparos Robóticos em robôs e androides. Sem ele, criar aparatos exige alugar oficina externa. Obra (regra da casa): 150.000 créditos, 2 semanas. Reparo em campo (regra da casa): 37.500 créditos, metade do prazo. Regra da casa: a nave sai de fábrica só com a Ponte, a Sala de Máquinas e o casco. Arraste esta câmara para a ficha da nave para comprá-la; a ficha confirma o preço e registra a obra no chat.",
     "quantity": 1,
     "cost": "150000",
     "weight_in_load": 0,

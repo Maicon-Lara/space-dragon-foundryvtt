@@ -5,7 +5,7 @@
   "_id": "LprkylnBTp2fqxEY",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>Controle central. Abriga o Computador Balístico (+2 nos ataques da nave) e o piloto automático; é onde se rolam os 3 testes de Pilotar do salto hiperespacial. Sem ela operacional, a nave não pode ser pilotada nem operar escudos ou armas.</p><p><strong>Obra:</strong> 120.000 créditos, 2 semanas. <strong>Reparo em campo:</strong> 30.000 créditos, metade do prazo (T10-2).</p>",
+    "description": "<p>Controle central. Abriga o Computador Balístico (+2 nos ataques da nave) e o piloto automático; é onde se rolam os 3 testes de pilotagem do salto hiperespacial. Sem ela operacional, a nave não pode ser pilotada nem operar escudos ou armas.</p><p><strong>Obra:</strong> 120.000 créditos, 2 semanas. <strong>Reparo em campo:</strong> 30.000 créditos, metade do prazo (regra da casa).</p>",
     "level": 1,
     "level3": "",
     "level6": "",

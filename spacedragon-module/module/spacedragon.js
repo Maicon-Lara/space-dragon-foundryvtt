@@ -49,6 +49,7 @@ import { ligarIntegracaoQdV } from "./integracao-qdv.js";
 import { registrarOpcaoDeVersao, avisarVersaoDoSistema } from "./versao.js";
 import { ligarCusto } from "./custo.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
+import { ligarAnulacao } from "./anulacao.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
 /* ── AS NAVES (CAPÍTULO 10) ────────────────────────────────────────────────
@@ -221,6 +222,7 @@ Hooks.once("ready", () => {
   passo("cabeçalho", () => ligarCabecalho());
   passo("Grandezas", () => ligarGrandezas());
   passo("alcance mental", () => ligarMental());
+  passo("anulação e contra-ataque mental", () => ligarAnulacao());
   passo("mutações", () => ligarMutacoes());
   passo("regras de ameaça (PV, Moral, prêmio de vilão)", () => ligarRegrasDeAmeaca());
   passo("convivência com o Qualidade de Vida", () => ligarIntegracaoQdV());

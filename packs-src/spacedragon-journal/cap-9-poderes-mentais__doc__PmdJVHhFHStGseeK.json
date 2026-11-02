@@ -1,0 +1,283 @@
+{
+  "folder": null,
+  "name": "Cap. 9 — Poderes Mentais",
+  "_id": "PmdJVHhFHStGseeK",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Tipos de poderes",
+      "type": "text",
+      "_id": "IJzi45vVqksvH5Jy",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Mente e percepção</h2>\n<p>Os mentálicos chamam seus poderes de ciência, mas ela está longe de ser\nexata. Em geral os poderes manipulam a mente e a percepção que as pessoas têm do\nambiente: sentidos, memória, raciocínio, e até a personalidade e as funções\nvitais de quem é afetado, pelos impulsos eletromagnéticos do cérebro.</p>\n\n<h2>Quem resiste</h2>\n<p>Humanos normalmente <strong>não têm</strong> resistência mental. Algumas\nespécies humanoides têm padrões neurais parecidos, que dificultam o trabalho do\nmentálico; espécies de mente mais simples não têm essa resistência. A regra\nestá em <em>Resistência mental (RM)</em>.</p>\n\n<h2>O Espírito Galáctico</h2>\n<p>Muitos poderes partem da teoria mentálica de que as mentes de todos os seres\nvivos que já morreram se agrupam numa grande mente coletiva, o\n<strong>Espírito Galáctico</strong>. Esses poderes resgatam a consciência de\nmentes mortas, ou até a reencarnam num corpo mortal. O grande alvo de muitos\nmentálicos é conectar-se ao Espírito Galáctico e atingir a sabedoria absoluta,\nou usar o próprio corpo para encarnar essa mente coletiva.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!PmdJVHhFHStGseeK.IJzi45vVqksvH5Jy"
+    },
+    {
+      "sort": 200000,
+      "name": "Grandeza mental",
+      "type": "text",
+      "_id": "10OULvtehg0z0ZMS",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Dez estágios</h2>\n<p>A <strong>grandeza mental</strong> é a escala que diz a quais poderes cada\num tem acesso: dez estágios, de pouco acima da capacidade humana normal até\nfeitos que alguns têm por divinos.</p>\n\n<h2>A grandeza é o preço</h2>\n<p>Cada poder pertence a uma grandeza, que indica, aproximadamente, sua força —\ne é também a <strong>porcentagem do alcance mental diário</strong> que o\nmentálico desconta ao usá-lo. Um poder de 5ª grandeza custa\n<strong>5%</strong>, <strong>mesmo que seja anulado ou não seja realizado com\nsucesso</strong>.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!PmdJVHhFHStGseeK.10OULvtehg0z0ZMS"
+    },
+    {
+      "sort": 300000,
+      "name": "Usando poderes",
+      "type": "text",
+      "_id": "uEBUbKqmBUq2xoMP",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>O que o mentálico sabe</h2>\n<p>O mentálico pode executar qualquer poder dentro da sua grandeza limite, mas é\nmais proficiente em uns que em outros. Começa o jogo conhecendo\n<strong>2 poderes de 1ª grandeza</strong>, à escolha do jogador. Esses, e todos\nos que aprender depois, ele realiza livremente, respeitando a grandeza máxima e\no alcance mental.</p>\n\n<h2>Poder desconhecido</h2>\n<p>Só se realiza com uma rolagem de porcentagem bem-sucedida, com o valor de\n<strong>realizar e aprender poder mental</strong> do Intelecto (T1-4), feita\n<strong>antes</strong> do poder.</p>\n<ul>\n<li><strong>Falha:</strong> não realiza, e mesmo assim desconta a grandeza do\nalcance diário.</li>\n<li><strong>Acima do dobro</strong> da chance: pode haver efeito colateral, a\ncritério do Mestre.</li>\n<li><strong>Sucesso:</strong> realiza o poder e pode tentar memorizá-lo (veja\n<em>Aprendendo poderes</em>).</li>\n</ul>\n\n<h2>Realizando</h2>\n<p>Basta dizer a intenção ao Mestre e rolar, se for preciso. O Mestre pode pedir\ndetalhes: alvos, área, a intenção. O mentálico precisa estar\n<strong>concentrado</strong> — se se mover ou fizer outra ação, o poder pode\nfalhar. Não há fala nem gesto.</p>\n\n<p>Depois da ação, efetiva ou não, desconta-se a grandeza do alcance diário. O\nmentálico <strong>nunca</strong> pode ultrapassar o alcance, sob risco de morte\nse tentar. O alcance <strong>zera após 8 horas de descanso</strong>.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!PmdJVHhFHStGseeK.uEBUbKqmBUq2xoMP"
+    },
+    {
+      "sort": 400000,
+      "name": "Aprendendo poderes",
+      "type": "text",
+      "_id": "EHiWfbxnCO4J3fh9",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Tentativa e erro</h2>\n<p>Todo mentálico pode aprender um poder desconhecido. Primeiro, precisa\n<strong>realizá-lo</strong> com a rolagem de porcentagem de\n<em>Usando poderes</em>. Depois de realizado, faz uma <strong>segunda\nrolagem</strong>, com a mesma chance, para memorizá-lo de vez: com sucesso, o\npoder está aprendido e não pede mais rolagem.</p>\n\n<ul>\n<li>Se <strong>falhar a primeira</strong> rolagem (a de realizar), só pode\ntentar aprender aquele poder depois de <strong>24 horas</strong> — mas pode\ncontinuar tentando usá-lo.</li>\n<li>Se essa rolagem passar do <strong>dobro</strong> da chance, só pode tentar\naprendê-lo, ou mesmo realizá-lo, depois de <strong>1d4 dias</strong>.</li>\n</ul>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!PmdJVHhFHStGseeK.EHiWfbxnCO4J3fh9"
+    },
+    {
+      "sort": 500000,
+      "name": "Anulação e contra-ataque",
+      "type": "text",
+      "_id": "HOBDn7znOnFn7OqE",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Anular</h2>\n<p>O mentálico que é <strong>alvo</strong> de um poder mental pode tentar anulá-lo\nna hora. Gasta do próprio alcance diário uma porcentagem igual à\n<strong>grandeza do poder</strong> usado pelo oponente e faz uma rolagem\nresistida.</p>\n\n<p>Pode gastar <strong>mais</strong> para ganhar bônus: <strong>+1 a cada 2%</strong>\na mais, cumulativo. Esse extra nunca pode passar da grandeza que já gastou para\nanular.</p>\n\n<h2>A rolagem</h2>\n<p>Cada um rola <strong>1d6 + o próprio nível</strong>; o defensor soma o bônus\nque pagou.</p>\n<table>\n<thead><tr><th>resultado</th><th>efeito</th></tr></thead>\n<tbody>\n<tr><td><strong>defensor maior</strong></td><td>o poder é anulado na hora</td></tr>\n<tr><td><strong>atacante maior</strong></td><td>a anulação é ineficaz; o poder funciona normalmente</td></tr>\n<tr><td><strong>empate</strong></td><td><strong>choque mental</strong>: 1d4 pontos de dano mental, JPM dos dois para não ficar atordoado por 6d10 segundos, e o poder original fracassa</td></tr>\n</tbody>\n</table>\n\n<h2>Contra-ataque</h2>\n<p>Se o defensor vencer com <strong>o dobro ou mais</strong> do resultado do\noponente, pode realizar na hora um novo poder contra o atacante. Esse poder pode\nser anulado normalmente pelo novo defensor — e é por isso que essas disputas\nesgotam os mentálicos.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!PmdJVHhFHStGseeK.HOBDn7znOnFn7OqE"
+    },
+    {
+      "sort": 600000,
+      "name": "Resistência mental (RM)",
+      "type": "text",
+      "_id": "ZWE3uERNseb8Jxbl",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Mentes parecidas demais</h2>\n<p>Algumas criaturas resistem naturalmente aos poderes mentais, porque têm mente\nparecida o bastante com a humana para causar interferência neural.</p>\n<ul>\n<li>Alienígenas com <strong>Intelecto 9 ou mais</strong> têm resistência\nmental; com Intelecto menor, não têm.</li>\n<li>Espécies com <strong>Intelecto 0</strong> são irracionais e, portanto,\n<strong>imunes</strong> a poderes mentais.</li>\n</ul>\n\n<h2>A rolagem</h2>\n<p>A RM é uma porcentagem. Cada vez que um mentálico usa um poder contra a\ncriatura, rola-se d%:</p>\n<ul>\n<li><strong>Igual ou acima</strong> da RM: o poder é efetivo.</li>\n<li><strong>Abaixo</strong>: aquela criatura <strong>nunca mais</strong> poderá\nser afetada por aquele poder.</li>\n</ul>\n<p>O poder ineficaz é descontado do alcance mental normalmente.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!PmdJVHhFHStGseeK.ZWE3uERNseb8Jxbl"
+    },
+    {
+      "sort": 700000,
+      "name": "Magias e poderes mentais",
+      "type": "text",
+      "_id": "IDkcv8CHhPuGWOFb",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Magias e poderes mentais</h2>\n<p>Ao contrário dos efeitos pirotécnicos, que desafiam a física, dos magos da\nfantasia medieval, os mentálicos lidam com mentes e com a percepção das pessoas.\nInterpretar um mentálico é usar a criatividade para criar efeitos manipulando a\nmente dos alvos.</p>\n\n<p>Não se espera que o mentálico <strong>\"colecione\"</strong> todos os poderes,\ncomo o mago anota magias no grimório. Aproveite os ganchos de história que os\npoderes oferecem — trocar a personalidade de outros personagens, contatar uma\nmente desencarnada. Como dá para tentar usar um poder sem dominá-lo, não se\npreocupe se um poder aparecer uma única vez na campanha: ele já terá cumprido seu\npapel.</p>\n\n<p>Os 112 poderes, da 1ª à 10ª grandeza, estão no compêndio <strong>Poderes Mentais</strong>, prontos\npara arrastar para a ficha.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!PmdJVHhFHStGseeK.IDkcv8CHhPuGWOFb"
+    }
+  ],
+  "flags": {},
+  "sort": 900,
+  "ownership": {
+    "default": 0
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "13.342",
+    "systemId": "olddragon2e",
+    "systemVersion": "This is auto replaced",
+    "createdTime": 0,
+    "modifiedTime": 0,
+    "lastModifiedBy": "spacedragonbld01",
+    "exportSource": null
+  },
+  "_key": "!journal!PmdJVHhFHStGseeK"
+}

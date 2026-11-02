@@ -14,6 +14,17 @@
 // Primeiro a gravidade transforma o movimento base; depois o terreno desconta
 // do resultado; depois a carga; depois a veste.
 
+/**
+ * 6.1: o papel que cada classe costuma assumir a bordo. É costume, não regra:
+ * o livro diz "comumente" e "frequentemente", e nada impede outra divisão.
+ */
+export const FUNCOES_A_BORDO = [
+  { classe: "Cosmonauta", funcao: "Comandante da nave e guarda-costas, pelo talento de classe e pela proficiência com armas." },
+  { classe: "Cientista", funcao: "Manutenção da nave: opera os mecanismos e repara os danos de combates ou de manobras malsucedidas." },
+  { classe: "Gatuno", funcao: "Todo tipo de serviço sujo. Mostra seu valor no destino, como batedor e explorador." },
+  { classe: "Mentálico", funcao: "Porta-voz e diplomata. Embarca pelo desejo de aprender sobre a natureza humana." },
+];
+
 /** T6-1: quanto custa cada tripulante, por expedição de cerca de um mês. */
 export const TRIPULANTES = [
   { funcao: "Guarda-costas", preco: 20000 },
@@ -66,7 +77,9 @@ export const CARGA = [
  * A chance BASE de uma criatura inteligente reagir bem, pela afiliação dela.
  *
  * Sobre ela soma-se o ajuste de reação da Comunicação de QUEM está tentando o
- * contato, e o teste é feito por personagem — não um por grupo.
+ * contato, e o teste é feito por personagem — não um por grupo. Um contato
+ * amigável pode virar seguidor, até o máximo de seguidores da Comunicação
+ * (T1-6).
  */
 export const REACAO = {
   leal: { amigavel: 70, texto: "70% de chance de ser amigável." },

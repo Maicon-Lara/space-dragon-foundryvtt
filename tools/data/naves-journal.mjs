@@ -5,7 +5,7 @@ import {
   T10_6_ORDEM, T10_6_CRITICOS, T10_6_FALHAS,
   PILOTAGEM_IMPROVISADA, SERVICOS_ESTACAO,
 } from "./naves.mjs";
-import { EQUIPAMENTOS_DE_NAVE } from "../../spacedragon-module/module/equipamentos-nave.js";
+import { EQUIPAMENTOS_DE_NAVE, TAMANHOS } from "../../spacedragon-module/module/equipamentos-nave.js";
 import { LADO_POR_TAMANHO } from "../../spacedragon-module/module/nave-token.js";
 import { XP_POR_TIPO } from "../../spacedragon-module/module/nave-xp.js";
 import { TIPOS } from "../../spacedragon-module/module/tipos-de-nave.js";
@@ -54,6 +54,39 @@ const linhaVeiculo = (n) =>
   `<td>${n.tamanho}</td><td>${n.tripulacao}</td><td>${n.pv}</td>` +
   `<td>${n.ba}</td><td>${n.cp}</td><td>${n.jp}</td><td>${n.mov}</td></tr>`;
 
+/* ── T10-2 E T10-4, DAS MESMAS FONTES QUE A FICHA LÊ ─────────────────────────
+ *
+ * A T10-2 sai de CAMARAS (camaras.js): só as colunas do livro, câmara,
+ * finalidade e equipamento. Preço e prazo de obra são da casa e não entram
+ * nesta tabela, para que ela não pareça dizer o que o livro não diz.
+ *
+ * A T10-4 sai de EQUIPAMENTOS_DE_NAVE (equipamentos-nave.js), com a matriz de
+ * tamanhos que a ficha usa para oferecer ou esconder cada equipamento. Na
+ * ordem do livro: utilitários e de combate, cada grupo em ordem alfabética.
+ */
+const linhasT10_2 = Object.values(CAMARAS)
+  .slice()
+  .sort((a, b) => a.rotulo.localeCompare(b.rotulo, "pt-BR"))
+  .map((c) => `<tr><td><strong>${c.rotulo}</strong></td><td>${c.finalidade}</td><td>${c.equipamento}</td></tr>`)
+  .join("");
+
+const SIGLA_DO_TAMANHO = { Pequena: "P", "Média": "M", Gigantesca: "G", Colossal: "C" };
+
+// a nota dos mísseis não traz a JP do alvo (ela mora na descrição do item, a
+// partir de `jpDoAlvo`); na tabela ela volta, como está no livro
+const notaDaT10_4 = (e) =>
+  e.efeito?.arma?.jpDoAlvo && !/JP/.test(e.nota) ? `${e.nota} Só atinge o alvo se ele falhar numa JP.` : e.nota;
+
+const tabelaT10_4 = (grupo) => tab(
+  ["equipamento", ...TAMANHOS.map((t) => SIGLA_DO_TAMANHO[t]), "efeito"],
+  Object.values(EQUIPAMENTOS_DE_NAVE)
+    .filter((e) => e.grupo === grupo)
+    .sort((a, b) => a.rotulo.localeCompare(b.rotulo, "pt-BR"))
+    .map((e) => `<tr><td><strong>${e.rotulo}</strong></td>` +
+      TAMANHOS.map((t) => `<td>${e.cabe?.[t] ? "✔" : "✘"}</td>`).join("") +
+      `<td>${notaDaT10_4(e)}</td></tr>`)
+    .join(""));
+
 const COLS = ["tipo", "tamanho", "tripulação", "PV", "BA", "CP", "JP", "movimento"];
 
 const d6 = (linhas) =>
@@ -79,6 +112,12 @@ decide o bônus da nave.</li>
 quem estiver operando a arma.</li>
 </ul>
 
+<h2>Quem pode ter uma nave</h2>
+<p>Personagens podem ter espaçonave própria <strong>a partir do 5º nível</strong>, por uma
+especialização de classe ou por outros meios no jogo. Abaixo disso são inexperientes
+demais para comandar uma nave — o que não os impede de fazer parte de uma tripulação,
+pilotar uma nave ou mesmo chegar a possuir uma.</p>
+
 <h2>Regra da casa: a nave é modular</h2>
 <p><em>Opcional, ligada por padrão: desligue em <strong>Configurações › Space Dragon › Nave modular</strong> para jogar só com o livro. Desligada, a aba Câmaras só marca o que a nave tem.</em></p>
 <p>Toda nave sai de fábrica com o <strong>mínimo para voar e manter todos vivos</strong>:</p>
@@ -88,7 +127,9 @@ quem estiver operando a arma.</li>
 <li><strong>casco e suporte de vida</strong> — a defesa contra o vácuo, que é o CP do tipo de nave.</li>
 </ul>
 <p>As outras câmaras da T10-2 — Aposentos, Arsenal, Laboratório e as demais — <strong>se
-compram</strong>, pelo preço e prazo de obra da tabela. O tamanho limita quantas cabem além
+compram</strong>, pelo preço e prazo de obra que a ficha mostra. Preço, prazo, efeito de cada
+câmara e o reparo de câmara danificada (25% da obra, metade do prazo) são <strong>desta regra
+da casa</strong>: a T10-2 do livro só diz a finalidade e o equipamento de cada câmara. O tamanho limita quantas cabem além
 das de fábrica: <strong>Pequena 0, Média 2, Gigantesca 4, Colossal 6</strong>. Passar do
 limite é decisão do Mestre (nave de enredo, reforma), e a ficha avisa.</p>
 <p>Na ficha, a aba <em>Câmaras</em> mostra o que veio de fábrica, o que foi comprado e o
@@ -97,6 +138,28 @@ ficha confirma o preço e registra a obra no chat. Os créditos saem de quem pag
 
 <h2>T10-1: Tipos de Espaçonaves</h2>
 ${tab(COLS, NAVES.map(linhaVeiculo).join(""))}
+
+<h2>T10-2: Câmaras de espaçonaves</h2>
+<p>As câmaras mais comuns, com a finalidade e o equipamento que se costuma achar em cada
+uma. Uma nave pode dividi-las em andares e alas; quais câmaras e equipamentos ela tem, e
+como são, o Mestre decide, e ele pode criar outras conforme a história.</p>
+${tab(["câmara", "finalidade", "equipamento"], linhasT10_2)}
+
+<h2>T10-4: Equipamentos adicionais</h2>
+<p>Equipamentos extras podem vir de fábrica ou ser instalados depois. A tabela diz o que
+cada um faz e em que tamanho de nave cabe (P, M, G, C). Instalar costuma ser muito caro e
+trabalho de cientistas especializados.</p>
+<p>⚠️ <strong>Custo, tempo de instalação e quantidade máxima de cada equipamento numa nave
+ficam a critério do Mestre</strong> — a tabela não os dá. Ele também pode criar
+equipamentos novos ou mudar os dados da tabela. Naves costumam ter várias armas, o que as
+deixa disparar mais vezes.</p>
+<h3>Equipamentos utilitários</h3>
+${tabelaT10_4("utilitario")}
+<h3>Equipamentos de combate</h3>
+${tabelaT10_4("combate")}
+<p class='nota-casa'><em>A coluna de efeito resume o texto da T10-4. Uma exigência é do módulo,
+e não do livro: o Computador balístico só dá o +2 com a Ponte de Comando operacional. O
+alcance das armas também é da casa e está no Guia rápido de combate espacial.</em></p>
 
 <h2>T10-7: Veículos terrestres, aquáticos e aéreos</h2>
 <p>Mesmas colunas, mesmas regras.</p>
@@ -142,8 +205,26 @@ com 80% e penalidade de 20% testa com 60%.</p>
 de PV perdidos</strong>. Uma nave de 200 PV que sofreu 70 de dano perdeu mais de
 30% e menos de 40%: penalidade de 15%.</p>
 
-<p>⚠️ Mesmo que a penalidade zere a porcentagem, ainda se rola — a falha crítica
-e o sucesso crítico continuam existindo.</p>
+<p>⚠️ Mesmo que a penalidade zere a porcentagem, ainda se rola: o teste tem
+sucesso com <strong>5% ou menos</strong>.</p>
+
+<h2>Salto hiperespacial</h2>
+<p>Só uma nave com <strong>acelerador hiperespacial</strong> (T10-4) salta. O salto pede
+<strong>três testes de pilotagem em sequência</strong>:</p>
+<ol>
+<li><strong>Distância</strong> — quanto a nave vai percorrer;</li>
+<li><strong>Direção</strong> — para onde ela segue;</li>
+<li><strong>Execução</strong> — o salto em si.</li>
+</ol>
+<p>⚠️ <strong>Só a falha no terceiro teste faz o salto falhar.</strong> Falhar no primeiro,
+no segundo ou nos dois não impede o salto: a nave chega com a distância e/ou a direção
+erradas, conforme o teste que falhou.</p>
+<ul>
+<li><strong>Não se salta durante um combate.</strong></li>
+<li><strong>A sequência não pode ser abortada</strong> depois de começada.</li>
+<li>O salto costuma gastar combustível, conforme a dificuldade de acertar a trajetória e a
+distância do destino.</li>
+</ul>
 
 <h2>T10-5: o teste de pilotagem vira o modificador da JP</h2>
 <p>Antes de qualquer JP da nave, o piloto testa. O resultado dele dá o
@@ -207,6 +288,12 @@ pedir um teste de operar máquinas, com penalidade se houver avaria.</li>
 Permitem usar a <strong>JP no lugar do CP</strong> para evitar um ataque, mas só
 uma vez a cada <strong>5 rodadas</strong>, sempre pedem teste de pilotagem, e
 falhar significa não poder fazer a JP. Costumam gastar combustível.</li>
+<li><strong>Movimentação</strong> — a nave se desloca até o seu movimento. Em geral não pede
+teste de pilotagem, mas o Mestre pode pedir um se a ação for perigosa. <strong>Não conta
+como ação separada</strong>: combina com qualquer outra, menos a movimentação dupla.</li>
+<li><strong>Movimentação dupla</strong> — a nave <strong>sacrifica a ação do turno</strong> e se
+desloca até o dobro do movimento. Sempre exige teste de pilotagem bem-sucedido, e
+<strong>falhar é perder a rodada</strong>. Costuma gastar combustível.</li>
 </ul>
 
 <h2>T10-6: Acertos críticos de espaçonave</h2>
@@ -319,7 +406,7 @@ absorve mais 5 na rodada. Num combate novo ele volta cheio. Desligue em
 ${tab(["avaria", "efeito", "prazo", "câmara se o prazo vencer"], AVARIAS_DO_GUIA)}
 <p>Vêm do crítico da T10-6 e, <strong>na casa</strong>, de todo acerto que tire <strong>10% ou mais do
 PV máximo</strong> do alvo (1d6: motor, armas, casco, sensores, escudos, tripulação). A Engenharia
-<strong>Repara</strong> uma por ação. Prazo vencido: a câmara fica danificada (obra a 25%, metade do
+<strong>Repara</strong> uma por ação. Prazo vencido: a câmara fica danificada (casa: obra a 25%, metade do
 prazo), e a penalidade continua até o Reparar.</p>
 
 <h2>Energia e Calor (camada de energia)</h2>

@@ -22,6 +22,12 @@
 //     permite rolar 1d6 na T7-4 para um efeito extra.
 //   · Falha crítica é o 1 natural, com 1d6 na T7-5.
 //   · Danos mortais variam de −5 a −19 pela Constituição. No OD2 é −10 fixo.
+//
+// ── TIRO À QUEIMA-ROUPA ─────────────────────────────────────────────────────
+//
+// A T7-3 só diz "+2", mas o texto do ataque à distância (p. 88) é explícito:
+// "bônus circunstancial de +2 nas rolagens de ataque E DANO". A nota da linha
+// diz isso, para ninguém aplicar só no ataque.
 
 /** T7-1: ajustes que o Mestre soma à jogada de surpresa. */
 export const T7_1 = [
@@ -66,7 +72,7 @@ export const T7_3 = {
     { situacao: "Pouca luz ou visibilidade", mod: "−4", nota: "Planeta sem muita luz solar e lunar, ou através de névoa ou fumaça densa." },
   ],
   "Distância": [
-    { situacao: "Tiro à queima-roupa", mod: "+2", nota: "Arma de fogo contra alvo a até 3 metros. Se o oponente estiver desarmado, é acerto crítico." },
+    { situacao: "Tiro à queima-roupa", mod: "+2", nota: "Arma de fogo contra alvo a até 3 metros. O +2 vale no ataque e no dano. Se o oponente estiver desarmado, é acerto crítico." },
     { situacao: "Distância média", mod: "−2", nota: "Alcance mínimo da arma multiplicado por 2." },
     { situacao: "Longa distância", mod: "−4", nota: "Alcance mínimo da arma multiplicado por 3." },
   ],

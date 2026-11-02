@@ -79,6 +79,43 @@
     },
     {
       "sort": 300000,
+      "name": "Testes de atributo",
+      "type": "text",
+      "_id": "vPgLpLvCb1n7NwAl",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Teste de atributo</h2>\n<p>Quando o personagem tenta algo que nenhum talento de classe cobre, o Mestre\npede um teste do atributo que mais se aplica.</p>\n\n<p>Role <strong>1d20</strong> e compare com o <strong>valor</strong> do atributo\n— o número, não o modificador. <strong>Igual ou menor</strong> é sucesso; maior\né falha. <strong>Um 20 no dado é sempre falha</strong>, seja qual for o valor.</p>\n\n<blockquote><p>Para identificar um dispositivo estranho numa nave caída, o\nMestre pede um teste de Ciência. Com Ciência 12, qualquer resultado de 1 a 12 no\nd20 é sucesso.</p></blockquote>\n\n<h2>Jogada resistida</h2>\n<p>Quando dois ou mais personagens disputam a mesma coisa, cada um rola\n<strong>1d20 e soma o valor</strong> do atributo. <strong>Vence o maior\ntotal.</strong> No empate, vence quem tem o atributo mais alto; se ainda\nempatar, rola-se de novo.</p>\n\n<blockquote><p>Numa partida de spaceball, o Mestre pede uma disputa de\nDestreza. Um jogador tem Destreza 12 e tira 7 (total 19); o outro tem 15 e tira\n8 (total 23). O segundo marca o ponto.</p></blockquote>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!9gkeALNh3JEFJT8z.vPgLpLvCb1n7NwAl"
+    },
+    {
+      "sort": 400000,
       "name": "O que este módulo é",
       "type": "text",
       "_id": "OlA5S59lvVLpvhuy",

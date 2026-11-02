@@ -944,6 +944,105 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   console.log(`  ✔ poder mental: conhecido sem rolar, desconhecido rola ${alvo}% e gasta mesmo falhando, aprende na 2ª, e o lançar do sistema segue o livro`);
 }
 
+// ── Anulação, contra-ataque mental e RM (Cap. 9.5 e 9.6) ───────────────────
+//
+// 1d6 + nível de cada um; +1 a cada 2% a mais, até a Grandeza. Maior anula,
+// menor deixa passar, empate é choque mental, o dobro abre o contra-ataque.
+// A RM rola d%: abaixo dela, aquele poder nunca mais afeta a criatura.
+{
+  const an = await import("../spacedragon-module/module/anulacao.js");
+  const { realizarPoder } = await import("../spacedragon-module/module/poder-mental.js");
+  const prob = [];
+  let fila = [];
+  const RollOriginal = globalThis.Roll;
+  const ChatAntes = globalThis.ChatMessage;
+  const cartoesA = [];
+  globalThis.ChatMessage = { getSpeaker: () => ({}), create: async (m) => cartoesA.push(m) };
+  globalThis.Roll = class {
+    constructor(f) { this.formula = f; }
+    async evaluate() { this.total = fila.shift(); if (this.total === undefined) throw new Error(`rolagem não prevista: ${this.formula}`); return this; }
+  };
+  globalThis.CONFIG.sounds = { dice: "" };
+
+  const mentalico = (nome, nivel, gasto = 0) => {
+    const flags = { alcanceGasto: gasto };
+    return {
+      type: "character", name: nome, id: nome, uuid: `Actor.${nome}`, isOwner: true,
+      system: { class: { name: "Mentálico" }, level: nivel, sabedoria: 16 },
+      getFlag: (_m, k) => flags[k], setFlag: async (_m, k, v) => { flags[k] = v; }, flags,
+    };
+  };
+  const r = (o) => an.resolverAnulacao(o);
+  if (r({ dadoDefensor: 4, nivelDefensor: 3, dadoAtacante: 2, nivelAtacante: 3 }).resultado !== "anulado") prob.push("7 contra 5 devia anular");
+  if (r({ dadoDefensor: 4, nivelDefensor: 3, dadoAtacante: 2, nivelAtacante: 3 }).contraAtaque) prob.push("7 contra 5 não é o dobro");
+  if (!r({ dadoDefensor: 6, nivelDefensor: 4, dadoAtacante: 1, nivelAtacante: 4 }).contraAtaque) prob.push("10 contra 5 é o dobro: devia abrir o contra-ataque");
+  if (r({ dadoDefensor: 3, nivelDefensor: 2, bonus: 1, dadoAtacante: 2, nivelAtacante: 4 }).resultado !== "choque") prob.push("6 contra 6 devia ser choque mental");
+  if (r({ dadoDefensor: 1, nivelDefensor: 1, dadoAtacante: 2, nivelAtacante: 1 }).resultado !== "ineficaz") prob.push("2 contra 3 devia deixar o poder passar");
+  if (an.bonusDoExtra(5) !== 2) prob.push("5% a mais dão +2 (a cada 2%)");
+  if (an.extraMaximo(3, 20) !== 3) prob.push("o extra não passa da Grandeza");
+  if (an.extraMaximo(3, 4) !== 1) prob.push("o extra não passa do que resta depois da Grandeza");
+
+  // Anulação de verdade: defensor de 10º (39% no dia) anula uma 4ª gastando 4% a mais.
+  let def = mentalico("Defensora", 10), atk = mentalico("Atacante", 5);
+  fila = [3, 5];
+  let res = await an.anularPoder(def, atk, 4, 4, "Medo");
+  if (res?.resultado !== "anulado" || res.bonus !== 2) prob.push(`3+10+2 contra 5+5 devia anular com +2, deu ${JSON.stringify(res)}`);
+  if (def.flags.alcanceGasto !== 8) prob.push(`a anulação devia gastar 4% + 4%, gastou ${def.flags.alcanceGasto}`);
+  // Pedir mais que a Grandeza não passa: 3ª com 6% a mais vira 3% a mais.
+  def = mentalico("Defensora", 10);
+  fila = [1, 6];
+  res = await an.anularPoder(def, atk, 3, 6, "Medo");
+  if (res?.gasto !== 6 || res.bonus !== 1) prob.push(`o extra da 3ª não passa de 3%, deu ${JSON.stringify(res)}`);
+  if (atk.flags.alcanceGasto !== 0) prob.push("a anulação não mexe no alcance do atacante");
+  if (cartoesA.at(-1)?.content.includes(an.BOTAO_CONTRA)) prob.push("15 contra 10 não é o dobro: o cartão não oferece contra-ataque");
+
+  // O dobro abre o botão de contra-atacar.
+  def = mentalico("Defensora", 10); atk = mentalico("Atacante", 1);
+  fila = [6, 1];
+  cartoesA.length = 0;
+  res = await an.anularPoder(def, atk, 1, 0, "Medo");
+  if (!res?.contraAtaque || !cartoesA[0]?.content.includes(an.BOTAO_CONTRA)) prob.push("16 contra 2 devia trazer o botão de contra-atacar");
+
+  // Empate: choque mental, 1d4 para cada, JPM dos dois, 6d10 para quem falha.
+  def = mentalico("Defensora", 5); atk = mentalico("Atacante", 5);
+  const jpms = [];
+  fila = [3, 3, 2, 4, 37];
+  cartoesA.length = 0;
+  res = await an.anularPoder(def, atk, 2, 0, "Medo", { jpm: async (a) => { jpms.push(a.name); return { passou: a === def }; } });
+  if (res?.resultado !== "choque" || res.choque?.defensor !== 2 || res.choque?.atacante !== 4) prob.push(`empate devia dar choque com 1d4 para cada, deu ${JSON.stringify(res)}`);
+  if (jpms.join() !== "Defensora,Atacante") prob.push("o choque pede JPM dos dois");
+  if (!cartoesA.some((c) => c.content.includes("37 segundos"))) prob.push("quem falha na JPM fica atordoado por 6d10 segundos");
+
+  // Sem alcance para a Grandeza: recusa e não gasta.
+  def = mentalico("Defensora", 10, 38);
+  fila = [];
+  if (await an.anularPoder(def, atk, 3, 0, "Medo")) prob.push("com 1% restante, anular uma 3ª devia ser recusado");
+
+  // O cartão do poder: botão de anular para o alvo mentálico, RM para a criatura.
+  const flagsBicho = { ameaca: { rm: "20%" } };
+  const bicho = { type: "monster", name: "Zork", uuid: "Actor.Zork", isOwner: true, system: {}, getFlag: (_m, k) => flagsBicho[k], setFlag: async (_m, k, v) => { flagsBicho[k] = v; } };
+  const poder = { _id: "p1", name: "Medo", system: { circle: "2" }, getFlag: () => ({ memorized: true }) };
+  atk = mentalico("Atacante", 10); def = mentalico("Defensora", 10);
+  fila = [15];
+  cartoesA.length = 0;
+  await realizarPoder(atk, poder, { alvos: [def, bicho] });
+  const c = cartoesA[0]?.content ?? "";
+  if (!c.includes(an.BOTAO_ANULAR) || !c.includes('data-alvo="Actor.Defensora"')) prob.push("o cartão do poder devia trazer Anular para o alvo mentálico");
+  if (!c.includes("resistiu") || !flagsBicho.imuneAPoderes?.includes("Medo")) prob.push("d% 15 contra RM 20% devia resistir e marcar a criatura como imune");
+  fila = [];
+  cartoesA.length = 0;
+  await realizarPoder(atk, poder, { alvos: [bicho] });
+  if (!cartoesA[0]?.content.includes("imune")) prob.push("a criatura que resistiu não é afetada de novo pelo mesmo poder");
+
+  globalThis.Roll = RollOriginal;
+  globalThis.ChatMessage = ChatAntes;
+  if (prob.length) {
+    for (const x of prob) console.error(`  ✘ ${x}`);
+    process.exit(1);
+  }
+  console.log("  ✔ anulação mental: 1d6 + nível, +1 a cada 2%, choque no empate, contra-ataque no dobro, e a RM barra o poder para sempre");
+}
+
 // ── A JP pela regra do livro: 1d20 + mod ≥ JP da classe ────────────────────
 //
 // O sistema faz o contrário (d20 ≤ JP + mod). Cosmonauta de 1º, JP 16,

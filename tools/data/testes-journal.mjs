@@ -113,8 +113,9 @@ o cartão <strong>sussurrado ao Mestre</strong>.</p>
 <li><strong>Percepção</strong> é 1d6, e passa dentro de uma faixa que
 cresce de 1–2 a 1–5. A macro rola e compara.</li>
 <li><strong>Desativar robôs</strong> é 1d20 contra a T3-2, pelo nível do
-disruptor, e o resultado precisa ser <em>maior</em> ou igual. Depende do
-Capítulo 8, que o módulo ainda não traz.</li>
+disruptor, e o resultado precisa ser <em>maior</em> ou igual. A tabela e a
+regra estão no journal <strong>Aparatos e Feitos Científicos</strong>, página
+<em>Desativar robôs</em>.</li>
 <li><strong>Ataque furtivo</strong> e <strong>dano crítico</strong> são
 multiplicadores de dano, não chances.</li>
 <li><strong>Alcance mental</strong> é orçamento diário: usar um poder desconta

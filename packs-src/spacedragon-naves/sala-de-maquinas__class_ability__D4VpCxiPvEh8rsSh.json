@@ -5,7 +5,7 @@
   "_id": "D4VpCxiPvEh8rsSh",
   "img": "systems/olddragon2e/assets/icons/kit.svg",
   "system": {
-    "description": "<p>Propulsão e geradores primários. É o que permite ao Técnico testar Operar e Consertar Máquinas para reativar a energia ou reparar a nave em combate. Espaço obrigatório do acelerador hiperespacial, e onde se gerenciam os tanques de combustível.</p><p><strong>Obra:</strong> 200.000 créditos, 3 semanas. <strong>Reparo em campo:</strong> 50.000 créditos, metade do prazo (T10-2).</p>",
+    "description": "<p>Propulsão e geradores primários. É o que permite ao cientista testar operar e consertar máquinas para reativar a energia ou reparar a nave em combate. Espaço obrigatório do acelerador hiperespacial, e onde se gerenciam os tanques de combustível.</p><p><strong>Obra:</strong> 200.000 créditos, 3 semanas. <strong>Reparo em campo:</strong> 50.000 créditos, metade do prazo (regra da casa).</p>",
     "level": 1,
     "level3": "",
     "level6": "",

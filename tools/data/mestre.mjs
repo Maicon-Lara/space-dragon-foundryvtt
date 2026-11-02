@@ -37,7 +37,7 @@ export const INTERESSES = [
 /**
  * T11-3: relíquias tecnológicas.
  *
- * Não é uma tabela: são SEIS, cada uma com o próprio dado. Rola-se todas para
+ * Não é uma tabela: são SETE, cada uma com o próprio dado. Rola-se todas para
  * montar uma relíquia.
  */
 export const RELIQUIAS = {
@@ -136,7 +136,11 @@ export const ATMOSFERAS = [
   { d: 10, atmosfera: "Ácida", respiravel: false, efeito: "Causa dano por ácido fraco a cada minuto de exposição, a personagens e objetos. O dano não regride." },
 ];
 
-/** T11-7 a T11-9: fauna, flora e organização social, em 1d8. */
+/**
+ * T11-7 (fauna predominante), T11-8 (flora predominante) e T11-9 (organização
+ * social), todas em 1d8. O livro imprime as três lado a lado, junto com a T11-6,
+ * sob o título "T11-6 a T11-9"; por isso ficam numa lista só, uma coluna cada.
+ */
 export const FAUNA_FLORA_SOCIEDADE = [
   { d: 1, fauna: "Mamíferos terrestres", flora: "Gramíneas", social: "Monarquia" },
   { d: 2, fauna: "Répteis terrestres", flora: "Árvores diversas", social: "Ditadura" },

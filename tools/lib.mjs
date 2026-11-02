@@ -554,7 +554,10 @@ export function journalDoc(entry, sort) {
   const id = makeId(`journal:${semente}`);
   const pages = (entry.pages || [{ title: entry.title, content: entry.content }]).map(
     (p, i) => {
-      const pid = makeId(`journal-page:${semente}:${p.title}:${i}`);
+      // `seedIndice`: a posição que GEROU o id. A posição entra na semente, e
+      // uma página nova no meio trocaria o id de todas as de depois — quem
+      // insere na ordem do livro fixa as antigas na posição que tinham.
+      const pid = makeId(`journal-page:${semente}:${p.title}:${p.seedIndice ?? i}`);
       return {
         sort: (i + 1) * 100000,
         name: p.title,

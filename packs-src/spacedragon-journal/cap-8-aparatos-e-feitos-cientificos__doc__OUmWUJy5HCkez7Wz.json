@@ -15,7 +15,7 @@
       "image": {},
       "text": {
         "format": 1,
-        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Duas coisas diferentes</h2>\n<p><strong>Aparatos tecnológicos</strong> são objetos: alguém os constrói, alguém\nos carrega, alguém os usa. <strong>Feitos científicos</strong> são\nprocedimentos, e só o cientista os realiza — não há o que carregar.</p>\n\n<h2>A categoria decide quem pode usar</h2>\n<p>Todo aparato é <strong>ofensivo</strong>, <strong>defensivo</strong> ou\n<strong>utilitário</strong>, e cada classe opera só as suas:</p>\n\n<table>\n<thead><tr><th>classe</th><th>opera</th></tr></thead>\n<tbody><tr><td><strong>Cientista</strong></td><td>Ofensivo, Defensivo, Utilitário</td></tr><tr><td><strong>Cosmonauta</strong></td><td>Defensivo, Utilitário</td></tr><tr><td><strong>Gatuno</strong></td><td>Utilitário</td></tr><tr><td><strong>Mentálico</strong></td><td>Utilitário</td></tr></tbody>\n</table>\n\n<p>É a categoria que responde <em>\"meu gatuno pode usar isto?\"</em>. Por isso\nela está no item, e não perdida no meio da descrição.</p>\n\n<h2>Nível tecnológico</h2>\n<p>O <strong>NT</strong> mede o quanto o aparato é avançado. Ele limita o que o\ncientista consegue <strong>construir</strong> — não o que consegue\n<strong>usar</strong>: não há limite de nível para usar.</p>\n\n<p>O <em>Nível Tecnológico Máximo</em> do Cientista sobe um degrau a cada dois\nníveis de classe.</p>\n\n<p>Dois itens têm <strong>NT variável</strong>: a <em>Injeção de adrenalina</em>\ne os <em>Reparos robóticos</em>. O custo deles também é.</p>\n</div>"
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Duas coisas diferentes</h2>\n<p><strong>Aparatos tecnológicos</strong> são objetos: alguém os constrói, alguém\nos carrega, alguém os usa. <strong>Feitos científicos</strong> são\nprocedimentos, e só o cientista os realiza — não há o que carregar.</p>\n\n<h2>A categoria decide quem pode usar</h2>\n<p>Todo aparato é <strong>ofensivo</strong>, <strong>defensivo</strong> ou\n<strong>utilitário</strong>, e cada classe opera só as suas:</p>\n\n<table>\n<thead><tr><th>classe</th><th>opera</th></tr></thead>\n<tbody><tr><td><strong>Cientista</strong></td><td>Ofensivo, Defensivo, Utilitário</td></tr><tr><td><strong>Cosmonauta</strong></td><td>Defensivo, Utilitário</td></tr><tr><td><strong>Gatuno</strong></td><td>Utilitário</td></tr><tr><td><strong>Mentálico</strong></td><td>Utilitário</td></tr></tbody>\n</table>\n\n<p>É a categoria que responde <em>\"meu gatuno pode usar isto?\"</em>. Por isso\nela está no item, e não perdida no meio da descrição.</p>\n\n<h2>Feitos científicos</h2>\n<p>Feitos são experiências e operações. Em geral levam <strong>mais tempo</strong>\nque a construção de um aparato, a maioria dos resultados é\n<strong>permanente</strong>, e muitos envolvem um <strong>paciente</strong>, que\nrecebe o resultado.</p>\n\n<p>Salvo quando a descrição diz outra coisa, o acesso a recursos e o\nprocedimento são os mesmos de criar e consertar aparatos (veja\n<em>Criando e consertando</em>). A diferença principal: muitos feitos\n<strong>não podem ser interrompidos</strong> — o cientista se dedica a eles\ndurante todo o tempo necessário. Outros levam semanas ou meses e, por isso, já\ntêm margem natural para pausas.</p>\n\n<h2>Nível tecnológico</h2>\n<p>O <strong>NT</strong> mede o quanto o aparato é avançado. Aparatos de\n<strong>1º NT</strong> são mundanos e relativamente simples de criar; os de\n<strong>10º NT</strong> são tecnologia tão avançada que pessoas comuns duvidam\nque existam, e poucos entendem como funcionam.</p>\n\n<p>O NT limita o que o cientista consegue <strong>construir</strong> — não o\nque consegue <strong>usar</strong>: não há limite de nível para usar.</p>\n\n<p>O <em>Nível Tecnológico Máximo</em> do Cientista sobe um degrau a cada dois\nníveis de classe.</p>\n\n<p>Dois itens têm <strong>NT variável</strong>: a <em>Injeção de adrenalina</em>\ne os <em>Reparos robóticos</em>. O custo deles também é.</p>\n</div>"
       },
       "video": {
         "controls": true,
@@ -113,6 +113,117 @@
         "exportSource": null
       },
       "_key": "!journal.pages!OUmWUJy5HCkez7Wz.BrRYEIe4uufQQZtt"
+    },
+    {
+      "sort": 400000,
+      "name": "Usando aparatos",
+      "type": "text",
+      "_id": "Vaomc2GJGOFnJPmI",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Em geral, sem rolagem</h2>\n<p>Nenhum aparato pede rolagem para ser usado, a menos que outra regra — uma\nespecialização de classe, por exemplo — diga o contrário. Muitos trazem regras\nde uso próprias na descrição. Quando há rolagem, o sucesso indica uso correto e\nsem problemas; a falha pode ter efeitos desastrosos.</p>\n\n<h2>Identificar e operar</h2>\n<ul>\n<li><strong>Identificar</strong> para que serve um aparato é um teste de\n<strong>Ciência</strong>.</li>\n<li>A critério do Mestre, o <strong>cientista</strong> pode ter de passar num\nteste de <strong>operar máquinas</strong> para usar um aparato de funcionamento\ne finalidade desconhecidos, criado por outra pessoa, de procedência obscura,\ndanificado, ou muito acima do nível tecnológico dele.</li>\n</ul>\n\n<h2>Quem não tem proficiência</h2>\n<p>Quando a única saída é um membro de outra classe usar um aparato que não\nopera (pela categoria) ou que desconhece, rola-se um teste com a porcentagem de\n<strong>aptidão tecnológica</strong> da Ciência (T1-5), se houver. Sucesso: usa\no aparato <strong>provisoriamente</strong>. Falha: um <strong>defeito da\nT11-4</strong> (seção do Mestre, journal do Cap. 11).</p>\n\n<p>Testes só devem ser pedidos se houver chance real de falha.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!OUmWUJy5HCkez7Wz.Vaomc2GJGOFnJPmI"
+    },
+    {
+      "sort": 500000,
+      "name": "Criando e consertando",
+      "type": "text",
+      "_id": "wm8K5gvaP8VAaLaG",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Criando</h2>\n<p>O cientista cria qualquer aparato que seu nível tecnológico alcance, desde\nque tenha os materiais ou componentes e instalações adequadas. Considera-se que\ntem os materiais se pagar o <strong>custo</strong> da descrição, com\n<strong>desconto</strong> de uma porcentagem igual à <strong>aptidão\ntecnológica</strong> da Ciência (T1-5).</p>\n\n<ul>\n<li>O tempo para <strong>obter</strong> os materiais fica a critério do Mestre,\nque pode até <strong>vetar</strong> a criação se as circunstâncias não\najudarem — falta de componente ou de laboratório, por exemplo.</li>\n<li>O <strong>tempo de criação</strong> está na descrição (de horas a semanas)\ne pode ser <strong>dividido</strong> quantas vezes for preciso, contanto que o\ncientista trabalhe no mesmo laboratório ou leve o projeto para outro.</li>\n<li>Os créditos são <strong>pagos no início</strong> da criação. Também dá\npara comprar os componentes de antemão e construir depois.</li>\n<li>O cientista pode <strong>começar o jogo</strong> já com quaisquer aparatos\nque seu nível tecnológico e sua renda inicial permitam.</li>\n</ul>\n\n<h2>Consertando</h2>\n<p>Para reparar um aparato, o cientista paga <strong>25% do custo\ntotal</strong> e leva <strong>até metade do tempo</strong> de construção\noriginal.</p>\n\n<p>O mesmo procedimento serve para <strong>adaptar</strong> um aparato feito por\noutra pessoa ou de operação complicada, e para <strong>produzir mais\ncargas</strong> de aparatos com número fixo de usos.</p>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!OUmWUJy5HCkez7Wz.wm8K5gvaP8VAaLaG"
+    },
+    {
+      "sort": 600000,
+      "name": "Inventando novos aparatos e feitos",
+      "type": "text",
+      "_id": "DMBA7jHnsvxnPHuH",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<div class=\"odo-markdown spacedragon-doc\">\n<h2>Para o que a lista não cobre</h2>\n<p>A regra se divide entre cientistas comuns e inventores.</p>\n\n<h2>Cientistas comuns</h2>\n<p>Quem não seguiu especialização, ou virou pesquisador ou niilógico, pode\nalterar qualquer aparato ou feito ao qual tenha acesso pelo nível tecnológico\npara uma finalidade diferente da original: uma mochila a jato vira propulsor\nsubaquático, um detector de mentiras reage a uma palavra. O\n<strong>custo é o mesmo</strong> do original, e o <strong>tempo de criação\ndobra</strong>.</p>\n\n<h2>Inventores</h2>\n<ul>\n<li><strong>A partir do 10º nível:</strong> combina as características de\n<strong>3 aparatos distintos</strong> num só, desde que estejam ao alcance do\nseu nível tecnológico e que passe num teste simples de <strong>operar\nmáquinas</strong> — um membro biônico com cortador laser e visor de precisão\nacoplados, por exemplo. O custo é a <strong>soma</strong> dos aparatos\ncombinados mais o prejuízo tecnológico do inventor; o tempo se calcula do mesmo\njeito.</li>\n<li><strong>No 20º nível:</strong> cria aparatos e feitos novos livremente,\napresentando a proposta ao Mestre. O Mestre define o NT; o custo é\n<strong>1d10 por NT × $10.000</strong>, e depois se aplica o prejuízo\ntecnológico. O tempo de criação ou realização é o Mestre quem define.</li>\n</ul>\n</div>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1
+      },
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "13.342",
+        "systemId": "olddragon2e",
+        "systemVersion": "This is auto replaced",
+        "createdTime": 0,
+        "modifiedTime": 0,
+        "lastModifiedBy": "spacedragonbld01",
+        "exportSource": null
+      },
+      "_key": "!journal.pages!OUmWUJy5HCkez7Wz.DMBA7jHnsvxnPHuH"
     }
   ],
   "flags": {},

@@ -30,6 +30,7 @@
 import { orcamento } from "./mental.js";
 import { preparar } from "./testes.js";
 import { CAMPO_NA_FICHA } from "./dados.js";
+import { reacoesDosAlvos } from "./anulacao.js";
 
 import { t as txt } from "./i18n.js";
 
@@ -64,11 +65,19 @@ async function cartaoDoSistema(ator, item) {
   }
 }
 
+/** Os atores dos tokens que quem realiza marcou como alvo. */
+const alvosMarcados = () =>
+  [...(globalThis.game?.user?.targets ?? [])].map((t) => t.actor).filter(Boolean);
+
 /**
  * Realiza o poder: confere limite e alcance, rola se for desconhecido,
  * desconta a Grandeza e, se deu certo com um desconhecido, oferece aprender.
+ *
+ * Realizado, o cartão traz a reação de cada alvo (anulacao.js): a RM de quem
+ * tem e o botão de anular de quem é mentálico. `alvos` vem do contra-ataque,
+ * que já sabe contra quem é; senão valem os tokens marcados.
  */
-export async function realizarPoder(ator, item, { perguntar = confirmar } = {}) {
+export async function realizarPoder(ator, item, { perguntar = confirmar, alvos = alvosMarcados() } = {}) {
   const g = Number(item?.system?.circle) || 1;
   const o = orcamento(ator);
 
@@ -107,6 +116,12 @@ export async function realizarPoder(ator, item, { perguntar = confirmar } = {}) 
   await ator.setFlag(ID, FLAG_GASTO, o.gasto + g);
   const depois = orcamento(ator);
   corpo += `<ul class="sd-parcelas"><li>gastou <strong>${g}%</strong> — restam <strong>${depois.restante}%</strong> de ${depois.total}%</li></ul>`;
+
+  if (realizou) {
+    const reacao = await reacoesDosAlvos(ator, item, alvos);
+    corpo += reacao.html;
+    rolls.push(...reacao.rolls);
+  }
 
   const cartao = realizou ? await cartaoDoSistema(ator, item) : "";
   await ChatMessage.create({

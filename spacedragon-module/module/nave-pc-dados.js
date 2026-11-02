@@ -239,7 +239,7 @@ export function orcamentoDeCamaras(nave, chaves, tamanho) {
  *     nem se desinstala. A ficha só o nomeia, para ninguém achar que falta.
  *
  * Todo o resto — Aposentos, Arsenal, Laboratório… — se COMPRA, pelo preço e
- * prazo de obra da T10-2, dentro do que o tamanho comporta. O limite é aviso,
+ * prazo de obra da casa (a T10-2 só traz finalidade e equipamento), dentro do que o tamanho comporta. O limite é aviso,
  * não trava (ver orcamentoDeCamaras).
  */
 
@@ -311,7 +311,7 @@ export function compraDeCamara(chave, nave, raca = "") {
 
 /**
  * Metade de um prazo de obra, arredondada para cima em dias: "1 semana" vira
- * "4 dias", "2 semanas" vira "1 semana". O reparo da T10-2 leva metade do tempo
+ * "4 dias", "2 semanas" vira "1 semana". O reparo da casa leva metade do tempo
  * da obra, e "metade de 1,5 semana" não é coisa que a mesa queira calcular.
  */
 export function metadeDoPrazo(prazo) {
@@ -326,7 +326,7 @@ export function metadeDoPrazo(prazo) {
 
 /**
  * O que custa reparar uma câmara danificada: 25% da obra e metade do prazo
- * (T10-2). Null se ela não está danificada.
+ * (regra da casa, não da T10-2). Null se ela não está danificada.
  */
 export function reparoDeCamara(chave, nave) {
   const c = CAMARAS[chave];

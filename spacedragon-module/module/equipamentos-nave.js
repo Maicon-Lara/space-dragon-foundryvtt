@@ -58,13 +58,13 @@ export const EQUIPAMENTOS_DE_NAVE = {
     rotulo: "Corredor de acoplagem",
     grupo: "utilitario",
     cabe: { Pequena: false, "Média": true, Gigantesca: true, Colossal: false },
-    nota: "Passagem acoplável a outras naves, para abordagem.",
+    nota: "Passagem acoplável a outras naves para abordagem. Exige teste de pilotagem para manobrar corretamente.",
   },
   gancho: {
     rotulo: "Gancho eletromagnético",
     grupo: "utilitario",
     cabe: { Pequena: true, "Média": true, Gigantesca: false, Colossal: false },
-    nota: "Prende e reboca outra nave ou carga no vácuo.",
+    nota: "Poderoso ímã que se prende ao casco de outra nave, possibilitando um reboque.",
   },
   solares: {
     rotulo: "Painéis solares",

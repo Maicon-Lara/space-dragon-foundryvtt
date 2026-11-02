@@ -47,8 +47,8 @@
  *
  *   · Percepção é 1d6, e passa dentro de uma FAIXA ("1-2" até "1-5").
  *   · Desativar robôs é 1d20 contra a T3-2, pelo nível do disruptor, e o
- *     resultado precisa ser MAIOR ou igual. Depende do Capítulo 8, que o
- *     módulo ainda não tem.
+ *     resultado precisa ser MAIOR ou igual. A tabela está em robos.mjs, e a
+ *     página do journal em aparatos-journal.mjs ("Desativar robôs").
  *   · Ataque furtivo e dano crítico são multiplicadores, não chances.
  *   · Alcance mental é orçamento diário: usar um poder desconta um percentual
  *     igual à grandeza dele.
