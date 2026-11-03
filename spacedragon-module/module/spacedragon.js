@@ -46,6 +46,7 @@ import { abrirReliquia, gerarReliquia, gerarDaCriatura, rolarDefeito } from "./r
 import { ligarMutacoes } from "./mutacoes-ficha.js";
 import { ligarRegrasDeAmeaca, xpDeVilaoDoAtor } from "./ameaca-regras.js";
 import { ligarIntegracaoQdV } from "./integracao-qdv.js";
+import { ligarIntegracaoPV } from "./integracao-pv.js";
 import { registrarOpcaoDeVersao, avisarVersaoDoSistema } from "./versao.js";
 import { ligarCusto } from "./custo.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
@@ -226,6 +227,8 @@ Hooks.once("ready", () => {
   passo("mutações", () => ligarMutacoes());
   passo("regras de ameaça (PV, Moral, prêmio de vilão)", () => ligarRegrasDeAmeaca());
   passo("convivência com o Qualidade de Vida", () => ligarIntegracaoQdV());
+  // o caminho dos PV no Heartbeat e no Health Estimate (integracao-pv.js)
+  passo("PV no Heartbeat e no Health Estimate", () => ligarIntegracaoPV());
   passo("degraus", () => ligarDegraus());
   passo("Ordem de Ação na ficha", () => ligarOrdemNaFicha());
   // o botão de iniciativa do OD2, na ficha de personagem e na de nave; some

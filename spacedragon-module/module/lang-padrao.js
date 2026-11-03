@@ -73,6 +73,7 @@ export const LANG_PADRAO = {
   "spacedragon.aviso.alcanceInsuficientePoder": "Faltam {falta}% de alcance mental: restam {restante}% e {nome} custa {custo}%. O livro é taxativo: o alcance nunca pode ser ultrapassado.",
   "spacedragon.aviso.semReliquia": "{nome} não carrega relíquia nenhuma — o bloco só dá o prêmio em XP.",
   "spacedragon.aviso.aCriatura": "A criatura",
+  "spacedragon.aviso.pvConfigurado": "Space Dragon: o caminho dos PV do Old Dragon 2 (system.hp) foi configurado em {modulos}.",
   "spacedragon.aviso.navesAntigas": "{n} nave(s) ainda usam o tipo de ator antigo. O console diz como converter.",
   "spacedragon.aviso.semPermissao": "Você não tem permissão sobre {nome}.",
   "spacedragon.aviso.testeDesconhecido": "Teste desconhecido: {chave}",

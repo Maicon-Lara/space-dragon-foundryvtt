@@ -208,6 +208,21 @@ o jogador rola a JP pela ficha do Space Dragon (1d20 + mod ≥ JP) e o Mestre
 mantém ou remove o efeito: as condicionais de JP do Qualidade de Vida comparam
 no sentido do Old Dragon 2.
 
+## Com o Heartbeat e o Health Estimate
+
+Os dois leem os PV no caminho do D&D 5e (`system.attributes.hp`), e o Old
+Dragon 2 os guarda em `system.hp` — daí o aviso "Heartbeat | HP Data Path
+incorrect.". Ao abrir o mundo, o Mestre tem as opções deles acertadas sozinhas:
+
+| módulo | opção | valor |
+|---|---|---|
+| Heartbeat | HP Data Path | `system.hp.value` |
+| Heartbeat | Max HP Data Path | `system.hp.max` |
+| Heartbeat | Additional Actor Types | inclui `monster` |
+| Health Estimate | Hit Points Attribute Data Path | `actor.system.hp` |
+
+Um caminho que o Mestre já tenha trocado para outra coisa é mantido.
+
 ## As porcentagens
 
 Subjugar, furtividade, clonagem, aptidão tecnológica e a chance de poder mental
