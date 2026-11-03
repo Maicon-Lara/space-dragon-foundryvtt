@@ -136,9 +136,7 @@ export function ligarIntegracaoPV() {
     console.error(`spacedragon | não deu para configurar os PV no ${nome}`, e);
     return null;
   }))).then((nomes) => {
-    const ajustados = nomes.filter(Boolean);
-    if (ajustados.length) {
-      globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.pvConfigurado", { modulos: ajustados.join(", ") }));
-    }
+    const modulos = nomes.filter(Boolean).join(", ");
+    if (modulos) globalThis.ui?.notifications?.info?.(txt("spacedragon.aviso.pvConfigurado", { modulos }));
   });
 }
