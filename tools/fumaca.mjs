@@ -1297,12 +1297,24 @@ console.log("  ✔ suplementos: o chassi e a habilidade vêm da flag, e um nome 
   if ((await pv("Mentálico", null, 17, 16)) !== 0) probEsp.push("o Mentálico no 17º não ganha PV nenhum");
   const artifice = { fonte: "Artífice", colunas: { dv: { "17": "+2 PV" } } };
   if ((await pv("Mentálico", artifice, 17, 10)) !== 2) probEsp.push("o Artífice volta a ganhar +2 PV no 17º");
+  // O Psiquista (Consular) PERDE os PV da tabela: sem Constituição, sem mínimo de 1.
+  const consularPV = { fonte: "Consular", colunas: { dv: { "10": "−1 PV", "15": "−2 PV" } } };
+  if ((await pv("Mentálico", consularPV, 10, 16)) !== -1) probEsp.push("o Consular devia perder 1 PV no 10º, mesmo com Constituição boa");
+  if ((await pv("Mentálico", consularPV, 15, 4)) !== -2) probEsp.push("o Consular devia perder 2 PV no 15º");
+  {
+    const quase = comEsp("Mentálico", consularPV, { level: 15, constituicao: 10, hp: { max: 2, value: 2 } });
+    quase.system.class.system = { hp: 4 };
+    let gravado = null;
+    quase.update = async (u) => { gravado = u["system.hp.max"]; };
+    await vit.rolarPV(quase);
+    if (gravado !== 1) probEsp.push(`a perda de PV não pode deixar o máximo abaixo de 1 (ficou ${gravado})`);
+  }
 
   if (probEsp.length) {
     for (const x of probEsp) console.error(`  ✘ ${x}`);
     process.exit(1);
   }
-  console.log("  ✔ especialização: Sabotador 51% no 5º, Espião com CT dobrado, Consular 17%/4ª, Mercenário ×3, PV fixo com Constituição");
+  console.log("  ✔ especialização: Sabotador 51% no 5º, Espião com CT dobrado, Consular 17%/4ª, Mercenário ×3, PV fixo com Constituição, a perda de PV do Consular");
 }
 
 // ── Desativar Robôs na ficha ───────────────────────────────────────────────

@@ -94,7 +94,15 @@ export async function rolarPV(ator = null, { nivel = null } = {}) {
   let roll = null;
 
   const fixo = String(cel ?? "").match(/\+(\d+)\s*PV/i);
-  if (fixo) {
+  // Uma especialização pode trocar o ganho por PERDA: o Psiquista do livro
+  // "perde 1 ou 2 pontos de vida de seu total ao subir de nível ao invés de
+  // ganhá-los". A tabela dela traz "−1 PV"; a Constituição não entra, porque
+  // não há ganho a modificar, e o mínimo de 1 PV por nível não vale.
+  const perda = String(cel ?? "").match(/[−-]\s*(\d+)\s*PV/i);
+  if (perda) {
+    ganho = -Number(perda[1]);
+    como = `${cel} da tabela, no ${n}º nível — a especialização perde PV em vez de ganhar`;
+  } else if (fixo) {
     // A classe parou de dar dados: o número da tabela é o ganho do nível, e a
     // Constituição continua valendo. Cap. 5: "Seu modificador de Constituição
     // também influi na quantidade de pontos de vida ganhos, e a regra de 1 PV
@@ -115,7 +123,7 @@ export async function rolarPV(ator = null, { nivel = null } = {}) {
 
   // A Constituição entra em todo ganho, rolado ou fixo; só não entra quando a
   // tabela não dá PV nenhum (o Mentálico do 17º em diante).
-  const usouCon = !!cel && cel !== "–" && cel !== "-";
+  const usouCon = !!cel && cel !== "–" && cel !== "-" && !perda;
 
   // O livro garante o mínimo de 1 PV por nível a partir do 2º: uma
   // Constituição ruim não pode tirar vida de quem subiu de nível.
@@ -125,15 +133,19 @@ export async function rolarPV(ator = null, { nivel = null } = {}) {
   }
 
   const antes = Number(ator.system?.hp?.max) || 0;
-  const depois = antes + ganho;
+  // a perda não leva ninguém abaixo de 1 PV máximo
+  const depois = Math.max(perda ? 1 : 0, antes + ganho);
   await ator.update({ "system.hp.max": depois, "system.hp.value": depois });
 
   const sinal = con > 0 ? `+${con}` : `${con}`;
+  const rotulo = ganho < 0
+    ? `<strong class="failure">−${-ganho} PV</strong>`
+    : `<strong class="success">+${ganho} PV</strong>`;
   await ChatMessage.create({
     content:
       `<div class="title">Pontos de Vida — ${n}º nível</div>` +
       `<div class="sd-teste">` +
-      `<p class="result"><strong class="success">+${ganho} PV</strong> — total ${depois}</p>` +
+      `<p class="result">${rotulo} — total ${depois}</p>` +
       `<ul class="sd-parcelas"><li>${como}</li>` +
       (!usouCon ? "" : `<li>${sinal} <em>ajuste de Constituição (T1-3)</em></li>`) +
       `</ul></div>`,
