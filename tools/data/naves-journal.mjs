@@ -434,7 +434,8 @@ ${tab(["tipo", "XP"], linhasDeXP)}
       content: `
 <p><strong>Regra da casa, não é do livro.</strong> Liga-se em <em>Configurações › Space Dragon ›
 Combate Cinematográfico de naves</em>, e nasce desligada. Ligada, substitui os postos das Regras
-Compiladas, as camadas, o dano por margem e o escudo-reserva. Desligar devolve tudo como era.</p>
+Compiladas, as camadas, o dano por margem e o escudo-reserva. A escala guarda o PV que a nave tinha:
+antes de desligar a opção, o botão <em>Voltar ao PV do livro</em> o devolve.</p>
 
 <h2>Por que existe</h2>
 <p>Com os PV do livro, uma Espaçonave particular (3d100) levava umas 27 rodadas para cair diante de
@@ -466,8 +467,9 @@ de JP da rodada. Vence o grau maior; no empate, a nave menor; depois, o grupo. O
 <li><strong>Turnos:</strong> cada jogador age no seu posto (Leme, Artilharia, Engenharia,
 Sensores, Comando), com quatro ações por posto. Quem sai do posto para apagar fogo deixa o
 posto vazio.</li>
-<li><strong>Fim da rodada:</strong> incêndios e brechas cobram, o fogo espalha, a Prioridade
-Escudos recarrega, e o que vale até o fim da rodada sai.</li>
+<li><strong>Fim da rodada</strong> (clique antes de avançar o rastreador, uma vez por nave):
+incêndios e brechas cobram, o fogo espalha, a Prioridade Escudos recarrega, e o que vale até o
+fim da rodada sai. Firmar e Giro evasivo duram até o próximo turno da nave.</li>
 </ol>
 
 <h2>O tiro</h2>

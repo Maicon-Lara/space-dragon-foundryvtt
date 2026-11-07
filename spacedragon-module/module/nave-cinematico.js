@@ -173,7 +173,7 @@ export function pedeEvento(rodada) {
 /**
  * Os termos do ataque no Cinematográfico, cada um com nome, para o cartão.
  *
- *   · `vantagem`: a minha contra este alvo ("mira" dá +2);
+ *   · `vantagem`: a(s) minha(s) contra este alvo, chave ou lista ("mira" dá +2);
  *   · `caudaContraMim`: o alvo está na minha cauda (−2);
  *   · `firmar`: o Leme firmou nesta rodada (+2).
  */
@@ -187,7 +187,7 @@ export function termosCine({
     ["Computador Balístico", pen.semBalistico ? 0 : balistico],
     ["artilheiro", artilheiro],
     ["Tensão", tensaoDaRodada(rodada)],
-    ["Mira (duelo)", vantagem === "mira" ? 2 : 0],
+    ["Mira (duelo)", [].concat(vantagem ?? []).includes("mira") ? 2 : 0],
     ["Na cauda (inimigo)", caudaContraMim ? -2 : 0],
     ["Firmar (Leme)", firmar ? 2 : 0],
     ["Rajada", rajada ? -4 : 0],
@@ -367,6 +367,8 @@ export function fimDaRodadaCine(avarias = {}, { rodada = 0, estados = {} } = {})
   D12.forEach((d, i) => {
     const a = avarias[d.camara];
     if (!a || (d.familia !== "incendio" && d.familia !== "brecha")) return;
+    // a brecha Fora é «câmara selada e perdida»: selada, não vaza mais
+    if (d.familia === "brecha" && a.estado === "fora") return;
     const formula = a.estado === "fora" && d.dadoFora ? d.dadoFora : d.dado;
     danos.push({ camara: d.camara, familia: d.familia, formula });
     if (d.familia !== "incendio") return;

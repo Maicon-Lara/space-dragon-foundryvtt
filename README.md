@@ -112,7 +112,8 @@ e nada gravado na nave se perde: religar devolve tudo como estava.
 
 **O Combate Cinematográfico** (opção, desligada) nasceu do teste da mesa: com os PV do
 livro, uma Espaçonave particular levava umas 27 rodadas para cair. Ligada a opção, use o
-botão *Aplicar escala do tipo* na aba Tripulação de cada nave (Escudo e Casco cheios), anote
+botão *Aplicar escala do tipo* na aba Tripulação de cada nave (Escudo e Casco cheios; o PV de
+antes fica guardado, e *Voltar ao PV do livro* o devolve), anote
 o Pilotar do Leme, e a rodada fica: **Duelo de pilotos** → turnos na ordem do rastreador →
 **Fim da rodada**. O disparo e o botão *Aplicar* do cartão já fazem a conta nova. As regras
 estão no journal do Cap. 10, página *Combate Cinematográfico (casa)*.

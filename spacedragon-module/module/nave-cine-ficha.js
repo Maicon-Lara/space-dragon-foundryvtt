@@ -35,6 +35,7 @@ export const CLASSE_CINE_RESOLVER = "sd-cine-resolver";
 export const CLASSE_CINE_FIM = "sd-cine-fim";
 export const CLASSE_CINE_ENCERRAR = "sd-cine-encerrar";
 export const CLASSE_CINE_ESCALA = "sd-cine-escala";
+export const CLASSE_CINE_LIVRO = "sd-cine-livro";
 
 /** As ações que a ficha aplica sozinha; as outras são decisão da mesa. */
 export const AUTOMATICAS_CINE = new Set([
@@ -51,10 +52,14 @@ export function cineVazio() {
     recarga: null,
     agilidade: 0,
     pilotar: 0,
+    // Firmar e Giro valem «até o próximo turno da nave»: guardam a rodada em
+    // que foram feitos, e `turno` diz quando a nave agiu pela última vez
+    firmar: null,
+    giro: null,
+    turno: null,
     prioridade: [],
-    firmar: false,
-    giro: 0,
     forcado: false,
+    // «O PRÓXIMO acerto no Casco desse alvo»: sem prazo, gasta-se no acerto
     trava: null,
     interferencia: null,
     supressao: null,
@@ -64,8 +69,12 @@ export function cineVazio() {
     ultimoReparo: null,
     // «Motores: +20% no duelo da PRÓXIMA rodada» — a rodada em que o bônus vale
     motores: null,
-    // a Prioridade Armas vale num acerto só: «+1 dado de dano em UMA arma»
+    // cada Prioridade Armas é «+1 dado de dano em UMA arma»: quantas já foram
     armasUsadas: 0,
+    // a rodada que o botão Fim da rodada já cobrou (dois cliques não cobram duas vezes)
+    fimRodada: null,
+    // o PV de antes da escala, para voltar ao livro (a escala não apaga o que a nave tinha)
+    pvLivro: null,
   };
 }
 
@@ -85,7 +94,65 @@ export function cineDe(nave) {
     interferencia: c.interferencia?.alvo ? c.interferencia : null,
     supressao: c.supressao?.alvo ? c.supressao : null,
     duelo: c.duelo?.grau ? c.duelo : null,
+    firmar: c.firmar && Number.isFinite(Number(c.firmar.rodada)) ? c.firmar : null,
+    giro: Number(c.giro?.valor) ? c.giro : null,
+    pvLivro: Number(c.pvLivro?.max) ? c.pvLivro : null,
   };
+}
+
+/* ── «ATÉ O PRÓXIMO TURNO DA NAVE» ───────────────────────────────────────────
+ *
+ * Firmar (−2 de CP) e Giro evasivo (+4 ou −2) duram até a nave agir de novo:
+ * o resto da rodada em que foram feitos e, na rodada seguinte, até o turno
+ * dela. O exemplo do §10 depende disso — o esquadrão que vence o duelo da
+ * rodada 2 ainda atira contra o CP 24 do Firmar da rodada 1.
+ */
+export function vigenteAteProximoTurno(efeito, cine, rodada) {
+  const feito = Number(efeito?.rodada);
+  const r = Number(rodada) || 0;
+  if (!efeito || !Number.isFinite(feito)) return false;
+  if (feito === r) return true;
+  return feito === r - 1 && Number(cine?.turno) !== r;
+}
+
+/** O +2 de ataque do Firmar vale só NESTA rodada. */
+export const firmouNestaRodada = (cine, rodada) => Boolean(cine?.firmar) && Number(cine.firmar.rodada) === (Number(rodada) || 0);
+
+/** A nave começou o turno: o que valia «até o próximo turno» dela acaba. */
+export function marcarTurno(cine, rodada) {
+  const r = Number(rodada) || 0;
+  if (Number(cine.turno) === r) return cine;
+  const velho = (e) => (e && Number(e.rodada) < r ? null : e);
+  return { ...cine, turno: r, firmar: velho(cine.firmar), giro: velho(cine.giro) };
+}
+
+/** Escudo a 0 quando a Ponte ou a Sala de Máquinas caem Fora, venha de onde vier. */
+export function normalizarEscudo(cine) {
+  if (!penalidadesDeCamara(cine.avarias).semEscudo || !cine.escudo.atual) return cine;
+  return { ...cine, escudo: { ...cine.escudo, atual: 0 } };
+}
+
+/**
+ * A Vantagem contra um alvo. Uma; com Crítico no duelo, duas — e diferentes.
+ * Clicar de novo depois do limite troca a mais antiga.
+ */
+export function adicionarVantagem(cine, token, nome, chave, { critico = false } = {}) {
+  const atual = cine.vantagens?.[token]?.chaves ?? [];
+  if (atual.includes(chave)) return cine;
+  const limite = critico ? 2 : 1;
+  const chaves = atual.length >= limite ? [...atual.slice(1), chave] : [...atual, chave];
+  return { ...cine, vantagens: { ...cine.vantagens, [token]: { chaves, nome } } };
+}
+
+/** As Vantagens que `cine` tem contra `token`. */
+export const vantagensContra = (cine, token) => (token ? cine?.vantagens?.[token]?.chaves ?? [] : []);
+
+/** Manobra de risco (Giro): só nave P ou M, e não sob Bloqueio ou Supressão. */
+export function podeManobrar({ tamanho, bloqueada = false, suprimida = false } = {}) {
+  if (tamanho !== "Pequena" && tamanho !== "Média") return "tamanho";
+  if (bloqueada) return "bloqueio";
+  if (suprimida) return "supressao";
+  return null;
 }
 
 /**
@@ -108,6 +175,14 @@ export function aplicarEscala(cine, tipo, { temEscudo = false } = {}) {
   };
 }
 
+/** O PV de antes da escala, guardado UMA vez (aplicar de novo não o perde). */
+export function guardarPvDoLivro(cine, hp) {
+  if (cine.pvLivro) return cine;
+  const max = Number(hp?.max) || 0;
+  if (!max) return cine;
+  return { ...cine, pvLivro: { value: Number(hp?.value) || 0, max } };
+}
+
 /**
  * O que vale "até o fim da rodada" sai; o que vale "até o fim da PRÓXIMA"
  * (Interferência, Supressão) sai só quando o prazo dela passou.
@@ -115,15 +190,18 @@ export function aplicarEscala(cine, tipo, { temEscudo = false } = {}) {
 export function limparRodadaCine(cine, rodada = 0) {
   const r = Number(rodada) || 0;
   const vivo = (x) => (x && Number(x.ate) > r ? x : null);
+  // Firmar e Giro desta rodada passam para a próxima (até o turno da nave);
+  // os de antes já não valem. A Trava não tem prazo: espera o acerto.
+  const recente = (e) => (e && Number(e.rodada) >= r ? e : null);
   return {
     ...cine,
-    firmar: false,
-    giro: 0,
+    firmar: recente(cine.firmar),
+    giro: recente(cine.giro),
     prioridade: [],
     forcado: false,
-    trava: null,
     vantagens: {},
     armasUsadas: 0,
+    fimRodada: r,
     motores: (cine.prioridade ?? []).includes("motores") ? r + 1 : null,
     interferencia: vivo(cine.interferencia),
     supressao: vivo(cine.supressao),
@@ -140,7 +218,7 @@ export function acaoCine(cine, acao, { alvo = null, alvoNome = "", rodada = 0, c
   const r = Number(rodada) || 0;
   switch (acao) {
     case "firmar":
-      return { cine: { ...cine, firmar: true }, linha: txt("spacedragon.cine.acao.firmou") };
+      return { cine: { ...cine, firmar: { rodada: r } }, linha: txt("spacedragon.cine.acao.firmou") };
     case "travar":
       if (!alvo) return { erro: txt("spacedragon.cine.aviso.semAlvo") };
       return { cine: { ...cine, trava: alvo }, linha: txt("spacedragon.cine.acao.travou", { alvo: esc(alvoNome) }) };
@@ -185,21 +263,21 @@ export const prioridadeConta = (cine, chave) => (cine?.prioridade ?? []).filter(
  */
 
 /** O CP do alvo no Cinematográfico: o da ficha, com o Firmar e o Giro dele. */
-export function cpCine(cpBase, cineAlvo = {}) {
+export function cpCine(cpBase, cineAlvo = {}, rodada = 0) {
   // Number(null) é 0: um alvo sem CP viraria CP 0 e todo tiro acertaria
   if (cpBase === null || cpBase === undefined || cpBase === "") return null;
   const base = Number(cpBase);
   if (!Number.isFinite(base)) return null;
   const partes = [
-    ["Firmar do alvo", cineAlvo.firmar ? -2 : 0],
-    ["Giro evasivo do alvo", Number(cineAlvo.giro) || 0],
+    ["Firmar do alvo", vigenteAteProximoTurno(cineAlvo.firmar, cineAlvo, rodada) ? -2 : 0],
+    ["Giro evasivo do alvo", vigenteAteProximoTurno(cineAlvo.giro, cineAlvo, rodada) ? Number(cineAlvo.giro.valor) || 0 : 0],
   ].filter(([, v]) => v !== 0);
   return { cp: base + partes.reduce((s, [, v]) => s + v, 0), base, partes };
 }
 
 /**
- * Os dados de dano do acerto: o da arma, +1 da Rajada, +1 por Prioridade Armas
- * ainda não gasta. A metralhadora rola UMA vez 3d10 (§6), e não 4×1d10.
+ * Os dados de dano do acerto: o da arma, +1 da Rajada, +1 da Prioridade Armas
+ * (uma por arma). A metralhadora rola UMA vez 3d10 (§6), e não 4×1d10.
  */
 export function formulaDoDanoCine(chave, arma, { rajada = false, armas = 0 } = {}) {
   const base = chave === "metralhadora" ? "3d10" : String(arma?.dano ?? "");
@@ -222,15 +300,17 @@ export function ajusteDaArmaCine(chave, tamanhoDoAlvo) {
  *
  *   imp = { dano, camara, extraAusente, extraArsenal, rodada }
  *
- * O golpe na câmara é recalculado AQUI, com o estado da hora: entre o tiro e o
- * clique do Mestre, o escudo pode ter recarregado (e aí nada chega ao Casco) ou
- * outra arma pode já ter avariado a mesma câmara (e aí ela cai Fora).
+ * A câmara é decidida no tiro, com o Escudo daquela hora. O que se recalcula
+ * AQUI é o golpe: entre o tiro e o clique do Mestre o escudo pode ter
+ * recarregado (e aí nada chega ao Casco, e a câmara não é atingida), ou outra
+ * arma pode já ter avariado a mesma câmara (e aí ela cai Fora). Os dois extras
+ * vêm rolados do tiro sempre que há câmara, para servirem a qualquer desfecho.
+ * `golpe` diz o que aconteceu, para o aviso do Mestre.
  */
 export function aplicarImpactoCine(cine, casco, imp = {}, { estados = {} } = {}) {
   const r = aplicarDanoCineLocal({ escudo: cine.escudo.atual, casco, dano: imp.dano });
   let novoCasco = r.casco;
   let avarias = { ...cine.avarias };
-  const notas = [];
   let golpe = null;
   if (imp.camara && r.noCasco > 0) {
     const g = golpeNaCamaraLocal(estados[imp.camara], avarias[imp.camara]);
@@ -247,7 +327,6 @@ export function aplicarImpactoCine(cine, casco, imp = {}, { estados = {} } = {})
     noEscudo: r.noEscudo,
     noCasco: casco - novoCasco,
     golpe,
-    notas,
   };
 }
 
@@ -278,6 +357,10 @@ function blocoDasTrilhas(cine, hp) {
     campo("pilotar", cine.pilotar, { rotulo: txt("spacedragon.cine.pilotar"), dica: txt("spacedragon.cine.pilotarDica") }) +
     `<button type="button" class="${CLASSE_CINE_ESCALA}" title="${esc(txt("spacedragon.cine.escalaDica"))}">` +
     `${txt("spacedragon.cine.escala")}</button>` +
+    (cine.pvLivro
+      ? `<button type="button" class="${CLASSE_CINE_LIVRO}" title="${esc(txt("spacedragon.cine.livroDica"))}">` +
+        `${txt("spacedragon.cine.livro", { pv: cine.pvLivro.max })}</button>`
+      : "") +
     `</div>`
   );
 }
@@ -298,7 +381,7 @@ function blocoDoDuelo(cine, rodada) {
     `</div>` +
     (vantagens.length
       ? `<ul class="cine-vantagens-ativas">${vantagens.map(([, v]) =>
-        `<li>${VANTAGENS[v.chave]?.rotulo ?? v.chave} → ${esc(v.nome ?? "?")}</li>`).join("")}</ul>`
+        `<li>${(v.chaves ?? []).map((k) => VANTAGENS[k]?.rotulo ?? k).join(" + ")} → ${esc(v.nome ?? "?")}</li>`).join("")}</ul>`
       : "") +
     `</div>`
   );

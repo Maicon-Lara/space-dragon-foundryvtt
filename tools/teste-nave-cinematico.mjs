@@ -182,6 +182,11 @@ confere(formulas.hospital === "2d10" && formulas.corredores === "1d4" && !formul
 f = fimDaRodadaCine({ laboratorio: { estado: "avaria", desde: 1 } }, { rodada: 5, estados });
 confere(f.espalhou[0]?.para === "acoplagem" && f.avarias.acoplagem.estado === "avaria", "[CINE-FIM] o fogo do Laboratório abre brecha na Acoplagem (a câmara seguinte)");
 
+f = fimDaRodadaCine({ corredores: { estado: "fora", desde: 1 }, deposito: { estado: "fora", desde: 2 } }, { rodada: 2, estados });
+confere(!f.danos.some((x) => x.camara === "corredores") && f.danos.some((x) => x.camara === "deposito" && x.formula === "2d6"),
+  "[CINE-FIM] brecha Fora é «câmara selada»: não cobra mais; incêndio Fora continua, em dobro");
+confere(soma(termosCine({ ba: 12, vantagem: ["cauda", "mira"] })) === 14, "[CINE-EXEMPLO] Mira em lista (Crítico com duas Vantagens) dá +2");
+
 // ── [CINE-POS] ──
 const pos = depoisDoCombate({ arsenal: { estado: "avaria" }, deposito: { estado: "fora" } });
 confere(pos.ultimoTeste.join() === "arsenal" && pos.danificadas.join() === "deposito", "[CINE-POS] avaria ganha teste, Fora danifica direto");

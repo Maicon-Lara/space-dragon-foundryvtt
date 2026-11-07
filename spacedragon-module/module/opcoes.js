@@ -99,7 +99,7 @@ export function multiplicadorDeDano() {
 }
 
 /**
- * As cinco opções de nave. `aoMudar` redesenha as Fichas de Nave abertas: quem
+ * As opções de nave. `aoMudar` redesenha as Fichas de Nave abertas: quem
  * troca a opção quer ver o efeito sem fechar a ficha.
  *
  * As camadas existiam no código e eram lidas por `camadaLigada`, mas nunca

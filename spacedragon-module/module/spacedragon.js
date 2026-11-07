@@ -70,7 +70,7 @@ import { migrarNavesNoReady, migrarNaves, navesPorMigrar, porMigrar } from "./na
 import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaRodada } from "./ordem-inversao.js";
 
 import { t as txt } from "./i18n.js";
-import { registrarOpcoesDeNave } from "./opcoes.js";
+import { registrarOpcoesDeNave, combateCinematico } from "./opcoes.js";
 import { ligarIniciativaDasNaves } from "./nave-iniciativa.js";
 import { ajustarTokensNoReady } from "./nave-token.js";
 
@@ -191,6 +191,11 @@ Hooks.once("ready", () => {
   passo("botão de criar nave", () => ligarBotaoDeNovaNave());
   // o botão "Aplicar" dos cartões de disparo, para o Mestre (nave-pc-ficha.js)
   passo("aplicar disparo no alvo", () => ligarAplicarImpacto());
+  // o Combate Cinematográfico mostra a Tensão e o duelo DA RODADA: quando o
+  // rastreador muda de rodada, a Ficha de Nave aberta precisa redesenhar
+  passo("rodada nova na Ficha de Nave", () => Hooks.on("updateCombat", (_c, mud) => {
+    if (mud && "round" in mud && combateCinematico()) redesenharFichasDeNave();
+  }));
   passo("tipo de nave que vira nave", () => ligarTipoQueViraNave());
   // a migração das naves criadas quando as regras moravam no Star Wars: sem
   // ela a nave abre VAZIA, que parece apagada
