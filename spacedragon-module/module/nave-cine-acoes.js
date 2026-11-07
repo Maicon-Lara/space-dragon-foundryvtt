@@ -27,7 +27,7 @@ import {
   cineDe, aplicarEscala, limparRodadaCine, acaoCine, escolherPrioridade, prioridadeConta,
   cpCine, formulaDoDanoCine, ajusteDaArmaCine, aplicarImpactoCine, marcarTurno, normalizarEscudo,
   adicionarVantagem, vantagensContra, podeManobrar, firmouNestaRodada, guardarPvDoLivro,
-  comRodada, armasLivres,
+  comRodada, armasLivres, comecarCombateCine,
   CLASSE_CINE_ACAO, CLASSE_CINE_CAMPO, CLASSE_CINE_DUELO, CLASSE_CINE_VANTAGEM,
   CLASSE_CINE_PRIORIDADE, CLASSE_CINE_RESOLVER, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
   CLASSE_CINE_LIVRO,
@@ -252,7 +252,10 @@ async function duelo(ctx) {
     agilidade: cine.agilidade,
     cascoBaixo: cascoAbaixoDaMetade(hp.value, hp.max),
     avarias: cine.avarias,
-    motores: Number(cine.motores) === rodada,
+    // a Motores da rodada anterior vale neste duelo; se o fechamento dela ainda
+    // não chegou (a fila do Mestre), ela ainda está sob a rodada anterior
+    motores: Number(cine.motores) === rodada ||
+      (rodada > 1 && prioridadeConta(cine, "motores", rodada - 1) > 0),
     interferencia: interferida(meuToken, rodada),
   });
 
@@ -626,8 +629,9 @@ export async function fecharRodadaDaNave(ator, { combate, rodada }) {
     rolado[d.camara] = r.total;
   }
   const vezes = prioridadeConta(inicio, "escudos", rodada);
+  const penInicio = penalidadesDeCamara(previa.avarias);
   let recarga = 0;
-  if (vezes && inicio.recarga) {
+  if (vezes && inicio.recarga && !penInicio.semRecarga && !penInicio.semEscudo) {
     for (let i = 0; i < vezes; i += 1) {
       const r = await rolar(inicio.recarga);
       rolls.push(r);
@@ -700,6 +704,28 @@ export async function fecharRodadaDoCombate(combate, rodada) {
   return fechou;
 }
 
+/** O combate começou: cada nave do combate, uma vez por ator, recomeça as escolhas. */
+export async function comecarCombate(combate) {
+  const vistos = new Set();
+  let n = 0;
+  for (const c of combate?.combatants ?? []) {
+    const ator = c?.actor;
+    if (!ator || !ehNave(ator)) continue;
+    const chave = ator.uuid ?? ator.id;
+    if (vistos.has(chave)) continue;
+    vistos.add(chave);
+    try {
+      const nave = naveDe(ator, ID);
+      const mud = updateDaNave(nave, { ...nave, cine: comecarCombateCine(cineDe(nave)) }, ID);
+      if (mud) await ator.update(mud);
+      n += 1;
+    } catch (e) {
+      console.error(`${ID} | começar o combate de ${ator.name}`, e);
+    }
+  }
+  return n;
+}
+
 /** A chave, nas opções da atualização, da rodada de antes da mudança. */
 export const OPCAO_RODADA_ANTES = "spacedragonRodadaAntes";
 
@@ -730,6 +756,15 @@ function souOMestreAtivo() {
 export async function fecharRodadaPeloRastreador(combate, mudanca, opcoes = {}) {
   if (!souOMestreAtivo()) return 0;
   const antes = opcoes?.[OPCAO_RODADA_ANTES] ?? combate?.previous?.round;
+  // o combate começou: cada nave larga o que sobrou de outro combate
+  if (Number(mudanca?.round) === 1 && !(Number(antes) >= 1)) {
+    const vez = fila.then(() => comecarCombate(combate)).catch((e) => {
+      console.error(`${ID} | começar o combate das naves`, e);
+      return 0;
+    });
+    fila = vez;
+    return vez;
+  }
   const rodada = rodadaQueAcabou(mudanca?.round, antes);
   if (rodada === null) {
     // avançou e nada fechou: a rodada de antes chegou igual à nova — o aviso

@@ -31,6 +31,7 @@ import {
   cpCine, formulaDoDanoCine, ajusteDaArmaCine, aplicarImpactoCine, painelCinematico,
   vigenteAteProximoTurno, firmouNestaRodada, marcarTurno, normalizarEscudo, adicionarVantagem,
   vantagensContra, podeManobrar, guardarPvDoLivro, CLASSE_CINE_LIVRO, daRodada, comRodada, armasLivres,
+  comecarCombateCine, CAMPOS_ANTIGOS,
   MARCA_CINE, CLASSE_CINE_RESOLVER, CLASSE_CINE_DUELO, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
 } from "../spacedragon-module/module/nave-cine-ficha.js";
 import { porPainelDaTripulacao, porPainelDasCamadas, MARCA_TRIPULACAO } from "../spacedragon-module/module/nave-pc-ficha.js";
@@ -222,6 +223,21 @@ confere(!hostil.includes("<script>"), "[CINEF-PAINEL] o nome no posto entra esca
   confere(limparRodadaCine(vazio, 5, { combate: "c1" }).motores === null, "[CINEF-NOVA] sem Motores, nada para o duelo seguinte");
   const legado = cineDe({ cine: { prioridade: ["motores"], vantagens: { t: { chave: "mira" } }, armasUsadas: 3 } });
   confere(prioridadeConta(legado, "motores", 1) === 0 && vantagensContra(legado, "t", 1).length === 0, "[CINEF-NOVA] estado gravado no formato antigo é ignorado sem erro");
+}
+
+// ── [CINEF-COMECO] o combate começa limpo ──
+{
+  let c = comRodada(vazio, 5, (d) => ({ ...d, prioridade: ["escudos"], forcado: true }));        // sobra do combate anterior
+  c = escolherPrioridade(c, "motores", { rodada: 0 }).cine;                                      // escolhida antes de começar
+  c = adicionarVantagem(c, "t1", "A", "mira", { rodada: 0 });
+  c = { ...c, prioridade: ["armas"], vantagens: { x: {} }, armasUsadas: 2, fimRodada: { combate: "velho", rodada: 4 }, motores: 5 };
+  const novo = comecarCombateCine(c);
+  confere(Object.keys(novo.porRodada).join() === "1", `[CINEF-COMECO] só a rodada 1 fica (${Object.keys(novo.porRodada)})`);
+  confere(prioridadeConta(novo, "motores", 1) === 1 && vantagensContra(novo, "t1", 1).join() === "mira", "[CINEF-COMECO] o escolhido antes de começar vale na rodada 1");
+  confere(prioridadeConta(novo, "escudos", 5) === 0, "[CINEF-COMECO] a sobra da rodada 5 do combate anterior sai (era o achado da revisão)");
+  confere(novo.fimRodada === null && novo.motores === null, "[CINEF-COMECO] marca de fechamento e Motores do combate anterior saem");
+  confere(CAMPOS_ANTIGOS.every((k) => !(k in novo)), "[CINEF-COMECO] os campos do formato antigo saem");
+  confere(!Object.keys(comecarCombateCine(vazio).porRodada).length, "[CINEF-COMECO] sem nada escolhido, nada fica");
 }
 
 // ── [CINEF-REVISAO] achados da revisão independente ──

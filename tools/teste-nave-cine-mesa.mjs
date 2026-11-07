@@ -28,7 +28,7 @@
 import { instalarLang } from "./lang-de-teste.mjs";
 import {
   dispararCine, aplicarImpactoCineDaMensagem, PARA_TESTE, fecharRodadaDaNave, fecharRodadaDoCombate, fecharRodadaPeloRastreador,
-  guardarRodadaAntes, OPCAO_RODADA_ANTES,
+  guardarRodadaAntes, OPCAO_RODADA_ANTES, comecarCombate,
 } from "../spacedragon-module/module/nave-cine-acoes.js";
 
 const problemas = [];
@@ -277,7 +277,27 @@ confere(await fecharRodadaDaNave(presa, { combate: "c1", rodada: 2 }) === false 
   confere(ultima.system.hp.value === 36 && !Object.keys(cineDeAtor(ultima).avarias ?? {}).length,
     `[CINEM-FIM] Encerrar cobra o fogo da rodada 3, que não terminou pelo rastreador, e depois limpa (${ultima.system.hp.value})`);
 
+  // o combate começa: o que sobrou do anterior sai, uma vez por ator
+  cineDeAtor(b).porRodada = { 7: { prioridade: ["escudos"] } };
+  cineDeAtor(b).prioridade = ["armas"];
+  const combNovo = { id: "cN", combatants: [{ actor: b }, { actor: b }, { actor: naoNave }] };
+  confere(await fecharRodadaPeloRastreador(combNovo, { round: 1 }, { [OPCAO_RODADA_ANTES]: 0 }) === 1, "[CINEM-FIM] o rastreador começa o combate: uma nave recomeça");
+  confere(!cineDeAtor(b).porRodada?.[7]?.prioridade?.length && !cineDeAtor(b).prioridade, "[CINEM-FIM] a sobra do combate anterior e o formato antigo saem do ator");
+  confere(await comecarCombate({ id: "cV", combatants: [] }) === 0, "[CINEM-FIM] combate sem naves: nada");
+
   globalThis.game.users = undefined;
+  combate(2, [presa, thw]);
+}
+
+// ── [CINEM-MOTORES] o duelo antes de o fechamento da rodada anterior chegar ──
+{
+  const m = novaNave({ id: "m", nome: "Motores" });
+  cineDeAtor(m).pilotar = 50;
+  cineDeAtor(m).porRodada = { 4: { prioridade: ["motores"] } };   // a rodada 4 ainda não fechou
+  combate(5, [m]);
+  roteiro["1d100"] = [60];
+  await PARA_TESTE.duelo(ctxDe(m));
+  confere(/Chance 70%/.test(mensagens.at(-1).content), `[CINEM-MOTORES] a Motores da 4 dá +20% no duelo da 5 mesmo antes do fechamento: ${mensagens.at(-1).content.slice(0, 160)}`);
   combate(2, [presa, thw]);
 }
 confere(cineDeAtor(presa).avarias?.deposito?.estado === "avaria", "[CINEM-FIM] o incêndio continua até alguém apagar");

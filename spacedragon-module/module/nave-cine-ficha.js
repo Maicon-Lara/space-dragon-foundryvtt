@@ -166,6 +166,32 @@ export function adicionarVantagem(cine, token, nome, chave, { critico = false, r
   });
 }
 
+/** Campos de versões anteriores desta regra, que nada mais lê. */
+export const CAMPOS_ANTIGOS = ["prioridade", "forcado", "armasUsadas", "vantagens", "prioridadeRodada", "forcadoRodada"];
+
+/**
+ * O combate começou (rodada 1): o que sobrou de outro combate sai, e o que foi
+ * escolhido antes de o rastreador começar (rodada 0) passa a valer na 1.
+ *
+ * Sem isso, um combate apagado sem "Encerrar" deixava as escolhas da última
+ * rodada dele gravadas, e elas voltavam a valer na rodada de mesmo número do
+ * combate seguinte.
+ */
+export function comecarCombateCine(cine) {
+  const antes = daRodada(cine, 0);
+  const na1 = daRodada(cine, 1);
+  const juntas = {
+    prioridade: [...antes.prioridade, ...na1.prioridade].slice(-((antes.forcado || na1.forcado) ? 2 : 1)),
+    forcado: antes.forcado || na1.forcado,
+    armasUsadas: 0,
+    vantagens: { ...antes.vantagens, ...na1.vantagens },
+  };
+  const tem = juntas.prioridade.length || juntas.forcado || Object.keys(juntas.vantagens).length;
+  const limpo = { ...cine, porRodada: tem ? { 1: juntas } : {}, fimRodada: null, motores: null };
+  for (const k of CAMPOS_ANTIGOS) delete limpo[k];
+  return limpo;
+}
+
 /** As Vantagens que `cine` tem contra `token` na `rodada`. */
 export const vantagensContra = (cine, token, rodada) =>
   (token ? daRodada(cine, rodada).vantagens[token]?.chaves ?? [] : []);
