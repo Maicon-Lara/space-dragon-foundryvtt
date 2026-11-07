@@ -31,7 +31,7 @@ import {
   ESCALA, escalaDoTipo, cascoAbaixoDaMetade, grauDoTeste, chanceDoDuelo, vencedorDoDuelo,
   iniciativaDoDuelo, tensaoDaRodada, pedeEvento, termosCine, aplicarDanoCine, atingeCamara,
   D12, camaraDoD12, golpeNaCamara, registrarGolpe, resolverAvaria, penalidadesDeCamara,
-  fimDaRodadaCine, depoisDoCombate, recarregar, podeRepararAgora, ACOES_CINE,
+  fimDaRodadaCine, depoisDoCombate, recarregar, podeRepararAgora, ACOES_CINE, rodadaAFechar,
 } from "../spacedragon-module/module/nave-cinematico.js";
 import { TIPOS } from "../spacedragon-module/module/tipos-de-nave.js";
 import { CAMARAS } from "../spacedragon-module/module/camaras.js";
@@ -183,8 +183,19 @@ f = fimDaRodadaCine({ laboratorio: { estado: "avaria", desde: 1 } }, { rodada: 5
 confere(f.espalhou[0]?.para === "acoplagem" && f.avarias.acoplagem.estado === "avaria", "[CINE-FIM] o fogo do Laboratório abre brecha na Acoplagem (a câmara seguinte)");
 
 f = fimDaRodadaCine({ corredores: { estado: "fora", desde: 1 }, deposito: { estado: "fora", desde: 2 } }, { rodada: 2, estados });
-confere(!f.danos.some((x) => x.camara === "corredores") && f.danos.some((x) => x.camara === "deposito" && x.formula === "2d6"),
-  "[CINE-FIM] brecha Fora é «câmara selada»: não cobra mais; incêndio Fora continua, em dobro");
+confere(f.danos.some((x) => x.camara === "corredores" && x.formula === "1d4") && f.danos.some((x) => x.camara === "deposito" && x.formula === "2d6"),
+  "[CINE-FIM] Corredores Fora (isolamento) ainda é brecha e cobra 1d4; incêndio Fora continua, em dobro");
+f = fimDaRodadaCine({ acoplagem: { estado: "fora", desde: 1 }, despressurizacao: { estado: "fora", desde: 1 } }, { rodada: 2, estados });
+confere(f.danos.length === 0, "[CINE-FIM] Acoplagem e Despressurização Fora são «câmara selada»: não cobram mais");
+// ── qual rodada o botão fecha ──
+confere(rodadaAFechar(null, 1) === 1 && rodadaAFechar(1, 2) === 2, "[CINE-FIM] no tempo certo, fecha a rodada de agora");
+confere(rodadaAFechar(null, 2) === 2, "[CINE-FIM] a nave que nunca fechou a rodada 1 fecha a 2 no fim da 2 (não a 1)");
+confere(rodadaAFechar(1, 3, { inicio: true }) === 2, "[CINE-FIM] rastreador no começo da 3 e a 2 aberta: fecha a 2");
+confere(rodadaAFechar(2, 3, { inicio: true }) === 3, "[CINE-FIM] a 2 já fechada: no começo da 3, fecha a 3");
+confere(rodadaAFechar(1, 3) === 3, "[CINE-FIM] no meio da 3, fecha a 3 mesmo com a 2 aberta");
+confere(rodadaAFechar(3, 3) === null && rodadaAFechar(3, 3, { inicio: true }) === null, "[CINE-FIM] duas vezes, nada");
+confere(rodadaAFechar(5, 1) === 1, "[CINE-FIM] marca de outro combate (maior que a rodada de agora) não conta");
+confere(rodadaAFechar(null, 0) === null, "[CINE-FIM] fora de combate não há rodada a fechar");
 confere(soma(termosCine({ ba: 12, vantagem: ["cauda", "mira"] })) === 14, "[CINE-EXEMPLO] Mira em lista (Crítico com duas Vantagens) dá +2");
 
 // ── [CINE-POS] ──

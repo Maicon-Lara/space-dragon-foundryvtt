@@ -677,7 +677,15 @@ async function aplicarImpactoDaMensagem(msg) {
     globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.jaAplicado"));
     return;
   }
-  if (imp.modo === "cine") return aplicarImpactoCineDaMensagem(msg, imp);
+  if (imp.modo === "cine") {
+    // um cartão que ficou no chat de quando a opção estava ligada não pode
+    // gravar o estado do Cinematográfico numa mesa que voltou ao livro
+    if (!combateCinematico()) {
+      globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.cartaoDesligado"));
+      return;
+    }
+    return aplicarImpactoCineDaMensagem(msg, imp);
+  }
   const doc = await globalThis.fromUuid?.(imp.alvo);
   const ator = doc?.actor ?? doc;
   if (!ator?.update) return;

@@ -202,6 +202,24 @@ const hpAntes = presa.system.hp.value;
 avisos.length = 0;
 await PARA_TESTE.fimDaRodada(ctxDe(presa));
 confere(presa.system.hp.value === hpAntes && avisos.some(([k]) => k === "warn"), "[CINEM-FIM] o segundo clique na mesma rodada não cobra de novo");
+{
+  // clicar DEPOIS de avançar o rastreador fecha a rodada que ficou aberta
+  const atrasada = novaNave({ id: "atr", nome: "Atrasada", camaras: { deposito: "instalada" } });
+  cineDeAtor(atrasada).giro = { valor: 4, rodada: 2 };
+  cineDeAtor(atrasada).fimRodada = 1;
+  cineDeAtor(atrasada).avarias = { deposito: { estado: "avaria", desde: 2 } };
+  combate(3, [atrasada]);
+  globalThis.game.combat.turn = 0; // o Mestre avançou: a rodada 3 está no primeiro turno
+  roteiro["1d6"] = [2];
+  await PARA_TESTE.fimDaRodada(ctxDe(atrasada));
+  confere(cineDeAtor(atrasada).fimRodada === 2 && atrasada.system.hp.value === 38, "[CINEM-FIM] atrasado: fecha a rodada 2, que estava aberta, e cobra o fogo");
+  confere(cineDeAtor(atrasada).giro?.valor === 4, "[CINEM-FIM] atrasado: o Giro da rodada 2 continua valendo na 3");
+  roteiro["1d6"] = [2];
+  globalThis.game.combat.turn = 4; // fim da rodada 3
+  await PARA_TESTE.fimDaRodada(ctxDe(atrasada));
+  confere(cineDeAtor(atrasada).fimRodada === 3 && atrasada.system.hp.value === 36, "[CINEM-FIM] e no fim da 3 o botão fecha a 3, sem travar");
+  combate(2, [presa, thw]);
+}
 confere(cineDeAtor(presa).avarias?.deposito?.estado === "avaria", "[CINEM-FIM] o incêndio continua até alguém apagar");
 
 // ── [CINEM-ACOES] ──
@@ -266,6 +284,13 @@ confere(!cineDeAtor(presa).avarias.deposito, "[CINEM-ACOES] Resolver apaga o inc
   const t3 = await dispararCine(ctxDe(presa), { item: { name: "Torre" }, chave: "disparadores", arma: { nome: "Disparadores laser", dano: "2d10" } });
   confere(t3.impacto?.camara === "arsenal" && !mensagens.at(-1).content.includes("<img"), `[CINEM-REVISAO] câmara inválida: cai no d12 e nada entra no chat (${t3.impacto?.camara})`);
   confere(Number(t3.impacto?.extraAusente) > 0 && Number(t3.impacto?.extraArsenal) > 0, "[CINEM-REVISAO] os extras saem rolados no tiro, para qualquer desfecho");
+
+  // cancelar a janela de disparo não gasta o Firmar da rodada anterior
+  cineDeAtor(presa).firmar = { rodada: 2 };
+  cineDeAtor(presa).turno = 2;
+  dialogo = null;
+  await dispararCine(ctxDe(presa), { item: { name: "Torre" }, chave: "disparadores", arma: { nome: "Disparadores laser", dano: "2d10" } });
+  confere(cineDeAtor(presa).firmar?.rodada === 2 && cineDeAtor(presa).turno === 2, "[CINEM-REVISAO] janela cancelada: o turno não começou");
 
   // o míssil chega pela JP, não rola contra o CP
   roteiro["4d10"] = [22];

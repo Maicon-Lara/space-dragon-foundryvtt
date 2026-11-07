@@ -350,6 +350,27 @@ export function penalidadesDeCamara(avarias = {}) {
 
 export const RODADAS_PARA_ESPALHAR = 2;
 
+/** As brechas que, Fora, viram «câmara selada e perdida até a obra» (§5.2). */
+export const SELADAS_QUANDO_FORA = new Set(["acoplagem", "despressurizacao"]);
+
+/**
+ * Qual rodada o botão Fim da rodada fecha.
+ *
+ * A de agora — a não ser que o rastreador esteja no COMEÇO de uma rodada nova
+ * (`inicio`: o primeiro turno dela) e a anterior não tenha sido fechada: aí o
+ * Mestre avançou antes de clicar, e o que se fecha é a anterior, porque na nova
+ * nada aconteceu ainda. Uma marca maior que a rodada de agora é de outro
+ * combate e não conta. Devolve `null` se a rodada já foi fechada.
+ */
+export function rodadaAFechar(fechada, rodadaAtual, { inicio = false } = {}) {
+  const r = Math.trunc(Number(rodadaAtual) || 0);
+  if (r < 1) return null;
+  let f = Math.trunc(Number(fechada) || 0);
+  if (f > r) f = 0;
+  const alvo = inicio && r > 1 && f < r - 1 ? r - 1 : r;
+  return alvo > f ? alvo : null;
+}
+
 /**
  * O que o fim da rodada cobra das avarias de câmara.
  *
@@ -367,8 +388,10 @@ export function fimDaRodadaCine(avarias = {}, { rodada = 0, estados = {} } = {})
   D12.forEach((d, i) => {
     const a = avarias[d.camara];
     if (!a || (d.familia !== "incendio" && d.familia !== "brecha")) return;
-    // a brecha Fora é «câmara selada e perdida»: selada, não vaza mais
-    if (d.familia === "brecha" && a.estado === "fora") return;
+    // Acoplagem e Despressurização Fora são «câmara selada e perdida»: não
+    // vazam mais. Corredores Fora é outra coisa (Ponte e Máquinas isoladas) e
+    // continua sendo brecha, que cobra 1d4.
+    if (a.estado === "fora" && SELADAS_QUANDO_FORA.has(d.camara)) return;
     const formula = a.estado === "fora" && d.dadoFora ? d.dadoFora : d.dado;
     danos.push({ camara: d.camara, familia: d.familia, formula });
     if (d.familia !== "incendio") return;

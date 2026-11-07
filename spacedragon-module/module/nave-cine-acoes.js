@@ -21,7 +21,7 @@ import {
   EXPLOSAO_DO_ARSENAL, chanceDoDuelo, grauDoTeste, iniciativaDoDuelo, termosCine, atingeCamara,
   camaraDoD12, golpeNaCamara, registrarGolpe, penalidadesDeCamara, fimDaRodadaCine,
   depoisDoCombate, recarregar, podeRepararAgora, cascoAbaixoDaMetade, aplicarDanoCine, tensaoDaRodada,
-  pedeEvento, D12,
+  pedeEvento, D12, rodadaAFechar,
 } from "./nave-cinematico.js";
 import {
   cineDe, aplicarEscala, limparRodadaCine, acaoCine, escolherPrioridade, prioridadeConta,
@@ -173,6 +173,7 @@ export function ligarCine(raiz, ctx) {
 async function aplicarEscalaDaNave(ctx, { confirmar = true } = {}) {
   const nave = naveDe(ctx.ator, ID);
   const tipo = tipoDaNave(nave, ctx.ator?.system?.race?.name ?? "");
+  const jaGuardado = cineDe(nave).pvLivro;
   const cine = guardarPvDoLivro(cineDe(nave), ctx.ator?.system?.hp);
   const r = aplicarEscala(cine, tipo, { temEscudo: equipamentosDoAtor(ctx.ator, ID).has("escudo") });
   if (!r) {
@@ -183,9 +184,11 @@ async function aplicarEscalaDaNave(ctx, { confirmar = true } = {}) {
     const V2 = globalThis.foundry?.applications?.api?.DialogV2;
     const ok = await V2?.confirm?.({
       window: { title: txt("spacedragon.cine.escala") },
-      content: `<p>${txt("spacedragon.cine.aviso.confirmarEscala", {
-        pv: Number(ctx.ator?.system?.hp?.max) || 0, escudo: r.cine.escudo.max, casco: r.hp.max,
-      })}</p>`,
+      content: `<p>${jaGuardado
+        ? txt("spacedragon.cine.aviso.confirmarEscalaDeNovo", { pv: jaGuardado.max, escudo: r.cine.escudo.max, casco: r.hp.max })
+        : txt("spacedragon.cine.aviso.confirmarEscala", {
+          pv: Number(ctx.ator?.system?.hp?.max) || 0, escudo: r.cine.escudo.max, casco: r.hp.max,
+        })}</p>`,
       rejectClose: false,
     });
     if (!ok) return;
@@ -406,6 +409,8 @@ export async function dispararCine(ctx, { item, chave, arma }) {
   const ator = ctx.ator;
   const nave = naveDe(ator, ID);
   const rodada = rodadaAtual();
+  // o turno só começa quando o tiro sai: cancelar a janela não gasta o Firmar
+  // nem o Giro da rodada anterior
   const cine = marcarTurno(cineDe(nave), rodada);
   const pen = penalidadesDeCamara(cine.avarias);
   const alvo = [...(globalThis.game?.user?.targets ?? [])][0] ?? null;
@@ -416,8 +421,10 @@ export async function dispararCine(ctx, { item, chave, arma }) {
     globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.semPonte", { nave: esc(ator.name) }));
     return null;
   }
-  if (cine !== cineDe(nave)) await ctx.gravar(nave, { ...nave, cine });
-  if (chave === "misseis") return lancarMissil(ctx, { item, arma, alvo, rodada });
+  if (chave === "misseis") {
+    await ctx.gravar(nave, { ...nave, cine });
+    return lancarMissil(ctx, { item, arma, alvo, rodada });
+  }
 
   const nomeArt = String(nave?.postos?.artilharia ?? "").trim();
   const bad = Number(globalThis.game?.actors?.getName?.(nomeArt)?.system?.bad);
@@ -446,6 +453,7 @@ export async function dispararCine(ctx, { item, chave, arma }) {
     rejectClose: false,
   });
   if (!escolha || typeof escolha !== "object") return null;
+  await ctx.gravar(nave, { ...nave, cine });
   const rajada = escolha.rajada === "on";
   const mirar = escolha.mirar === "on";
   const usaArmas = armasLivres > 0 && escolha.armas === "on";
@@ -599,10 +607,12 @@ async function fimDaRodada(ctx) {
   const ator = ctx.ator;
   const nave = naveDe(ator, ID);
   const cine = cineDe(nave);
-  const rodada = rodadaAtual();
-  // um clique por rodada: o segundo cobraria o fogo de novo
-  if (Number(cine.fimRodada) === rodada && rodada > 0) {
-    return globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.fimJaCobrado", { rodada }));
+  // A última rodada ainda aberta: se o rastreador já avançou, fecha a anterior.
+  // Uma vez por rodada — o segundo clique cobraria o fogo de novo.
+  const inicio = Number(globalThis.game?.combat?.turn) === 0;
+  const rodada = rodadaAFechar(cine.fimRodada, rodadaAtual(), { inicio });
+  if (rodada === null) {
+    return globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.fimJaCobrado", { rodada: rodadaAtual() }));
   }
   const f = fimDaRodadaCine(cine.avarias, { rodada, estados: estadosDasCamaras(nave) });
   const rolls = [];
