@@ -28,6 +28,7 @@
 import { instalarLang } from "./lang-de-teste.mjs";
 import {
   dispararCine, aplicarImpactoCineDaMensagem, PARA_TESTE, fecharRodadaDaNave, fecharRodadaDoCombate, fecharRodadaPeloRastreador,
+  guardarRodadaAntes, OPCAO_RODADA_ANTES,
 } from "../spacedragon-module/module/nave-cine-acoes.js";
 
 const problemas = [];
@@ -224,6 +225,50 @@ confere(await fecharRodadaDaNave(presa, { combate: "c1", rodada: 2 }) === false 
   // um combate novo não é travado pela marca do anterior
   cineDeAtor(b).fimRodada = { combate: "cX", rodada: 3 };
   confere(await fecharRodadaDaNave(b, { combate: "cY", rodada: 1 }) === true, "[CINEM-FIM] a marca de outro combate não trava a rodada 1 do seguinte");
+  // [M3] a rodada de antes vem do preUpdateCombat, mesmo com `previous` já na rodada nova
+  const opcoes = {};
+  guardarRodadaAntes({ round: 4 }, { round: 5 }, opcoes);
+  confere(opcoes[OPCAO_RODADA_ANTES] === 4, "[CINEM-FIM] o preUpdateCombat guarda a rodada de antes nas opções");
+  const combErrado = { id: "cX", previous: { round: 5 }, combatants: [{ actor: a }] };
+  roteiro["1d6"] = [1];
+  confere(await fecharRodadaPeloRastreador(combErrado, { round: 5 }, opcoes) === 1 && cineDeAtor(a).fimRodada.rodada === 4,
+    "[CINEM-FIM] com a rodada das opções, fecha a 4 mesmo se `previous` já disser 5");
+
+  // [M1] avançar duas rodadas depressa: os fechamentos vão em fila, e os dois danos contam
+  const hpA = a.system.hp.value;
+  // o servidor demora: sem a fila, o segundo fechamento leria a nave antes de o primeiro gravar
+  const updateRapido = a.update;
+  a.update = async function (mud) { await new Promise((ok) => setTimeout(ok, 15)); return updateRapido.call(this, mud); };
+  roteiro["1d6"] = [2, 3];
+  const p1 = fecharRodadaPeloRastreador(comb, { round: 6 }, { [OPCAO_RODADA_ANTES]: 5 });
+  const p2 = fecharRodadaPeloRastreador(comb, { round: 7 }, { [OPCAO_RODADA_ANTES]: 6 });
+  await Promise.all([p1, p2]);
+  a.update = updateRapido;
+  confere(a.system.hp.value === hpA - 5 && cineDeAtor(a).fimRodada.rodada === 6, `[CINEM-FIM] duas rodadas seguidas: 2 + 3 de fogo, nada se perde (${hpA} → ${a.system.hp.value})`);
+
+  // [B1] uma nave que falha não leva as outras
+  const quebrada = novaNave({ id: "q", nome: "Quebrada" });
+  quebrada.update = async () => { throw new Error("ator apagado"); };
+  cineDeAtor(quebrada).avarias = { aposentos: { estado: "avaria", desde: 1 } };
+  quebrada.flags.spacedragon.nave.camaras = { aposentos: "instalada" };
+  const inteira = novaNave({ id: "i", nome: "Inteira" });
+  const erroAntes = console.error;
+  console.error = () => {};
+  roteiro["1d6"] = [1];
+  const n = await fecharRodadaDoCombate({ id: "cZ", combatants: [{ actor: quebrada }, { actor: inteira }] }, 1);
+  console.error = erroAntes;
+  confere(n === 1 && cineDeAtor(inteira).fimRodada?.combate === "cZ", "[CINEM-FIM] a nave que falha não impede a seguinte");
+
+  // [M2] Encerrar combate cobra a última rodada antes de limpar
+  const ultima = novaNave({ id: "u", nome: "Última", camaras: { deposito: "instalada" } });
+  cineDeAtor(ultima).avarias = { deposito: { estado: "avaria", desde: 3 } };
+  cineDeAtor(ultima).fimRodada = { combate: "cU", rodada: 2 };
+  globalThis.game.combat = { id: "cU", round: 3, combatants: [] };
+  roteiro["1d6"] = [4];
+  await PARA_TESTE.encerrar(ctxDe(ultima));
+  confere(ultima.system.hp.value === 36 && !Object.keys(cineDeAtor(ultima).avarias ?? {}).length,
+    `[CINEM-FIM] Encerrar cobra o fogo da rodada 3, que não terminou pelo rastreador, e depois limpa (${ultima.system.hp.value})`);
+
   globalThis.game.users = undefined;
   combate(2, [presa, thw]);
 }

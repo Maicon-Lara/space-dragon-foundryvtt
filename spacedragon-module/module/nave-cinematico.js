@@ -406,6 +406,10 @@ export function precisaFechar(marca, combate, rodada) {
  * A rodada que acabou quando o rastreador mudou: só ao AVANÇAR. Voltar o
  * rastreador (corrigir um clique) não fecha nada. Devolve null quando não há o
  * que fechar.
+ *
+ * `rodadaAnterior` vem do `preUpdateCombat` (o valor antes da mudança, que
+ * viaja nas opções da atualização) e, sem ele, de `combat.previous`. Pular
+ * rodadas editando o número à mão fecha só a última antes da nova.
  */
 export function rodadaQueAcabou(rodadaNova, rodadaAnterior) {
   const nova = Math.trunc(Number(rodadaNova) || 0);

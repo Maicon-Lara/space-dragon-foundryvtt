@@ -213,7 +213,7 @@ async function voltarAoLivro(ctx) {
 
 async function prioridade(ctx, chave) {
   const nave = naveDe(ctx.ator, ID);
-  const r = escolherPrioridade(cineDe(nave), chave);
+  const r = escolherPrioridade(cineDe(nave), chave, { rodada: rodadaAtual() });
   if (r.erro) return globalThis.ui?.notifications?.warn?.(r.erro);
   return ctx.gravar(nave, { ...nave, cine: r.cine });
 }
@@ -226,7 +226,7 @@ async function vantagem(ctx, chave) {
   const rodada = rodadaAtual();
   // «Com Crítico, escolhe duas» — o Crítico do duelo DESTA rodada
   const critico = cine.duelo?.grau === "critico" && Number(cine.duelo?.rodada) === rodada;
-  const novo = adicionarVantagem(cine, marcado.id, marcado.name ?? "", chave, { critico });
+  const novo = adicionarVantagem(cine, marcado.id, marcado.name ?? "", chave, { critico, rodada });
   await ctx.gravar(nave, { ...nave, cine: novo });
   return cartao(ctx.ator, txt("spacedragon.cine.cartao.vantagem"), [
     `<strong>${VANTAGENS[chave].rotulo}</strong> → ${esc(marcado.name ?? "?")}: ${VANTAGENS[chave].efeito}`,
@@ -352,7 +352,7 @@ async function acao(ctx, chave, { camara = null } = {}) {
   } else if (chave === "forcar") {
     const r = await rolar("1d6");
     rolls.push(r);
-    novo = { ...cine, forcado: true };
+    novo = { ...cine, forcado: true, forcadoRodada: rodada };
     if (r.total === 1) {
       const g = golpeNaCamara(estadoDoComodo(nave, "maquinas"), cine.avarias.maquinas);
       novo = normalizarEscudo({ ...novo, avarias: registrarGolpe(cine.avarias, "maquinas", g.tipo, rodada) });
@@ -645,9 +645,21 @@ export async function fecharRodadaDaNave(ator, { combate, rodada }) {
   }
   if (pen.semEscudo) escudo = 0;
 
-  const novo = limparRodadaCine({ ...cine, avarias: f.avarias, escudo: { ...cine.escudo, atual: escudo } }, rodada, { combate });
+  // RELÊ a nave depois das rolagens: enquanto o dado rolava, o Mestre pode ter
+  // aplicado um tiro ou um jogador escolhido a Prioridade da rodada nova. O que
+  // mudou nesse meio-tempo vale; o que se grava aqui é só o que o fim da rodada
+  // muda — o fogo espalhado, o escudo recarregado e a limpeza.
+  const naveAgora = naveDe(ator, ID);
+  const cineAgora = cineDe(naveAgora);
+  const avariasAgora = { ...cineAgora.avarias };
+  for (const e of f.espalhou) if (!avariasAgora[e.para]) avariasAgora[e.para] = f.avarias[e.para];
+  const ganhoDeEscudo = Math.max(0, escudo - cine.escudo.atual);
+  const escudoAgora = penalidadesDeCamara(avariasAgora).semEscudo
+    ? 0
+    : recarregar(cineAgora.escudo.atual, cineAgora.escudo.max, ganhoDeEscudo);
+  const novo = limparRodadaCine({ ...cineAgora, avarias: avariasAgora, escudo: { ...cineAgora.escudo, atual: escudoAgora } }, rodada, { combate });
   const hp = Number(ator.system?.hp?.value) || 0;
-  const mud = updateDaNave(nave, { ...nave, cine: novo }, ID) ?? {};
+  const mud = updateDaNave(naveAgora, { ...naveAgora, cine: novo }, ID) ?? {};
   if (dano) mud["system.hp.value"] = hp - dano;
   if (Object.keys(mud).length) await ator.update(mud);
   // a nave sem nada a cobrar não enche o chat: só quem tem fogo, brecha ou recarga
@@ -668,7 +680,12 @@ export async function fecharRodadaDoCombate(combate, rodada) {
     const chave = ator.uuid ?? ator.id;
     if (vistos.has(chave)) continue;
     vistos.add(chave);
-    if (await fecharRodadaDaNave(ator, { combate: combate.id, rodada })) fechou += 1;
+    // uma nave que falha não leva as outras junto
+    try {
+      if (await fecharRodadaDaNave(ator, { combate: combate.id, rodada })) fechou += 1;
+    } catch (e) {
+      console.error(`${ID} | fechar a rodada ${rodada} de ${ator.name}`, e);
+    }
   }
   if (fechou && pedeEvento(rodada + 1)) {
     await globalThis.ChatMessage?.create?.({
@@ -684,22 +701,51 @@ export async function fecharRodadaDoCombate(combate, rodada) {
  * Roda num cliente só — o do Mestre ativo —, senão cada cliente aberto cobraria
  * o fogo de novo. `anterior` é a rodada antes da mudança (`combat.previous`).
  */
-export async function fecharRodadaPeloRastreador(combate, mudanca) {
+export const OPCAO_RODADA_ANTES = "spacedragonRodadaAntes";
+
+/** No `preUpdateCombat`: guarda nas opções a rodada de ANTES da mudança. */
+export function guardarRodadaAntes(combate, mudanca, opcoes) {
+  if (mudanca && "round" in mudanca && opcoes) opcoes[OPCAO_RODADA_ANTES] = Number(combate?.round) || 0;
+}
+
+/**
+ * Os fechamentos em FILA: avançar duas rodadas depressa (2→3→4) não pode pôr
+ * dois fechamentos lendo e gravando a mesma nave ao mesmo tempo.
+ */
+let fila = Promise.resolve();
+
+export async function fecharRodadaPeloRastreador(combate, mudanca, opcoes = {}) {
   const jogo = globalThis.game;
   const mestre = jogo?.users?.activeGM ?? null;
   if (mestre ? mestre.id !== jogo?.user?.id : !jogo?.user?.isGM) return 0;
-  const rodada = rodadaQueAcabou(mudanca?.round, combate?.previous?.round);
-  if (rodada === null) return 0;
-  try {
-    return await fecharRodadaDoCombate(combate, rodada);
-  } catch (e) {
-    console.error(`${ID} | fechar a rodada das naves`, e);
+  const antes = opcoes?.[OPCAO_RODADA_ANTES] ?? combate?.previous?.round;
+  const rodada = rodadaQueAcabou(mudanca?.round, antes);
+  if (rodada === null) {
+    // avançou e nada fechou: a rodada de antes chegou igual à nova — o aviso
+    // existe para isso não passar em silêncio numa versão do Foundry diferente
+    if (Number(mudanca?.round) > 1 && Number(antes) === Number(mudanca?.round)) {
+      console.warn(`${ID} | o rastreador avançou para a rodada ${mudanca.round}, mas a rodada anterior não chegou ao gancho: nenhuma nave fechou a rodada`);
+    }
     return 0;
   }
+  const vez = fila.then(() => fecharRodadaDoCombate(combate, rodada)).catch((e) => {
+    console.error(`${ID} | fechar a rodada das naves`, e);
+    return 0;
+  });
+  fila = vez;
+  return vez;
 }
 
 async function encerrar(ctx) {
   const ator = ctx.ator;
+  // A última rodada não termina pelo rastreador: cobra-se aqui, antes de limpar
+  // (o §2 cobra o fim de TODA rodada, inclusive a última).
+  const combate = globalThis.game?.combat;
+  const aberta = Number(combate?.round) || 0;
+  if (combate?.id && aberta > 0) {
+    await fila;
+    await fecharRodadaDaNave(ator, { combate: combate.id, rodada: aberta });
+  }
   const nave = naveDe(ator, ID);
   const cine = cineDe(nave);
   const { ultimoTeste, danificadas } = depoisDoCombate(cine.avarias);

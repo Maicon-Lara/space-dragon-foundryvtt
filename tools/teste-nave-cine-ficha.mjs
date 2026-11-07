@@ -201,6 +201,20 @@ confere(semCombate.includes("Nenhuma avaria"), "[CINEF-PAINEL] sem avarias, o pa
 const hostil = painelCinematico(ator, { ...naveVazia(), postos: { leme: '"><script>' } }, {});
 confere(!hostil.includes("<script>"), "[CINEF-PAINEL] o nome no posto entra escapado");
 
+// ── [CINEF-NOVA] o fechamento da rodada r roda depois de o rastreador avançar ──
+{
+  const r5 = { ...vazio, prioridade: ["motores"], prioridadeRodada: 6, forcado: true, forcadoRodada: 6, armasUsadas: 1,
+    vantagens: { t1: { chaves: ["mira"], rodada: 6 }, t2: { chaves: ["cauda"], rodada: 5 } } };
+  const fechada = limparRodadaCine(r5, 5, { combate: "c1" });
+  confere(fechada.prioridade.join() === "motores" && fechada.prioridadeRodada === 6 && fechada.forcado && fechada.armasUsadas === 1,
+    "[CINEF-NOVA] a Prioridade e o reator escolhidos na rodada 6 sobrevivem ao fechamento da 5");
+  confere(fechada.vantagens.t1 && !fechada.vantagens.t2, "[CINEF-NOVA] a Vantagem da rodada 6 fica; a da 5 sai");
+  const velha = limparRodadaCine({ ...vazio, prioridade: ["motores"], prioridadeRodada: 5 }, 5, { combate: "c1" });
+  confere(!velha.prioridade.length && velha.motores === 6, "[CINEF-NOVA] a Prioridade Motores da 5 sai e vale no duelo da 6");
+  confere(escolherPrioridade(vazio, "armas", { rodada: 7 }).cine.prioridadeRodada === 7, "[CINEF-NOVA] escolher a Prioridade grava a rodada");
+  confere(adicionarVantagem(vazio, "t", "X", "mira", { rodada: 7 }).vantagens.t.rodada === 7, "[CINEF-NOVA] a Vantagem grava a rodada");
+}
+
 // ── [CINEF-REVISAO] achados da revisão independente ──
 let v = adicionarVantagem(vazio, "t1", "Garra", "mira");
 v = adicionarVantagem(v, "t1", "Garra", "cauda");
