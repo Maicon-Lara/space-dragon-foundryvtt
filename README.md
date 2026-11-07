@@ -6,7 +6,7 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 1.32.0 — os onze capítulos portados.** 463 documentos em dez
+> **Estado: 1.33.0 — os onze capítulos portados.** 463 documentos em dez
 > compêndios, agrupados na pasta **Space Dragon** da barra de compêndios: 42 de
 > classe, 10 de espécie, 64 de equipamento, 101 poderes mentais, 80 aparatos e
 > feitos, 59 criaturas e personagens de exemplo, 68 de naves, 4 tabelas de
@@ -102,12 +102,20 @@ Dragon*:
 | Camada: energia do reator | §7 das Regras Compiladas; com ela, a ação extra por 2 pontos e o Calor do reator (casa) | desligada |
 | Camada: controle de avarias | §7 das Regras Compiladas; com ela, a avaria por dano pesado, 10% do PV (casa) | desligada |
 | Camada: fuga como relógio | §7 das Regras Compiladas | desligada |
+| **Combate Cinematográfico de naves (regra da casa)** | Escudo e Casco no lugar do PV de dados, duelo de pilotos que ordena a iniciativa, Tensão crescente, postos com quatro ações, acerto forte que atinge uma câmara (d12) e vira incêndio, brecha ou sistema avariado. Ligada, substitui os postos das Compiladas, as camadas, o dano por margem e o escudo-reserva | desligada |
 
 Para jogar **só com o livro**, desligue as duas primeiras. A aba Tripulação passa
 a mostrar o combate do Cap. 10, a câmara deixa de se danificar e a aba Câmaras
 só marca o que a nave tem, sem compra nem limite. As camadas só aparecem com as
 Regras Compiladas ligadas. Trocar uma opção redesenha as Fichas de Nave abertas,
 e nada gravado na nave se perde: religar devolve tudo como estava.
+
+**O Combate Cinematográfico** (opção, desligada) nasceu do teste da mesa: com os PV do
+livro, uma Espaçonave particular levava umas 27 rodadas para cair. Ligada a opção, use o
+botão *Aplicar escala do tipo* na aba Tripulação de cada nave (Escudo e Casco cheios), anote
+o Pilotar do Leme, e a rodada fica: **Duelo de pilotos** → turnos na ordem do rastreador →
+**Fim da rodada**. O disparo e o botão *Aplicar* do cartão já fazem a conta nova. As regras
+estão no journal do Cap. 10, página *Combate Cinematográfico (casa)*.
 
 **O alcance das armas de nave é regra da casa.** A T10-4 não dá alcance; o
 módulo usa três faixas, como as da T5-1 (média −2, longa −4):
