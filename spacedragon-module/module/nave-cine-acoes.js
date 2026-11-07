@@ -27,6 +27,7 @@ import {
   cineDe, aplicarEscala, limparRodadaCine, acaoCine, escolherPrioridade, prioridadeConta,
   cpCine, formulaDoDanoCine, ajusteDaArmaCine, aplicarImpactoCine, marcarTurno, normalizarEscudo,
   adicionarVantagem, vantagensContra, podeManobrar, firmouNestaRodada, guardarPvDoLivro,
+  comRodada, armasLivres,
   CLASSE_CINE_ACAO, CLASSE_CINE_CAMPO, CLASSE_CINE_DUELO, CLASSE_CINE_VANTAGEM,
   CLASSE_CINE_PRIORIDADE, CLASSE_CINE_RESOLVER, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
   CLASSE_CINE_LIVRO,
@@ -89,8 +90,8 @@ function suprimida(meuToken, rodada) {
 }
 
 /** Alguém em cena venceu esta nave no duelo e escolheu Bloqueio? */
-function bloqueada(meuToken) {
-  return navesEmCena().some((n) => vantagensContra(n.cine, meuToken).includes("bloqueio"));
+function bloqueada(meuToken, rodada) {
+  return navesEmCena().some((n) => vantagensContra(n.cine, meuToken, rodada).includes("bloqueio"));
 }
 
 function estadosDasCamaras(nave) {
@@ -316,7 +317,7 @@ async function acao(ctx, chave, { camara = null } = {}) {
   if (chave === "giro") {
     const impede = podeManobrar({
       tamanho: tamanhoDaNave(nave, ator.system?.race?.name ?? ""),
-      bloqueada: bloqueada(meuToken),
+      bloqueada: bloqueada(meuToken, rodada),
       suprimida: suprimida(meuToken, rodada),
     });
     const MOTIVO = {
@@ -327,7 +328,7 @@ async function acao(ctx, chave, { camara = null } = {}) {
     if (impede) return globalThis.ui?.notifications?.warn?.(MOTIVO[impede]);
     const hp = ator.system?.hp ?? {};
     const chance = Number(cine.pilotar) + Number(cine.agilidade) + pen.pilotar +
-      (prioridadeConta(cine, "motores") ? 20 : 0) + (cascoAbaixoDaMetade(hp.value, hp.max) ? -20 : 0);
+      (prioridadeConta(cine, "motores", rodada) ? 20 : 0) + (cascoAbaixoDaMetade(hp.value, hp.max) ? -20 : 0);
     const r = await rolar("1d100");
     rolls.push(r);
     const g = grauDoTeste(pen.pilotarSo5 ? 5 : chance, r.total);
@@ -352,7 +353,7 @@ async function acao(ctx, chave, { camara = null } = {}) {
   } else if (chave === "forcar") {
     const r = await rolar("1d6");
     rolls.push(r);
-    novo = { ...cine, forcado: true, forcadoRodada: rodada };
+    novo = comRodada(cine, rodada, (d) => ({ ...d, forcado: true }));
     if (r.total === 1) {
       const g = golpeNaCamara(estadoDoComodo(nave, "maquinas"), cine.avarias.maquinas);
       novo = normalizarEscudo({ ...novo, avarias: registrarGolpe(cine.avarias, "maquinas", g.tipo, rodada) });
@@ -427,7 +428,7 @@ export async function dispararCine(ctx, { item, chave, arma }) {
 
   const nomeArt = String(nave?.postos?.artilharia ?? "").trim();
   const bad = Number(globalThis.game?.actors?.getName?.(nomeArt)?.system?.bad);
-  const armasLivres = prioridadeConta(cine, "armas") - (Number(cine.armasUsadas) || 0);
+  const livres = armasLivres(cine, rodada);
   const opcoesCamara = D12.map((d, i) => `<option value="${d.camara}">${i + 1}. ${CAMARAS[d.camara]?.rotulo ?? d.camara}</option>`).join("");
   const V2 = globalThis.foundry?.applications?.api?.DialogV2;
   if (!V2) return null;
@@ -440,8 +441,8 @@ export async function dispararCine(ctx, { item, chave, arma }) {
       `<div class="form-group"><label>${txt("spacedragon.nave.disparo.situacao")}</label>` +
       `<input type="number" name="situacao" value="0"></div>` +
       `<div class="form-group"><label>${txt("spacedragon.cine.disparo.rajada")}</label><input type="checkbox" name="rajada"></div>` +
-      (armasLivres > 0
-        ? `<div class="form-group"><label>${txt("spacedragon.cine.disparo.prioridadeArmas", { n: armasLivres })}</label><input type="checkbox" name="armas" checked></div>`
+      (livres > 0
+        ? `<div class="form-group"><label>${txt("spacedragon.cine.disparo.prioridadeArmas", { n: livres })}</label><input type="checkbox" name="armas" checked></div>`
         : "") +
       `<div class="form-group"><label>${txt("spacedragon.cine.disparo.mirar")}</label><input type="checkbox" name="mirar"></div>` +
       `<div class="form-group"><label>${txt("spacedragon.cine.disparo.escolherCamara")}</label><select name="camara">${opcoesCamara}</select></div>`,
@@ -455,7 +456,7 @@ export async function dispararCine(ctx, { item, chave, arma }) {
   await ctx.gravar(nave, { ...nave, cine });
   const rajada = escolha.rajada === "on";
   const mirar = escolha.mirar === "on";
-  const usaArmas = armasLivres > 0 && escolha.armas === "on";
+  const usaArmas = livres > 0 && escolha.armas === "on";
   // o <select> é do cliente: só vale uma das doze
   const camaraEscolhida = CAMARAS_DO_D12.has(escolha.camara) ? escolha.camara : null;
 
@@ -471,8 +472,8 @@ export async function dispararCine(ctx, { item, chave, arma }) {
     balistico: bonusDeAtaque(nave, equipamentosDoAtor(ator, ID)),
     artilheiro: escolha.artilheiro,
     rodada,
-    vantagem: vantagensContra(cine, alvoToken),
-    caudaContraMim: vantagensContra(cineAlvo, meuToken).includes("cauda"),
+    vantagem: vantagensContra(cine, alvoToken, rodada),
+    caudaContraMim: vantagensContra(cineAlvo, meuToken, rodada).includes("cauda"),
     firmar: firmouNestaRodada(cine, rodada),
     rajada,
     mirarSistema: mirar,
@@ -510,7 +511,7 @@ export async function dispararCine(ctx, { item, chave, arma }) {
   }
   if (acerto) {
     const fDano = formulaDoDanoCine(chave, arma, { rajada, armas: usaArmas ? 1 : 0 });
-    if (usaArmas) novoCine = { ...novoCine, armasUsadas: (Number(cine.armasUsadas) || 0) + 1 };
+    if (usaArmas) novoCine = comRodada(novoCine, rodada, (d) => ({ ...d, armasUsadas: d.armasUsadas + 1 }));
     const rd = await r(fDano);
     const dano = rd.total * (natural === 20 ? 2 : 1);
     linhas.push(txt("spacedragon.cine.disparo.acerto", { dano, formula: fDano }) + (natural === 20 ? ` <strong>${txt("spacedragon.cine.disparo.critico")}</strong>` : ""));
@@ -611,56 +612,60 @@ export async function aplicarImpactoCineDaMensagem(msg, imp) {
  * Devolve true se fechou.
  */
 export async function fecharRodadaDaNave(ator, { combate, rodada }) {
+  const inicio = cineDe(naveDe(ator, ID));
+  if (!precisaFechar(inicio.fimRodada, combate, rodada)) return false;
+  // Rola primeiro, com o que a nave tinha; decide depois, com o que ela TEM —
+  // enquanto o dado rolava, o Mestre pode ter aplicado um tiro, alguém pode ter
+  // apagado um fogo, e a rodada nova pode já ter escolhas próprias.
+  const previa = fimDaRodadaCine(inicio.avarias, { rodada, estados: estadosDasCamaras(naveDe(ator, ID)) });
+  const rolls = [];
+  const rolado = {};
+  for (const d of previa.danos) {
+    const r = await rolar(d.formula);
+    rolls.push(r);
+    rolado[d.camara] = r.total;
+  }
+  const vezes = prioridadeConta(inicio, "escudos", rodada);
+  let recarga = 0;
+  if (vezes && inicio.recarga) {
+    for (let i = 0; i < vezes; i += 1) {
+      const r = await rolar(inicio.recarga);
+      rolls.push(r);
+      recarga += r.total;
+    }
+  }
+
   const nave = naveDe(ator, ID);
   const cine = cineDe(nave);
   if (!precisaFechar(cine.fimRodada, combate, rodada)) return false;
   const f = fimDaRodadaCine(cine.avarias, { rodada, estados: estadosDasCamaras(nave) });
-  const rolls = [];
   const linhas = [];
   let dano = 0;
   for (const d of f.danos) {
-    const r = await rolar(d.formula);
-    rolls.push(r);
-    dano += r.total;
+    // só cobra o que ainda queima e já tem o dado rolado (fogo apagado no meio
+    // não cobra; câmara que pegou fogo no meio fica para a próxima rodada)
+    if (!(d.camara in rolado)) continue;
+    dano += rolado[d.camara];
     linhas.push(txt("spacedragon.cine.fimRodada.dano", {
       camara: CAMARAS[d.camara]?.rotulo ?? d.camara,
       familia: d.familia === "incendio" ? txt("spacedragon.cine.incendio") : txt("spacedragon.cine.brecha"),
-      n: r.total,
+      n: rolado[d.camara],
     }));
   }
   for (const e of f.espalhou) {
     linhas.push(txt("spacedragon.cine.fimRodada.espalhou", { de: CAMARAS[e.de]?.rotulo ?? e.de, para: CAMARAS[e.para]?.rotulo ?? e.para }));
   }
-
-  let escudo = cine.escudo.atual;
   const pen = penalidadesDeCamara(f.avarias);
-  const vezes = prioridadeConta(cine, "escudos");
-  if (vezes && cine.recarga && !pen.semRecarga && !pen.semEscudo) {
-    for (let i = 0; i < vezes; i += 1) {
-      const r = await rolar(cine.recarga);
-      rolls.push(r);
-      escudo = recarregar(escudo, cine.escudo.max, r.total);
-    }
+  let escudo = cine.escudo.atual;
+  if (recarga && !pen.semRecarga && !pen.semEscudo) {
+    escudo = recarregar(escudo, cine.escudo.max, recarga);
     linhas.push(txt("spacedragon.cine.fimRodada.recarga", { escudo, max: cine.escudo.max }));
   }
   if (pen.semEscudo) escudo = 0;
 
-  // RELÊ a nave depois das rolagens: enquanto o dado rolava, o Mestre pode ter
-  // aplicado um tiro ou um jogador escolhido a Prioridade da rodada nova. O que
-  // mudou nesse meio-tempo vale; o que se grava aqui é só o que o fim da rodada
-  // muda — o fogo espalhado, o escudo recarregado e a limpeza.
-  const naveAgora = naveDe(ator, ID);
-  const cineAgora = cineDe(naveAgora);
-  const avariasAgora = { ...cineAgora.avarias };
-  for (const e of f.espalhou) if (!avariasAgora[e.para]) avariasAgora[e.para] = f.avarias[e.para];
-  const ganhoDeEscudo = Math.max(0, escudo - cine.escudo.atual);
-  const escudoAgora = penalidadesDeCamara(avariasAgora).semEscudo
-    ? 0
-    : recarregar(cineAgora.escudo.atual, cineAgora.escudo.max, ganhoDeEscudo);
-  const novo = limparRodadaCine({ ...cineAgora, avarias: avariasAgora, escudo: { ...cineAgora.escudo, atual: escudoAgora } }, rodada, { combate });
-  const hp = Number(ator.system?.hp?.value) || 0;
-  const mud = updateDaNave(naveAgora, { ...naveAgora, cine: novo }, ID) ?? {};
-  if (dano) mud["system.hp.value"] = hp - dano;
+  const novo = limparRodadaCine({ ...cine, avarias: f.avarias, escudo: { ...cine.escudo, atual: escudo } }, rodada, { combate });
+  const mud = updateDaNave(nave, { ...nave, cine: novo }, ID) ?? {};
+  if (dano) mud["system.hp.value"] = (Number(ator.system?.hp?.value) || 0) - dano;
   if (Object.keys(mud).length) await ator.update(mud);
   // a nave sem nada a cobrar não enche o chat: só quem tem fogo, brecha ou recarga
   if (linhas.length) await cartao(ator, txt("spacedragon.cine.cartao.fimRodada", { nave: esc(ator.name), rodada }), linhas, { rolls });
@@ -695,12 +700,7 @@ export async function fecharRodadaDoCombate(combate, rodada) {
   return fechou;
 }
 
-/**
- * O gancho do rastreador: quando o Mestre AVANÇA a rodada, fecha a que acabou.
- *
- * Roda num cliente só — o do Mestre ativo —, senão cada cliente aberto cobraria
- * o fogo de novo. `anterior` é a rodada antes da mudança (`combat.previous`).
- */
+/** A chave, nas opções da atualização, da rodada de antes da mudança. */
 export const OPCAO_RODADA_ANTES = "spacedragonRodadaAntes";
 
 /** No `preUpdateCombat`: guarda nas opções a rodada de ANTES da mudança. */
@@ -714,10 +714,21 @@ export function guardarRodadaAntes(combate, mudanca, opcoes) {
  */
 let fila = Promise.resolve();
 
-export async function fecharRodadaPeloRastreador(combate, mudanca, opcoes = {}) {
+/** Este cliente é o do Mestre ativo? Só ele cobra o fim da rodada. */
+function souOMestreAtivo() {
   const jogo = globalThis.game;
   const mestre = jogo?.users?.activeGM ?? null;
-  if (mestre ? mestre.id !== jogo?.user?.id : !jogo?.user?.isGM) return 0;
+  return mestre ? mestre.id === jogo?.user?.id : Boolean(jogo?.user?.isGM);
+}
+
+/**
+ * O gancho do rastreador: quando o rastreador AVANÇA, fecha a rodada que
+ * acabou. Roda num cliente só — o do Mestre ativo —, senão cada cliente aberto
+ * cobraria o fogo de novo. A rodada de antes vem das `opcoes` (guardada no
+ * `preUpdateCombat`) e, sem ela, de `combat.previous`.
+ */
+export async function fecharRodadaPeloRastreador(combate, mudanca, opcoes = {}) {
+  if (!souOMestreAtivo()) return 0;
   const antes = opcoes?.[OPCAO_RODADA_ANTES] ?? combate?.previous?.round;
   const rodada = rodadaQueAcabou(mudanca?.round, antes);
   if (rodada === null) {
@@ -738,13 +749,18 @@ export async function fecharRodadaPeloRastreador(combate, mudanca, opcoes = {}) 
 
 async function encerrar(ctx) {
   const ator = ctx.ator;
-  // A última rodada não termina pelo rastreador: cobra-se aqui, antes de limpar
-  // (o §2 cobra o fim de TODA rodada, inclusive a última).
+  // Encerrar é do Mestre ativo: é ele quem cobra o fim das rodadas, e um
+  // jogador cobrando a mesma rodada ao mesmo tempo cobraria duas vezes.
+  if (!souOMestreAtivo()) return globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.encerrarSoMestre"));
+  // A última rodada não termina pelo rastreador: cobra-se aqui, na fila e antes
+  // de limpar (o §2 cobra o fim de TODA rodada, inclusive a última). Encerre
+  // antes de apagar o combate do rastreador.
   const combate = globalThis.game?.combat;
   const aberta = Number(combate?.round) || 0;
   if (combate?.id && aberta > 0) {
-    await fila;
-    await fecharRodadaDaNave(ator, { combate: combate.id, rodada: aberta });
+    const vez = fila.then(() => fecharRodadaDaNave(ator, { combate: combate.id, rodada: aberta }));
+    fila = vez.catch(() => 0);
+    await vez;
   }
   const nave = naveDe(ator, ID);
   const cine = cineDe(nave);
@@ -753,6 +769,7 @@ async function encerrar(ctx) {
   for (const k of danificadas) if (estadoDoComodo(nave, k) === "instalada") camaras[k] = "danificada";
   const novo = {
     ...limparRodadaCine(cine, Infinity),
+    porRodada: {},
     avarias: {},
     duelo: null,
     ultimoReparo: null,

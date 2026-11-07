@@ -56,20 +56,21 @@ export function cineVazio() {
     firmar: null,
     giro: null,
     turno: null,
-    prioridade: [],
-    forcado: false,
     // «O PRÓXIMO acerto no Casco desse alvo»: sem prazo, gasta-se no acerto
     trava: null,
     interferencia: null,
     supressao: null,
-    vantagens: {},
+    // As escolhas que valem UMA rodada (Prioridade, reator forçado, Armas
+    // usadas, Vantagens do duelo), guardadas sob a rodada em que foram feitas:
+    // { [rodada]: { prioridade, forcado, armasUsadas, vantagens } }. Quem lê
+    // pega a da rodada atual; o fechamento da rodada r lê a r e apaga as
+    // velhas. Assim a hora do fechamento não mistura uma rodada com a outra.
+    porRodada: {},
     avarias: {},
     duelo: null,
     ultimoReparo: null,
     // «Motores: +20% no duelo da PRÓXIMA rodada» — a rodada em que o bônus vale
     motores: null,
-    // cada Prioridade Armas é «+1 dado de dano em UMA arma»: quantas já foram
-    armasUsadas: 0,
     // a última rodada fechada, com o combate: { combate, rodada }
     fimRodada: null,
     // o PV de antes da escala, para voltar ao livro (a escala não apaga o que a nave tinha)
@@ -85,8 +86,7 @@ export function cineDe(nave) {
     ...base,
     ...c,
     escudo: { ...base.escudo, ...(c.escudo ?? {}) },
-    prioridade: Array.isArray(c.prioridade) ? [...c.prioridade] : [],
-    vantagens: { ...(c.vantagens ?? {}) },
+    porRodada: { ...(c.porRodada ?? {}) },
     avarias: { ...(c.avarias ?? {}) },
     // A gravação por caminho (updateDaNave) não sabe trocar um objeto por null:
     // apaga as chaves de dentro e deixa um {} no lugar. Lido aqui, {} é nada.
@@ -132,21 +132,43 @@ export function normalizarEscudo(cine) {
   return { ...cine, escudo: { ...cine.escudo, atual: 0 } };
 }
 
-/**
- * A Vantagem contra um alvo. Uma; com Crítico no duelo, duas — e diferentes.
- * Clicar de novo depois do limite troca a mais antiga.
- */
-export function adicionarVantagem(cine, token, nome, chave, { critico = false, rodada = 0 } = {}) {
-  const atual = cine.vantagens?.[token]?.chaves ?? [];
-  if (atual.includes(chave)) return cine;
-  const limite = critico ? 2 : 1;
-  const chaves = atual.length >= limite ? [...atual.slice(1), chave] : [...atual, chave];
-  // a rodada da escolha: o fechamento da rodada ANTERIOR não a apaga
-  return { ...cine, vantagens: { ...cine.vantagens, [token]: { chaves, nome, rodada: Number(rodada) || 0 } } };
+/* ── AS ESCOLHAS DA RODADA ───────────────────────────────────────────────── */
+
+const chaveDaRodada = (rodada) => String(Math.trunc(Number(rodada) || 0));
+
+/** As escolhas desta rodada, com o que faltar preenchido. */
+export function daRodada(cine, rodada) {
+  const d = cine?.porRodada?.[chaveDaRodada(rodada)] ?? {};
+  return {
+    prioridade: Array.isArray(d.prioridade) ? [...d.prioridade] : [],
+    forcado: d.forcado === true,
+    armasUsadas: Number(d.armasUsadas) || 0,
+    vantagens: { ...(d.vantagens ?? {}) },
+  };
 }
 
-/** As Vantagens que `cine` tem contra `token`. */
-export const vantagensContra = (cine, token) => (token ? cine?.vantagens?.[token]?.chaves ?? [] : []);
+/** A nave com as escolhas da `rodada` trocadas por `fn(escolhas)`. */
+export function comRodada(cine, rodada, fn) {
+  return { ...cine, porRodada: { ...(cine.porRodada ?? {}), [chaveDaRodada(rodada)]: fn(daRodada(cine, rodada)) } };
+}
+
+/**
+ * A Vantagem contra um alvo, NESTA rodada. Uma; com Crítico no duelo, duas — e
+ * diferentes. Clicar de novo depois do limite troca a mais antiga.
+ */
+export function adicionarVantagem(cine, token, nome, chave, { critico = false, rodada = 0 } = {}) {
+  return comRodada(cine, rodada, (d) => {
+    const atual = d.vantagens[token]?.chaves ?? [];
+    if (atual.includes(chave)) return d;
+    const limite = critico ? 2 : 1;
+    const chaves = atual.length >= limite ? [...atual.slice(1), chave] : [...atual, chave];
+    return { ...d, vantagens: { ...d.vantagens, [token]: { chaves, nome } } };
+  });
+}
+
+/** As Vantagens que `cine` tem contra `token` na `rodada`. */
+export const vantagensContra = (cine, token, rodada) =>
+  (token ? daRodada(cine, rodada).vantagens[token]?.chaves ?? [] : []);
 
 /** Manobra de risco (Giro): só nave P ou M, e não sob Bloqueio ou Supressão. */
 export function podeManobrar({ tamanho, bloqueada = false, suprimida = false } = {}) {
@@ -194,24 +216,17 @@ export function limparRodadaCine(cine, rodada = 0, { combate = null } = {}) {
   // Firmar e Giro desta rodada passam para a próxima (até o turno da nave);
   // os de antes já não valem. A Trava não tem prazo: espera o acerto.
   const recente = (e) => (e && Number(e.rodada) >= r ? e : null);
-  // O fechamento da rodada r roda DEPOIS de o rastreador avançar: o que já foi
-  // escolhido na rodada nova (Prioridade, reator, Vantagens) não é da r, e fica.
-  const daNova = (rod) => Number(rod) > r;
-  const prioridadeNova = daNova(cine.prioridadeRodada);
-  const vantagensNovas = Object.fromEntries(Object.entries(cine.vantagens ?? {}).filter(([, v]) => daNova(v?.rodada)));
-  const prioridadeQueAcaba = prioridadeNova ? [] : (cine.prioridade ?? []);
+  // As escolhas da rodada r saem; as da r+1 (feitas depois de o rastreador
+  // avançar, antes de este fechamento terminar) ficam, porque moram sob r+1.
+  const porRodada = Object.fromEntries(Object.entries(cine.porRodada ?? {}).filter(([k]) => Number(k) > r));
+  const motoresDaRodada = daRodada(cine, r).prioridade.includes("motores");
   return {
     ...cine,
     firmar: recente(cine.firmar),
     giro: recente(cine.giro),
-    prioridade: prioridadeNova ? cine.prioridade : [],
-    prioridadeRodada: prioridadeNova ? cine.prioridadeRodada : null,
-    forcado: daNova(cine.forcadoRodada) ? cine.forcado : false,
-    forcadoRodada: daNova(cine.forcadoRodada) ? cine.forcadoRodada : null,
-    vantagens: vantagensNovas,
-    armasUsadas: prioridadeNova ? cine.armasUsadas : 0,
+    porRodada,
     fimRodada: combate ? { combate, rodada: r } : cine.fimRodada ?? null,
-    motores: prioridadeQueAcaba.includes("motores") ? r + 1 : (daNova(cine.motores) && prioridadeNova ? cine.motores : null),
+    motores: motoresDaRodada ? r + 1 : (Number(cine.motores) > r ? cine.motores : null),
     interferencia: vivo(cine.interferencia),
     supressao: vivo(cine.supressao),
   };
@@ -250,22 +265,26 @@ export function acaoCine(cine, acao, { alvo = null, alvoNome = "", rodada = 0, c
   }
 }
 
-/** Prioridade: uma por rodada; com o reator forçado, duas. */
+/** Prioridade: uma por rodada; com o reator forçado NESTA rodada, duas. */
 export function escolherPrioridade(cine, chave, { rodada = 0 } = {}) {
   if (!PRIORIDADES[chave]) return { erro: txt("spacedragon.cine.aviso.acaoDaMesa") };
   if (penalidadesDeCamara(cine.avarias).semPrioridade) return { erro: txt("spacedragon.cine.aviso.semPrioridade") };
-  const atual = cine.prioridade ?? [];
-  const limite = cine.forcado ? 2 : 1;
-  const prioridadeRodada = Number(rodada) || 0;
-  if (atual.length >= limite) {
-    // trocar a escolha é permitido: a última substitui a mais antiga
-    return { cine: { ...cine, prioridade: [...atual.slice(1), chave], prioridadeRodada } };
-  }
-  return { cine: { ...cine, prioridade: [...atual, chave], prioridadeRodada } };
+  return {
+    cine: comRodada(cine, rodada, (d) => {
+      const limite = d.forcado ? 2 : 1;
+      // trocar a escolha é permitido: a última substitui a mais antiga
+      const prioridade = d.prioridade.length >= limite ? [...d.prioridade.slice(1), chave] : [...d.prioridade, chave];
+      return { ...d, prioridade };
+    }),
+  };
 }
 
-/** Quantas vezes a Prioridade `chave` foi escolhida nesta rodada. */
-export const prioridadeConta = (cine, chave) => (cine?.prioridade ?? []).filter((p) => p === chave).length;
+/** Quantas vezes a Prioridade `chave` foi escolhida na `rodada`. */
+export const prioridadeConta = (cine, chave, rodada) => daRodada(cine, rodada).prioridade.filter((p) => p === chave).length;
+
+/** Quantas Prioridades Armas ainda estão livres na `rodada` (uma por arma). */
+export const armasLivres = (cine, rodada) =>
+  Math.max(0, prioridadeConta(cine, "armas", rodada) - daRodada(cine, rodada).armasUsadas);
 
 /* ── O TIRO E O IMPACTO ──────────────────────────────────────────────────────
  *
@@ -378,7 +397,7 @@ function blocoDasTrilhas(cine, hp) {
 function blocoDoDuelo(cine, rodada) {
   const d = cine.duelo;
   const grau = d && Number(d.rodada) === Number(rodada) ? GRAU[d.grau] : null;
-  const vantagens = Object.entries(cine.vantagens ?? {});
+  const vantagens = Object.entries(daRodada(cine, rodada).vantagens);
   return (
     `<div class="cine-duelo">` +
     `<button type="button" class="${CLASSE_CINE_DUELO}">${txt("spacedragon.cine.duelo")}</button> ` +
@@ -397,12 +416,12 @@ function blocoDoDuelo(cine, rodada) {
   );
 }
 
-function blocoDaPrioridade(cine) {
+function blocoDaPrioridade(cine, rodada) {
   const pen = penalidadesDeCamara(cine.avarias);
   return (
     `<div class="cine-prioridade">${txt("spacedragon.cine.prioridade")} ` +
     Object.entries(PRIORIDADES).map(([k, p]) => {
-      const n = prioridadeConta(cine, k);
+      const n = prioridadeConta(cine, k, rodada);
       return `<button type="button" class="${CLASSE_CINE_PRIORIDADE}${n ? " ativa" : ""}" data-prioridade="${k}" ` +
         `title="${esc(p.efeito)}"${pen.semPrioridade ? " disabled" : ""}>${p.rotulo}${n > 1 ? " ×2" : ""}</button>`;
     }).join("") +
@@ -463,7 +482,7 @@ export function painelCinematico(ator, nave, { rodada = null, classePosto = "sw-
     `</h3>` +
     blocoDasTrilhas(cine, ator?.system?.hp) +
     blocoDoDuelo(cine, rodada) +
-    blocoDaPrioridade(cine) +
+    blocoDaPrioridade(cine, rodada) +
     blocoDosPostos(nave, classePosto) +
     blocoDasAvarias(cine) +
     `<div class="cine-rodada">` +

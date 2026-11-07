@@ -159,7 +159,7 @@ cineDeAtor(thw).avarias = {};
 
 // ── [CINEM-DISPARO] ──
 combate(2, [presa, thw]);
-cineDeAtor(presa).vantagens = { "tok-thw": { chaves: ["mira"], nome: "Dunelizard" } };
+cineDeAtor(presa).porRodada = { 2: { vantagens: { "tok-thw": { chaves: ["mira"], nome: "Dunelizard" } } } };
 cineDeAtor(presa).firmar = { rodada: 2 };
 cineDeAtor(presa).trava = "tok-thw";
 globalThis.game.user.targets = new Set([tokThw]);
@@ -192,13 +192,13 @@ confere(cineDeAtor(presa).escudo.atual === 0 && presa.system.hp.value === 33 && 
   `[CINEM-APLICAR] 13: 6 no Escudo, 7 no Casco, Depósito em chamas (${JSON.stringify(cineDeAtor(presa).avarias)})`);
 
 // ── [CINEM-FIM] o fim da rodada, pelo rastreador ──
-cineDeAtor(presa).prioridade = ["escudos"];
+cineDeAtor(presa).porRodada = { 2: { prioridade: ["escudos"] } };
 roteiro["1d6"] = [3];
 roteiro["1d10"] = [7];
 confere(await fecharRodadaDaNave(presa, { combate: "c1", rodada: 2 }) === true, "[CINEM-FIM] fecha a rodada 2");
 confere(presa.system.hp.value === 30, `[CINEM-FIM] o incêndio cobra 3 do Casco: ${presa.system.hp.value}`);
 confere(cineDeAtor(presa).escudo.atual === 7, `[CINEM-FIM] Prioridade Escudos recarrega 7: ${cineDeAtor(presa).escudo.atual}`);
-confere(!(cineDeAtor(presa).prioridade ?? []).length && !Object.keys(cineDeAtor(presa).vantagens ?? {}).length,
+confere(!cineDeAtor(presa).porRodada?.[2]?.prioridade?.length && !Object.keys(cineDeAtor(presa).porRodada?.[2]?.vantagens ?? {}).length,
   "[CINEM-FIM] Prioridade e Vantagens saem");
 confere(cineDeAtor(presa).firmar?.rodada === 2, "[CINEM-FIM] o Firmar da rodada 2 fica para o CP até o turno da nave na 3");
 const hpAntes = presa.system.hp.value;
@@ -259,6 +259,14 @@ confere(await fecharRodadaDaNave(presa, { combate: "c1", rodada: 2 }) === false 
   console.error = erroAntes;
   confere(n === 1 && cineDeAtor(inteira).fimRodada?.combate === "cZ", "[CINEM-FIM] a nave que falha não impede a seguinte");
 
+  // Encerrar é do Mestre ativo: o jogador recebe aviso e nada muda
+  globalThis.game.user = { ...globalThis.game.user, id: "jogador", isGM: false };
+  const antesDeEncerrar = JSON.stringify(cineDeAtor(a));
+  avisos.length = 0;
+  await PARA_TESTE.encerrar(ctxDe(a));
+  confere(JSON.stringify(cineDeAtor(a)) === antesDeEncerrar && avisos.some(([k, t]) => k === "warn" && /Mestre/.test(t)), "[CINEM-FIM] o jogador não encerra: só o Mestre ativo");
+  globalThis.game.user = { ...globalThis.game.user, id: "mestre", isGM: true };
+
   // [M2] Encerrar combate cobra a última rodada antes de limpar
   const ultima = novaNave({ id: "u", nome: "Última", camaras: { deposito: "instalada" } });
   cineDeAtor(ultima).avarias = { deposito: { estado: "avaria", desde: 3 } };
@@ -284,7 +292,7 @@ await PARA_TESTE.acao(ctxDe(presa), "reparo");
 confere(presa.system.hp.value === 35 && avisos.some(([k]) => k === "warn"), "[CINEM-ACOES] na rodada seguinte, o Reparo recusa");
 roteiro["1d6"] = [1];
 await PARA_TESTE.acao(ctxDe(presa), "forcar");
-confere(cineDeAtor(presa).forcado && cineDeAtor(presa).avarias.maquinas?.estado === "avaria", "[CINEM-ACOES] Forçar com 1: avaria na Sala de Máquinas");
+confere(cineDeAtor(presa).porRodada?.[3]?.forcado && cineDeAtor(presa).avarias.maquinas?.estado === "avaria", "[CINEM-ACOES] Forçar com 1: avaria na Sala de Máquinas");
 await PARA_TESTE.acao(ctxDe(presa), "resolver", { camara: "deposito" });
 confere(!cineDeAtor(presa).avarias.deposito, "[CINEM-ACOES] Resolver apaga o incêndio do Depósito");
 
@@ -314,15 +322,14 @@ confere(!cineDeAtor(presa).avarias.deposito, "[CINEM-ACOES] Resolver apaga o inc
   combate(3, [presa, thw]);
   globalThis.game.user.targets = new Set([tokThw]);
   // Prioridade Armas: +1 dado numa arma, à escolha
-  cineDeAtor(presa).prioridade = ["armas"];
-  cineDeAtor(presa).armasUsadas = 0;
+  cineDeAtor(presa).porRodada = { 3: { prioridade: ["armas"], armasUsadas: 0 } };
   cineDeAtor(thw).escudo = { atual: 0, max: 0 };
   thw.system.hp.value = 20;
   dialogo = { artilheiro: "3", situacao: "0", armas: "on" };
   roteiro.d20 = [15];
   roteiro["3d10"] = [16];
   const t1 = await dispararCine(ctxDe(presa), { item: { name: "Torre" }, chave: "disparadores", arma: { nome: "Disparadores laser", dano: "2d10" } });
-  confere(t1.acerto && rolado.some(([f]) => f === "3d10") && cineDeAtor(presa).armasUsadas === 1, "[CINEM-REVISAO] Prioridade Armas: 3d10 numa arma, e fica gasta");
+  confere(t1.acerto && rolado.some(([f]) => f === "3d10") && cineDeAtor(presa).porRodada?.[3]?.armasUsadas === 1, "[CINEM-REVISAO] Prioridade Armas: 3d10 numa arma, e fica gasta");
   dialogo = { artilheiro: "3", situacao: "0" };
   roteiro.d20 = [15];
   const antes = rolado.length;

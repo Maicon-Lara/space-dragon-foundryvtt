@@ -471,7 +471,8 @@ posto vazio.</li>
 incêndios e brechas cobram, o fogo espalha, a Prioridade Escudos recarrega, e o que vale até o
 fim da rodada sai. Firmar e Giro evasivo duram até o próximo turno da nave. Quem fecha é o
 cliente do Mestre: sem Mestre conectado, a rodada não é cobrada. Pular rodadas editando o número
-à mão cobra só a última; a última rodada do combate é cobrada no <em>Encerrar combate</em>.</li>
+à mão cobra só a última; a última rodada do combate é cobrada no <em>Encerrar combate</em>, que é
+do Mestre e vem antes de apagar o combate do rastreador.</li>
 </ol>
 
 <h2>O tiro</h2>

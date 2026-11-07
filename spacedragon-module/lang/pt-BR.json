@@ -287,7 +287,7 @@
   "spacedragon.cine.incendio": "incêndio",
   "spacedragon.cine.brecha": "brecha",
   "spacedragon.cine.encerrar": "Encerrar combate",
-  "spacedragon.cine.encerrarDica": "Câmara Fora fica danificada; avaria ainda ativa pede o último teste; o Escudo volta cheio.",
+  "spacedragon.cine.encerrarDica": "Só o Mestre: cobra a rodada ainda aberta, deixa danificada a câmara Fora, pede o último teste da avaria ativa e devolve o Escudo cheio. Use antes de apagar o combate do rastreador.",
   "spacedragon.cine.encerrarDanificadas": "Ficaram <strong>danificadas</strong>: {lista}.",
   "spacedragon.cine.encerrarTeste": "Último teste para resolver (falhou, marque danificada na aba Câmaras): {lista}.",
   "spacedragon.cine.encerrarLimpo": "Nenhuma avaria a bordo. A nave sai inteira.",
@@ -352,5 +352,6 @@
   "spacedragon.cine.disparo.missil": "Míssil lançado: chega no fim da rodada, e o alvo faz JP (com o modificador do duelo dele). <strong>Só se falhar</strong>, aplique <strong>{dano}</strong> de dano (primeiro no Escudo). Se passar, o míssil faz a volta e tenta de novo no fim da rodada seguinte, uma vez.",
   "spacedragon.cine.aviso.confirmarEscalaDeNovo": "A escala será aplicada de novo: Escudo {escudo}, Casco {casco}, cheios. O PV do livro ({pv}) continua guardado.",
   "spacedragon.cine.aviso.cartaoDesligado": "Este cartão é do Combate Cinematográfico, que está desligado. Religue a opção para aplicá-lo.",
-  "spacedragon.cine.fimAutomatico": "O fim da rodada é automático: quando o Mestre avança o rastreador, cada nave cobra fogo e brechas, recarrega pela Prioridade Escudos e limpa a rodada. Firmar e Giro valem até o próximo turno da nave."
+  "spacedragon.cine.fimAutomatico": "O fim da rodada é automático: quando o Mestre avança o rastreador, cada nave cobra fogo e brechas, recarrega pela Prioridade Escudos e limpa a rodada. Firmar e Giro valem até o próximo turno da nave.",
+  "spacedragon.cine.aviso.encerrarSoMestre": "Só o Mestre encerra o combate de uma nave: é ele quem cobra a última rodada."
 }

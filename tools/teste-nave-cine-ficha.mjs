@@ -30,7 +30,7 @@ import {
   cineVazio, cineDe, aplicarEscala, limparRodadaCine, acaoCine, escolherPrioridade, prioridadeConta,
   cpCine, formulaDoDanoCine, ajusteDaArmaCine, aplicarImpactoCine, painelCinematico,
   vigenteAteProximoTurno, firmouNestaRodada, marcarTurno, normalizarEscudo, adicionarVantagem,
-  vantagensContra, podeManobrar, guardarPvDoLivro, CLASSE_CINE_LIVRO,
+  vantagensContra, podeManobrar, guardarPvDoLivro, CLASSE_CINE_LIVRO, daRodada, comRodada, armasLivres,
   MARCA_CINE, CLASSE_CINE_RESOLVER, CLASSE_CINE_DUELO, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
 } from "../spacedragon-module/module/nave-cine-ficha.js";
 import { porPainelDaTripulacao, porPainelDasCamadas, MARCA_TRIPULACAO } from "../spacedragon-module/module/nave-pc-ficha.js";
@@ -91,7 +91,7 @@ const ator = { name: "Presa de Krayt", items: [], system: { hp: { value: 33, max
 
 // ── [CINEF-ESTADO] ──
 const vazio = cineVazio();
-confere(vazio.escudo.atual === 0 && vazio.prioridade.length === 0 && vazio.duelo === null, "[CINEF-ESTADO] estado vazio");
+confere(vazio.escudo.atual === 0 && daRodada(vazio, 1).prioridade.length === 0 && vazio.duelo === null && !Object.keys(vazio.porRodada).length, "[CINEF-ESTADO] estado vazio");
 const lido = cineDe({ cine: { escudo: { atual: 7 }, avarias: { ponte: { estado: "avaria" } } } });
 const residuo = cineDe({ cine: { interferencia: {}, supressao: {}, duelo: {} } });
 confere(residuo.interferencia === null && residuo.supressao === null && residuo.duelo === null, "[CINEF-ESTADO] o {} que a gravação por caminho deixa conta como nada");
@@ -104,12 +104,12 @@ confere(esc.cine.escudo.max === 0 && esc.cine.recarga === null, "[CINEF-ESTADO] 
 confere(aplicarEscala(vazio, "") === null, "[CINEF-ESTADO] sem tipo, sem escala");
 
 const sujo = {
-  ...vazio, firmar: { rodada: 2 }, giro: { valor: 4, rodada: 1 }, prioridade: ["motores"], forcado: true, trava: "t1",
-  vantagens: { t1: { chaves: ["mira"] } }, armasUsadas: 1,
+  ...vazio, firmar: { rodada: 2 }, giro: { valor: 4, rodada: 1 }, trava: "t1",
+  porRodada: { 2: { prioridade: ["motores"], forcado: true, armasUsadas: 1, vantagens: { t1: { chaves: ["mira"] } } } },
   interferencia: { alvo: "t2", ate: 3 }, supressao: { alvo: "t3", ate: 2 },
 };
 const limpo = limparRodadaCine(sujo, 2, { combate: "c1" });
-confere(!limpo.prioridade.length && !limpo.forcado && !Object.keys(limpo.vantagens).length && limpo.armasUsadas === 0 && limpo.fimRodada?.combate === "c1" && limpo.fimRodada?.rodada === 2,
+confere(!Object.keys(limpo.porRodada).length && limpo.fimRodada?.combate === "c1" && limpo.fimRodada?.rodada === 2,
   "[CINEF-ESTADO] o fim da rodada apaga Prioridade, reator, Vantagens e a Prioridade Armas gasta, e marca a rodada cobrada");
 confere(limpo.firmar?.rodada === 2, "[CINEF-ESTADO] o Firmar desta rodada passa para a próxima (até o turno da nave)");
 confere(limpo.giro === null, "[CINEF-ESTADO] o Giro da rodada anterior já não vale");
@@ -135,11 +135,14 @@ confere(!/<script>/.test(acaoCine(vazio, "travar", { alvo: "t9", alvoNome: "<scr
 
 // ── [CINEF-PRIOR] ──
 let pr = escolherPrioridade(vazio, "armas").cine;
-confere(prioridadeConta(pr, "armas") === 1, "[CINEF-PRIOR] uma Prioridade");
+confere(prioridadeConta(pr, "armas", 0) === 1, "[CINEF-PRIOR] uma Prioridade");
 pr = escolherPrioridade(pr, "escudos").cine;
-confere(prioridadeConta(pr, "armas") === 0 && prioridadeConta(pr, "escudos") === 1, "[CINEF-PRIOR] sem forçar, a nova troca a anterior");
-pr = escolherPrioridade(escolherPrioridade({ ...vazio, forcado: true }, "armas").cine, "armas").cine;
-confere(prioridadeConta(pr, "armas") === 2, "[CINEF-PRIOR] reator forçado: a mesma duas vezes");
+confere(prioridadeConta(pr, "armas", 0) === 0 && prioridadeConta(pr, "escudos", 0) === 1, "[CINEF-PRIOR] sem forçar, a nova troca a anterior");
+const forcadoNa3 = comRodada(vazio, 3, (d) => ({ ...d, forcado: true }));
+pr = escolherPrioridade(escolherPrioridade(forcadoNa3, "armas", { rodada: 3 }).cine, "armas", { rodada: 3 }).cine;
+confere(prioridadeConta(pr, "armas", 3) === 2 && armasLivres(pr, 3) === 2, "[CINEF-PRIOR] reator forçado: a mesma duas vezes, duas armas livres");
+pr = escolherPrioridade(escolherPrioridade(forcadoNa3, "armas", { rodada: 4 }).cine, "escudos", { rodada: 4 }).cine;
+confere(prioridadeConta(pr, "escudos", 4) === 1 && prioridadeConta(pr, "armas", 4) === 0, "[CINEF-PRIOR] o reator forçado da rodada 3 não dá duas Prioridades na 4");
 confere(escolherPrioridade(comAvaria, "armas").erro, "[CINEF-PRIOR] Sala de Máquinas avariada: sem Prioridade");
 
 // ── [CINEF-TIRO] ──
@@ -201,18 +204,24 @@ confere(semCombate.includes("Nenhuma avaria"), "[CINEF-PAINEL] sem avarias, o pa
 const hostil = painelCinematico(ator, { ...naveVazia(), postos: { leme: '"><script>' } }, {});
 confere(!hostil.includes("<script>"), "[CINEF-PAINEL] o nome no posto entra escapado");
 
-// ── [CINEF-NOVA] o fechamento da rodada r roda depois de o rastreador avançar ──
+// ── [CINEF-NOVA] as escolhas moram sob a rodada: o fechamento da r não toca a r+1 ──
 {
-  const r5 = { ...vazio, prioridade: ["motores"], prioridadeRodada: 6, forcado: true, forcadoRodada: 6, armasUsadas: 1,
-    vantagens: { t1: { chaves: ["mira"], rodada: 6 }, t2: { chaves: ["cauda"], rodada: 5 } } };
-  const fechada = limparRodadaCine(r5, 5, { combate: "c1" });
-  confere(fechada.prioridade.join() === "motores" && fechada.prioridadeRodada === 6 && fechada.forcado && fechada.armasUsadas === 1,
-    "[CINEF-NOVA] a Prioridade e o reator escolhidos na rodada 6 sobrevivem ao fechamento da 5");
-  confere(fechada.vantagens.t1 && !fechada.vantagens.t2, "[CINEF-NOVA] a Vantagem da rodada 6 fica; a da 5 sai");
-  const velha = limparRodadaCine({ ...vazio, prioridade: ["motores"], prioridadeRodada: 5 }, 5, { combate: "c1" });
-  confere(!velha.prioridade.length && velha.motores === 6, "[CINEF-NOVA] a Prioridade Motores da 5 sai e vale no duelo da 6");
-  confere(escolherPrioridade(vazio, "armas", { rodada: 7 }).cine.prioridadeRodada === 7, "[CINEF-NOVA] escolher a Prioridade grava a rodada");
-  confere(adicionarVantagem(vazio, "t", "X", "mira", { rodada: 7 }).vantagens.t.rodada === 7, "[CINEF-NOVA] a Vantagem grava a rodada");
+  let c = escolherPrioridade(vazio, "motores", { rodada: 5 }).cine;   // Motores na rodada 5
+  c = escolherPrioridade(c, "escudos", { rodada: 6 }).cine;           // Escudos na 6, antes de fechar a 5
+  c = adicionarVantagem(c, "t1", "A", "mira", { rodada: 6 });
+  c = adicionarVantagem(c, "t2", "B", "cauda", { rodada: 5 });
+  c = comRodada(c, 6, (d) => ({ ...d, forcado: true, armasUsadas: 1 }));
+  const fechada = limparRodadaCine(c, 5, { combate: "c1" });
+  confere(fechada.motores === 6, "[CINEF-NOVA] a Motores da 5 vale no duelo da 6, mesmo com a Prioridade da 6 já escolhida (era o achado A1)");
+  confere(prioridadeConta(fechada, "escudos", 6) === 1 && daRodada(fechada, 6).forcado && daRodada(fechada, 6).armasUsadas === 1,
+    "[CINEF-NOVA] as escolhas da 6 sobrevivem ao fechamento da 5");
+  confere(prioridadeConta(fechada, "escudos", 5) === 0 && !fechada.porRodada[5], "[CINEF-NOVA] as da 5 saem");
+  confere(vantagensContra(fechada, "t1", 6).join() === "mira" && vantagensContra(fechada, "t2", 5).length === 0,
+    "[CINEF-NOVA] a Vantagem da 6 fica; a da 5 sai");
+  confere(prioridadeConta(c, "escudos", 5) === 0, "[CINEF-NOVA] a Escudos da 6 não conta como da 5 (a recarga da 5 não a vê; era o achado A2)");
+  confere(limparRodadaCine(vazio, 5, { combate: "c1" }).motores === null, "[CINEF-NOVA] sem Motores, nada para o duelo seguinte");
+  const legado = cineDe({ cine: { prioridade: ["motores"], vantagens: { t: { chave: "mira" } }, armasUsadas: 3 } });
+  confere(prioridadeConta(legado, "motores", 1) === 0 && vantagensContra(legado, "t", 1).length === 0, "[CINEF-NOVA] estado gravado no formato antigo é ignorado sem erro");
 }
 
 // ── [CINEF-REVISAO] achados da revisão independente ──
@@ -234,7 +243,8 @@ confere(guardarPvDoLivro(backup, { value: 40, max: 40 }).pvLivro.max === 187, "[
 const comBackup = painelCinematico(ator, { ...naveVazia(), cine: backup }, {});
 confere(comBackup.includes(`class="${CLASSE_CINE_LIVRO}"`) && comBackup.includes("187"), "[CINEF-REVISAO] o painel oferece voltar ao PV do livro");
 confere(!painelCinematico(ator, { ...naveVazia() }, {}).includes(CLASSE_CINE_LIVRO), "[CINEF-REVISAO] sem backup, sem o botão");
-const listaV = painelCinematico(ator, { ...naveVazia(), cine: v }, { rodada: 1 });
+const listaV = painelCinematico(ator, { ...naveVazia(), cine: v }, {});
+confere(!painelCinematico(ator, { ...naveVazia(), cine: v }, { rodada: 1 }).includes("Mira + Na cauda"), "[CINEF-REVISAO] as Vantagens de outra rodada não aparecem");
 confere(listaV.includes("Mira + Na cauda → Garra"), "[CINEF-REVISAO] o painel lista as duas Vantagens");
 
 if (problemas.length) {
