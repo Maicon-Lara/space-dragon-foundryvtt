@@ -454,6 +454,11 @@ ${tab(["tipo", "Escudo*", "Casco", "Agilidade", "Recarga"], linhasDaTabela([
 <p>* Só com Escudo de força instalado. CP, BA e JP são os da T10-1. O <strong>Casco é o PV da
 ficha</strong>, e a barra do token desce com ele. Abaixo da metade do Casco, −20% em todo Pilotar.
 Na aba Tripulação, o botão <em>Aplicar escala do tipo</em> põe tudo isso, cheio.</p>
+<p><strong>A ficha no posto.</strong> Arraste cada personagem para o campo do posto dele. A nave
+lê da ficha o Pilotar Naves (%) do Leme, ou o Operar Máquinas (%) de quem não tem Pilotar; o BA à
+distância da Artilharia; e o teste de Resolver avaria (Operar Máquinas do Técnico, Intelecto dos
+demais). Quando a Ponte ou a Sala de Máquinas é atingida, o cartão pede a JPR de quem está no
+posto dela, e a falha custa 1d6 de PV. Um nome digitado, sem ficha, vale como antes.</p>
 
 <h2>A rodada</h2>
 <ol>

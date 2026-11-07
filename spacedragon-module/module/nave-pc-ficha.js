@@ -58,7 +58,10 @@ import {
   combateCompilado, naveModular, camadaLigada, danoPorMargem, escudoComoReserva, multiplicadorDeDano,
   combateCinematico,
 } from "./opcoes.js";
-import { painelCinematico, MARCA_CINE } from "./nave-cine-ficha.js";
+import { painelCinematico, MARCA_CINE, seloDoTripulante } from "./nave-cine-ficha.js";
+import {
+  tripulacaoDaNave, acharAtorNoMundo, digitarNoPosto, vincularAoPosto, tripulanteDoPosto, baDistanciaDe,
+} from "./nave-tripulante.js";
 import { ligarCine, dispararCine, aplicarImpactoCineDaMensagem } from "./nave-cine-acoes.js";
 import { dadosExtrasDeDano } from "./tripulacao.js";
 import {
@@ -366,6 +369,7 @@ export function sugestoesDeTripulacao() {
  */
 export function painelDaTripulacao(ator, nave) {
   const ocupantes = nave?.postos ?? {};
+  const tripulacao = tripulacaoDaNave(nave, acharAtorNoMundo);
 
   const linhas = POSTOS.map((posto) => {
     const quemEsta = String(ocupantes[posto.chave] ?? "").trim();
@@ -405,6 +409,7 @@ export function painelDaTripulacao(ator, nave) {
         `<input type="text" class="${CLASSE_POSTO}" data-posto="${posto.chave}" ` +
         `value="${quemEsta.replace(/"/g, "&quot;")}" placeholder="${posto.quem}" ` +
         `list="${LISTA_TRIPULACAO}" title="${txt("spacedragon.nave.tripulacao.dicaPosto")}">` +
+        seloDoTripulante(tripulacao[posto.chave]) +
       `</div>` +
       `<div class="posto-faz">${posto.oQueFaz}</div>` +
       (travado
@@ -456,8 +461,10 @@ export function porPainelDaTripulacao(raiz, ator) {
   // o Combate Cinematográfico (opção, desligada por padrão) substitui os postos
   // das Compiladas: os dois na mesma aba dariam duas regras para a mesma ação
   if (combateCinematico()) {
-    aba.insertAdjacentHTML("afterbegin", painelCinematico(ator, naveDe(ator, ID), {
+    const nave = naveDe(ator, ID);
+    aba.insertAdjacentHTML("afterbegin", painelCinematico(ator, nave, {
       rodada: globalThis.game?.combat?.round ?? null, classePosto: CLASSE_POSTO,
+      tripulacao: tripulacaoDaNave(nave, acharAtorNoMundo),
     }));
     return true;
   }
@@ -583,8 +590,9 @@ function distanciaAoAlvo(ator, alvo) {
 function artilheiroDaNave(nave) {
   const nome = String(nave?.postos?.artilharia ?? "").trim();
   if (!nome) return null;
-  const bad = Number(globalThis.game?.actors?.getName?.(nome)?.system?.bad);
-  return { nome, bad: Number.isFinite(bad) ? bad : null };
+  // a ficha vinculada ao posto; sem vínculo, o ator com esse nome
+  const ator = tripulanteDoPosto(nave, "artilharia", acharAtorNoMundo);
+  return { nome: ator?.name ?? nome, bad: baDistanciaDe(ator) };
 }
 
 /** O rótulo de cada faixa, com a chave por extenso para o teste de idioma. */
@@ -1432,13 +1440,47 @@ export function registrarFichaDeNavePC() {
         if (!campo?.dataset?.posto) return;
         if (!this.isEditable) return;
         const nave = naveDe(this.actor, ID);
-        const quem = String(campo.value ?? "").trim();
-        const postos = { ...(nave.postos ?? {}) };
         // vazio APAGA a chave em vez de gravar "": um posto vago é a ausência
-        // do registro, e é o que `postosOcupados` conta
-        if (quem) postos[campo.dataset.posto] = quem;
-        else delete postos[campo.dataset.posto];
-        await this.#gravarNave(nave, { ...nave, postos });
+        // do registro, e é o que `postosOcupados` conta. Trocar o nome solta a
+        // ficha vinculada: quem senta agora é outro.
+        await this.#gravarNave(nave, digitarNoPosto(nave, campo.dataset.posto, campo.value));
+      });
+
+      // ── ARRASTAR O PERSONAGEM PARA O POSTO ──
+      //
+      // Ouvido aqui, e não no `_onDropActor` da ficha: a ficha do sistema pode
+      // tratar o soltar de um ator do jeito dela, e este soltar só vale em cima
+      // de um posto. O resto da ficha segue para o sistema.
+      const postoDoEvento = (ev) => ev.target?.closest?.(".posto")?.querySelector?.(`.${CLASSE_POSTO}`)?.dataset?.posto ?? null;
+      raiz.addEventListener("dragover", (ev) => {
+        if (postoDoEvento(ev)) ev.preventDefault();
+      });
+      raiz.addEventListener("drop", async (ev) => {
+        const posto = postoDoEvento(ev);
+        if (!posto) return;
+        let dados = null;
+        try { dados = JSON.parse(ev.dataTransfer?.getData?.("text/plain") || "null"); } catch { dados = null; }
+        if (dados?.type !== "Actor") return;
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (!this.isEditable) return;
+        let ator = null;
+        try {
+          ator = await globalThis.Actor?.implementation?.fromDropData?.(dados);
+        } catch { ator = null; }
+        if (!ator) return;
+        const nave = naveDe(this.actor, ID);
+        const nova = vincularAoPosto(nave, posto, ator);
+        if (!nova) {
+          globalThis.ui?.notifications?.warn?.(ator.pack
+            ? txt("spacedragon.tripulante.doCompendio")
+            : txt("spacedragon.tripulante.naoNave"));
+          return;
+        }
+        await this.#gravarNave(nave, nova);
+        globalThis.ui?.notifications?.info?.(txt("spacedragon.tripulante.vinculou", {
+          nome: escapa(ator.name), posto: POSTOS.find((p) => p.chave === posto)?.rotulo ?? posto,
+        }));
       });
     }
 
@@ -1578,6 +1620,16 @@ export function registrarFichaDeNavePC() {
      * Agora a câmara (reconhecida pela flag `camaraDeNave`) passa pela mesma
      * compra do botão, e nenhum item é criado. O resto segue para o sistema.
      */
+    /**
+     * Um personagem solto em cima de um posto é do listener dos postos
+     * (#ligarPostos), que o vincula. Aqui só se garante que a ficha do sistema
+     * não faça mais nada com ele; fora dos postos, segue para o sistema.
+     */
+    async _onDropActor(event, data) {
+      if (event?.target?.closest?.(".posto")?.querySelector?.(`.${CLASSE_POSTO}`)) return false;
+      return super._onDropActor?.(event, data);
+    }
+
     async _onDropItem(event, data) {
       // Qualquer falha AQUI devolve o item ao sistema: reconhecer câmara é um
       // extra, e não pode custar o arrastar do tipo, da classe ou de uma arma.

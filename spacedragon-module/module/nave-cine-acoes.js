@@ -21,8 +21,13 @@ import {
   EXPLOSAO_DO_ARSENAL, chanceDoDuelo, grauDoTeste, iniciativaDoDuelo, termosCine, atingeCamara,
   camaraDoD12, golpeNaCamara, registrarGolpe, penalidadesDeCamara, fimDaRodadaCine,
   depoisDoCombate, recarregar, podeRepararAgora, cascoAbaixoDaMetade, aplicarDanoCine, tensaoDaRodada,
-  pedeEvento, D12, precisaFechar, rodadaQueAcabou,
+  pedeEvento, D12, precisaFechar, rodadaQueAcabou, ACOES_CINE, FAMILIA_DA_CAMARA,
 } from "./nave-cinematico.js";
+import {
+  tripulanteDoPosto, vinculadoAoPosto, acharAtorNoMundo, pilotarDe, baDistanciaDe, consertoDe, consertoPassou,
+  formulaDoConserto, tripulantesNaCamara, tripulacaoDaNave,
+} from "./nave-tripulante.js";
+import { rolarJP } from "./jp.js";
 import {
   cineDe, aplicarEscala, limparRodadaCine, acaoCine, escolherPrioridade, prioridadeConta,
   cpCine, formulaDoDanoCine, ajusteDaArmaCine, aplicarImpactoCine, marcarTurno, normalizarEscudo,
@@ -50,9 +55,34 @@ async function rolar(formula) {
   return new globalThis.Roll(formula).evaluate();
 }
 
-async function cartao(ator, titulo, linhas = [], { rolls = [], flags = null } = {}) {
+/** O ator sentado no `posto` da nave, ou null (ver nave-tripulante.js). */
+const tripulante = (nave, posto) => tripulanteDoPosto(nave, posto, acharAtorNoMundo);
+
+/** De que posto é cada ação do painel. */
+const POSTO_DA_ACAO = Object.fromEntries(
+  Object.entries(ACOES_CINE).flatMap(([posto, acoes]) => acoes.map((a) => [a.chave, posto])),
+);
+
+/**
+ * O Pilotar do Leme: o da ficha do piloto vinculado, se ele pilota pela
+ * tabela; senão, o campo da nave. { valor, nome, fonte }
+ */
+function pilotoDaNave(nave, cine) {
+  const piloto = tripulante(nave, "leme");
+  // como no painel: só a ficha vinculada (achada pelo vínculo) substitui o campo
+  const lido = vinculadoAoPosto(nave, "leme", acharAtorNoMundo) ? pilotarDe(piloto) : null;
+  if (lido) return { valor: lido.valor, nome: piloto.name, fonte: lido.fonte };
+  return { valor: Number(cine.pilotar) || 0, nome: piloto?.name ?? null, fonte: null };
+}
+
+/** Quem fala no cartão: o tripulante do posto, se tem ficha; senão, a nave. */
+function falante(ator, quem) {
+  return globalThis.ChatMessage?.getSpeaker?.({ actor: quem ?? ator });
+}
+
+async function cartao(ator, titulo, linhas = [], { rolls = [], flags = null, quem = null } = {}) {
   await globalThis.ChatMessage?.create?.({
-    speaker: globalThis.ChatMessage?.getSpeaker?.({ actor: ator }),
+    speaker: falante(ator, quem),
     content:
       `<div class="spacedragon-cartao sd-cine">` +
       `<h4>${titulo}</h4>` +
@@ -158,7 +188,7 @@ export function ligarCine(raiz, ctx) {
       if (cl.contains(CLASSE_CINE_PRIORIDADE)) return await prioridade(ctx, alvoDoClique.dataset.prioridade);
       if (cl.contains(CLASSE_CINE_RESOLVER)) return await acao(ctx, "resolver", { camara: alvoDoClique.dataset.camara });
       if (cl.contains(CLASSE_CINE_ENCERRAR)) return await encerrar(ctx);
-      if (cl.contains(CLASSE_CINE_ACAO)) return await acao(ctx, alvoDoClique.dataset.acao);
+      if (cl.contains(CLASSE_CINE_ACAO)) return await acao(ctx, alvoDoClique.dataset.acao, { posto: alvoDoClique.dataset.posto });
     } catch (e) {
       console.error(`${ID} | Combate Cinematográfico`, e);
     }
@@ -231,7 +261,7 @@ async function vantagem(ctx, chave) {
   await ctx.gravar(nave, { ...nave, cine: novo });
   return cartao(ctx.ator, txt("spacedragon.cine.cartao.vantagem"), [
     `<strong>${VANTAGENS[chave].rotulo}</strong> → ${esc(marcado.name ?? "?")}: ${VANTAGENS[chave].efeito}`,
-  ]);
+  ], { quem: tripulante(nave, "leme") });
 }
 
 /* ── O DUELO DE PILOTOS ──────────────────────────────────────────────────── */
@@ -247,8 +277,9 @@ async function duelo(ctx) {
   const meuToken = tokenDaNave(ator, ctx.token);
   const pen = penalidadesDeCamara(cine.avarias);
   const hp = ator.system?.hp ?? {};
+  const piloto = pilotoDaNave(nave, cine);
   const { chance, partes } = chanceDoDuelo({
-    pilotar: cine.pilotar,
+    pilotar: piloto.valor,
     agilidade: cine.agilidade,
     cascoBaixo: cascoAbaixoDaMetade(hp.value, hp.max),
     avarias: cine.avarias,
@@ -293,17 +324,18 @@ async function duelo(ctx) {
 
   const conta = partes.map(([r, v]) => `${sinal(v)}% ${r}`).join(", ");
   await cartao(ator, txt("spacedragon.cine.cartao.duelo", { nave: esc(ator.name) }), [
+    piloto.fonte ? txt("spacedragon.tripulante.piloto", { nome: esc(piloto.nome), fonte: piloto.fonte, valor: piloto.valor }) : null,
     pen.perdeDuelo ? txt("spacedragon.cine.cartao.perdeDuelo") : txt("spacedragon.cine.cartao.chance", { chance: pen.pilotarSo5 ? 5 : chance, conta }),
     d100 !== null ? txt("spacedragon.cine.cartao.rolou", { d100 }) : null,
     `<strong>${grau.rotulo}</strong> · ${txt("spacedragon.cine.cartao.jp", { jp: sinal(grau.jp) })}`,
     txt("spacedragon.cine.cartao.vencedor"),
     notaDaOrdem,
-  ], { rolls });
+  ], { rolls, quem: tripulante(nave, "leme") });
 }
 
 /* ── AS AÇÕES DE POSTO ───────────────────────────────────────────────────── */
 
-async function acao(ctx, chave, { camara = null } = {}) {
+async function acao(ctx, chave, { camara = null, posto = null } = {}) {
   const ator = ctx.ator;
   const nave = naveDe(ator, ID);
   const rodada = rodadaAtual();
@@ -316,6 +348,38 @@ async function acao(ctx, chave, { camara = null } = {}) {
   const linhas = [];
   let novo = cine;
   let hpNovo = null;
+  let quem = tripulante(nave, posto ?? POSTO_DA_ACAO[chave] ?? "");
+
+  if (chave === "resolver") {
+    // §4: Sistema e Brecha pedem teste (Operar Máquinas do Técnico, Intelecto
+    // dos demais); Incêndio, só a ação
+    const qual = camara ?? "maquinas";
+    if (cine.avarias?.[qual]?.estado !== "avaria") return globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.nadaAResolver"));
+    if (FAMILIA_DA_CAMARA[qual] !== "incendio") {
+      if (Number(cine.consertoFalhou?.[qual]) === rodada && rodada > 0) {
+        return globalThis.ui?.notifications?.warn?.(txt("spacedragon.tripulante.jaTentou"));
+      }
+      const escolha = await quemConserta(nave, qual);
+      if (!escolha) return null;
+      if (escolha.ator) {
+        quem = escolha.ator;
+        const teste = consertoDe(escolha.ator);
+        const r = await rolar(formulaDoConserto(teste));
+        rolls.push(r);
+        const ok = consertoPassou(teste, r.total);
+        const nome = esc(escolha.ator.name);
+        linhas.push(ok
+          ? txt("spacedragon.tripulante.consertoOk", { nome, fonte: teste.fonte, rolado: r.total, valor: teste.valor })
+          : txt("spacedragon.tripulante.consertoFalhou", { nome, fonte: teste.fonte, rolado: r.total, valor: teste.valor }));
+        if (!ok) {
+          // tentou e não conseguiu: a ação se gasta, a avaria fica, e a câmara
+          // não aceita outra tentativa nesta rodada
+          await ctx.gravar(nave, { ...nave, cine: { ...cine, consertoFalhou: { ...(cine.consertoFalhou ?? {}), [qual]: rodada } } });
+          return cartao(ator, txt("spacedragon.cine.cartao.acao", { nave: esc(ator.name) }), linhas, { rolls, quem });
+        }
+      }
+    }
+  }
 
   if (chave === "giro") {
     const impede = podeManobrar({
@@ -330,7 +394,7 @@ async function acao(ctx, chave, { camara = null } = {}) {
     };
     if (impede) return globalThis.ui?.notifications?.warn?.(MOTIVO[impede]);
     const hp = ator.system?.hp ?? {};
-    const chance = Number(cine.pilotar) + Number(cine.agilidade) + pen.pilotar +
+    const chance = pilotoDaNave(nave, cine).valor + Number(cine.agilidade) + pen.pilotar +
       (prioridadeConta(cine, "motores", rodada) ? 20 : 0) + (cascoAbaixoDaMetade(hp.value, hp.max) ? -20 : 0);
     const r = await rolar("1d100");
     rolls.push(r);
@@ -373,7 +437,53 @@ async function acao(ctx, chave, { camara = null } = {}) {
 
   await ctx.gravar(nave, { ...nave, cine: novo });
   if (hpNovo !== null) await ator.update({ "system.hp.value": hpNovo });
-  return cartao(ator, txt("spacedragon.cine.cartao.acao", { nave: esc(ator.name) }), linhas, { rolls });
+  return cartao(ator, txt("spacedragon.cine.cartao.acao", { nave: esc(ator.name) }), linhas, { rolls, quem });
+}
+
+/**
+ * Quem tenta resolver a avaria: os tripulantes com ficha (vinculados aos
+ * postos) e o personagem de quem clicou. Pergunta só se há escolha.
+ *
+ * Devolve { ator } (rola o teste dele), { ator: null } (sem teste: a mesa já
+ * resolveu, ou ninguém tem ficha) ou null (cancelou).
+ */
+async function quemConserta(nave, camara) {
+  const vistos = new Set();
+  const candidatos = [];
+  const somar = (a) => {
+    const chave = a?.uuid ?? a?.id;
+    if (!a || vistos.has(chave) || !consertoDe(a) || a.isOwner === false) return;
+    vistos.add(chave);
+    candidatos.push(a);
+  };
+  const meu = globalThis.game?.user?.character ?? null;
+  // primeiro quem clicou, depois a Engenharia, depois os outros postos
+  somar(meu);
+  const trip = tripulacaoDaNave(nave, acharAtorNoMundo);
+  somar(trip.engenharia?.ator);
+  for (const t of Object.values(trip)) somar(t.ator);
+  // sem candidato, a janela ainda aparece, só com o «sem teste»: resolver sem
+  // rolar é uma escolha da mesa, não um silêncio da ficha
+
+  const V2 = globalThis.foundry?.applications?.api?.DialogV2;
+  if (!V2?.wait) return { ator: candidatos[0] ?? null };
+  const opcoes = candidatos.map((a, i) => {
+    const t = consertoDe(a);
+    const conta = t.tipo === "pct" ? `${t.fonte} ${t.valor}%` : `${t.fonte} ${t.valor} (1d20)`;
+    return `<option value="${i}">${esc(a.name)} — ${conta}</option>`;
+  }).join("") + `<option value="sem">${txt("spacedragon.tripulante.semTeste")}</option>`;
+  const r = await V2.wait({
+    window: { title: txt("spacedragon.tripulante.quemConserta", { camara: CAMARAS[camara]?.rotulo ?? camara }) },
+    content: `<div class="form-group"><select name="quem">${opcoes}</select></div>`,
+    buttons: [
+      { action: "ok", label: txt("spacedragon.botao.rolar"), default: true, callback: (_ev, b) => String(new FormData(b.form).get("quem")) },
+      { action: "cancelar", label: txt("spacedragon.botao.cancelar") },
+    ],
+    rejectClose: false,
+  });
+  if (r === null || r === undefined || r === "cancelar") return null;
+  if (r === "sem") return { ator: null };
+  return { ator: candidatos[Number(r)] ?? null };
 }
 
 /* ── O DISPARO ───────────────────────────────────────────────────────────── */
@@ -429,8 +539,8 @@ export async function dispararCine(ctx, { item, chave, arma }) {
     return lancarMissil(ctx, { item, arma, alvo, rodada });
   }
 
-  const nomeArt = String(nave?.postos?.artilharia ?? "").trim();
-  const bad = Number(globalThis.game?.actors?.getName?.(nomeArt)?.system?.bad);
+  const artilheiro = tripulante(nave, "artilharia");
+  const bad = baDistanciaDe(artilheiro);
   const livres = armasLivres(cine, rodada);
   const opcoesCamara = D12.map((d, i) => `<option value="${d.camara}">${i + 1}. ${CAMARAS[d.camara]?.rotulo ?? d.camara}</option>`).join("");
   const V2 = globalThis.foundry?.applications?.api?.DialogV2;
@@ -439,8 +549,10 @@ export async function dispararCine(ctx, { item, chave, arma }) {
     window: { title: txt("spacedragon.janela.disparo", { arma: nomeArma }) },
     content:
       (pen.armasParadas ? `<p><em>${txt("spacedragon.cine.aviso.armasParadas", { n: pen.armasParadas })}</em></p>` : "") +
-      `<div class="form-group"><label>${txt("spacedragon.nave.disparo.artilheiro")}</label>` +
-      `<input type="number" name="artilheiro" value="${Number.isFinite(bad) ? bad : ""}"></div>` +
+      `<div class="form-group"><label>${artilheiro
+        ? txt("spacedragon.nave.disparo.artilheiroNome", { nome: esc(artilheiro.name) })
+        : txt("spacedragon.nave.disparo.artilheiro")}</label>` +
+      `<input type="number" name="artilheiro" value="${bad ?? ""}"></div>` +
       `<div class="form-group"><label>${txt("spacedragon.nave.disparo.situacao")}</label>` +
       `<input type="number" name="situacao" value="0"></div>` +
       `<div class="form-group"><label>${txt("spacedragon.cine.disparo.rajada")}</label><input type="checkbox" name="rajada"></div>` +
@@ -567,7 +679,7 @@ export async function dispararCine(ctx, { item, chave, arma }) {
     ? `<button type="button" class="sd-aplicar-impacto">${txt("spacedragon.nave.disparo.aplicar", { alvo: nomeAlvo || "?" })}</button>`
     : "";
   await globalThis.ChatMessage?.create?.({
-    speaker: globalThis.ChatMessage?.getSpeaker?.({ actor: ator }),
+    speaker: falante(ator, artilheiro),
     content:
       `<div class="spacedragon-cartao sd-disparo sd-cine">` +
       `<h4>${txt("spacedragon.cine.disparo.titulo", { arma: nomeArma, alvo: nomeAlvo || "?" })}</h4>` +
@@ -600,8 +712,91 @@ export async function aplicarImpactoCineDaMensagem(msg, imp) {
     globalThis.ui?.notifications?.info?.(txt("spacedragon.cine.aviso.aplicado", {
       alvo: esc(ator.name), escudo: r.noEscudo, casco: r.noCasco,
     }) + golpe);
+    if (r.golpe && r.golpe.tipo !== "ausente") {
+      // o dano já está gravado: um cartão que falha não pode deixar o
+      // impacto sem a marca de aplicado (seria aplicado de novo)
+      try {
+        await cartaoDaJpr(ator, nave, r.golpe.camara);
+      } catch (e) {
+        console.error(`${ID} | cartão de JPR`, e);
+      }
+    }
   }
   await msg.setFlag(ID, "impacto", { ...imp, aplicado: true });
+}
+
+/* ── A JPR DE QUEM ESTÁ NA CÂMARA ATINGIDA ───────────────────────────────── */
+
+export const CLASSE_CINE_JPR = "sd-cine-jpr";
+
+/**
+ * §5: quem estiver na câmara atingida faz JPR; falhou, 1d6. A nave sabe quem
+ * está na Ponte e na Sala de Máquinas pelos postos. O cartão leva um botão por
+ * tripulante com ficha — o jogador rola a JPR do próprio personagem.
+ */
+async function cartaoDaJpr(ator, nave, camara) {
+  const lista = tripulantesNaCamara(nave, camara, acharAtorNoMundo);
+  if (!lista.length) return;
+  const linhas = lista.map((t) => (t.ator
+    ? `<button type="button" class="${CLASSE_CINE_JPR}" data-uuid="${esc(t.ator.uuid ?? "")}">` +
+      `${txt("spacedragon.tripulante.jprBotao", { nome: esc(t.ator.name) })}</button>`
+    : txt("spacedragon.tripulante.jprSemFicha", { nome: esc(t.nome) })));
+  await cartao(ator, txt("spacedragon.tripulante.jprTitulo", { camara: CAMARAS[camara]?.rotulo ?? camara, nave: esc(ator.name) }),
+    [txt("spacedragon.tripulante.jprRegra"), ...linhas]);
+}
+
+/** O botão da JPR: o dono do personagem rola, e a falha cobra 1d6 de PV. */
+export async function rolarJprDoTripulante(uuid, mensagem = null) {
+  const doc = await globalThis.fromUuid?.(uuid);
+  const quem = doc?.actor ?? doc;
+  if (!quem) return null;
+  if (!quem.isOwner) {
+    globalThis.ui?.notifications?.warn?.(txt("spacedragon.aviso.semPermissao", { nome: esc(quem.name) }));
+    return null;
+  }
+  // uma JPR por cartão: a marca fica no PRÓPRIO personagem (o jogador é dono
+  // dele, não da mensagem do Mestre), e sobrevive a recarregar a página
+  // (as últimas 20, para dois cartões seguidos não liberarem o primeiro)
+  const feitas = [].concat(quem.getFlag?.(ID, "jprFeitas") ?? quem.flags?.[ID]?.jprFeitas ?? []);
+  if (mensagem) {
+    if (feitas.includes(mensagem)) {
+      globalThis.ui?.notifications?.warn?.(txt("spacedragon.tripulante.jprFeita", { nome: esc(quem.name) }));
+      return null;
+    }
+    await quem.update({ [`flags.${ID}.jprFeitas`]: [...feitas, mensagem].slice(-20) });
+  }
+  let r;
+  try {
+    r = await rolarJP(quem, "jpd");
+  } catch (e) {
+    // a rolagem não saiu: o cartão volta a valer para ele
+    if (mensagem) await quem.update({ [`flags.${ID}.jprFeitas`]: feitas });
+    throw e;
+  }
+  if (!r || r.passou) return r;
+  const dano = await rolar("1d6");
+  const pv = (Number(quem.system?.hp?.value) || 0) - dano.total;
+  await quem.update({ "system.hp.value": pv });
+  await cartao(quem, txt("spacedragon.tripulante.jprDano", { nome: esc(quem.name), dano: dano.total, pv }), [], { rolls: [dano] });
+  return { ...r, dano: dano.total };
+}
+
+/** Liga os botões de JPR nos cartões. Uma vez, no `ready`. */
+export function ligarJprDaTripulacao() {
+  globalThis.Hooks?.on?.("renderChatMessageHTML", (msg, html) => {
+    for (const b of html?.querySelectorAll?.(`.${CLASSE_CINE_JPR}`) ?? []) {
+      if (b.dataset.ligado) continue;
+      b.dataset.ligado = "1";
+      b.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        b.disabled = true;
+        rolarJprDoTripulante(b.dataset.uuid, msg?.id ?? null)
+          .catch((e) => console.error(`${ID} | JPR do tripulante`, e))
+          .finally(() => { b.disabled = false; });
+      });
+    }
+  });
+  return true;
 }
 
 /* ── O FIM DA RODADA E O FIM DO COMBATE ──────────────────────────────────── */
