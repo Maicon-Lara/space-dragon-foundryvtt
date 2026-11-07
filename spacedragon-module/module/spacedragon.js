@@ -71,6 +71,7 @@ import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaR
 
 import { t as txt } from "./i18n.js";
 import { registrarOpcoesDeNave, combateCinematico } from "./opcoes.js";
+import { fecharRodadaPeloRastreador } from "./nave-cine-acoes.js";
 import { ligarIniciativaDasNaves } from "./nave-iniciativa.js";
 import { ajustarTokensNoReady } from "./nave-token.js";
 
@@ -191,10 +192,12 @@ Hooks.once("ready", () => {
   passo("botão de criar nave", () => ligarBotaoDeNovaNave());
   // o botão "Aplicar" dos cartões de disparo, para o Mestre (nave-pc-ficha.js)
   passo("aplicar disparo no alvo", () => ligarAplicarImpacto());
-  // o Combate Cinematográfico mostra a Tensão e o duelo DA RODADA: quando o
-  // rastreador muda de rodada, a Ficha de Nave aberta precisa redesenhar
-  passo("rodada nova na Ficha de Nave", () => Hooks.on("updateCombat", (_c, mud) => {
-    if (mud && "round" in mud && combateCinematico()) redesenharFichasDeNave();
+  // O Combate Cinematográfico na virada da rodada: o Mestre ativo fecha a
+  // rodada que acabou para cada nave (fogo, brecha, recarga, limpeza), e as
+  // Fichas de Nave abertas redesenham a Tensão e o duelo da rodada nova.
+  passo("rodada nova no Combate Cinematográfico", () => Hooks.on("updateCombat", (combate, mud) => {
+    if (!mud || !("round" in mud) || !combateCinematico()) return;
+    fecharRodadaPeloRastreador(combate, mud).finally(() => redesenharFichasDeNave());
   }));
   passo("tipo de nave que vira nave", () => ligarTipoQueViraNave());
   // a migração das naves criadas quando as regras moravam no Star Wars: sem

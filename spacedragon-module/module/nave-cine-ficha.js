@@ -32,7 +32,6 @@ export const CLASSE_CINE_DUELO = "sd-cine-duelo";
 export const CLASSE_CINE_VANTAGEM = "sd-cine-vantagem";
 export const CLASSE_CINE_PRIORIDADE = "sd-cine-prioridade";
 export const CLASSE_CINE_RESOLVER = "sd-cine-resolver";
-export const CLASSE_CINE_FIM = "sd-cine-fim";
 export const CLASSE_CINE_ENCERRAR = "sd-cine-encerrar";
 export const CLASSE_CINE_ESCALA = "sd-cine-escala";
 export const CLASSE_CINE_LIVRO = "sd-cine-livro";
@@ -71,7 +70,7 @@ export function cineVazio() {
     motores: null,
     // cada Prioridade Armas é «+1 dado de dano em UMA arma»: quantas já foram
     armasUsadas: 0,
-    // a rodada que o botão Fim da rodada já cobrou (dois cliques não cobram duas vezes)
+    // a última rodada fechada, com o combate: { combate, rodada }
     fimRodada: null,
     // o PV de antes da escala, para voltar ao livro (a escala não apaga o que a nave tinha)
     pvLivro: null,
@@ -97,6 +96,7 @@ export function cineDe(nave) {
     firmar: c.firmar && Number.isFinite(Number(c.firmar.rodada)) ? c.firmar : null,
     giro: Number(c.giro?.valor) ? c.giro : null,
     pvLivro: Number(c.pvLivro?.max) ? c.pvLivro : null,
+    fimRodada: c.fimRodada?.combate ? c.fimRodada : null,
   };
 }
 
@@ -187,7 +187,7 @@ export function guardarPvDoLivro(cine, hp) {
  * O que vale "até o fim da rodada" sai; o que vale "até o fim da PRÓXIMA"
  * (Interferência, Supressão) sai só quando o prazo dela passou.
  */
-export function limparRodadaCine(cine, rodada = 0) {
+export function limparRodadaCine(cine, rodada = 0, { combate = null } = {}) {
   const r = Number(rodada) || 0;
   const vivo = (x) => (x && Number(x.ate) > r ? x : null);
   // Firmar e Giro desta rodada passam para a próxima (até o turno da nave);
@@ -201,7 +201,7 @@ export function limparRodadaCine(cine, rodada = 0) {
     forcado: false,
     vantagens: {},
     armasUsadas: 0,
-    fimRodada: r,
+    fimRodada: combate ? { combate, rodada: r } : cine.fimRodada ?? null,
     motores: (cine.prioridade ?? []).includes("motores") ? r + 1 : null,
     interferencia: vivo(cine.interferencia),
     supressao: vivo(cine.supressao),
@@ -457,7 +457,7 @@ export function painelCinematico(ator, nave, { rodada = null, classePosto = "sw-
     blocoDosPostos(nave, classePosto) +
     blocoDasAvarias(cine) +
     `<div class="cine-rodada">` +
-    `<button type="button" class="${CLASSE_CINE_FIM}" title="${esc(txt("spacedragon.cine.fimDica"))}">${txt("spacedragon.cine.fim")}</button> ` +
+    `<span class="cine-fim-auto">${txt("spacedragon.cine.fimAutomatico")}</span> ` +
     `<button type="button" class="${CLASSE_CINE_ENCERRAR}" title="${esc(txt("spacedragon.cine.encerrarDica"))}">${txt("spacedragon.cine.encerrar")}</button>` +
     `</div>` +
     `</section>`

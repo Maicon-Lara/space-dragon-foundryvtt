@@ -288,8 +288,6 @@ export const LANG_PADRAO = {
   "spacedragon.cine.resolver": "Resolver",
   "spacedragon.cine.incendio": "incêndio",
   "spacedragon.cine.brecha": "brecha",
-  "spacedragon.cine.fim": "Fim da rodada",
-  "spacedragon.cine.fimDica": "Fecha a última rodada ainda aberta desta nave (se o rastreador já avançou, fecha a anterior). Cobra os incêndios e as brechas, espalha o fogo, recarrega o escudo da Prioridade Escudos e apaga o que vale até o fim da rodada. Uma vez por rodada.",
   "spacedragon.cine.encerrar": "Encerrar combate",
   "spacedragon.cine.encerrarDica": "Câmara Fora fica danificada; avaria ainda ativa pede o último teste; o Escudo volta cheio.",
   "spacedragon.cine.encerrarDanificadas": "Ficaram <strong>danificadas</strong>: {lista}.",
@@ -330,7 +328,6 @@ export const LANG_PADRAO = {
   "spacedragon.cine.fimRodada.espalhou": "O fogo de {de} espalhou para {para}!",
   "spacedragon.cine.fimRodada.recarga": "Prioridade Escudos: Escudo em {escudo}/{max}.",
   "spacedragon.cine.fimRodada.evento": "A Tensão chega a +{tensao}: o Mestre rola um Evento (1d8).",
-  "spacedragon.cine.fimRodada.limpa": "Rodada encerrada. Prioridade e Vantagens saíram; Firmar e Giro valem até o próximo turno da nave; a Trava espera o próximo acerto.",
   "spacedragon.cine.disparo.titulo": "{arma} contra {alvo}",
   "spacedragon.cine.disparo.rajada": "Rajada (−4, +1 dado)",
   "spacedragon.cine.disparo.mirar": "Mirar sistema (−4, escolhe a câmara)",
@@ -352,10 +349,10 @@ export const LANG_PADRAO = {
   "spacedragon.cine.aviso.manobraBloqueio": "Um inimigo escolheu Bloqueio: sem Manobra de risco nesta rodada.",
   "spacedragon.cine.aviso.manobraSupressao": "Nave suprimida: sem Manobra de risco até o fim da próxima rodada.",
   "spacedragon.cine.aviso.golpe": "{camara}: {tipo}.",
-  "spacedragon.cine.aviso.fimJaCobrado": "A rodada {rodada} já foi encerrada nesta nave.",
   "spacedragon.cine.cartao.ordemDeAcao": "A Ordem de Ação do módulo está ligada: o rastreador é dela, e o duelo não gravou a iniciativa. Siga a ordem do duelo à mão, ou desligue a Ordem de Ação.",
   "spacedragon.cine.disparo.prioridadeArmas": "Prioridade Armas (+1 dado; {n} livre)",
   "spacedragon.cine.disparo.missil": "Míssil lançado: chega no fim da rodada, e o alvo faz JP (com o modificador do duelo dele). <strong>Só se falhar</strong>, aplique <strong>{dano}</strong> de dano (primeiro no Escudo). Se passar, o míssil faz a volta e tenta de novo no fim da rodada seguinte, uma vez.",
   "spacedragon.cine.aviso.confirmarEscalaDeNovo": "A escala será aplicada de novo: Escudo {escudo}, Casco {casco}, cheios. O PV do livro ({pv}) continua guardado.",
-  "spacedragon.cine.aviso.cartaoDesligado": "Este cartão é do Combate Cinematográfico, que está desligado. Religue a opção para aplicá-lo."
+  "spacedragon.cine.aviso.cartaoDesligado": "Este cartão é do Combate Cinematográfico, que está desligado. Religue a opção para aplicá-lo.",
+  "spacedragon.cine.fimAutomatico": "O fim da rodada é automático: quando o Mestre avança o rastreador, cada nave cobra fogo e brechas, recarrega pela Prioridade Escudos e limpa a rodada. Firmar e Giro valem até o próximo turno da nave."
 };

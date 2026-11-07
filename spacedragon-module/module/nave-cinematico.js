@@ -354,24 +354,6 @@ export const RODADAS_PARA_ESPALHAR = 2;
 export const SELADAS_QUANDO_FORA = new Set(["acoplagem", "despressurizacao"]);
 
 /**
- * Qual rodada o botão Fim da rodada fecha.
- *
- * A de agora — a não ser que o rastreador esteja no COMEÇO de uma rodada nova
- * (`inicio`: o primeiro turno dela) e a anterior não tenha sido fechada: aí o
- * Mestre avançou antes de clicar, e o que se fecha é a anterior, porque na nova
- * nada aconteceu ainda. Uma marca maior que a rodada de agora é de outro
- * combate e não conta. Devolve `null` se a rodada já foi fechada.
- */
-export function rodadaAFechar(fechada, rodadaAtual, { inicio = false } = {}) {
-  const r = Math.trunc(Number(rodadaAtual) || 0);
-  if (r < 1) return null;
-  let f = Math.trunc(Number(fechada) || 0);
-  if (f > r) f = 0;
-  const alvo = inicio && r > 1 && f < r - 1 ? r - 1 : r;
-  return alvo > f ? alvo : null;
-}
-
-/**
  * O que o fim da rodada cobra das avarias de câmara.
  *
  *   · cada incêndio e cada brecha rola o dado dela (o Fora do incêndio dobra);
@@ -403,6 +385,34 @@ export function fimDaRodadaCine(avarias = {}, { rodada = 0, estados = {} } = {})
     espalhou.push({ de: d.camara, para: prox.camara });
   });
   return { danos, avarias: novas, espalhou };
+}
+
+/**
+ * Esta nave ainda precisa fechar a `rodada` deste `combate`?
+ *
+ * A marca guarda o combate junto da rodada: uma marca de outro combate nunca
+ * conta, e a mesma rodada não se fecha duas vezes. Quem chama é o rastreador
+ * (nave-cine-acoes.js), quando o Mestre avança — e não um botão, que dependia
+ * de alguém lembrar de clicar na hora certa.
+ */
+export function precisaFechar(marca, combate, rodada) {
+  const r = Math.trunc(Number(rodada) || 0);
+  if (r < 1) return false;
+  if (!marca || marca.combate !== combate) return true;
+  return Number(marca.rodada) < r;
+}
+
+/**
+ * A rodada que acabou quando o rastreador mudou: só ao AVANÇAR. Voltar o
+ * rastreador (corrigir um clique) não fecha nada. Devolve null quando não há o
+ * que fechar.
+ */
+export function rodadaQueAcabou(rodadaNova, rodadaAnterior) {
+  const nova = Math.trunc(Number(rodadaNova) || 0);
+  const antes = Number(rodadaAnterior);
+  if (nova < 2) return null;
+  if (Number.isFinite(antes) && antes >= nova) return null;
+  return nova - 1;
 }
 
 /**

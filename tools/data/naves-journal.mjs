@@ -467,7 +467,7 @@ de JP da rodada. Vence o grau maior; no empate, a nave menor; depois, o grupo. O
 <li><strong>Turnos:</strong> cada jogador age no seu posto (Leme, Artilharia, Engenharia,
 Sensores, Comando), com quatro ações por posto. Quem sai do posto para apagar fogo deixa o
 posto vazio.</li>
-<li><strong>Fim da rodada</strong> (clique antes de avançar o rastreador, uma vez por nave):
+<li><strong>Fim da rodada</strong> (automático, quando o Mestre avança o rastreador):
 incêndios e brechas cobram, o fogo espalha, a Prioridade Escudos recarrega, e o que vale até o
 fim da rodada sai. Firmar e Giro evasivo duram até o próximo turno da nave.</li>
 </ol>

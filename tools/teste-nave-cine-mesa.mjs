@@ -26,7 +26,9 @@
  */
 
 import { instalarLang } from "./lang-de-teste.mjs";
-import { dispararCine, aplicarImpactoCineDaMensagem, PARA_TESTE } from "../spacedragon-module/module/nave-cine-acoes.js";
+import {
+  dispararCine, aplicarImpactoCineDaMensagem, PARA_TESTE, fecharRodadaDaNave, fecharRodadaDoCombate, fecharRodadaPeloRastreador,
+} from "../spacedragon-module/module/nave-cine-acoes.js";
 
 const problemas = [];
 const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
@@ -188,36 +190,41 @@ await aplicarImpactoCineDaMensagem({ async setFlag() {} }, { modo: "cine", alvo:
 confere(cineDeAtor(presa).escudo.atual === 0 && presa.system.hp.value === 33 && cineDeAtor(presa).avarias?.deposito?.estado === "avaria",
   `[CINEM-APLICAR] 13: 6 no Escudo, 7 no Casco, Depósito em chamas (${JSON.stringify(cineDeAtor(presa).avarias)})`);
 
-// ── [CINEM-FIM] ──
+// ── [CINEM-FIM] o fim da rodada, pelo rastreador ──
 cineDeAtor(presa).prioridade = ["escudos"];
 roteiro["1d6"] = [3];
 roteiro["1d10"] = [7];
-await PARA_TESTE.fimDaRodada(ctxDe(presa));
+confere(await fecharRodadaDaNave(presa, { combate: "c1", rodada: 2 }) === true, "[CINEM-FIM] fecha a rodada 2");
 confere(presa.system.hp.value === 30, `[CINEM-FIM] o incêndio cobra 3 do Casco: ${presa.system.hp.value}`);
 confere(cineDeAtor(presa).escudo.atual === 7, `[CINEM-FIM] Prioridade Escudos recarrega 7: ${cineDeAtor(presa).escudo.atual}`);
 confere(!(cineDeAtor(presa).prioridade ?? []).length && !Object.keys(cineDeAtor(presa).vantagens ?? {}).length,
   "[CINEM-FIM] Prioridade e Vantagens saem");
 confere(cineDeAtor(presa).firmar?.rodada === 2, "[CINEM-FIM] o Firmar da rodada 2 fica para o CP até o turno da nave na 3");
 const hpAntes = presa.system.hp.value;
-avisos.length = 0;
-await PARA_TESTE.fimDaRodada(ctxDe(presa));
-confere(presa.system.hp.value === hpAntes && avisos.some(([k]) => k === "warn"), "[CINEM-FIM] o segundo clique na mesma rodada não cobra de novo");
+confere(await fecharRodadaDaNave(presa, { combate: "c1", rodada: 2 }) === false && presa.system.hp.value === hpAntes, "[CINEM-FIM] a mesma rodada não se fecha duas vezes");
 {
-  // clicar DEPOIS de avançar o rastreador fecha a rodada que ficou aberta
-  const atrasada = novaNave({ id: "atr", nome: "Atrasada", camaras: { deposito: "instalada" } });
-  cineDeAtor(atrasada).giro = { valor: 4, rodada: 2 };
-  cineDeAtor(atrasada).fimRodada = 1;
-  cineDeAtor(atrasada).avarias = { deposito: { estado: "avaria", desde: 2 } };
-  combate(3, [atrasada]);
-  globalThis.game.combat.turn = 0; // o Mestre avançou: a rodada 3 está no primeiro turno
-  roteiro["1d6"] = [2];
-  await PARA_TESTE.fimDaRodada(ctxDe(atrasada));
-  confere(cineDeAtor(atrasada).fimRodada === 2 && atrasada.system.hp.value === 38, "[CINEM-FIM] atrasado: fecha a rodada 2, que estava aberta, e cobra o fogo");
-  confere(cineDeAtor(atrasada).giro?.valor === 4, "[CINEM-FIM] atrasado: o Giro da rodada 2 continua valendo na 3");
-  roteiro["1d6"] = [2];
-  globalThis.game.combat.turn = 4; // fim da rodada 3
-  await PARA_TESTE.fimDaRodada(ctxDe(atrasada));
-  confere(cineDeAtor(atrasada).fimRodada === 3 && atrasada.system.hp.value === 36, "[CINEM-FIM] e no fim da 3 o botão fecha a 3, sem travar");
+  // o gancho: só o Mestre ativo fecha, só ao AVANÇAR, uma vez por ator, e o Evento sai uma vez
+  const a = novaNave({ id: "a", nome: "Nave A", camaras: { deposito: "instalada" } });
+  const b = novaNave({ id: "b", nome: "Nave B" });
+  cineDeAtor(a).avarias = { deposito: { estado: "avaria", desde: 3 } };
+  const naoNave = { id: "p", name: "Piloto", flags: {}, system: {} };
+  const comb = { id: "cX", previous: { round: 3 }, combatants: [{ actor: a }, { actor: a }, { actor: b }, { actor: naoNave }] };
+  const antesMsgs = mensagens.length;
+  globalThis.game.user = { ...globalThis.game.user, id: "jogador", isGM: false };
+  globalThis.game.users = { activeGM: { id: "mestre" } };
+  roteiro["1d6"] = [2, 2];
+  confere(await fecharRodadaPeloRastreador(comb, { round: 4 }) === 0 && a.system.hp.value === 40, "[CINEM-FIM] no cliente de um jogador, o gancho não fecha nada");
+  globalThis.game.user = { ...globalThis.game.user, id: "mestre", isGM: true };
+  confere(await fecharRodadaPeloRastreador(comb, { round: 3 }) === 0, "[CINEM-FIM] voltar o rastreador não fecha nada");
+  confere(await fecharRodadaPeloRastreador(comb, { round: 4 }) === 2, "[CINEM-FIM] o Mestre avança da 3 para a 4: fecha a 3 das duas naves");
+  confere(a.system.hp.value === 38 && cineDeAtor(a).fimRodada?.combate === "cX" && cineDeAtor(a).fimRodada?.rodada === 3,
+    `[CINEM-FIM] a nave A (dois tokens) cobra o fogo uma vez só: ${a.system.hp.value}`);
+  confere(mensagens.slice(antesMsgs).some((m) => /Tensão chega a \+3/.test(m.content)), "[CINEM-FIM] a Tensão chega a +3 na rodada 4: um lembrete de Evento");
+  confere(await fecharRodadaDoCombate(comb, 3) === 0, "[CINEM-FIM] a rodada 3 já foi fechada neste combate");
+  // um combate novo não é travado pela marca do anterior
+  cineDeAtor(b).fimRodada = { combate: "cX", rodada: 3 };
+  confere(await fecharRodadaDaNave(b, { combate: "cY", rodada: 1 }) === true, "[CINEM-FIM] a marca de outro combate não trava a rodada 1 do seguinte");
+  globalThis.game.users = undefined;
   combate(2, [presa, thw]);
 }
 confere(cineDeAtor(presa).avarias?.deposito?.estado === "avaria", "[CINEM-FIM] o incêndio continua até alguém apagar");

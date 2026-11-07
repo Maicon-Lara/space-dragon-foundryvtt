@@ -21,14 +21,14 @@ import {
   EXPLOSAO_DO_ARSENAL, chanceDoDuelo, grauDoTeste, iniciativaDoDuelo, termosCine, atingeCamara,
   camaraDoD12, golpeNaCamara, registrarGolpe, penalidadesDeCamara, fimDaRodadaCine,
   depoisDoCombate, recarregar, podeRepararAgora, cascoAbaixoDaMetade, aplicarDanoCine, tensaoDaRodada,
-  pedeEvento, D12, rodadaAFechar,
+  pedeEvento, D12, precisaFechar, rodadaQueAcabou,
 } from "./nave-cinematico.js";
 import {
   cineDe, aplicarEscala, limparRodadaCine, acaoCine, escolherPrioridade, prioridadeConta,
   cpCine, formulaDoDanoCine, ajusteDaArmaCine, aplicarImpactoCine, marcarTurno, normalizarEscudo,
   adicionarVantagem, vantagensContra, podeManobrar, firmouNestaRodada, guardarPvDoLivro,
   CLASSE_CINE_ACAO, CLASSE_CINE_CAMPO, CLASSE_CINE_DUELO, CLASSE_CINE_VANTAGEM,
-  CLASSE_CINE_PRIORIDADE, CLASSE_CINE_RESOLVER, CLASSE_CINE_FIM, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
+  CLASSE_CINE_PRIORIDADE, CLASSE_CINE_RESOLVER, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
   CLASSE_CINE_LIVRO,
 } from "./nave-cine-ficha.js";
 import { naveDe, estadoDoComodo, updateDaNave, tamanhoDaNave } from "./nave-pc-dados.js";
@@ -141,7 +141,7 @@ export function ligarCine(raiz, ctx) {
   raiz.addEventListener("click", async (ev) => {
     const alvoDoClique = ev.target?.closest?.(
       [CLASSE_CINE_ACAO, CLASSE_CINE_DUELO, CLASSE_CINE_VANTAGEM, CLASSE_CINE_PRIORIDADE,
-        CLASSE_CINE_RESOLVER, CLASSE_CINE_FIM, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
+        CLASSE_CINE_RESOLVER, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
         CLASSE_CINE_LIVRO].map((c) => `.${c}`).join(","),
     );
     if (!alvoDoClique) return;
@@ -156,7 +156,6 @@ export function ligarCine(raiz, ctx) {
       if (cl.contains(CLASSE_CINE_VANTAGEM)) return await vantagem(ctx, alvoDoClique.dataset.vantagem);
       if (cl.contains(CLASSE_CINE_PRIORIDADE)) return await prioridade(ctx, alvoDoClique.dataset.prioridade);
       if (cl.contains(CLASSE_CINE_RESOLVER)) return await acao(ctx, "resolver", { camara: alvoDoClique.dataset.camara });
-      if (cl.contains(CLASSE_CINE_FIM)) return await fimDaRodada(ctx);
       if (cl.contains(CLASSE_CINE_ENCERRAR)) return await encerrar(ctx);
       if (cl.contains(CLASSE_CINE_ACAO)) return await acao(ctx, alvoDoClique.dataset.acao);
     } catch (e) {
@@ -603,17 +602,18 @@ export async function aplicarImpactoCineDaMensagem(msg, imp) {
 
 /* ── O FIM DA RODADA E O FIM DO COMBATE ──────────────────────────────────── */
 
-async function fimDaRodada(ctx) {
-  const ator = ctx.ator;
+/**
+ * Fecha a `rodada` do `combate` para uma nave: cobra incêndios e brechas,
+ * espalha o fogo, recarrega pela Prioridade Escudos e limpa o que valia até o
+ * fim da rodada. Uma vez por rodada e por combate (`precisaFechar`).
+ *
+ * Grava direto no ator (não há ficha aberta: quem chama é o rastreador).
+ * Devolve true se fechou.
+ */
+export async function fecharRodadaDaNave(ator, { combate, rodada }) {
   const nave = naveDe(ator, ID);
   const cine = cineDe(nave);
-  // A última rodada ainda aberta: se o rastreador já avançou, fecha a anterior.
-  // Uma vez por rodada — o segundo clique cobraria o fogo de novo.
-  const inicio = Number(globalThis.game?.combat?.turn) === 0;
-  const rodada = rodadaAFechar(cine.fimRodada, rodadaAtual(), { inicio });
-  if (rodada === null) {
-    return globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.fimJaCobrado", { rodada: rodadaAtual() }));
-  }
+  if (!precisaFechar(cine.fimRodada, combate, rodada)) return false;
   const f = fimDaRodadaCine(cine.avarias, { rodada, estados: estadosDasCamaras(nave) });
   const rolls = [];
   const linhas = [];
@@ -645,13 +645,57 @@ async function fimDaRodada(ctx) {
   }
   if (pen.semEscudo) escudo = 0;
 
-  const novo = limparRodadaCine({ ...cine, avarias: f.avarias, escudo: { ...cine.escudo, atual: escudo } }, rodada);
-  await ctx.gravar(nave, { ...nave, cine: novo });
+  const novo = limparRodadaCine({ ...cine, avarias: f.avarias, escudo: { ...cine.escudo, atual: escudo } }, rodada, { combate });
   const hp = Number(ator.system?.hp?.value) || 0;
-  if (dano) await ator.update({ "system.hp.value": hp - dano });
-  if (pedeEvento(rodada + 1)) linhas.push(`<strong>${txt("spacedragon.cine.fimRodada.evento", { tensao: tensaoDaRodada(rodada + 1) })}</strong>`);
-  if (!linhas.length) linhas.push(txt("spacedragon.cine.fimRodada.limpa"));
-  await cartao(ator, txt("spacedragon.cine.cartao.fimRodada", { nave: esc(ator.name), rodada }), linhas, { rolls });
+  const mud = updateDaNave(nave, { ...nave, cine: novo }, ID) ?? {};
+  if (dano) mud["system.hp.value"] = hp - dano;
+  if (Object.keys(mud).length) await ator.update(mud);
+  // a nave sem nada a cobrar não enche o chat: só quem tem fogo, brecha ou recarga
+  if (linhas.length) await cartao(ator, txt("spacedragon.cine.cartao.fimRodada", { nave: esc(ator.name), rodada }), linhas, { rolls });
+  return true;
+}
+
+/**
+ * Fecha a rodada para todas as naves do combate, uma vez por ator (dois tokens
+ * vinculados do mesmo ator são a mesma nave). O lembrete de Evento sai uma vez.
+ */
+export async function fecharRodadaDoCombate(combate, rodada) {
+  const vistos = new Set();
+  let fechou = 0;
+  for (const c of combate?.combatants ?? []) {
+    const ator = c?.actor;
+    if (!ator || !ehNave(ator)) continue;
+    const chave = ator.uuid ?? ator.id;
+    if (vistos.has(chave)) continue;
+    vistos.add(chave);
+    if (await fecharRodadaDaNave(ator, { combate: combate.id, rodada })) fechou += 1;
+  }
+  if (fechou && pedeEvento(rodada + 1)) {
+    await globalThis.ChatMessage?.create?.({
+      content: `<div class="spacedragon-cartao sd-cine"><p><strong>${txt("spacedragon.cine.fimRodada.evento", { tensao: tensaoDaRodada(rodada + 1) })}</strong></p></div>`,
+    });
+  }
+  return fechou;
+}
+
+/**
+ * O gancho do rastreador: quando o Mestre AVANÇA a rodada, fecha a que acabou.
+ *
+ * Roda num cliente só — o do Mestre ativo —, senão cada cliente aberto cobraria
+ * o fogo de novo. `anterior` é a rodada antes da mudança (`combat.previous`).
+ */
+export async function fecharRodadaPeloRastreador(combate, mudanca) {
+  const jogo = globalThis.game;
+  const mestre = jogo?.users?.activeGM ?? null;
+  if (mestre ? mestre.id !== jogo?.user?.id : !jogo?.user?.isGM) return 0;
+  const rodada = rodadaQueAcabou(mudanca?.round, combate?.previous?.round);
+  if (rodada === null) return 0;
+  try {
+    return await fecharRodadaDoCombate(combate, rodada);
+  } catch (e) {
+    console.error(`${ID} | fechar a rodada das naves`, e);
+    return 0;
+  }
 }
 
 async function encerrar(ctx) {
@@ -690,4 +734,4 @@ async function encerrar(ctx) {
  * As ações internas, para o teste com um Foundry de brinquedo
  * (tools/teste-nave-cine-mesa.mjs). A ficha não usa: ela entra por `ligarCine`.
  */
-export const PARA_TESTE = { duelo, acao, vantagem, prioridade, fimDaRodada, encerrar, aplicarEscalaDaNave, voltarAoLivro };
+export const PARA_TESTE = { duelo, acao, vantagem, prioridade, encerrar, aplicarEscalaDaNave, voltarAoLivro };

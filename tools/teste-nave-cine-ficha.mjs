@@ -31,7 +31,7 @@ import {
   cpCine, formulaDoDanoCine, ajusteDaArmaCine, aplicarImpactoCine, painelCinematico,
   vigenteAteProximoTurno, firmouNestaRodada, marcarTurno, normalizarEscudo, adicionarVantagem,
   vantagensContra, podeManobrar, guardarPvDoLivro, CLASSE_CINE_LIVRO,
-  MARCA_CINE, CLASSE_CINE_RESOLVER, CLASSE_CINE_DUELO, CLASSE_CINE_FIM, CLASSE_CINE_ESCALA,
+  MARCA_CINE, CLASSE_CINE_RESOLVER, CLASSE_CINE_DUELO, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
 } from "../spacedragon-module/module/nave-cine-ficha.js";
 import { porPainelDaTripulacao, porPainelDasCamadas, MARCA_TRIPULACAO } from "../spacedragon-module/module/nave-pc-ficha.js";
 import { naveVazia } from "../spacedragon-module/module/nave-pc-dados.js";
@@ -108,8 +108,8 @@ const sujo = {
   vantagens: { t1: { chaves: ["mira"] } }, armasUsadas: 1,
   interferencia: { alvo: "t2", ate: 3 }, supressao: { alvo: "t3", ate: 2 },
 };
-const limpo = limparRodadaCine(sujo, 2);
-confere(!limpo.prioridade.length && !limpo.forcado && !Object.keys(limpo.vantagens).length && limpo.armasUsadas === 0 && limpo.fimRodada === 2,
+const limpo = limparRodadaCine(sujo, 2, { combate: "c1" });
+confere(!limpo.prioridade.length && !limpo.forcado && !Object.keys(limpo.vantagens).length && limpo.armasUsadas === 0 && limpo.fimRodada?.combate === "c1" && limpo.fimRodada?.rodada === 2,
   "[CINEF-ESTADO] o fim da rodada apaga Prioridade, reator, Vantagens e a Prioridade Armas gasta, e marca a rodada cobrada");
 confere(limpo.firmar?.rodada === 2, "[CINEF-ESTADO] o Firmar desta rodada passa para a próxima (até o turno da nave)");
 confere(limpo.giro === null, "[CINEF-ESTADO] o Giro da rodada anterior já não vale");
@@ -192,7 +192,9 @@ confere(html.includes('value="Talik Secura"') && html.includes('value="Mesla"'),
 confere((html.match(/data-posto="/g) ?? []).length >= 5, "[CINEF-PAINEL] cinco postos");
 confere(html.includes(`class="${CLASSE_CINE_RESOLVER}" data-camara="deposito"`), "[CINEF-PAINEL] a avaria do Depósito tem Resolver");
 confere(!html.includes(`data-camara="ponte"`) && html.includes("FORA"), "[CINEF-PAINEL] a Ponte Fora não tem Resolver e aparece como FORA");
-for (const c of [CLASSE_CINE_DUELO, CLASSE_CINE_FIM, CLASSE_CINE_ESCALA]) confere(html.includes(`class="${c}"`), `[CINEF-PAINEL] botão ${c}`);
+for (const c of [CLASSE_CINE_DUELO, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA]) confere(html.includes(`class="${c}"`), `[CINEF-PAINEL] botão ${c}`);
+confere(!html.includes("sd-cine-fim\"") && /automático/.test(html), "[CINEF-PAINEL] sem botão de fim da rodada: o painel diz que é automático");
+confere(cineDe({ cine: { fimRodada: 3 } }).fimRodada === null, "[CINEF-ESTADO] a marca antiga (só o número) não conta: sem combate, nada trava");
 const semCombate = painelCinematico(ator, { ...naveVazia() }, { rodada: null });
 confere(!semCombate.includes("Tensão"), "[CINEF-PAINEL] fora de combate, sem Tensão");
 confere(semCombate.includes("Nenhuma avaria"), "[CINEF-PAINEL] sem avarias, o painel diz");
