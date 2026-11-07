@@ -56,7 +56,10 @@ import { aplicarAcao, ehAutomatica, limparFimDaRodada } from "./nave-acoes.js";
 import { CAMARAS } from "./camaras.js";
 import {
   combateCompilado, naveModular, camadaLigada, danoPorMargem, escudoComoReserva, multiplicadorDeDano,
+  combateCinematico,
 } from "./opcoes.js";
+import { painelCinematico, MARCA_CINE } from "./nave-cine-ficha.js";
+import { ligarCine, dispararCine, aplicarImpactoCineDaMensagem } from "./nave-cine-acoes.js";
 import { dadosExtrasDeDano } from "./tripulacao.js";
 import {
   AVARIAS, CRITICO_T10_6, FALHA_T10_6, AVARIA_POR_DANO, causaAvaria, cpDoAlvo, termosDoAtaque,
@@ -449,6 +452,15 @@ export function porPainelDaTripulacao(raiz, ator) {
               raiz.querySelector('[data-tab="spells"]:not(nav [data-tab="spells"])');
   if (!aba) return false;
   aba.querySelector(`.${MARCA_TRIPULACAO}`)?.remove();
+  aba.querySelector(`.${MARCA_CINE}`)?.remove();
+  // o Combate Cinematográfico (opção, desligada por padrão) substitui os postos
+  // das Compiladas: os dois na mesma aba dariam duas regras para a mesma ação
+  if (combateCinematico()) {
+    aba.insertAdjacentHTML("afterbegin", painelCinematico(ator, naveDe(ator, ID), {
+      rodada: globalThis.game?.combat?.round ?? null, classePosto: CLASSE_POSTO,
+    }));
+    return true;
+  }
   const html = combateCompilado() ? painelDaTripulacao(ator, naveDe(ator, ID)) : painelDoLivro();
   aba.insertAdjacentHTML("afterbegin", html);
   return true;
@@ -519,8 +531,9 @@ export function porPainelDasCamadas(raiz, ator) {
   if (!aba) return false;
   aba.querySelector(`.${MARCA_CAMADAS}`)?.remove();
   // as camadas estendem os postos do §7: sem as Regras Compiladas, não há o
-  // que estender, mesmo que a camada esteja ligada
-  if (!combateCompilado()) return false;
+  // que estender, mesmo que a camada esteja ligada — e o Cinematográfico tem
+  // a própria Prioridade e o próprio fim de rodada
+  if (!combateCompilado() || combateCinematico()) return false;
   const nave = naveDe(ator, ID);
   const html = painelDasCamadas(nave, {
     tamanho: nave?.tamanho,
@@ -664,6 +677,7 @@ async function aplicarImpactoDaMensagem(msg) {
     globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.jaAplicado"));
     return;
   }
+  if (imp.modo === "cine") return aplicarImpactoCineDaMensagem(msg, imp);
   const doc = await globalThis.fromUuid?.(imp.alvo);
   const ator = doc?.actor ?? doc;
   if (!ator?.update) return;
@@ -1179,7 +1193,8 @@ export function registrarFichaDeNavePC() {
      * O disparo: «1d20 + BA da nave + BA à distância de quem opera a arma», mais
      * o Computador Balístico e a faixa de alcance (regra da casa).
      */
-    async #disparar({ item, arma }) {
+    async #disparar({ item, chave, arma }) {
+      if (combateCinematico()) return dispararCine(this.#contextoCine(), { item, chave, arma });
       const ator = this.actor;
       const nave = naveDe(ator, ID);
       const alvo = [...(globalThis.game?.user?.targets ?? [])][0] ?? null;
@@ -1618,10 +1633,21 @@ export function registrarFichaDeNavePC() {
         this.#ligarAcoes(raiz);
         this.#ligarDisparo(raiz);
         this.#ligarXP(raiz);
+        ligarCine(raiz, this.#contextoCine());
       } catch (e) {
         console.warn(`${ID} | não pude preparar a Ficha de Nave`, e);
       }
       this.#devolverFoco(raiz, antes);
+    }
+
+    /** O que o Combate Cinematográfico precisa da ficha (nave-cine-acoes.js). */
+    #contextoCine() {
+      return {
+        ator: this.actor,
+        token: this.token ?? null,
+        editavel: () => Boolean(this.isEditable),
+        gravar: (antes, depois) => this.#gravarNave(antes, depois),
+      };
     }
 
     /** Qual campo nosso estava em foco, e onde o cursor estava nele. */
