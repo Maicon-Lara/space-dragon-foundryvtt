@@ -45,6 +45,10 @@ const linhasDeXP = Object.entries(TIPOS)
   .map(([chave, t]) => `<tr><td>${t.rotulo}</td><td>${XP_POR_TIPO[chave].toLocaleString("pt-BR")}</td></tr>`)
   .join("");
 
+/** Linhas de tabela a partir de listas de células (as páginas novas usam assim). */
+const linhasDaTabela = (linhas) =>
+  linhas.map((l) => `<tr>${l.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("");
+
 const tab = (cab, linhas) =>
   `<table><thead><tr>${cab.map((c) => `<th>${c}</th>`).join("")}</tr></thead>` +
   `<tbody>${linhas}</tbody></table>`;
@@ -421,6 +425,76 @@ Máquinas. A Engenharia pode <strong>Ventilar</strong> (−2).</p>
 do cartão do Qualidade de Vida com estes valores, e a XP vai para a tripulação. O Mestre
 troca o valor de uma nave no Painel de Voo dela.</p>
 ${tab(["tipo", "XP"], linhasDeXP)}
+`,
+    },
+    // 1.33: o Combate Cinematográfico, também no fim — mesma razão do Guia
+    // rápido: a página nova não pode trocar o id das que já existem.
+    {
+      title: "Combate Cinematográfico (casa)",
+      content: `
+<p><strong>Regra da casa, não é do livro.</strong> Liga-se em <em>Configurações › Space Dragon ›
+Combate Cinematográfico de naves</em>, e nasce desligada. Ligada, substitui os postos das Regras
+Compiladas, as camadas, o dano por margem e o escudo-reserva. A escala guarda o PV que a nave tinha:
+antes de desligar a opção, o botão <em>Voltar ao PV do livro</em> o devolve.</p>
+
+<h2>Por que existe</h2>
+<p>Com os PV do livro, uma Espaçonave particular (3d100) levava umas 27 rodadas para cair diante de
+um disparador laser (2d10). O Cinematográfico troca a <strong>escala</strong>, não as armas.</p>
+
+<h2>Escudo e Casco</h2>
+${tab(["tipo", "Escudo*", "Casco", "Agilidade", "Recarga"], linhasDaTabela([
+  ["Caça", "—", "20", "+20%", "—"],
+  ["Cápsula", "—", "15", "+20%", "—"],
+  ["Escolta", "—", "30", "+20%", "—"],
+  ["Espaçonave particular", "15", "40", "+0%", "1d10"],
+  ["Cargueiro / Transuniversal", "30", "80", "−20%", "2d10"],
+  ["Cruzador", "60", "150", "−40%", "3d10"],
+  ["Nave-mãe", "60", "200", "−40%", "3d10"],
+]))}
+<p>* Só com Escudo de força instalado. CP, BA e JP são os da T10-1. O <strong>Casco é o PV da
+ficha</strong>, e a barra do token desce com ele. Abaixo da metade do Casco, −20% em todo Pilotar.
+Na aba Tripulação, o botão <em>Aplicar escala do tipo</em> põe tudo isso, cheio.</p>
+
+<h2>A rodada</h2>
+<ol>
+<li><strong>Tensão:</strong> +1 em todos os ataques por rodada a partir da 2ª, até +5, para os dois
+lados. Ao chegar a +3 e a +5, o Mestre rola um Evento.</li>
+<li><strong>Duelo de pilotos:</strong> cada piloto rola Pilotar + Agilidade. O grau é o da T10-5
+(01 crítico, até 20 ótimo, sucesso, falha, acima de 80 grave, 100 desastre) e dá o modificador
+de JP da rodada. Vence o grau maior; no empate, a nave menor; depois, o grupo. O botão
+<em>Duelo de pilotos</em> grava a iniciativa nessa ordem. O vencedor escolhe uma
+<strong>Vantagem</strong>: Mira (+2), Na cauda (−2 no vencido), Bloqueio ou Posição.</li>
+<li><strong>Turnos:</strong> cada jogador age no seu posto (Leme, Artilharia, Engenharia,
+Sensores, Comando), com quatro ações por posto. Quem sai do posto para apagar fogo deixa o
+posto vazio.</li>
+<li><strong>Fim da rodada</strong> (automático, quando o Mestre avança o rastreador):
+incêndios e brechas cobram, o fogo espalha, a Prioridade Escudos recarrega, e o que vale até o
+fim da rodada sai. Firmar e Giro evasivo duram até o próximo turno da nave. Quem fecha é o
+cliente do Mestre: sem Mestre conectado, a rodada não é cobrada. Pular rodadas editando o número
+à mão cobra só a última; a última rodada do combate é cobrada no <em>Encerrar combate</em>, que é
+do Mestre e vem antes de apagar o combate do rastreador.</li>
+</ol>
+
+<h2>O tiro</h2>
+<p>1d20 + BA da nave + Computador Balístico + artilheiro + Tensão + Vantagem e Firmar ≥ CP. O dano
+vai <strong>primeiro ao Escudo</strong>, depois ao Casco. Se chega ao Casco com <strong>margem de 5
+ou mais</strong> (2+ contra alvo travado, sempre no 20 natural, ou escolhida com <em>Mirar
+sistema</em>), rola-se <strong>d12</strong> na ordem das doze câmaras:</p>
+${tab(["família", "câmaras (d12)", "efeito"], linhasDaTabela([
+  ["Sistema", "1 Ponte · 3 Máquinas · 6 Arsenal · 12 Saída", "penalidade mecânica: −2 no ataque, sem Prioridade, arma parada, cápsulas travadas"],
+  ["Incêndio", "2 Aposentos · 4 Depósito · 5 Refeitório · 7 Ala · 8 Laboratório", "1d6 (Ala e Laboratório 1d10) no Casco por rodada; 2 rodadas sem apagar, espalha"],
+  ["Brecha", "9 Acoplagem · 10 Despressurização · 11 Corredores", "1d4 por rodada; só com traje"],
+]))}
+<p>Câmara ausente: +1d10 no Casco. A mesma câmara de novo: <strong>Fora</strong>. Quem estiver na
+câmara faz JPR ou leva 1d6. Metralhadora: uma rolagem de 3d10 (+2 contra nave pequena); canhão de
+energia: −4 contra nave pequena.</p>
+
+<h2>Depois do combate</h2>
+<p>O botão <em>Encerrar combate</em>: câmara Fora fica <strong>danificada</strong> (conserto pela
+T10-2); avaria ainda ativa pede um último teste; o Escudo volta cheio.</p>
+
+<p class='nota-casa'><em>Ainda não automatizado nesta versão: ameaças com esquadrão e seções,
+Talentos e Manias de nave, a tabela de Eventos e a fuga.</em></p>
 `,
     },
   ],

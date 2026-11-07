@@ -79,6 +79,16 @@ export const naveModular = () => regraDeNave("naveModular");
 export const danoPorMargem = () => regraDeNave("naveDanoPorMargem");
 export const escudoComoReserva = () => regraDeNave("naveEscudoReserva");
 
+/* ── O COMBATE CINEMATOGRÁFICO (1.33) ────────────────────────────────────────
+ *
+ * Regra da casa (nave-cinematico.js). Ao contrário das de cima, nasce
+ * DESLIGADA: ela troca a escala inteira do combate (Escudo e Casco no lugar do
+ * PV de dados), e uma atualização não pode fazer isso com a nave de quem não
+ * pediu. Fora do Foundry também conta como desligada, para os testes que já
+ * existiam continuarem descrevendo a ficha de sempre.
+ */
+export const combateCinematico = () => camadaLigada("naveCinematico");
+
 export function multiplicadorDeDano() {
   try {
     const v = Number(globalThis.game?.settings?.get?.(ID, "naveMultiplicadorDano"));
@@ -89,7 +99,7 @@ export function multiplicadorDeDano() {
 }
 
 /**
- * As cinco opções de nave. `aoMudar` redesenha as Fichas de Nave abertas: quem
+ * As opções de nave. `aoMudar` redesenha as Fichas de Nave abertas: quem
  * troca a opção quer ver o efeito sem fechar a ficha.
  *
  * As camadas existiam no código e eram lidas por `camadaLigada`, mas nunca
@@ -132,6 +142,10 @@ export function registrarOpcoesDeNave(aoMudar = () => {}) {
     choices: { 1: "×1", 2: "×2", 3: "×3" },
     default: 1,
     onChange: () => aoMudar(),
+  });
+  reg("naveCinematico", false, {
+    name: "spacedragon.opcao.naveCinematico.nome",
+    hint: "spacedragon.opcao.naveCinematico.dica",
   });
   reg("camadaEnergia", false, {
     name: "spacedragon.opcao.camadaEnergia.nome",

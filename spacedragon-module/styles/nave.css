@@ -470,3 +470,43 @@
   font-size: 10px;
   opacity: .7;
 }
+
+/* ── O COMBATE CINEMATOGRÁFICO (opção de mundo, 1.33) ──────────────────────
+ *
+ * O painel reaproveita o desenho dos postos das Compiladas, para a mesa que
+ * troca de regra não ter de reaprender a aba. O que é dele: as trilhas de
+ * Escudo e Casco, o duelo, a Prioridade e a lista de avarias a bordo. */
+.spacedragon-nave-pc .sd-painel-cine h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0 0 6px;
+}
+.spacedragon-nave-pc .sd-painel-cine .cine-tensao { font-size: 11px; font-weight: 700; }
+.spacedragon-nave-pc .sd-painel-cine .cine-trilhas,
+.spacedragon-nave-pc .sd-painel-cine .cine-duelo,
+.spacedragon-nave-pc .sd-painel-cine .cine-prioridade,
+.spacedragon-nave-pc .sd-painel-cine .cine-avarias,
+.spacedragon-nave-pc .sd-painel-cine .cine-rodada {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin: 0 0 8px;
+  font-size: 12px;
+}
+.spacedragon-nave-pc .sd-painel-cine .cine-trilha { font-weight: 700; }
+.spacedragon-nave-pc .sd-painel-cine .sd-cine-campo { width: 6ch; padding: 1px 4px; font-size: 12px; }
+.spacedragon-nave-pc .sd-painel-cine .cine-sem { opacity: .7; font-style: italic; }
+.spacedragon-nave-pc .sd-painel-cine button { min-width: max-content; padding: 0 7px; font-size: 11px; line-height: 20px; }
+.spacedragon-nave-pc .sd-painel-cine .sd-cine-prioridade.ativa { font-weight: 700; outline: 2px solid; }
+.spacedragon-nave-pc .sd-painel-cine .posto { margin: 0 0 6px; padding: 5px 8px; border-left: 3px solid; border-radius: 0 3px 3px 0; }
+.spacedragon-nave-pc .sd-painel-cine .posto-cabeca { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.spacedragon-nave-pc .sd-painel-cine .sw-posto-nome { flex: 1 1 10ch; min-width: 8ch; font-size: 12px; padding: 1px 4px; border: 1px solid; border-radius: 3px; }
+.spacedragon-nave-pc .sd-painel-cine .posto-acoes { display: flex; flex-wrap: wrap; gap: 4px 10px; margin: 4px 0 0; padding: 0; list-style: none; font-size: 11px; }
+.spacedragon-nave-pc .sd-painel-cine .acao-texto { opacity: .8; }
+.spacedragon-nave-pc .sd-painel-cine .cine-avarias ul { width: 100%; margin: 2px 0 0; padding-left: 16px; }
+.spacedragon-nave-pc .sd-painel-cine .cine-avaria.fora { font-weight: 700; }
+.spacedragon-nave-pc .sd-painel-cine .cine-avaria.familia-incendio { list-style: "🔥 "; }
+.spacedragon-nave-pc .sd-painel-cine .cine-avaria.familia-brecha { list-style: "💨 "; }
+.spacedragon-nave-pc .sd-painel-cine .cine-avaria.familia-sistema { list-style: "⚡ "; }

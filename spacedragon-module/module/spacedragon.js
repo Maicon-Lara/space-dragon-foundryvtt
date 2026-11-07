@@ -70,7 +70,8 @@ import { migrarNavesNoReady, migrarNaves, navesPorMigrar, porMigrar } from "./na
 import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaRodada } from "./ordem-inversao.js";
 
 import { t as txt } from "./i18n.js";
-import { registrarOpcoesDeNave } from "./opcoes.js";
+import { registrarOpcoesDeNave, combateCinematico } from "./opcoes.js";
+import { fecharRodadaPeloRastreador, guardarRodadaAntes } from "./nave-cine-acoes.js";
 import { ligarIniciativaDasNaves } from "./nave-iniciativa.js";
 import { ajustarTokensNoReady } from "./nave-token.js";
 
@@ -191,6 +192,18 @@ Hooks.once("ready", () => {
   passo("botão de criar nave", () => ligarBotaoDeNovaNave());
   // o botão "Aplicar" dos cartões de disparo, para o Mestre (nave-pc-ficha.js)
   passo("aplicar disparo no alvo", () => ligarAplicarImpacto());
+  // O Combate Cinematográfico na virada da rodada: o Mestre ativo fecha a
+  // rodada que acabou para cada nave (fogo, brecha, recarga, limpeza), e as
+  // Fichas de Nave abertas redesenham a Tensão e o duelo da rodada nova.
+  passo("rodada nova no Combate Cinematográfico", () => {
+    // a rodada de ANTES, guardada nas opções da atualização (viajam a todos os
+    // clientes): não depender da ordem em que o Foundry preenche `previous`
+    Hooks.on("preUpdateCombat", (combate, mud, opcoes) => guardarRodadaAntes(combate, mud, opcoes));
+    Hooks.on("updateCombat", (combate, mud, opcoes) => {
+      if (!mud || !("round" in mud) || !combateCinematico()) return;
+      fecharRodadaPeloRastreador(combate, mud, opcoes).finally(() => redesenharFichasDeNave());
+    });
+  });
   passo("tipo de nave que vira nave", () => ligarTipoQueViraNave());
   // a migração das naves criadas quando as regras moravam no Star Wars: sem
   // ela a nave abre VAZIA, que parece apagada
