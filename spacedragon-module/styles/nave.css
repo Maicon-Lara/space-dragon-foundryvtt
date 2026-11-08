@@ -510,3 +510,9 @@
 .spacedragon-nave-pc .sd-painel-cine .cine-avaria.familia-incendio { list-style: "🔥 "; }
 .spacedragon-nave-pc .sd-painel-cine .cine-avaria.familia-brecha { list-style: "💨 "; }
 .spacedragon-nave-pc .sd-painel-cine .cine-avaria.familia-sistema { list-style: "⚡ "; }
+
+/* o tripulante vinculado ao posto (nave-tripulante.js) */
+.spacedragon-nave-pc .posto-ficha { font-size: 0.85em; opacity: 0.85; white-space: nowrap; }
+.spacedragon-nave-pc .posto-ficha.vinculado { opacity: 1; font-weight: bold; }
+.spacedragon-nave-pc .posto-ficha i { margin-right: 3px; }
+.spacedragon-nave-pc .sd-painel-cine .cine-lido strong { margin-left: 4px; }

@@ -6,7 +6,7 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 1.34.0 — os onze capítulos portados.** 463 documentos em dez
+> **Estado: 1.35.0 — os onze capítulos portados.** 463 documentos em dez
 > compêndios, agrupados na pasta **Space Dragon** da barra de compêndios: 42 de
 > classe, 10 de espécie, 64 de equipamento, 101 poderes mentais, 80 aparatos e
 > feitos, 59 criaturas e personagens de exemplo, 68 de naves, 4 tabelas de
@@ -113,10 +113,25 @@ e nada gravado na nave se perde: religar devolve tudo como estava.
 **O Combate Cinematográfico** (opção, desligada) nasceu do teste da mesa: com os PV do
 livro, uma Espaçonave particular levava umas 27 rodadas para cair. Ligada a opção, use o
 botão *Aplicar escala do tipo* na aba Tripulação de cada nave (Escudo e Casco cheios; o PV de
-antes fica guardado, e *Voltar ao PV do livro* o devolve), anote
-o Pilotar do Leme, e a rodada fica: **Duelo de pilotos** → turnos na ordem do rastreador →
+antes fica guardado, e *Voltar ao PV do livro* o devolve), arraste a ficha de cada
+personagem para o posto dele, e a rodada fica: **Duelo de pilotos** → turnos na ordem do rastreador →
 o Mestre avança, e o **fim da rodada** é cobrado sozinho. O disparo e o botão *Aplicar* do cartão já fazem a conta nova. As regras
 estão no journal do Cap. 10, página *Combate Cinematográfico (casa)*.
+
+**Os postos aceitam a ficha do personagem.** Arraste o personagem (da barra lateral
+ou do token) para o campo de um posto: a nave guarda o vínculo e lê da ficha, na hora
+de rolar, o que o posto precisa. O selo ao lado do nome mostra o que foi lido.
+
+| Posto | O que a nave lê da ficha |
+|---|---|
+| Leme | Pilotar Naves (%) pela tabela da classe (e da especialização); quem não tem, Operar Máquinas (%); sem nenhuma, vale o campo digitado na nave |
+| Artilharia | o BA à distância, no disparo |
+| Engenharia e quem resolver avaria | Operar Máquinas (%) do Técnico, ou teste de Intelecto (1d20) dos demais |
+| Ponte e Sala de Máquinas atingidas | o cartão pede a JPR de quem está no posto da câmara; a falha custa 1d6 de PV |
+
+Os cartões do duelo, do disparo e das ações saem em nome de quem está no posto. O
+nome digitado continua valendo para NPC ou droide sem ficha, e digitar outro nome
+solta o vínculo.
 
 **O alcance das armas de nave é regra da casa.** A T10-4 não dá alcance; o
 módulo usa três faixas, como as da T5-1 (média −2, longa −4):

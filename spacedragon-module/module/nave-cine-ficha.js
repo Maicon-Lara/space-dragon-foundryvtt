@@ -22,6 +22,7 @@ import {
   registrarGolpe as registrarGolpeLocal,
 } from "./nave-cinematico.js";
 import { POSTOS } from "./tripulacao.js";
+import { pilotarDe } from "./nave-tripulante.js";
 import { CAMARAS } from "./camaras.js";
 import { t as txt } from "./i18n.js";
 
@@ -187,7 +188,7 @@ export function comecarCombateCine(cine) {
     vantagens: { ...antes.vantagens, ...na1.vantagens },
   };
   const tem = juntas.prioridade.length || juntas.forcado || Object.keys(juntas.vantagens).length;
-  const limpo = { ...cine, porRodada: tem ? { 1: juntas } : {}, fimRodada: null, motores: null };
+  const limpo = { ...cine, porRodada: tem ? { 1: juntas } : {}, fimRodada: null, motores: null, consertoFalhou: null };
   for (const k of CAMPOS_ANTIGOS) delete limpo[k];
   return limpo;
 }
@@ -395,7 +396,20 @@ function campo(chave, valor, { tipo = "number", rotulo, dica = "" } = {}) {
   );
 }
 
-function blocoDasTrilhas(cine, hp) {
+/**
+ * O Pilotar do Leme: lido da ficha do piloto vinculado, quando ele pilota pela
+ * tabela; senão, o campo de sempre, para a mesa digitar.
+ */
+function campoDoPilotar(cine, leme) {
+  // só a ficha VINCULADA: um NPC digitado com o nome de um ator do mundo não
+  // tira da mesa o campo de digitar
+  const lido = leme?.ator && leme.vinculado ? pilotarDe(leme.ator) : null;
+  if (!lido) return campo("pilotar", cine.pilotar, { rotulo: txt("spacedragon.cine.pilotar"), dica: txt("spacedragon.cine.pilotarDica") });
+  return `<span class="cine-campo cine-lido" title="${esc(txt("spacedragon.tripulante.lidoDaFicha", { nome: leme.ator.name, fonte: lido.fonte }))}">` +
+    `${txt("spacedragon.cine.pilotar")} <strong>${lido.valor}</strong></span>`;
+}
+
+function blocoDasTrilhas(cine, hp, tripulacao = {}) {
   const casco = Number(hp?.value) || 0;
   const cascoMax = Number(hp?.max) || 0;
   return (
@@ -409,7 +423,7 @@ function blocoDasTrilhas(cine, hp) {
     `${txt("spacedragon.cine.casco")} <strong>${casco}</strong> / ${cascoMax}</div>` +
     campo("agilidade", cine.agilidade, { rotulo: txt("spacedragon.cine.agilidade") }) +
     campo("recarga", cine.recarga ?? "", { tipo: "text", rotulo: txt("spacedragon.cine.recarga") }) +
-    campo("pilotar", cine.pilotar, { rotulo: txt("spacedragon.cine.pilotar"), dica: txt("spacedragon.cine.pilotarDica") }) +
+    campoDoPilotar(cine, tripulacao.leme) +
     `<button type="button" class="${CLASSE_CINE_ESCALA}" title="${esc(txt("spacedragon.cine.escalaDica"))}">` +
     `${txt("spacedragon.cine.escala")}</button>` +
     (cine.pvLivro
@@ -460,7 +474,7 @@ function blocoDaPrioridade(cine, rodada) {
  * Os postos: o nome de quem senta (o mesmo campo dos postos de sempre, para o
  * gravar da ficha valer igual) e as quatro ações de cada um.
  */
-function blocoDosPostos(nave, classePosto) {
+function blocoDosPostos(nave, classePosto, tripulacao = {}) {
   const ocupantes = nave?.postos ?? {};
   return POSTOS.map((posto) => {
     const quem = String(ocupantes[posto.chave] ?? "").trim();
@@ -471,7 +485,9 @@ function blocoDosPostos(nave, classePosto) {
     return (
       `<div class="posto${quem ? " posto-ocupado" : ""}">` +
       `<div class="posto-cabeca"><strong>${posto.rotulo}</strong> ` +
-      `<input type="text" class="${classePosto}" data-posto="${posto.chave}" value="${esc(quem)}" placeholder="${esc(posto.quem)}">` +
+      `<input type="text" class="${classePosto}" data-posto="${posto.chave}" value="${esc(quem)}" placeholder="${esc(posto.quem)}" ` +
+      `title="${esc(txt("spacedragon.nave.tripulacao.dicaPosto"))}">` +
+      seloDoTripulante(tripulacao[posto.chave]) +
       `</div><ul class="posto-acoes">${acoes}</ul></div>`
     );
   }).join("");
@@ -497,8 +513,21 @@ function blocoDasAvarias(cine) {
   );
 }
 
+/**
+ * O selo ao lado do nome: a ficha está ligada, e o que a nave leu dela.
+ * Sem ficha (um nome só), nada.
+ */
+export function seloDoTripulante(t) {
+  if (!t?.ator) return "";
+  const dica = t.vinculado
+    ? txt("spacedragon.tripulante.vinculado", { nome: t.ator.name })
+    : txt("spacedragon.tripulante.peloNome", { nome: t.ator.name });
+  return `<span class="posto-ficha${t.vinculado ? " vinculado" : ""}" title="${esc(dica)}">` +
+    `<i class="fas fa-${t.vinculado ? "link" : "user"}"></i>${t.resumo ? ` ${esc(t.resumo)}` : ""}</span>`;
+}
+
 /** O painel inteiro, na aba de Tripulação. */
-export function painelCinematico(ator, nave, { rodada = null, classePosto = "sw-posto-nome" } = {}) {
+export function painelCinematico(ator, nave, { rodada = null, classePosto = "sw-posto-nome", tripulacao = {} } = {}) {
   const cine = cineDe(nave);
   const tensao = rodada ? tensaoDaRodada(rodada) : null;
   return (
@@ -506,10 +535,10 @@ export function painelCinematico(ator, nave, { rodada = null, classePosto = "sw-
     `<h3>${txt("spacedragon.cine.titulo")}` +
     (tensao !== null ? ` <span class="cine-tensao">${txt("spacedragon.cine.tensao", { rodada, tensao })}</span>` : "") +
     `</h3>` +
-    blocoDasTrilhas(cine, ator?.system?.hp) +
+    blocoDasTrilhas(cine, ator?.system?.hp, tripulacao) +
     blocoDoDuelo(cine, rodada) +
     blocoDaPrioridade(cine, rodada) +
-    blocoDosPostos(nave, classePosto) +
+    blocoDosPostos(nave, classePosto, tripulacao) +
     blocoDasAvarias(cine) +
     `<div class="cine-rodada">` +
     `<span class="cine-fim-auto">${txt("spacedragon.cine.fimAutomatico")}</span> ` +

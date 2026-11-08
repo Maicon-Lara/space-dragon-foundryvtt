@@ -71,7 +71,7 @@ import { registrarCombate, conferirCombate, avisarSeOrdemPerdida, ligarResumoDaR
 
 import { t as txt } from "./i18n.js";
 import { registrarOpcoesDeNave, combateCinematico } from "./opcoes.js";
-import { fecharRodadaPeloRastreador, guardarRodadaAntes } from "./nave-cine-acoes.js";
+import { fecharRodadaPeloRastreador, guardarRodadaAntes, ligarJprDaTripulacao } from "./nave-cine-acoes.js";
 import { ligarIniciativaDasNaves } from "./nave-iniciativa.js";
 import { ajustarTokensNoReady } from "./nave-token.js";
 
@@ -192,6 +192,7 @@ Hooks.once("ready", () => {
   passo("botão de criar nave", () => ligarBotaoDeNovaNave());
   // o botão "Aplicar" dos cartões de disparo, para o Mestre (nave-pc-ficha.js)
   passo("aplicar disparo no alvo", () => ligarAplicarImpacto());
+  passo("JPR da tripulação na câmara atingida", () => ligarJprDaTripulacao());
   // O Combate Cinematográfico na virada da rodada: o Mestre ativo fecha a
   // rodada que acabou para cada nave (fogo, brecha, recarga, limpeza), e as
   // Fichas de Nave abertas redesenham a Tensão e o duelo da rodada nova.

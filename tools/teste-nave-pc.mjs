@@ -448,7 +448,10 @@ function no(tag, name, filhos = []) {
     }
     return "";
   })();
-  confere(/delete postos\[/.test(corpo),
+  // a regra mora em digitarNoPosto (nave-tripulante.js), que o listener chama
+  const { digitarNoPosto } = await import("../spacedragon-module/module/nave-tripulante.js");
+  const vago = digitarNoPosto({ postos: { leme: "Talik" }, vinculos: { leme: "Actor.x" } }, "leme", "  ");
+  confere(/digitarNoPosto\(/.test(corpo) && !("leme" in vago.postos) && !("leme" in vago.vinculos),
     "o campo vazio não APAGA o posto — gravaria \"\" e a vaga contaria como ocupada");
   confere(/isEditable/.test(corpo),
     "o campo grava mesmo com a ficha travada — um jogador sem permissão mudaria a tripulação");

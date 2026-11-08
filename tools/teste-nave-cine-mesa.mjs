@@ -20,14 +20,21 @@
  *                      Prioridade e limpa a rodada;
  *   · [CINEM-ENCERRAR] Fora vira câmara danificada, e o Escudo volta cheio;
  *   · [CINEM-ACOES]    Reparo não repete em rodadas seguidas; Forçar com 1
- *                      avaria a Sala de Máquinas.
+ *                      avaria a Sala de Máquinas;
+ *   · [CINEM-TRIP]     o tripulante vinculado ao posto: o duelo usa o Pilotar
+ *                      da ficha do piloto e fala por ele; o disparo traz o BA
+ *                      do artilheiro; Resolver avaria rola o teste de quem
+ *                      tenta (falhou, a avaria fica; incêndio, sem teste); a
+ *                      câmara atingida pede JPR a quem está nela, e a falha
+ *                      custa 1d6 de PV.
  *
  *     node tools/teste-nave-cine-mesa.mjs
  */
 
 import { instalarLang } from "./lang-de-teste.mjs";
+import { pilotarDe, consertoDe } from "../spacedragon-module/module/nave-tripulante.js";
 import {
-  dispararCine, aplicarImpactoCineDaMensagem, PARA_TESTE, fecharRodadaDaNave, fecharRodadaDoCombate, fecharRodadaPeloRastreador,
+  dispararCine, aplicarImpactoCineDaMensagem, rolarJprDoTripulante, PARA_TESTE, fecharRodadaDaNave, fecharRodadaDoCombate, fecharRodadaPeloRastreador,
   guardarRodadaAntes, OPCAO_RODADA_ANTES, comecarCombate,
 } from "../spacedragon-module/module/nave-cine-acoes.js";
 
@@ -403,6 +410,145 @@ confere(!Object.keys(cineDeAtor(presa).avarias ?? {}).length && cineDeAtor(presa
 // ── [CINEM-LIVRO] voltar ao PV do livro ──
 await PARA_TESTE.voltarAoLivro(ctxDe(presa));
 confere(presa.system.hp.max === 187 && presa.system.hp.value === 187 && !cineDeAtor(presa).pvLivro?.max, `[CINEM-LIVRO] o PV do livro volta, e o backup sai (${JSON.stringify(presa.system.hp)})`);
+
+// ── [CINEM-TRIP] o tripulante vinculado ao posto ──
+{
+  globalThis.CONFIG ??= { sounds: {} };
+  const classe = (chassi) => ({ type: "class", name: `Algo — ${chassi}`, flags: { spacedragon: { chassi } } });
+  const hab = (name, habilidade = null) => ({ type: "class_ability", name, flags: habilidade ? { spacedragon: { habilidade } } : {} });
+  const pessoa = (id, name, items, system = {}) => ({
+    id, uuid: `Actor.${id}`, name, items, flags: {}, isOwner: true,
+    system: { level: 7, sabedoria: 12, bad: 3, jp: 12, jpd_total: 10, hp: { value: 30, max: 30 }, ...system },
+    async update(mud) { for (const [k, v] of Object.entries(mud)) setPath(this, k, v); return this; },
+  });
+  const talik = pessoa("talik", "Talik Secura", [classe("Cosmonauta"), hab("Pilotar Naves")], { sabedoria: 10 });
+  const md9 = pessoa("md9", "MD-9", [classe("Cientista"), hab("Operar e Consertar Máquinas", "Operar Máquinas")]);
+  const mesla = pessoa("mesla", "Mesla", [classe("Gatuno")], { bad: 7 });
+  const nt = novaNave({ id: "nt", nome: "Presa", camaras: { ponte: "instalada", maquinas: "instalada" } });
+  const mundo = { "Actor.talik": talik, "Actor.md9": md9, "Actor.mesla": mesla, "Actor.nt": nt };
+  const antes = { getName: globalThis.game.actors.getName, fromUuid: globalThis.fromUuid, getSpeaker: globalThis.ChatMessage.getSpeaker, wait: globalThis.foundry.applications.api.DialogV2.wait };
+  globalThis.game.actors.getName = (nome) => Object.values(mundo).find((a) => a.name === nome) ?? null;
+  globalThis.fromUuidSync = (u) => mundo[u] ?? null;
+  globalThis.fromUuid = async (u) => mundo[u] ?? antes.fromUuid(u);
+  globalThis.ChatMessage.getSpeaker = ({ actor } = {}) => ({ alias: actor?.name });
+  let ultimoDialogo = null;
+  globalThis.foundry.applications.api.DialogV2.wait = async (o) => { ultimoDialogo = o; return dialogo; };
+
+  const naveT = nt.flags.spacedragon.nave;
+  naveT.postos = { leme: "Talik Secura", artilharia: "Mesla", engenharia: "MD-9", sensores: "R5-D4" };
+  naveT.vinculos = { leme: "Actor.talik", engenharia: "Actor.md9" };   // a Mesla, só pelo nome
+  cineDeAtor(nt).pilotar = 10;                                          // o campo digitado perde para a ficha
+  combate(2, [nt, thw]);
+
+  // o duelo: o Pilotar da ficha, e o cartão fala pelo piloto
+  const pTalik = pilotarDe(talik).valor;
+  roteiro["1d100"] = [99];
+  await PARA_TESTE.duelo(ctxDe(nt));
+  const mDuelo = mensagens.at(-1);
+  confere(new RegExp(`Chance ${pTalik}%`).test(mDuelo.content) && /Talik Secura, Pilotar Naves/.test(mDuelo.content) && mDuelo.speaker?.alias === "Talik Secura",
+    `[CINEM-TRIP] o duelo usa o Pilotar de Talik (${pTalik}%) e fala por ele: ${mDuelo.content.slice(0, 200)} / ${JSON.stringify(mDuelo.speaker)}`);
+  // sem a ficha no Leme, o campo da nave volta a valer
+  naveT.postos.leme = "Kael"; delete naveT.vinculos.leme;
+  roteiro["1d100"] = [99];
+  await PARA_TESTE.duelo(ctxDe(nt));
+  confere(/Chance 10%/.test(mensagens.at(-1).content) && mensagens.at(-1).speaker?.alias === "Presa", "[CINEM-TRIP] piloto sem ficha: o Pilotar digitado na nave, e fala a nave");
+  naveT.postos.leme = "Talik Secura"; naveT.vinculos.leme = "Actor.talik";
+
+  // o disparo: o BA de quem está na Artilharia, com o nome no rótulo
+  globalThis.game.user.targets = new Set([tokThw]);
+  dialogo = null;
+  await dispararCine(ctxDe(nt), { item: { name: "Laser" }, chave: "lasers", arma: { nome: "Laser", dano: "2d10" } });
+  confere(/BA à distância de Mesla/.test(ultimoDialogo?.content ?? "") && /name="artilheiro" value="7"/.test(ultimoDialogo?.content ?? ""),
+    `[CINEM-TRIP] o disparo traz o BA de Mesla (+7): ${(ultimoDialogo?.content ?? "").slice(0, 300)}`);
+  globalThis.game.user.targets = new Set();
+
+  // Resolver avaria: o teste de quem tenta
+  const operar = consertoDe(md9).valor;
+  cineDeAtor(nt).avarias = { maquinas: { estado: "avaria", desde: 1 } };
+  dialogo = "0";                                   // MD-9, o primeiro (a Engenharia)
+  roteiro["1d100"] = [operar + 1];
+  await PARA_TESTE.acao(ctxDe(nt), "resolver", { camara: "maquinas" });
+  confere(cineDeAtor(nt).avarias.maquinas?.estado === "avaria" && /A avaria continua/.test(mensagens.at(-1).content) && mensagens.at(-1).speaker?.alias === "MD-9",
+    `[CINEM-TRIP] MD-9 falha no Operar Máquinas (${operar}%): a avaria fica, e o cartão é dele`);
+  confere(/MD-9 — Operar Máquinas/.test(ultimoDialogo?.content ?? "") && /Talik Secura — Intelecto 10/.test(ultimoDialogo?.content ?? "") && /value="sem"/.test(ultimoDialogo?.content ?? ""),
+    "[CINEM-TRIP] a janela lista quem pode tentar, com a chance de cada um, e o «sem teste»");
+  ultimoDialogo = null;
+  const nAv = avisos.length;
+  await PARA_TESTE.acao(ctxDe(nt), "resolver", { camara: "maquinas" });
+  confere(ultimoDialogo === null && avisos.length === nAv + 1 && cineDeAtor(nt).avarias.maquinas?.estado === "avaria",
+    "[CINEM-TRIP] falhou: outra tentativa na mesma câmara só na próxima rodada");
+  combate(3, [nt, thw]);
+  roteiro["1d100"] = [operar];
+  await PARA_TESTE.acao(ctxDe(nt), "resolver", { camara: "maquinas" });
+  confere(!cineDeAtor(nt).avarias.maquinas && /Resolvido/.test(mensagens.at(-1).content), "[CINEM-TRIP] com ≤ a chance, resolvida");
+  cineDeAtor(nt).avarias = { maquinas: { estado: "avaria", desde: 1 } };
+  dialogo = "1";                                   // Talik, pelo Intelecto
+  roteiro.d20 = [9];
+  roteiro["1d20"] = [9];
+  await PARA_TESTE.acao(ctxDe(nt), "resolver", { camara: "maquinas" });
+  confere(!cineDeAtor(nt).avarias.maquinas && /Talik Secura, Intelecto: rolou 9/.test(mensagens.at(-1).content), `[CINEM-TRIP] Talik resolve pelo Intelecto, 1d20 ≤ 10: ${mensagens.at(-1).content.slice(0, 200)}`);
+  cineDeAtor(nt).avarias = { maquinas: { estado: "avaria", desde: 1 } };
+  dialogo = "sem";
+  await PARA_TESTE.acao(ctxDe(nt), "resolver", { camara: "maquinas" });
+  confere(!cineDeAtor(nt).avarias.maquinas, "[CINEM-TRIP] «sem teste»: resolve como antes");
+  cineDeAtor(nt).avarias = { maquinas: { estado: "avaria", desde: 1 } };
+  dialogo = null;
+  await PARA_TESTE.acao(ctxDe(nt), "resolver", { camara: "maquinas" });
+  confere(cineDeAtor(nt).avarias.maquinas?.estado === "avaria", "[CINEM-TRIP] fechar a janela: nada acontece");
+  cineDeAtor(nt).avarias = { deposito: { estado: "avaria", desde: 1 } };
+  ultimoDialogo = null;
+  await PARA_TESTE.acao(ctxDe(nt), "resolver", { camara: "deposito" });
+  confere(!cineDeAtor(nt).avarias.deposito && ultimoDialogo === null, "[CINEM-TRIP] incêndio: sem teste, só a ação");
+  cineDeAtor(nt).avarias = {};
+
+  // a câmara atingida: JPR para quem está nela
+  const msg = { setFlag: async () => {} };
+  cineDeAtor(nt).escudo = { atual: 0, max: 0 };
+  await aplicarImpactoCineDaMensagem(msg, { modo: "cine", alvo: "Actor.nt", dano: 5, camara: "ponte", extraAusente: 0, extraArsenal: 0, rodada: 2 });
+  const cJpr = mensagens.at(-1).content;
+  confere(/data-uuid="Actor.talik"/.test(cJpr) && /data-uuid="Actor.mesla"/.test(cJpr) && !/Actor.md9/.test(cJpr) && /R5-D4: sem ficha/.test(cJpr),
+    `[CINEM-TRIP] Ponte atingida: JPR de Talik e Mesla, R5 sem ficha, MD-9 (na Sala de Máquinas) fora: ${cJpr.slice(0, 400)}`);
+  const nMsgs = mensagens.length;
+  await aplicarImpactoCineDaMensagem(msg, { modo: "cine", alvo: "Actor.nt", dano: 5, camara: null, extraAusente: 0, extraArsenal: 0, rodada: 2 });
+  confere(mensagens.length === nMsgs, "[CINEM-TRIP] sem câmara atingida, sem cartão de JPR");
+
+  // o mesmo personagem em dois postos da Ponte: um botão só
+  naveT.postos.comando = "Talik Secura"; naveT.vinculos.comando = "Actor.talik";
+  await aplicarImpactoCineDaMensagem(msg, { modo: "cine", alvo: "Actor.nt", dano: 5, camara: "ponte", extraAusente: 0, extraArsenal: 0, rodada: 2 });
+  confere((mensagens.at(-1).content.match(/Actor.talik/g) ?? []).length === 1, "[CINEM-TRIP] dois postos na Ponte, uma JPR");
+  delete naveT.postos.comando; delete naveT.vinculos.comando;
+
+  roteiro.d20 = [3];
+  roteiro["1d6"] = [4];
+  talik.getFlag = (escopo, chave) => talik.flags?.[escopo]?.[chave];
+  const falhou = await rolarJprDoTripulante("Actor.talik", "msg-1");
+  const nAvJ = avisos.length;
+  confere(await rolarJprDoTripulante("Actor.talik", "msg-1") === null && avisos.length === nAvJ + 1 && talik.system.hp.value === 26,
+    "[CINEM-TRIP] o segundo clique no mesmo cartão não rola outra JPR");
+  confere(falhou && !falhou.passou && falhou.dano === 4 && talik.system.hp.value === 26, `[CINEM-TRIP] JPR falhou: 1d6 (4) do PV de Talik (${talik.system.hp.value})`);
+  roteiro.d20 = [15];
+  const passou = await rolarJprDoTripulante("Actor.talik", "msg-2");
+  const nAvK = avisos.length;
+  confere(await rolarJprDoTripulante("Actor.talik", "msg-1") === null && avisos.length === nAvK + 1,
+    "[CINEM-TRIP] depois do cartão B, voltar ao cartão A não rola outra JPR");
+  confere(passou?.passou && talik.system.hp.value === 26, "[CINEM-TRIP] JPR passou: nada");
+  mesla.isOwner = false;
+  // o conserto só oferece quem o usuário controla
+  cineDeAtor(nt).avarias = { maquinas: { estado: "avaria", desde: 3 } };
+  dialogo = null;
+  await PARA_TESTE.acao(ctxDe(nt), "resolver", { camara: "maquinas" });
+  confere(!/Mesla/.test(ultimoDialogo?.content ?? "") && /MD-9/.test(ultimoDialogo?.content ?? ""), "[CINEM-TRIP] a janela do conserto não oferece o personagem de outro jogador");
+  cineDeAtor(nt).avarias = {};
+  const nAvisos = avisos.length;
+  confere(await rolarJprDoTripulante("Actor.mesla") === null && avisos.length === nAvisos + 1, "[CINEM-TRIP] quem não é dono não rola a JPR alheia");
+
+  globalThis.game.actors.getName = antes.getName;
+  globalThis.fromUuid = antes.fromUuid;
+  globalThis.ChatMessage.getSpeaker = antes.getSpeaker;
+  globalThis.foundry.applications.api.DialogV2.wait = antes.wait;
+  delete globalThis.fromUuidSync;
+  dialogo = null;
+}
 
 if (problemas.length) {
   console.error(`${problemas.length} problema(s) no Combate Cinematográfico na mesa:`);

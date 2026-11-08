@@ -89,7 +89,7 @@ function leNumero(obj, caminhos) {
   return null;
 }
 
-function nivelDe(ator) {
+export function nivelDe(ator) {
   const doItem = ator?.items?.find?.((i) => i.type === "class")?.system;
   return (
     leNumero(ator?.system, ["level", "nivel", "details.level", "attributes.level", "experience.level"]) ??
@@ -102,7 +102,7 @@ function nivelDe(ator) {
  * O valor de um atributo do Space Dragon, lido do campo do OD2 onde este
  * módulo convenciona anotá-lo. Ver o journal "Onde anotar cada um na ficha".
  */
-function atributoDe(ator, atributo) {
+export function atributoDe(ator, atributo) {
   const campo = CAMPO_NA_FICHA[atributo];
   const cru = leNumero(ator?.system, [
     campo, `atributos.${campo}`, `attributes.${campo}`, `abilities.${campo}`,
