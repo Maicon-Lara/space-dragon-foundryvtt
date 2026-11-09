@@ -141,12 +141,15 @@ confere(Object.keys(R.marcaDeFerida(ator([]), "tok1")).length === 0, "[FERIU] se
 await rodiano.update(mud);
 confere(R.ajusteContraQuemFeriu(rodiano, { chave: "tok1" })?.valor === 2, "[FERIU] +2 contra quem feriu");
 confere(R.ajusteContraQuemFeriu(rodiano, { chave: "tok2" }) === null, "[FERIU] outro alvo não dá bônus");
+await rodiano.update({ "flags.spacedragon.feridoPor": ["tok1", "atorX"] });
+confere(R.ajusteContraQuemFeriu(rodiano, { chave: "tok7", atorId: "atorX" })?.valor === 2, "[FERIU] ferido pela ficha da barra lateral");
 game.user.targets = new Set([{ name: "Alvo", actor: { system: { ac_total: 1 } }, document: { uuid: "Token.x", id: "tok1" } }]);
 natural = 10;
 const arma = { id: "w", name: "Pistola", type: "weapon", system: { type: "ranged", damage: "1d6" } };
 formulas.length = 0;
 await usarItem(rodiano, arma, { ataque: "bad", dano: "1d6" });
 confere(formulas.includes("1d20 + 3"), `[FERIU] o ataque soma: ${formulas}`);
+confere(/1d20 <strong>10<\/strong> \+1 \(BA\) \+2 \(Sangue Frio\) = <strong>13<\/strong>/.test(mensagens.at(-1).content), `[CONTA] o cartão mostra a conta: ${mensagens.at(-1).content}`);
 let flagsDoCartao = null;
 game.settings.get = () => true;
 game.user.targets = new Set([{ name: "D", document: { uuid: "Token.y" } }]);

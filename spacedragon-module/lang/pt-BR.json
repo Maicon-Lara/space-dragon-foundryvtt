@@ -444,6 +444,8 @@
   "spacedragon.auto.sacrificouFalha": "Sacrificou o 2º ataque: d% {total} contra {chance}%. Falhou, e o turno acabou.",
   "spacedragon.auto.danoMassivo": "20 natural: o alvo corre risco de morte por dano massivo.",
   "spacedragon.auto.usar": "Usar",
+  "spacedragon.auto.contaAtaque": "1d20 <strong>{natural}</strong> {somas} = <strong>{total}</strong>",
+  "spacedragon.auto.contaDados": "{formula} → {result} = <strong>{total}</strong>",
   "spacedragon.auto.usarComLimite": "{rotulo} ({restam}/{max})",
   "spacedragon.auto.semUsos": "{nome}: sem usos restantes. Shift-clique no botão recarrega.",
   "spacedragon.racas.regenerou": "{nome} regenerou {n} PV ({habilidade}).",

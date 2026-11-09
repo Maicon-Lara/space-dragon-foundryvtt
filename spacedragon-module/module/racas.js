@@ -60,7 +60,9 @@ const feridoPor = (ator) => [].concat(ator?.getFlag?.(ID, "feridoPor") ?? ator?.
 /** O bônus de ataque contra um alvo que já feriu o ator, ou null. */
 export function ajusteContraQuemFeriu(ator, alvo) {
   const regra = regrasDe(ator).find((r) => r.contraQuemFeriu);
-  if (!regra || !alvo?.chave || !feridoPor(ator).includes(alvo.chave)) return null;
+  // Também pelo ator: a ficha aberta na barra lateral fere sem token nenhum.
+  const feridas = feridoPor(ator);
+  if (!regra || ![alvo?.chave, alvo?.atorId].some((c) => c && feridas.includes(c))) return null;
   return { valor: regra.contraQuemFeriu, nome: regra.nome };
 }
 
