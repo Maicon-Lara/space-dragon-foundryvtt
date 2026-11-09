@@ -29,7 +29,7 @@
 import { atorUsaFichaSD } from "./ficha.js";
 import { envolver, MODELO_PERSONAGEM } from "./envelope.js";
 import { efeitosDe } from "./mutacoes.js";
-import { venceJPPelaRaca } from "./racas.js";
+import { venceJPPelaRaca, situacoesDaJP } from "./racas.js";
 
 import { t as txt } from "./i18n.js";
 
@@ -153,6 +153,35 @@ export async function rolarJP(ator, qual, situacional = 0) {
     sound: CONFIG.sounds?.dice,
   });
   return { roll, passou, alvo, mod };
+}
+
+/**
+ * O ajuste da JP antes de rolar. Quem tem bônus de raça por situação vê as
+ * caixas em todo clique; os outros só abrem a janela com Shift, como antes.
+ * Devolve o ajuste, ou null se a janela foi fechada.
+ */
+export async function perguntarJP(ator, qual, { shift = false } = {}) {
+  const j = JPS[qual];
+  const caixas = venceJPPelaRaca(ator, qual) ? [] : situacoesDaJP(ator, qual);
+  if (!caixas.length) return shift ? perguntarSituacao(j.rotulo) : 0;
+  const V2 = foundry.applications?.api?.DialogV2;
+  if (!V2?.prompt) return 0;
+  const linhas = caixas.map((c, i) =>
+    `<div class="form-group"><label>${txt("spacedragon.racas.caixaJP", { bonus: c.bonus, rotulo: c.rotulo, nome: c.nome })}</label><input type="checkbox" name="c${i}"></div>`).join("");
+  const numero = shift ? `<div class="form-group"><label>Modificador de situação</label><input type="number" name="sit" value="0"></div>` : "";
+  const r = await V2.prompt({
+    window: { title: txt("spacedragon.janela.situacao", { rotulo: j.rotulo }) },
+    content: linhas + numero,
+    ok: {
+      label: txt("spacedragon.botao.rolar"),
+      callback: (_ev, botao) => {
+        const campos = botao.form?.elements ?? {};
+        return caixas.reduce((soma, c, i) => soma + (campos[`c${i}`]?.checked ? c.bonus : 0), Number(campos.sit?.value) || 0);
+      },
+    },
+    rejectClose: false,
+  });
+  return r ?? null;
 }
 
 /** Pede o modificador de situação (Shift-clique). */

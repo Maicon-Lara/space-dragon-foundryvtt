@@ -16,7 +16,8 @@ import { chassiDe } from "./chassi.js";
 import { multiplicadorDaArma, multiplicadorFurtivo, escolheArmaPreferida, regraDoMercenario } from "./vitalidade.js";
 import { ligarNaFicha } from "./ficha.js";
 import { ehNave } from "./nave-marca.js";
-import { rolarJP, modificadorDaJP } from "./jp.js";
+import { rolarJP, perguntarJP, modificadorDaJP } from "./jp.js";
+import { ajusteContraQuemFeriu, chaveDoAtacante, danoRecebido, marcaDeFerida } from "./racas.js";
 import { atorUsaFichaSD } from "./ficha.js";
 import { t as txt } from "./i18n.js";
 
@@ -132,6 +133,17 @@ async function rolar(formula) {
   return new globalThis.Roll(formula).evaluate();
 }
 
+/* Usos limitados. Por dia, conta o dia do calendário do mundo; Shift no botão recarrega. */
+const periodoDe = (limite) => (limite.por === "dia" ? Math.floor((Number(globalThis.game?.time?.worldTime) || 0) / 86400) : 0);
+
+export function usosRestantes(ator, item, limite) {
+  const u = (ator.getFlag?.(ID, "usos") ?? ator.flags?.[ID]?.usos)?.[item.id];
+  return Math.max(0, limite.vezes - (u?.periodo === periodoDe(limite) ? Number(u.n) || 0 : 0));
+}
+
+const gravarUsos = (ator, item, limite, n) =>
+  ator.update({ [`flags.${ID}.usos.${item.id}`]: { n, periodo: periodoDe(limite) } });
+
 /** Os modos e o valor {n}, numa janela. Devolve a definição final ou null. */
 async function escolher(def, extras = {}) {
   const V2 = globalThis.foundry?.applications?.api?.DialogV2;
@@ -178,7 +190,9 @@ export const numeroDe = (v) => {
 
 const alvoDoToken = (t) => {
   const s = t.actor?.system ?? {};
-  return { uuid: t.document?.uuid ?? t.actor?.uuid, nome: t.name ?? t.actor?.name ?? "?", cp: s.ac_total ?? s.ac ?? numeroDe(s.ca) };
+  // A mesma chave de quem feriu: o ator se o token é ligado, senão o token.
+  const chave = t.document?.actorLink ? t.actor?.id : t.document?.id ?? null;
+  return { uuid: t.document?.uuid ?? t.actor?.uuid, nome: t.name ?? t.actor?.name ?? "?", cp: s.ac_total ?? s.ac ?? numeroDe(s.ca), chave };
 };
 
 /** Usa o item: rola, e manda o cartão com um botão por alvo. */
@@ -188,6 +202,10 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
     : [...(globalThis.game?.user?.targets ?? [])].map(alvoDoToken);
   if (!marcados.length) {
     globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.semAlvo"));
+    return null;
+  }
+  if (definicao.limite && usosRestantes(ator, item, definicao.limite) <= 0) {
+    globalThis.ui?.notifications?.warn?.(txt("spacedragon.auto.semUsos", { nome: esc(item.name) }));
     return null;
   }
   const multFurtivo = multiplicadorFurtivo(ator);
@@ -235,7 +253,9 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
     // um uso, um número de disparos: com vários alvos, eles se revezam
     for (let i = 0; i < (def.ataques ?? 1); i += 1) {
       const alvo = marcados[i % marcados.length];
-      const a = await r(`1d20 + ${ba + (Number(def.bonusAtaque) || 0) + (furtivo ? 2 : 0) + (Number(escolha.ajuste) || 0) + ajusteMerc}`);
+      const raca = ajusteContraQuemFeriu(ator, alvo);
+      if (raca) linhas.push(txt("spacedragon.racas.ajusteAtaque", { habilidade: esc(raca.nome), n: raca.valor, nome: esc(alvo.nome) }));
+      const a = await r(`1d20 + ${ba + (Number(def.bonusAtaque) || 0) + (furtivo ? 2 : 0) + (Number(escolha.ajuste) || 0) + ajusteMerc + (raca?.valor ?? 0)}`);
       const natural = a.dice?.[0]?.total;
       const acertou = natural === 20 || (natural !== 1 && (alvo.cp === null || a.total >= Number(alvo.cp)));
       linhas.push(acertou
@@ -259,7 +279,7 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
             ? txt("spacedragon.auto.danoCritico", { rolado, mult })
             : txt("spacedragon.auto.danoFurtivo", { rolado, mult }));
         }
-        atingidos.push({ ...alvo, dano: d });
+        atingidos.push({ ...alvo, dano: d, critico });
       } else {
         atingidos.push(alvo);
       }
@@ -293,12 +313,14 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
   if (def.nota) linhas.push(`<em>${esc(def.nota)}</em>`);
 
   const dados = {
-    nomeItem: item.name, alvos: atingidos.map((a) => ({ uuid: a.uuid, nome: a.nome, dano: a.dano ?? null })),
+    nomeItem: item.name, atacante: chaveDoAtacante(ator),
+    alvos: atingidos.map((a) => ({ uuid: a.uuid, nome: a.nome, dano: a.dano ?? null, critico: Boolean(a.critico) })),
     dano, cura, dreno, chaveDreno: def.dreno?.chave ?? null, jp: def.jp ?? null, aoPassar: def.aoPassar ?? null,
     efeito: def.efeito ? { ...def.efeito, mods: def.efeito.mods?.map((m) => ({ ...m, value: Number(montarFormula(m.value, contexto)) })) } : null,
     segundos,
   };
-  const botoes = atingidos.map((a, i) =>
+  if (def.limite) await gravarUsos(ator, item, def.limite, def.limite.vezes - usosRestantes(ator, item, def.limite) + 1);
+  const botoes = (def.semAlvo ? [] : atingidos).map((a, i) =>
     `<button type="button" class="${CLASSE_ALVO}" data-i="${i}">${def.jp
       ? txt("spacedragon.auto.rolarJp", { jp: ROTULO_JP[def.jp], nome: esc(a.nome) })
       : txt("spacedragon.auto.aplicar", { nome: esc(a.nome) })}</button>`).join("");
@@ -313,7 +335,10 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
 
 /** A JP do alvo: a do personagem pela regra do livro; a da criatura, 1d20 ≥ JP. */
 async function jpDoAlvo(ator, jp) {
-  if (ator.type !== "monster" && atorUsaFichaSD(ator)) return (await rolarJP(ator, QUAL_JP[jp]))?.passou ?? false;
+  if (ator.type !== "monster" && atorUsaFichaSD(ator)) {
+    const sit = await perguntarJP(ator, QUAL_JP[jp]);
+    return (await rolarJP(ator, QUAL_JP[jp], sit ?? 0))?.passou ?? false;
+  }
   // Criatura, ou personagem em outra ficha: `rolarJP` deduz o modificador do
   // total da ficha SD, e fora dela sairia invertido.
   const mod = ator.type === "monster" ? 0 : modificadorDaJP(ator.system, QUAL_JP[jp]);
@@ -355,8 +380,19 @@ export async function aplicarNoAlvo(idMensagem, i, dados) {
     globalThis.ui?.notifications?.info?.(txt("spacedragon.auto.resistiu", { nome: esc(ator.name) }));
     return { resultado };
   }
-  const dano = info.dano ?? dados.dano;
-  if (dano) await aplicarEmAtor(ator, resultado === "metade" ? Math.floor(dano / 2) : dano);
+  const recebido = danoRecebido(ator, { chave: chaveDoNome(dados.nomeItem), critico: Boolean(info.critico) });
+  const dano = (info.dano ?? dados.dano) * recebido.mult;
+  const fala = (texto) => globalThis.ChatMessage?.create?.({ speaker: globalThis.ChatMessage?.getSpeaker?.({ actor: ator }), content: `<div class="sd-teste"><p>${texto}</p></div>` });
+  if (dano) {
+    const final = resultado === "metade" ? Math.floor(dano / 2) : dano;
+    await aplicarEmAtor(ator, final, marcaDeFerida(ator, dados.atacante));
+    const habilidade = esc(recebido.nomes.join(", "));
+    if (recebido.mult > 1) await fala(txt("spacedragon.racas.danoMultiplicado", { nome: esc(ator.name), habilidade, mult: recebido.mult, dano: final }));
+    if (recebido.desativa && resultado === "cheio") {
+      await ator.toggleStatusEffect?.("unconscious", { active: true });
+      await fala(txt("spacedragon.racas.desativado", { nome: esc(ator.name) }));
+    }
+  }
   if (dados.cura) {
     const hp = ator.system?.hp ?? {};
     await ator.update({ "system.hp.value": Math.min(Number(hp.max) || Infinity, (Number(hp.value) || 0) + dados.cura) });
@@ -426,10 +462,18 @@ export function ligarAutomacao() {
       const botao = linha.ownerDocument.createElement("button");
       botao.type = "button";
       botao.className = CLASSE_USAR;
-      botao.textContent = def.rotulo ?? txt("spacedragon.auto.usar");
+      const rotulo = def.rotulo ?? txt("spacedragon.auto.usar");
+      const restam = def.limite ? usosRestantes(app.actor, item, def.limite) : 0;
+      botao.textContent = def.limite
+        ? txt("spacedragon.auto.usarComLimite", { rotulo, restam, max: def.limite.vezes })
+        : rotulo;
       botao.addEventListener("click", (ev) => {
         ev.preventDefault();
         ev.stopPropagation();
+        if (ev.shiftKey && def.limite) {
+          gravarUsos(app.actor, item, def.limite, 0).catch((e) => console.error(`${ID} | recarregar ${item.name}`, e));
+          return;
+        }
         usarItem(app.actor, item, def).catch((e) => console.error(`${ID} | usar ${item.name}`, e));
       });
       // Dentro de uma célula que já existe: um filho novo na linha, que é flex

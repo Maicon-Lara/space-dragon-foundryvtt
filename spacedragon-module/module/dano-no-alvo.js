@@ -19,6 +19,7 @@ import { naveDe, updateDaNave } from "./nave-pc-dados.js";
 import { cineDe } from "./nave-cine-ficha.js";
 import { aplicarDanoCine } from "./nave-cinematico.js";
 import { aplicarDanoNoAlvoLigado, combateCinematico } from "./opcoes.js";
+import { chaveDoAtacante, marcaDeFerida } from "./racas.js";
 import { t as txt } from "./i18n.js";
 
 const ID = "spacedragon";
@@ -69,7 +70,8 @@ export function marcarCartao(mensagem) {
   const alvo = [...(globalThis.game?.user?.targets ?? [])][0] ?? null;
   const uuid = alvo?.document?.uuid ?? null;
   if (!uuid) return false;
-  mensagem.updateSource({ flags: { [ID]: { [FLAG]: { alvo: uuid, nome: alvo.name ?? "", dano } } } });
+  const atacante = chaveDoAtacante(globalThis.ChatMessage?.getSpeakerActor?.(mensagem.speaker));
+  mensagem.updateSource({ flags: { [ID]: { [FLAG]: { alvo: uuid, nome: alvo.name ?? "", dano, atacante } } } });
   return true;
 }
 
@@ -105,7 +107,7 @@ export async function aplicarDanoNoAlvo(idDaMensagem, dados) {
   if (feitos.includes(idDaMensagem)) return avisa(txt("spacedragon.nave.disparo.jaAplicado"));
 
   const dano = Number(dados.dano) || 0;
-  const { pv, noEscudo } = await aplicarEmAtor(ator, dano, { [`flags.${ID}.${FEITOS}`]: [...feitos, idDaMensagem].slice(-30) });
+  const { pv, noEscudo } = await aplicarEmAtor(ator, dano, { [`flags.${ID}.${FEITOS}`]: [...feitos, idDaMensagem].slice(-30), ...marcaDeFerida(ator, dados.atacante) });
   globalThis.ui?.notifications?.info?.(txt("spacedragon.danoNoAlvo.aplicado", { alvo: esc(ator.name), dano: dano - noEscudo, pv }));
   return { pv, noEscudo };
 }

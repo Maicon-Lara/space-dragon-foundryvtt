@@ -42,7 +42,7 @@ import { ligarGolpesComoEfeitos } from "./nave-golpes-qdv.js";
 import { ligarMeuPosto } from "./nave-meu-posto.js";
 import { ligarAutomacao, registrarAutomacao } from "./automacao.js";
 import { migrarArmasNoReady } from "./migrar-armas.js";
-import { ligarRacas, registrarRacas } from "./racas.js";
+import { ligarRacas, ligarRacasNaMesa, registrarRacas } from "./racas.js";
 import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
 import { aplicarJP, rolarJP } from "./jp.js";
@@ -245,6 +245,7 @@ Hooks.once("ready", () => {
   // A JP também é regra do livro: 1d20 + mod ≥ JP, e não d20 ≤ JP + mod.
   passo("jogadas de proteção", () => aplicarJP());
   passo("regras de raça", () => ligarRacas());
+  passo("regras de raça na mesa", () => ligarRacasNaMesa());
   passo("ordem das habilidades", () => ordenarHabilidades(true));
   passo("painel de testes", () => ligarPainel());
   passo("cabeçalho", () => ligarCabecalho());
