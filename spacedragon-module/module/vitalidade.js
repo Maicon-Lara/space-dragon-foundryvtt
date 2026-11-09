@@ -187,6 +187,17 @@ export function multiplicadorDaArma(ator, item) {
   return preferida ? livro + 1 : livro;
 }
 
+/**
+ * O que o Mercenário ganha do 10º nível em diante, nesta arma, ou null.
+ * Sem arma marcada, nada de −4: a escolha ainda não foi feita na ficha.
+ */
+export function regraDoMercenario(ator, item) {
+  const level = Number(ator?.system?.level) || 1;
+  if (item?.type !== "weapon" || !/^Mercenário/.test(nomeDaClasse(ator)) || level < 10) return null;
+  const marcada = ator.getFlag?.("spacedragon", "armaPreferida") || "";
+  return { marcada: Boolean(marcada), preferida: Boolean(marcada) && item.id === marcada, chance: level >= 20 ? 40 : 20 };
+}
+
 /** T3-5, coluna do Ataque Furtivo, do 1º ao 20º nível. */
 const ATAQUE_FURTIVO = [2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5];
 
