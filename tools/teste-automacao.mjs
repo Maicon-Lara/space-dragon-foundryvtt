@@ -93,6 +93,15 @@ confere(automacaoDe({ name: "Cortador Laser" }).ataque === "bac", "[AUTO-LIVRO] 
 confere(automacaoDe({ type: "monster_attack", system: { description: "<p>Ferroada</p>" } }, { name: "Aranha Gigante" }).dreno.chave === "constituicao", "[AUTO-LIVRO] veneno da aranha");
 confere(automacaoDe({ name: "Item qualquer" }) === null, "[AUTO-LIVRO] item fora da tabela não ganha botão");
 
+// [AUTO-REGISTRO] as tabelas de outros módulos
+const { registrarAutomacao } = await import("../spacedragon-module/module/automacao.js");
+registrarAutomacao({ "choque da forca": "choque mental", "toque sombrio": { jp: "jpf", aoPassar: "soDano", dano: "1d4" }, "aponta errado": "nao existe" });
+confere(automacaoDe({ name: "Choque da Força" }) === T["choque mental"], "[AUTO-REGISTRO] equivalente aponta para o item daqui");
+confere(automacaoDe({ name: "Toque Sombrio" }).dano === "1d4", "[AUTO-REGISTRO] entrada própria");
+confere(automacaoDe({ name: "Aponta Errado" }) === null, "[AUTO-REGISTRO] equivalente inexistente não quebra");
+confere(montarFormula("-{nivel3}", { nivel: 7 }) === "-2", "[AUTO-REGISTRO] 1 a cada 3 níveis");
+confere(resultadoDaJp({ jp: "jpf", aoPassar: "soDano" }, true) === "soDano", "[AUTO-JP] passou: leva o dano, sem o efeito");
+
 // [AUTO-JP]
 confere(resultadoDaJp({ jp: "jpr", aoPassar: "metade" }, true) === "metade", "[AUTO-JP] passou em metade");
 confere(resultadoDaJp({ jp: "jpm", aoPassar: "anula" }, true) === "nada", "[AUTO-JP] passou em anula");
