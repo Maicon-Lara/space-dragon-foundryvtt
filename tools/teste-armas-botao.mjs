@@ -14,6 +14,7 @@
  *     node tools/teste-armas-botao.mjs
  */
 
+import fs from "node:fs";
 import { instalarLang } from "./lang-de-teste.mjs";
 
 const problemas = [];
@@ -95,6 +96,18 @@ ganchos.renderOD2CharacterSheet[0]({ actor: ator({ items: { get: () => poder } }
 confere(filhos.some((f) => f.className === CLASSE_USAR), "[BOTAO-LINHA] o botão entra na linha com o link do painel mental");
 confere(CLASSE_USAR !== "sd-usar", "[BOTAO-LINHA] classe separada da do painel mental");
 confere(seletor === "li.item[data-item-id]", `[BOTAO-LINHA] só as linhas, e não os campos delas: ${seletor}`);
+
+seletor = "";
+class NaveSheet { actor = ator({ items: { get: () => poder } }); }
+ganchos.renderOD2CharacterSheet[0](new NaveSheet(), raiz);
+confere(seletor === "", "[BOTAO-LINHA] a Ficha de Nave não ganha o botão");
+const css = fs.readFileSync(new URL("../spacedragon-module/styles/nave.css", import.meta.url), "utf8");
+confere(/\.sd-usar-item \{[^}]*width: auto !important/.test(css), "[BOTAO-LINHA] a largura precisa vencer o CSS do sistema");
+const celula = { children: [], appendChild(n) { this.children.push(n); } };
+const naCelula = { ...linha, querySelector: (s) => (s.includes("item-controls") ? celula : null) };
+const raizCelula = { querySelector() {}, querySelectorAll: () => [naCelula] };
+ganchos.renderOD2CharacterSheet[0]({ actor: ator({ items: { get: () => poder } }) }, raizCelula);
+confere(celula.children.length === 1, "[BOTAO-LINHA] o botão entra na célula, sem coluna nova");
 
 // [BOTAO-MENTAL]
 const classeMental = { type: "class", name: "Mentálico" };
