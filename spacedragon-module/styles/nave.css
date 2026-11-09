@@ -564,4 +564,5 @@
 
 /* O botão Usar na linha do item e os botões por alvo no chat */
 .sd-usar-item { width: auto; flex: 0 0 auto; padding: 0 8px; font-size: 11px; line-height: 20px; }
+.sd-arma-preferida { flex: 0 0 auto; margin-left: 4px; cursor: pointer; }
 .sd-auto-alvo { margin-top: 3px; }

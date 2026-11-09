@@ -29,6 +29,7 @@
 import { atorUsaFichaSD } from "./ficha.js";
 import { envolver, MODELO_PERSONAGEM } from "./envelope.js";
 import { efeitosDe } from "./mutacoes.js";
+import { venceJPPelaRaca } from "./racas.js";
 
 import { t as txt } from "./i18n.js";
 
@@ -120,6 +121,13 @@ export async function rolarJP(ator, qual, situacional = 0) {
   if (!j) return null;
   const s = ator.system;
   const alvo = Number(s.jp) || 0;
+  if (venceJPPelaRaca(ator, qual)) {
+    await ChatMessage.create({
+      content: `<div class="title">${j.rotulo} — ${j.nome}</div><div class="sd-teste"><p class="result"><strong class="success">${txt("spacedragon.jp.venceSemRolar")}</strong></p></div>`,
+      speaker: ChatMessage.getSpeaker({ actor: ator }),
+    });
+    return { roll: null, passou: true, alvo, mod: 0 };
+  }
   // O modificador inteiro sai da JP mostrada (JP − total): atributo, espécie,
   // mutações e os efeitos de outros módulos, numa conta só com a ficha.
   const total = Number(s[`${qual}_total`]);

@@ -36,6 +36,7 @@
 import { MODOS } from "./ordem.js";
 import { ehNave } from "./nave-marca.js";
 import { ligarNaFicha } from "./ficha.js";
+import { comAjusteDaOrdem } from "./racas.js";
 
 const ID = "spacedragon";
 const MARCA = "sd-ordem-ficha";
@@ -233,7 +234,7 @@ async function declarar(ator, raiz) {
   const modo = MODOS[op.dataset.modo] ?? MODOS.ataque;
   const entrada = String(raiz.querySelector(".sd-ordem-valor")?.value ?? "").trim();
 
-  const { n, como, roll } = await modo.valor(entrada);
+  const { n, como, roll } = comAjusteDaOrdem(ator, await modo.valor(entrada));
 
   // O rastreador só por opção, e só se houver combate: ver o cabeçalho.
   /* ── QUANDO O VALOR VAI PARA O RASTREADOR ─────────────────────────────────
