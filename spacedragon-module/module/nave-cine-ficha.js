@@ -68,6 +68,11 @@ export function cineVazio() {
     // velhas. Assim a hora do fechamento não mistura uma rodada com a outra.
     porRodada: {},
     avarias: {},
+    // Combate de Convés (nave-conves.js)
+    golpes: {},
+    fuga: 0,
+    recomposto: false,
+    colapso: null,
     duelo: null,
     ultimoReparo: null,
     // «Motores: +20% no duelo da PRÓXIMA rodada» — a rodada em que o bônus vale
@@ -89,6 +94,8 @@ export function cineDe(nave) {
     escudo: { ...base.escudo, ...(c.escudo ?? {}) },
     porRodada: { ...(c.porRodada ?? {}) },
     avarias: { ...(c.avarias ?? {}) },
+    golpes: { ...(c.golpes ?? {}) },
+    colapso: Number.isFinite(Number(c.colapso?.restam)) ? c.colapso : null,
     // A gravação por caminho (updateDaNave) não sabe trocar um objeto por null:
     // apaga as chaves de dentro e deixa um {} no lugar. Lido aqui, {} é nada.
     interferencia: c.interferencia?.alvo ? c.interferencia : null,
@@ -188,7 +195,10 @@ export function comecarCombateCine(cine) {
     vantagens: { ...antes.vantagens, ...na1.vantagens },
   };
   const tem = juntas.prioridade.length || juntas.forcado || Object.keys(juntas.vantagens).length;
-  const limpo = { ...cine, porRodada: tem ? { 1: juntas } : {}, fimRodada: null, motores: null, consertoFalhou: null };
+  const limpo = {
+    ...cine, porRodada: tem ? { 1: juntas } : {}, fimRodada: null, motores: null, consertoFalhou: null,
+    golpes: {}, fuga: 0, recomposto: false, colapso: null,
+  };
   for (const k of CAMPOS_ANTIGOS) delete limpo[k];
   return limpo;
 }
@@ -211,8 +221,8 @@ export function podeManobrar({ tamanho, bloqueada = false, suprimida = false } =
  * O Escudo e o Casco começam CHEIOS — aplicar a escala é preparar a nave para
  * o combate, e uma nave que entra pela metade seria uma surpresa ruim.
  */
-export function aplicarEscala(cine, tipo, { temEscudo = false } = {}) {
-  const e = escalaDoTipo(tipo, { temEscudo });
+export function aplicarEscala(cine, tipo, { temEscudo = false, escalaDe = escalaDoTipo } = {}) {
+  const e = escalaDe(tipo, { temEscudo });
   if (!e) return null;
   return {
     cine: {
@@ -409,7 +419,7 @@ function campoDoPilotar(cine, leme) {
     `${txt("spacedragon.cine.pilotar")} <strong>${lido.valor}</strong></span>`;
 }
 
-function blocoDasTrilhas(cine, hp, tripulacao = {}) {
+export function blocoDasTrilhas(cine, hp, tripulacao = {}) {
   const casco = Number(hp?.value) || 0;
   const cascoMax = Number(hp?.max) || 0;
   return (
@@ -434,7 +444,7 @@ function blocoDasTrilhas(cine, hp, tripulacao = {}) {
   );
 }
 
-function blocoDoDuelo(cine, rodada) {
+export function blocoDoDuelo(cine, rodada, vantagensDaMesa = VANTAGENS) {
   const d = cine.duelo;
   const grau = d && Number(d.rodada) === Number(rodada) ? GRAU[d.grau] : null;
   const vantagens = Object.entries(daRodada(cine, rodada).vantagens);
@@ -445,7 +455,7 @@ function blocoDoDuelo(cine, rodada) {
       ? `<span class="cine-grau">${txt("spacedragon.cine.grau", { grau: grau.rotulo, jp: (grau.jp > 0 ? "+" : "") + grau.jp })}</span>`
       : `<span class="cine-grau cine-sem">${txt("spacedragon.cine.semDuelo")}</span>`) +
     `<div class="cine-vantagens">${txt("spacedragon.cine.vantagem")} ` +
-    Object.entries(VANTAGENS).map(([k, v]) =>
+    Object.entries(vantagensDaMesa).map(([k, v]) =>
       `<button type="button" class="${CLASSE_CINE_VANTAGEM}" data-vantagem="${k}" title="${esc(v.efeito)}">${v.rotulo}</button>`).join("") +
     `</div>` +
     (vantagens.length

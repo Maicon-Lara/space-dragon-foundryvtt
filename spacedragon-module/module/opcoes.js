@@ -87,7 +87,10 @@ export const escudoComoReserva = () => regraDeNave("naveEscudoReserva");
  * pediu. Fora do Foundry também conta como desligada, para os testes que já
  * existiam continuarem descrevendo a ficha de sempre.
  */
-export const combateCinematico = () => camadaLigada("naveCinematico");
+export const combateConves = () => camadaLigada("naveConves");
+// O Convés roda no motor do Cinematográfico: ligar qualquer um dos dois põe a
+// ficha nesse modo, e `combateConves` escolhe a regra.
+export const combateCinematico = () => camadaLigada("naveCinematico") || combateConves();
 
 export function multiplicadorDeDano() {
   try {
@@ -146,6 +149,10 @@ export function registrarOpcoesDeNave(aoMudar = () => {}) {
   reg("naveCinematico", false, {
     name: "spacedragon.opcao.naveCinematico.nome",
     hint: "spacedragon.opcao.naveCinematico.dica",
+  });
+  reg("naveConves", false, {
+    name: "spacedragon.opcao.naveConves.nome",
+    hint: "spacedragon.opcao.naveConves.dica",
   });
   reg("camadaEnergia", false, {
     name: "spacedragon.opcao.camadaEnergia.nome",

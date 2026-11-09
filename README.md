@@ -6,7 +6,7 @@ Foundry VTT, rodando no sistema **Old Dragon 2**.
 **As regras são as do livro base, sem conversão.** Os modificadores, as
 porcentagens e a escala de 1 a 29 são os do Space Dragon.
 
-> **Estado: 1.35.0 — os onze capítulos portados.** 463 documentos em dez
+> **Estado: 1.36.0 — os onze capítulos portados.** 463 documentos em dez
 > compêndios, agrupados na pasta **Space Dragon** da barra de compêndios: 42 de
 > classe, 10 de espécie, 64 de equipamento, 101 poderes mentais, 80 aparatos e
 > feitos, 59 criaturas e personagens de exemplo, 68 de naves, 4 tabelas de
@@ -99,6 +99,7 @@ Dragon*:
 | **Dano de nave por margem (regra da casa)** | +1 dado de dano a cada 5 pontos acima do CP do alvo | ligada |
 | **Escudo de força como reserva (regra da casa)** | o escudo absorve 20 / 50 / 100 de dano por combate (M / G / C), em vez de +10 no CP | ligada |
 | **Multiplicador de dano de nave (regra da casa)** | ×1 (livro), ×2 ou ×3 no dano das armas de nave | ×1 |
+| **Combate de Convés de naves (regra da casa)** | versão enxuta do Cinematográfico: escala menor, duas ações por posto, golpe forte em d6, +1 dado de dano da 4ª rodada e Colapso de 3 rodadas, em que a tripulação pode morrer. Ligada, é a regra usada mesmo com o Cinematográfico ligado. Depois de ligar, use o botão de escala em cada nave | desligada |
 | Camada: energia do reator | §7 das Regras Compiladas; com ela, a ação extra por 2 pontos e o Calor do reator (casa) | desligada |
 | Camada: controle de avarias | §7 das Regras Compiladas; com ela, a avaria por dano pesado, 10% do PV (casa) | desligada |
 | Camada: fuga como relógio | §7 das Regras Compiladas | desligada |

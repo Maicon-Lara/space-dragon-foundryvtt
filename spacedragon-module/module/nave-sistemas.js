@@ -26,6 +26,7 @@
  */
 
 import { CAMARAS } from "./camaras.js";
+import { combateConves } from "./opcoes.js";
 import { EQUIPAMENTOS_DE_NAVE } from "./equipamentos-nave.js";
 import { estadoDoComodo, flagDeNave } from "./nave-pc-dados.js";
 
@@ -166,7 +167,9 @@ export function avisosDaNave(nave) {
   if (!podeEscapar(nave)) {
     avisos.push({
       grau: "aviso",
-      texto: "Sem Saída de Emergência: a 0 PV a nave explode e ninguém escapa (§5).",
+      texto: combateConves()
+        ? "Sem Saída de Emergência: no Colapso não há como abandonar a nave."
+        : "Sem Saída de Emergência: a 0 PV a nave explode e ninguém escapa (§5).",
     });
   }
   const semReparo = faltando(nave, "exigeParaReparar");

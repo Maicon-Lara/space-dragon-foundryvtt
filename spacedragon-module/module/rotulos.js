@@ -124,7 +124,8 @@ function troca(app, elemento) {
     const cabecaPoderes = raiz.querySelector(".character-tab-spells .spell .list .name");
     if (cabecaPoderes) cabecaPoderes.textContent = "Poder Mental";
     const abaPoderes = raiz.querySelector('.tabs [data-tab="spells"]');
-    if (abaPoderes) texto(abaPoderes, "Poderes");
+    // na Ficha de Nave esta aba é a Tripulação (nave-pc-ficha.js), e este gancho roda depois dela
+    if (abaPoderes && !abaPoderes.closest(".spacedragon-nave-pc")) texto(abaPoderes, "Poderes");
 
     // ── Restrições de equipamento ──
     // "Armaduras" vira "Vestes" e "Itens Mágicos" vira "Aparatos Tecnológicos".
