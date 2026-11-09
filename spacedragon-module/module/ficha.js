@@ -137,9 +137,9 @@ export function registrarFicha(padrao = true) {
       event.preventDefault?.();
       const qual = event.currentTarget?.dataset?.jp;
       const shift = !!event.shiftKey;
-      return import("./jp.js").then(async ({ rolarJP, perguntarSituacao, JPS }) => {
+      return import("./jp.js").then(async ({ rolarJP, perguntarJP, JPS }) => {
         if (!JPS[qual]) return null;
-        const sit = shift ? await perguntarSituacao(JPS[qual].rotulo) : 0;
+        const sit = await perguntarJP(this.actor, qual, { shift });
         if (sit === null) return null;
         return rolarJP(this.actor, qual, sit);
       });
