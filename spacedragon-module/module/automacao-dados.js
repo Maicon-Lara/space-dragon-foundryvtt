@@ -10,6 +10,7 @@
  * Campos de uma entrada:
  *   ataque   "bac" ou "bad": rola contra o CP de cada alvo;
  *   ataques  quantos disparos (padrão 1);
+ *   bonusAtaque  somado à BA (o bônus de ataque da arma);
  *   dano     fórmula em PV, rolada uma vez para todos os alvos;
  *   cura     fórmula em PV, sem passar do máximo;
  *   dreno    { chave, formula }: perda de atributo (o dano mental é dreno de
@@ -93,6 +94,18 @@ export const AUTOMACAO_DE_ITENS = {
     nota: "Recarga de 1d8 horas.",
   },
 
+  /* ── Armas de área ────────────────────────────────────────────────────
+   * As demais armas não entram aqui: automacaoDeArma as monta pelo próprio
+   * item. Estas têm a regra do Dano em Área, que não está nos campos dele. */
+  "granada eletrica (1)": { jp: "jpr", aoPassar: "metade", area: "5 m²", dano: "1d8" },
+  "granada explosiva (1)": { jp: "jpr", aoPassar: "metade", area: "10 m²", dano: "1d10" },
+  "pistola autodestrutiva": {
+    modos: [
+      { rotulo: "Disparo (1d6)", ataque: "bad", dano: "1d6" },
+      { rotulo: "Autodestruição (1d8 em 2 m²)", jp: "jpr", aoPassar: "metade", area: "2 m²", dano: "1d8" },
+    ],
+  },
+
   /* ── Poderes mentais ──────────────────────────────────────────────────── */
   "choque mental": {
     jp: "jpm", aoPassar: "anula", dreno: { chave: "sabedoria", formula: "1d4" },
@@ -169,6 +182,9 @@ export const ESPECIAIS_DE_CRIATURAS = {
   "mastodonte|ataque com presas": { jp: "jpr", aoPassar: "anula", efeito: ARREMESSADO, rotulo: "Arremesso" },
   "rinoceratops|chifrada": { jp: "jpr", aoPassar: "anula", efeito: ARREMESSADO, rotulo: "Arremesso" },
 };
+
+/** A fórmula do campo de dano: "1d10 em 10m²" vira "1d10"; sem dado, "". */
+export const danoRolavel = (dano) => String(dano ?? "").match(/^\s*(\d*d\d+(?:\s*[+-]\s*\d+)?)(?![\dd])/i)?.[1]?.replace(/\s+/g, "") ?? "";
 
 /** O nome sem acento, em minúsculas: o jeito de achar um item na tabela. */
 export const chaveDoNome = (nome) => String(nome ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "")

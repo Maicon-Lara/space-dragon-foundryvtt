@@ -98,6 +98,7 @@ export const aplicarDanoNoAlvoLigado = () => regraDeNave("aplicarDanoNoAlvo");
 export const meuPostoLigado = () => regraDeNave("naveMeuPosto");
 export const golpesComoEfeitosLigado = () => regraDeNave("naveGolpesComoEfeitos");
 export const automacaoDeItensLigada = () => regraDeNave("automacaoDeItens");
+export const automacaoDeArmasLigada = () => regraDeNave("automacaoDeArmas");
 
 export function multiplicadorDeDano() {
   try {
@@ -168,6 +169,10 @@ export function registrarOpcoesDeNave(aoMudar = () => {}) {
   reg("automacaoDeItens", true, {
     name: "spacedragon.opcao.automacaoDeItens.nome",
     hint: "spacedragon.opcao.automacaoDeItens.dica",
+  });
+  reg("automacaoDeArmas", true, {
+    name: "spacedragon.opcao.automacaoDeArmas.nome",
+    hint: "spacedragon.opcao.automacaoDeArmas.dica",
   });
   reg("naveMeuPosto", true, {
     name: "spacedragon.opcao.naveMeuPosto.nome",

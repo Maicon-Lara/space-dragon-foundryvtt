@@ -563,5 +563,5 @@
 .sd-aplicar-dano { margin-top: 4px; }
 
 /* O botão Usar na linha do item e os botões por alvo no chat */
-.sd-usar { width: auto; flex: 0 0 auto; padding: 0 8px; font-size: 11px; line-height: 20px; }
+.sd-usar-item { width: auto; flex: 0 0 auto; padding: 0 8px; font-size: 11px; line-height: 20px; }
 .sd-auto-alvo { margin-top: 3px; }

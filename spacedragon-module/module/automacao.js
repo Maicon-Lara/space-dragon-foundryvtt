@@ -8,10 +8,11 @@
  */
 
 import {
-  AUTOMACAO_DE_ITENS, ESPECIAIS_DE_CRIATURAS, chaveDoNome,
+  AUTOMACAO_DE_ITENS, ESPECIAIS_DE_CRIATURAS, chaveDoNome, danoRolavel,
 } from "./automacao-dados.js";
 import { aplicarEmAtor } from "./dano-no-alvo.js";
-import { automacaoDeItensLigada } from "./opcoes.js";
+import { automacaoDeItensLigada, automacaoDeArmasLigada } from "./opcoes.js";
+import { chassiDe } from "./chassi.js";
 import { ligarNaFicha } from "./ficha.js";
 import { ehNave } from "./nave-marca.js";
 import { rolarJP, modificadorDaJP } from "./jp.js";
@@ -21,7 +22,9 @@ import { t as txt } from "./i18n.js";
 const ID = "spacedragon";
 const FLAG = "automacao";
 const FEITOS = "automacoesFeitas";
-export const CLASSE_USAR = "sd-usar";
+// Não é "sd-usar": essa é do link "usar X%" do painel mental (mental.js), e o
+// botão deixava de ser desenhado nas linhas de poder do Mentálico.
+export const CLASSE_USAR = "sd-usar-item";
 export const CLASSE_ALVO = "sd-auto-alvo";
 
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
@@ -43,13 +46,41 @@ const resolver = (chave) => {
   return typeof achada === "string" ? AUTOMACAO_DE_ITENS[achada] ?? null : achada;
 };
 
+/**
+ * A arma comum, montada pelos campos do item — vale também para a arma feita à
+ * mão. As contas são as do sistema: BA + bônus da arma no ataque; no dano, Força
+ * para corpo a corpo e arremesso, e o bônus da arma e o da raça para todas.
+ */
+export function automacaoDeArma(item, ator) {
+  const s = item?.system ?? {};
+  const dado = danoRolavel(s.damage);
+  if (item?.type !== "weapon" || !dado || s.type === "ammunition") return null;
+  const corpo = s.type === "melee";
+  const forca = corpo || s.type === "throwing" ? Number(ator?.system?.mod_forca) || 0 : 0;
+  const extra = forca + (Number(s.bonus_damage) || 0) + (Number(ator?.system?.raceBonusDamage?.(item)) || 0);
+  const base = { dano: extra ? `${dado}${extra < 0 ? extra : `+${extra}`}` : dado, bonusAtaque: Number(s.bonus_ba) || 0 };
+  if (corpo && Number(s.throw_range) > 0) {
+    return { ...base, modos: [
+      { rotulo: txt("spacedragon.auto.modoCorpo"), ataque: "bac" },
+      { rotulo: txt("spacedragon.auto.modoArremesso"), ataque: "bad" },
+    ] };
+  }
+  return { ...base, ataque: corpo ? "bac" : "bad" };
+}
+
 /** O que este item faz, ou null. */
 export function automacaoDe(item, ator) {
   if (item?.type === "monster_attack") {
     const ataque = String(item.system?.description ?? "").replace(/<[^>]+>/g, " ");
     return ESPECIAIS_DE_CRIATURAS[`${chaveDoNome(ator?.name)}|${chaveDoNome(ataque)}`] ?? null;
   }
-  return resolver(chaveDoNome(item?.name));
+  return resolver(chaveDoNome(item?.name)) ?? automacaoDeArma(item, ator);
+}
+
+/** O que o botão da linha faz, respeitando a opção de cada tipo de item. */
+export function definicaoDoBotao(item, ator) {
+  const ligada = item?.type === "weapon" ? automacaoDeArmasLigada() : automacaoDeItensLigada();
+  return ligada ? automacaoDe(item, ator) : null;
 }
 
 /** Troca {n}, {des}, {nivel3} e {nivel4} numa fórmula. */
@@ -146,6 +177,13 @@ export async function usarItem(ator, item, definicao) {
   const escolha = await escolher(definicao);
   if (!escolha) return null;
   const { def, n } = escolha;
+  // O Mentálico paga o alcance e rola o desconhecido pela regra do Cap. 9 antes
+  // do efeito; sem isto o botão seria um jeito de usar o poder de graça.
+  if (item.type === "spell" && chassiDe(ator) === "Mentálico") {
+    const { realizarPoder } = await import("./poder-mental.js");
+    const poder = await realizarPoder(ator, item);
+    if (!poder?.realizou) return null;
+  }
   const nivel = Number(ator.system?.level) || 1;
   const contexto = { n, nivel, des: Number(ator.system?.mod_destreza) || 0 };
   const rolls = [];
@@ -160,7 +198,7 @@ export async function usarItem(ator, item, definicao) {
     // um uso, um número de disparos: com vários alvos, eles se revezam
     for (let i = 0; i < (def.ataques ?? 1); i += 1) {
       const alvo = marcados[i % marcados.length];
-      const a = await r(`1d20 + ${ba}`);
+      const a = await r(`1d20 + ${ba + (Number(def.bonusAtaque) || 0)}`);
       const natural = a.dice?.[0]?.total;
       const acertou = natural === 20 || (natural !== 1 && (alvo.cp === null || a.total >= Number(alvo.cp)));
       linhas.push(acertou
@@ -286,12 +324,14 @@ export async function aplicarNoAlvo(idMensagem, i, dados) {
 
 export function ligarAutomacao() {
   const desenha = (app, el) => {
-    if (!automacaoDeItensLigada() || ehNave(app?.actor) || !app?.actor?.isOwner) return;
+    if (ehNave(app?.actor) || !app?.actor?.isOwner) return;
     const raiz = el?.querySelector ? el : el?.[0];
-    for (const linha of raiz?.querySelectorAll?.("[data-item-id]") ?? []) {
+    // A linha, e não todo [data-item-id]: na aba de Poderes, o input e o select
+    // de dentro da linha também levam esse atributo.
+    for (const linha of raiz?.querySelectorAll?.("li.item[data-item-id]") ?? []) {
       if (linha.querySelector(`.${CLASSE_USAR}`)) continue;
       const item = app.actor.items?.get?.(linha.dataset.itemId);
-      const def = automacaoDe(item, app.actor);
+      const def = definicaoDoBotao(item, app.actor);
       if (!def) continue;
       const botao = linha.ownerDocument.createElement("button");
       botao.type = "button";
