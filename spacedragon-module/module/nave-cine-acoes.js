@@ -1160,11 +1160,11 @@ async function acaoConves(ctx, chave, { camara = null, posto = null } = {}) {
   } else if (chave === "travar") {
     if (!marcado) return aviso(txt("spacedragon.cine.aviso.semAlvo"));
     novo = { ...cine, trava: marcado.id };
-    linhas.push(txt("spacedragon.cine.acao.travou", { alvo: esc(marcado.name ?? "") }));
+    linhas.push(txt("spacedragon.conves.travou", { alvo: esc(marcado.name ?? "") }));
   } else if (chave === "interferir") {
     if (!marcado) return aviso(txt("spacedragon.cine.aviso.semAlvo"));
     novo = { ...cine, interferencia: { alvo: marcado.id, ate: rodada + 1 } };
-    linhas.push(txt("spacedragon.cine.acao.interferiu", { alvo: esc(marcado.name ?? "") }));
+    linhas.push(txt("spacedragon.conves.interferiu", { alvo: esc(marcado.name ?? "") }));
   } else if (chave === "recompor") {
     if (cine.recomposto) return aviso(txt("spacedragon.conves.aviso.jaRecompos"));
     if (!cine.recarga) return aviso(txt("spacedragon.cine.aviso.semEscudoDeForca"));
