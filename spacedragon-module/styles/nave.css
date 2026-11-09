@@ -516,3 +516,15 @@
 .spacedragon-nave-pc .posto-ficha.vinculado { opacity: 1; font-weight: bold; }
 .spacedragon-nave-pc .posto-ficha i { margin-right: 3px; }
 .spacedragon-nave-pc .sd-painel-cine .cine-lido strong { margin-left: 4px; }
+
+/* ── OS BOTÕES NA FICHA DO OLD DRAGON 2 ─────────────────────────────────────
+ *
+ * O sistema estica todo `button` da ficha à largura inteira: o duelo, as
+ * Vantagens e o comprar das câmaras viravam faixas empilhadas. */
+.spacedragon-nave-pc .sd-painel-cine button { width: auto; flex: 0 0 auto; }
+.spacedragon-nave-pc .sd-painel-cine .cine-vantagens { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.spacedragon-nave-pc .sd-painel-cine .cine-vantagens-ativas { width: 100%; margin: 2px 0 0; padding-left: 16px; }
+.spacedragon-nave-pc .sw-comodo-estado { display: block; width: auto; min-width: 9ch; margin: 3px 0 0 auto; line-height: 20px; }
+
+/* o Colapso é a hora mais perigosa da nave: não pode passar despercebido */
+.spacedragon-nave-pc .sd-painel-cine .conves-colapso { padding: 5px 8px; color: #7a0c1e; background: #f8dfe3; border: 2px solid #d9213f; border-radius: 3px; }

@@ -41,7 +41,14 @@ import { naveDe, estadoDoComodo, updateDaNave, tamanhoDaNave } from "./nave-pc-d
 import { bonusDeAtaque, equipamentosDoAtor, podeAtacar } from "./nave-sistemas.js";
 import { tipoDaNave } from "./nave-xp.js";
 import { ehNave } from "./nave-marca.js";
-import { camadaLigada } from "./opcoes.js";
+import { camadaLigada, combateConves } from "./opcoes.js";
+import {
+  ACOES_CONVES, GOLPE, GOLPES, MARCAS_DA_FUGA, POSTO_DA_ACAO_CONVES, RODADA_DO_DADO_EXTRA, escalaConves, dadosExtras,
+  termosConves, golpeForte, golpeDoD6, semArmaParaAtirar, danoATripulante, aplicarImpactoConves, repararGolpe,
+  marcarFuga, avancarColapso, somarSalvamento,
+} from "./nave-conves.js";
+import { CLASSE_CONVES_SALVAR } from "./nave-conves-ficha.js";
+import { escalaDoTipo } from "./nave-cinematico.js";
 import { CAMARAS } from "./camaras.js";
 import { t as txt } from "./i18n.js";
 
@@ -173,7 +180,7 @@ export function ligarCine(raiz, ctx) {
     const alvoDoClique = ev.target?.closest?.(
       [CLASSE_CINE_ACAO, CLASSE_CINE_DUELO, CLASSE_CINE_VANTAGEM, CLASSE_CINE_PRIORIDADE,
         CLASSE_CINE_RESOLVER, CLASSE_CINE_ENCERRAR, CLASSE_CINE_ESCALA,
-        CLASSE_CINE_LIVRO].map((c) => `.${c}`).join(","),
+        CLASSE_CINE_LIVRO, CLASSE_CONVES_SALVAR].map((c) => `.${c}`).join(","),
     );
     if (!alvoDoClique) return;
     ev.preventDefault();
@@ -181,6 +188,7 @@ export function ligarCine(raiz, ctx) {
     if (!ctx.editavel()) return;
     const cl = alvoDoClique.classList;
     try {
+      if (cl.contains(CLASSE_CONVES_SALVAR)) return await salvamento(ctx);
       if (cl.contains(CLASSE_CINE_ESCALA)) return await aplicarEscalaDaNave(ctx);
       if (cl.contains(CLASSE_CINE_LIVRO)) return await voltarAoLivro(ctx);
       if (cl.contains(CLASSE_CINE_DUELO)) return await duelo(ctx);
@@ -205,7 +213,10 @@ async function aplicarEscalaDaNave(ctx, { confirmar = true } = {}) {
   const tipo = tipoDaNave(nave, ctx.ator?.system?.race?.name ?? "");
   const jaGuardado = cineDe(nave).pvLivro;
   const cine = guardarPvDoLivro(cineDe(nave), ctx.ator?.system?.hp);
-  const r = aplicarEscala(cine, tipo, { temEscudo: equipamentosDoAtor(ctx.ator, ID).has("escudo") });
+  const r = aplicarEscala(cine, tipo, {
+    temEscudo: equipamentosDoAtor(ctx.ator, ID).has("escudo"),
+    escalaDe: combateConves() ? escalaConves : escalaDoTipo,
+  });
   if (!r) {
     globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.semTipo"));
     return;
@@ -256,7 +267,7 @@ async function vantagem(ctx, chave) {
   const cine = cineDe(nave);
   const rodada = rodadaAtual();
   // «Com Crítico, escolhe duas» — o Crítico do duelo DESTA rodada
-  const critico = cine.duelo?.grau === "critico" && Number(cine.duelo?.rodada) === rodada;
+  const critico = !combateConves() && cine.duelo?.grau === "critico" && Number(cine.duelo?.rodada) === rodada;
   const novo = adicionarVantagem(cine, marcado.id, marcado.name ?? "", chave, { critico, rodada });
   await ctx.gravar(nave, { ...nave, cine: novo });
   return cartao(ctx.ator, txt("spacedragon.cine.cartao.vantagem"), [
@@ -287,7 +298,8 @@ async function duelo(ctx) {
     // não chegou (a fila do Mestre), ela ainda está sob a rodada anterior
     motores: Number(cine.motores) === rodada ||
       (rodada > 1 && prioridadeConta(cine, "motores", rodada - 1) > 0),
-    interferencia: interferida(meuToken, rodada),
+    // no Convés a Interferência tira 2 do ataque, e não 20% do duelo
+    interferencia: !combateConves() && interferida(meuToken, rodada),
   });
 
   const rolls = [];
@@ -336,6 +348,7 @@ async function duelo(ctx) {
 /* ── AS AÇÕES DE POSTO ───────────────────────────────────────────────────── */
 
 async function acao(ctx, chave, { camara = null, posto = null } = {}) {
+  if (combateConves()) return acaoConves(ctx, chave, { camara, posto });
   const ator = ctx.ator;
   const nave = naveDe(ator, ID);
   const rodada = rodadaAtual();
@@ -494,7 +507,15 @@ async function quemConserta(nave, camara) {
  */
 async function lancarMissil(ctx, { item, arma, alvo, rodada }) {
   const ator = ctx.ator;
-  const rd = await rolar(String(arma?.dano || "4d10"));
+  // no Convés o míssil também recebe os dados extras; a Sobrecarga se gasta aqui
+  const conves = combateConves();
+  const nave = naveDe(ator, ID);
+  const cine = cineDe(nave);
+  const sobrecarga = conves && prioridadeConta(cine, "sobrecarga", rodada) > 0;
+  const rd = await rolar(conves
+    ? formulaDoDanoCine("misseis", { dano: arma?.dano || "4d10" }, { armas: dadosExtras(rodada, { sobrecarga }) })
+    : String(arma?.dano || "4d10"));
+  if (sobrecarga) await ctx.gravar(nave, { ...nave, cine: comRodada(cine, rodada, (d) => ({ ...d, prioridade: [] })) });
   const nomeAlvo = esc(alvo?.name ?? "");
   const impacto = alvo?.document?.uuid
     ? { modo: "cine", alvo: alvo.document.uuid, nome: alvo.name ?? "", dano: rd.total, camara: null, rodada }
@@ -504,7 +525,8 @@ async function lancarMissil(ctx, { item, arma, alvo, rodada }) {
     content:
       `<div class="spacedragon-cartao sd-disparo sd-cine">` +
       `<h4>${txt("spacedragon.cine.disparo.titulo", { arma: esc(item?.name ?? arma.nome), alvo: nomeAlvo || "?" })}</h4>` +
-      `<ul><li>${txt("spacedragon.cine.disparo.missil", { dano: rd.total })}</li></ul>` +
+      `<ul><li>${txt("spacedragon.cine.disparo.missil", { dano: rd.total })}</li>` +
+      (combateConves() ? `<li><em>${txt("spacedragon.conves.missil")}</em></li>` : "") + `</ul>` +
       (impacto ? `<button type="button" class="sd-aplicar-impacto">${txt("spacedragon.nave.disparo.aplicar", { alvo: nomeAlvo || "?" })}</button>` : "") +
       `</div>`,
     rolls: [rd],
@@ -519,6 +541,7 @@ async function lancarMissil(ctx, { item, arma, alvo, rodada }) {
  * a nave inimiga é do Mestre, e é ele quem grava nela.
  */
 export async function dispararCine(ctx, { item, chave, arma }) {
+  if (combateConves() && chave !== "misseis") return dispararConves(ctx, { item, chave, arma });
   const ator = ctx.ator;
   const nave = naveDe(ator, ID);
   const rodada = rodadaAtual();
@@ -530,7 +553,8 @@ export async function dispararCine(ctx, { item, chave, arma }) {
   const nomeAlvo = esc(alvo?.name ?? alvo?.actor?.name ?? "");
   const nomeArma = esc(item?.name ?? arma.nome);
 
-  if (!podeAtacar(nave) || pen.semArmas) {
+  const armasInstaladas = [...(ator.items ?? [])].filter((i) => i?.type === "weapon").length;
+  if (!podeAtacar(nave) || pen.semArmas || (combateConves() && semArmaParaAtirar(cine.golpes, armasInstaladas))) {
     globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.semPonte", { nave: esc(ator.name) }));
     return null;
   }
@@ -696,7 +720,9 @@ export async function aplicarImpactoCineDaMensagem(msg, imp) {
   const ator = doc?.actor ?? doc;
   if (!ator?.update) return;
   const hp = Number(ator.system?.hp?.value) || 0;
-  if (!ehNave(ator)) {
+  if (imp.conves && ehNave(ator)) {
+    await aplicarImpactoConvesNaNave(ator, hp, imp);
+  } else if (!ehNave(ator)) {
     await ator.update({ "system.hp.value": hp - (Number(imp.dano) || 0) });
   } else {
     const nave = naveDe(ator, ID);
@@ -746,7 +772,7 @@ async function cartaoDaJpr(ator, nave, camara) {
 }
 
 /** O botão da JPR: o dono do personagem rola, e a falha cobra 1d6 de PV. */
-export async function rolarJprDoTripulante(uuid, mensagem = null) {
+export async function rolarJprDoTripulante(uuid, mensagem = null, formulaDoDano = DANO_A_BORDO) {
   const doc = await globalThis.fromUuid?.(uuid);
   const quem = doc?.actor ?? doc;
   if (!quem) return null;
@@ -774,7 +800,7 @@ export async function rolarJprDoTripulante(uuid, mensagem = null) {
     throw e;
   }
   if (!r || r.passou) return r;
-  const dano = await rolar("1d6");
+  const dano = await rolar(formulaDoDano);
   const pv = (Number(quem.system?.hp?.value) || 0) - dano.total;
   await quem.update({ "system.hp.value": pv });
   await cartao(quem, txt("spacedragon.tripulante.jprDano", { nome: esc(quem.name), dano: dano.total, pv }), [], { rolls: [dano] });
@@ -784,13 +810,24 @@ export async function rolarJprDoTripulante(uuid, mensagem = null) {
 /** Liga os botões de JPR nos cartões. Uma vez, no `ready`. */
 export function ligarJprDaTripulacao() {
   globalThis.Hooks?.on?.("renderChatMessageHTML", (msg, html) => {
+    for (const b of html?.querySelectorAll?.(`.${CLASSE_CONVES_JPR_FINAL}`) ?? []) {
+      if (b.dataset.ligado) continue;
+      b.dataset.ligado = "1";
+      b.addEventListener("click", (ev) => {
+        ev.preventDefault();
+        b.disabled = true;
+        rolarJprFinal(b.dataset.uuid, Number(b.dataset.bonus) || 0, msg?.id ?? null)
+          .catch((e) => console.error(`${ID} | JPR do Colapso`, e))
+          .finally(() => { b.disabled = false; });
+      });
+    }
     for (const b of html?.querySelectorAll?.(`.${CLASSE_CINE_JPR}`) ?? []) {
       if (b.dataset.ligado) continue;
       b.dataset.ligado = "1";
       b.addEventListener("click", (ev) => {
         ev.preventDefault();
         b.disabled = true;
-        rolarJprDoTripulante(b.dataset.uuid, msg?.id ?? null)
+        rolarJprDoTripulante(b.dataset.uuid, msg?.id ?? null, b.dataset.dano || DANO_A_BORDO)
           .catch((e) => console.error(`${ID} | JPR do tripulante`, e))
           .finally(() => { b.disabled = false; });
       });
@@ -810,6 +847,7 @@ export function ligarJprDaTripulacao() {
  * Devolve true se fechou.
  */
 export async function fecharRodadaDaNave(ator, { combate, rodada }) {
+  if (combateConves()) return fecharRodadaConves(ator, { combate, rodada });
   const inicio = cineDe(naveDe(ator, ID));
   if (!precisaFechar(inicio.fimRodada, combate, rodada)) return false;
   // Rola primeiro, com o que a nave tinha; decide depois, com o que ela TEM —
@@ -891,7 +929,7 @@ export async function fecharRodadaDoCombate(combate, rodada) {
       console.error(`${ID} | fechar a rodada ${rodada} de ${ator.name}`, e);
     }
   }
-  if (fechou && pedeEvento(rodada + 1)) {
+  if (fechou && !combateConves() && pedeEvento(rodada + 1)) {
     await globalThis.ChatMessage?.create?.({
       content: `<div class="spacedragon-cartao sd-cine"><p><strong>${txt("spacedragon.cine.fimRodada.evento", { tensao: tensaoDaRodada(rodada + 1) })}</strong></p></div>`,
     });
@@ -1001,6 +1039,10 @@ async function encerrar(ctx) {
     ...limparRodadaCine(cine, Infinity),
     porRodada: {},
     avarias: {},
+    golpes: {},
+    fuga: 0,
+    recomposto: false,
+    colapso: null,
     duelo: null,
     ultimoReparo: null,
     motores: null,
@@ -1023,8 +1065,381 @@ async function encerrar(ctx) {
   ]);
 }
 
+/* ── O COMBATE DE CONVÉS ─────────────────────────────────────────────────────
+ *
+ * A regra mora em nave-conves.js. Aqui ficam só as rolagens e as gravações, no
+ * mesmo caminho do Cinematográfico: o duelo, a escala, o cartão com o botão de
+ * aplicar e o rastreador são os dele.
+ */
+
+/** Alguém em cena interferiu nesta nave (−2 no ataque)? */
+function interferenciaConves(meuToken, rodada) {
+  return navesEmCena().some((n) => n.cine.interferencia?.alvo === meuToken && Number(n.cine.interferencia.ate) >= rodada);
+}
+
+/** O teste da Sobrecarga: o da ficha da Engenharia; sem ficha, falha só no 1 em 1d6. */
+async function testeDaSobrecarga(nave) {
+  const eng = tripulante(nave, "engenharia");
+  const teste = eng ? consertoDe(eng) : null;
+  if (teste) {
+    const r = await rolar(formulaDoConserto(teste));
+    return { ok: consertoPassou(teste, r.total), r, quem: eng };
+  }
+  const r = await rolar("1d6");
+  return { ok: r.total !== 1, r, quem: eng };
+}
+
+async function acaoConves(ctx, chave, { camara = null, posto = null } = {}) {
+  const ator = ctx.ator;
+  const nave = naveDe(ator, ID);
+  const rodada = rodadaAtual();
+  const cine = marcarTurno(cineDe(nave), rodada);
+  const marcado = [...(globalThis.game?.user?.targets ?? [])][0] ?? null;
+  const rolls = [];
+  const linhas = [];
+  let novo = cine;
+  let quem = tripulante(nave, posto ?? POSTO_DA_ACAO_CONVES[chave] ?? "engenharia");
+  const aviso = (m) => globalThis.ui?.notifications?.warn?.(m);
+  const somarFuga = () => {
+    const f = marcarFuga(cine.fuga);
+    novo = { ...cine, fuga: f.marcas };
+    linhas.push(f.escapou
+      ? txt("spacedragon.conves.escapou", { marcas: f.marcas, max: MARCAS_DA_FUGA })
+      : txt("spacedragon.conves.marcou", { marcas: f.marcas, max: MARCAS_DA_FUGA }));
+  };
+
+  if (chave === "resolver") {
+    if (!cine.golpes[camara]) return aviso(txt("spacedragon.cine.aviso.nadaAResolver"));
+    // apagar incêndio é só a ação; o resto pede o teste de conserto
+    if (camara !== "incendio") {
+      if (Number(cine.consertoFalhou?.[camara]) === rodada && rodada > 0) return aviso(txt("spacedragon.tripulante.jaTentou"));
+      const escolha = await quemConserta(nave, camara);
+      if (!escolha) return null;
+      if (escolha.ator) {
+        quem = escolha.ator;
+        const teste = consertoDe(escolha.ator);
+        const r = await rolar(formulaDoConserto(teste));
+        rolls.push(r);
+        const ok = consertoPassou(teste, r.total);
+        const dados = { nome: esc(escolha.ator.name), fonte: teste.fonte, rolado: r.total, valor: teste.valor };
+        linhas.push(txt(ok ? "spacedragon.tripulante.consertoOk" : "spacedragon.tripulante.consertoFalhou", dados));
+        if (!ok) {
+          await ctx.gravar(nave, { ...nave, cine: { ...cine, consertoFalhou: { ...(cine.consertoFalhou ?? {}), [camara]: rodada } } });
+          return cartao(ator, txt("spacedragon.cine.cartao.acao", { nave: esc(ator.name) }), linhas, { rolls, quem });
+        }
+      }
+    }
+    novo = { ...cine, golpes: repararGolpe(cine.golpes, camara) };
+    linhas.push(txt("spacedragon.conves.reparou", { golpe: GOLPE[camara]?.rotulo ?? camara }));
+  } else if (chave === "giro") {
+    if (cine.golpes.motores) return aviso(txt("spacedragon.conves.aviso.semGiro"));
+    novo = { ...cine, giro: { valor: 4, rodada } };
+    linhas.push(txt("spacedragon.conves.giro"));
+  } else if (chave === "fuga") {
+    const r = await rolar("1d100");
+    rolls.push(r);
+    const hp = ator.system?.hp ?? {};
+    const chance = pilotoDaNave(nave, cine).valor + Number(cine.agilidade) + (cascoAbaixoDaMetade(hp.value, hp.max) ? -20 : 0);
+    const ok = grauDoTeste(chance, r.total).ordem >= GRAU.sucesso.ordem;
+    linhas.push(txt("spacedragon.cine.cartao.chance", { chance, conta: "" }), txt("spacedragon.cine.cartao.rolou", { d100: r.total }));
+    if (ok) somarFuga();
+    else linhas.push(txt("spacedragon.conves.naoMarcou"));
+  } else if (chave === "sobrecargaDano" || chave === "sobrecargaFuga") {
+    const t = await testeDaSobrecarga(nave);
+    rolls.push(t.r);
+    quem = t.quem;
+    if (!t.ok) {
+      novo = { ...cine, golpes: { ...cine.golpes, motores: true } };
+      linhas.push(txt("spacedragon.conves.sobrecargaFalhou"));
+    } else if (chave === "sobrecargaDano") {
+      novo = comRodada(cine, rodada, (d) => ({ ...d, prioridade: ["sobrecarga"] }));
+      linhas.push(txt("spacedragon.conves.sobrecargaDano"));
+    } else {
+      somarFuga();
+    }
+  } else if (chave === "travar") {
+    if (!marcado) return aviso(txt("spacedragon.cine.aviso.semAlvo"));
+    novo = { ...cine, trava: marcado.id };
+    linhas.push(txt("spacedragon.cine.acao.travou", { alvo: esc(marcado.name ?? "") }));
+  } else if (chave === "interferir") {
+    if (!marcado) return aviso(txt("spacedragon.cine.aviso.semAlvo"));
+    novo = { ...cine, interferencia: { alvo: marcado.id, ate: rodada + 1 } };
+    linhas.push(txt("spacedragon.cine.acao.interferiu", { alvo: esc(marcado.name ?? "") }));
+  } else if (chave === "recompor") {
+    if (cine.recomposto) return aviso(txt("spacedragon.conves.aviso.jaRecompos"));
+    if (!cine.recarga) return aviso(txt("spacedragon.cine.aviso.semEscudoDeForca"));
+    const r = await rolar(cine.recarga);
+    rolls.push(r);
+    novo = { ...cine, recomposto: true, escudo: { ...cine.escudo, atual: recarregar(cine.escudo.atual, cine.escudo.max, r.total) } };
+    linhas.push(txt("spacedragon.cine.acao.recarregou", { n: r.total, escudo: novo.escudo.atual, max: cine.escudo.max }));
+  } else {
+    return aviso(txt("spacedragon.cine.aviso.acaoDaMesa"));
+  }
+
+  await ctx.gravar(nave, { ...nave, cine: novo });
+  return cartao(ator, txt("spacedragon.cine.cartao.acao", { nave: esc(ator.name) }), linhas, { rolls, quem });
+}
+
+/** O disparo no Convés: mesma janela e mesmo cartão, com a conta da regra nova. */
+async function dispararConves(ctx, { item, chave, arma }) {
+  const ator = ctx.ator;
+  const nave = naveDe(ator, ID);
+  const rodada = rodadaAtual();
+  const cine = marcarTurno(cineDe(nave), rodada);
+  const alvo = [...(globalThis.game?.user?.targets ?? [])][0] ?? null;
+  const nomeAlvo = esc(alvo?.name ?? alvo?.actor?.name ?? "");
+  const nomeArma = esc(item?.name ?? arma.nome);
+
+  const armas = [...(ator.items ?? [])].filter((i) => i?.type === "weapon").length;
+  if (!podeAtacar(nave) || semArmaParaAtirar(cine.golpes, armas)) {
+    globalThis.ui?.notifications?.warn?.(txt("spacedragon.nave.disparo.semPonte", { nave: esc(ator.name) }));
+    return null;
+  }
+
+  const artilheiro = tripulante(nave, "artilharia");
+  const bad = baDistanciaDe(artilheiro);
+  const sobrecarga = prioridadeConta(cine, "sobrecarga", rodada) > 0;
+  const opcoes = GOLPES.map((g, i) => `<option value="${g.chave}">${i + 1}. ${g.rotulo}</option>`).join("");
+  const V2 = globalThis.foundry?.applications?.api?.DialogV2;
+  if (!V2) return null;
+  const escolha = await V2.wait({
+    window: { title: txt("spacedragon.janela.disparo", { arma: nomeArma }) },
+    content:
+      (cine.golpes.armas ? `<p><em>${txt("spacedragon.cine.aviso.armasParadas", { n: 1 })}</em></p>` : "") +
+      `<div class="form-group"><label>${artilheiro
+        ? txt("spacedragon.nave.disparo.artilheiroNome", { nome: esc(artilheiro.name) })
+        : txt("spacedragon.nave.disparo.artilheiro")}</label>` +
+      `<input type="number" name="artilheiro" value="${bad ?? ""}"></div>` +
+      `<div class="form-group"><label>${txt("spacedragon.nave.disparo.situacao")}</label>` +
+      `<input type="number" name="situacao" value="0"></div>` +
+      `<div class="form-group"><label>${txt("spacedragon.conves.mirar")}</label><input type="checkbox" name="mirar"></div>` +
+      `<div class="form-group"><label>${txt("spacedragon.conves.escolherGolpe")}</label><select name="golpe">${opcoes}</select></div>`,
+    buttons: [
+      { action: "rolar", label: txt("spacedragon.botao.rolar"), default: true, callback: (_ev, b) => Object.fromEntries(new FormData(b.form)) },
+      { action: "cancelar", label: txt("spacedragon.botao.cancelar") },
+    ],
+    rejectClose: false,
+  });
+  if (!escolha || typeof escolha !== "object") return null;
+  await ctx.gravar(nave, { ...nave, cine });
+  const mirar = escolha.mirar === "on";
+
+  const alvoAtor = alvo?.actor ?? null;
+  const alvoEhNave = Boolean(alvoAtor && ehNave(alvoAtor));
+  const naveAlvo = alvoEhNave ? naveDe(alvoAtor, ID) : {};
+  const cineAlvo = alvoEhNave ? cineDe(naveAlvo) : cineDe({});
+  const alvoToken = alvo?.id ?? null;
+  const meuToken = tokenDaNave(ator, ctx.token);
+
+  const termos = termosConves({
+    ba: ator.system?.ba ?? 0,
+    balistico: bonusDeAtaque(nave, equipamentosDoAtor(ator, ID)),
+    artilheiro: escolha.artilheiro,
+    rodada,
+    vantagem: vantagensContra(cine, alvoToken, rodada),
+    caudaContraMim: vantagensContra(cineAlvo, meuToken, rodada).includes("cauda"),
+    travado: Boolean(alvoToken && cine.trava === alvoToken),
+    interferido: interferenciaConves(meuToken, rodada),
+    golpes: cine.golpes,
+    mirar,
+    situacao: escolha.situacao,
+  });
+  const formula = ["1d20", ...termos.map(([, n]) => (n > 0 ? `+ ${n}` : `- ${Math.abs(n)}`))].join(" ");
+  const cpBase = alvoAtor?.system?.ac_total ?? alvoAtor?.system?.ac ?? null;
+  const cpInfo = cpCine(cpBase, alvoEhNave ? cineAlvo : {}, rodada);
+
+  const rolls = [];
+  const linhas = [];
+  const r = async (f) => { const x = await rolar(f); rolls.push(x); return x; };
+  const ataque = await r(formula);
+  const natural = ataque.dice?.[0]?.total;
+  const acerto = natural === 20 || (natural !== 1 && (!cpInfo || ataque.total >= cpInfo.cp));
+  linhas.push(`${formula.replace(/^1d20/, `<strong>${ataque.total}</strong> (d20: ${natural})`)}` +
+    (cpInfo ? ` · ${txt("spacedragon.cine.disparo.contra", { cp: cpInfo.cp })}` : ""));
+  linhas.push(`<small>${[...termos, ...(cpInfo?.partes ?? [])].map(([t2, v]) => `${sinal(v)} ${t2}`).join(", ")}</small>`);
+
+  let novoCine = cine;
+  let impacto = null;
+  if (acerto) {
+    const fDano = formulaDoDanoCine(chave, arma, { armas: dadosExtras(rodada, { sobrecarga }) });
+    const rd = await r(fDano);
+    const dano = rd.total * (natural === 20 ? 2 : 1);
+    linhas.push(txt("spacedragon.cine.disparo.acerto", { dano, formula: fDano }) + (natural === 20 ? ` <strong>${txt("spacedragon.cine.disparo.critico")}</strong>` : ""));
+    if (rodada >= RODADA_DO_DADO_EXTRA) linhas.push(`<small>${txt("spacedragon.conves.dadoExtra")}</small>`);
+    if (sobrecarga) novoCine = comRodada(novoCine, rodada, (d) => ({ ...d, prioridade: [] }));
+
+    const previa = aplicarDanoCine({ escudo: alvoEhNave ? cineAlvo.escudo.atual : 0, casco: 0, dano });
+    let golpe = null;
+    if (alvoEhNave && golpeForte({ total: ataque.total, cp: cpInfo?.cp ?? 0, natural, noCasco: previa.noCasco })) {
+      if (mirar && GOLPE[escolha.golpe]) golpe = GOLPE[escolha.golpe];
+      else golpe = golpeDoD6((await r("1d6")).total);
+      if (golpe) linhas.push(txt("spacedragon.conves.golpeForte", { golpe: golpe.rotulo, efeito: esc(golpe.efeito) }));
+    }
+    if (alvo?.document?.uuid) {
+      impacto = { modo: "cine", conves: true, alvo: alvo.document.uuid, nome: alvo.name ?? "", dano, golpe: golpe?.chave ?? null, rodada };
+    }
+  } else {
+    linhas.push(txt("spacedragon.nave.disparo.erro"));
+  }
+
+  if (novoCine !== cine) await ctx.gravar(nave, { ...nave, cine: novoCine });
+  const botao = impacto
+    ? `<button type="button" class="sd-aplicar-impacto">${txt("spacedragon.nave.disparo.aplicar", { alvo: nomeAlvo || "?" })}</button>`
+    : "";
+  await globalThis.ChatMessage?.create?.({
+    speaker: falante(ator, artilheiro),
+    content:
+      `<div class="spacedragon-cartao sd-disparo sd-cine">` +
+      `<h4>${txt("spacedragon.cine.disparo.titulo", { arma: nomeArma, alvo: nomeAlvo || "?" })}</h4>` +
+      `<ul>${linhas.map((l) => `<li>${l}</li>`).join("")}</ul>${botao}</div>`,
+    rolls,
+    ...(impacto ? { flags: { [ID]: { impacto } } } : {}),
+  });
+  return { acerto, impacto };
+}
+
+/** Aplica o impacto do Convés e pede as JPR que o golpe mandar. */
+async function aplicarImpactoConvesNaNave(ator, hp, imp) {
+  const nave = naveDe(ator, ID);
+  const r = aplicarImpactoConves(cineDe(nave), hp, imp);
+  const mud = updateDaNave(nave, { ...nave, cine: r.cine }, ID) ?? {};
+  await ator.update({ ...mud, "system.hp.value": r.casco });
+  globalThis.ui?.notifications?.info?.(txt("spacedragon.cine.aviso.aplicado", {
+    alvo: esc(ator.name), escudo: r.noEscudo, casco: r.noCasco,
+  }) + (r.golpe ? ` ${r.golpe.rotulo}: ${r.golpe.efeito}` : ""));
+  if (!r.golpe?.jpr) return;
+  // o dano já está gravado: um cartão que falha não pode impedir a marca de aplicado
+  try {
+    await cartaoDaJprConves(ator, nave, r.golpe, danoATripulante(r.casco, Number(ator.system?.hp?.max) || 0));
+  } catch (e) {
+    console.error(`${ID} | cartão de JPR`, e);
+  }
+}
+
+/** Todos os postos ocupados, sem repetir quem está em dois. */
+function aBordo(nave) {
+  const vistos = new Set();
+  return Object.keys(ACOES_CONVES)
+    .map((posto) => ({ posto, nome: String(nave?.postos?.[posto] ?? "").trim(), ator: tripulante(nave, posto) }))
+    .filter((t) => {
+      const chave = t.ator ? `a:${t.ator.uuid ?? t.ator.id}` : `n:${t.nome}`;
+      if (!t.nome || vistos.has(chave)) return false;
+      vistos.add(chave);
+      return true;
+    });
+}
+
+async function cartaoDaJprConves(ator, nave, golpe, formula) {
+  let lista = aBordo(nave);
+  if (!lista.length) return;
+  // Tripulação: um posto aleatório. Brecha: o Mestre escolhe dois dos botões.
+  if (golpe.jpr === 1) lista = [lista[(await rolar(`1d${lista.length}`)).total - 1] ?? lista[0]];
+  const linhas = lista.map((t) => (t.ator
+    ? `<button type="button" class="${CLASSE_CINE_JPR}" data-uuid="${esc(t.ator.uuid ?? "")}" data-dano="${formula}">` +
+      `${txt("spacedragon.tripulante.jprBotao", { nome: esc(t.ator.name) })}</button>`
+    : txt("spacedragon.tripulante.jprSemFicha", { nome: esc(t.nome) })));
+  await cartao(ator, txt("spacedragon.conves.jprTitulo", { golpe: golpe.rotulo, nave: esc(ator.name) }),
+    [txt("spacedragon.conves.jprRegra", { efeito: esc(golpe.efeito), dano: formula }), ...linhas]);
+}
+
+/** Um salvamento que deu certo no Colapso: +1 na JPR final. */
+async function salvamento(ctx) {
+  const nave = naveDe(ctx.ator, ID);
+  const cine = cineDe(nave);
+  if (!cine.colapso || cine.colapso.acabou) return null;
+  const colapso = somarSalvamento(cine.colapso);
+  await ctx.gravar(nave, { ...nave, cine: { ...cine, colapso } });
+  return cartao(ctx.ator, txt("spacedragon.cine.cartao.acao", { nave: esc(ctx.ator.name) }), [
+    txt("spacedragon.conves.salvou", { bonus: colapso.bonus }),
+  ]);
+}
+
+/** O fim da rodada no Convés: cobra o incêndio e faz o Colapso andar. */
+async function fecharRodadaConves(ator, { combate, rodada }) {
+  const inicio = cineDe(naveDe(ator, ID));
+  if (!precisaFechar(inicio.fimRodada, combate, rodada)) return false;
+  const rolls = [];
+  let fogo = 0;
+  if (inicio.golpes.incendio) {
+    const r = await rolar(GOLPE.incendio.dado);
+    rolls.push(r);
+    fogo = r.total;
+  }
+
+  const nave = naveDe(ator, ID);
+  const cine = cineDe(nave);
+  if (!precisaFechar(cine.fimRodada, combate, rodada)) return false;
+  // fogo apagado enquanto o dado rolava não cobra
+  const dano = cine.golpes.incendio ? fogo : 0;
+  const casco = (Number(ator.system?.hp?.value) || 0) - dano;
+  const { colapso, evento } = avancarColapso(cine.colapso, casco);
+  const novo = limparRodadaCine({ ...cine, colapso }, rodada, { combate });
+  const mud = updateDaNave(nave, { ...nave, cine: novo }, ID) ?? {};
+  if (dano) mud["system.hp.value"] = casco;
+  if (Object.keys(mud).length) await ator.update(mud);
+
+  const linhas = [];
+  if (dano) linhas.push(txt("spacedragon.conves.incendioCobrou", { n: dano, casco }));
+  if (evento === "comecou" || evento === "contando") linhas.push(`<strong>${txt("spacedragon.conves.colapso", { restam: colapso.restam })}</strong>`);
+  if (linhas.length) await cartao(ator, txt("spacedragon.cine.cartao.fimRodada", { nave: esc(ator.name), rodada }), linhas, { rolls });
+  if (evento === "fim") await cartaoDoFimDoColapso(ator, nave, colapso);
+  return true;
+}
+
+export const CLASSE_CONVES_JPR_FINAL = "sd-conves-jpr-final";
+
+async function cartaoDoFimDoColapso(ator, nave, colapso) {
+  const bonus = Number(colapso.bonus) || 0;
+  const linhas = aBordo(nave).map((t) => (t.ator
+    ? `<button type="button" class="${CLASSE_CONVES_JPR_FINAL}" data-uuid="${esc(t.ator.uuid ?? "")}" data-bonus="${bonus}">` +
+      `${txt("spacedragon.tripulante.jprBotao", { nome: esc(t.ator.name) })}</button>`
+    : txt("spacedragon.tripulante.jprSemFicha", { nome: esc(t.nome) })));
+  await cartao(ator, txt("spacedragon.conves.colapsoFimTitulo", { nave: esc(ator.name) }), [
+    txt("spacedragon.conves.colapsoRegra", { bonus }), ...linhas,
+  ]);
+}
+
+/**
+ * A JPR que decide quem morre. Anuncia o resultado e ajusta o PV de quem
+ * sobrevive; a morte é registrada pelo Mestre na ficha do personagem.
+ */
+export async function rolarJprFinal(uuid, bonus = 0, mensagem = null) {
+  const doc = await globalThis.fromUuid?.(uuid);
+  const quem = doc?.actor ?? doc;
+  if (!quem) return null;
+  if (!quem.isOwner) {
+    globalThis.ui?.notifications?.warn?.(txt("spacedragon.aviso.semPermissao", { nome: esc(quem.name) }));
+    return null;
+  }
+  const feitas = [].concat(quem.getFlag?.(ID, "jprFeitas") ?? quem.flags?.[ID]?.jprFeitas ?? []);
+  if (mensagem) {
+    if (feitas.includes(mensagem)) {
+      globalThis.ui?.notifications?.warn?.(txt("spacedragon.tripulante.jprFeita", { nome: esc(quem.name) }));
+      return null;
+    }
+    await quem.update({ [`flags.${ID}.jprFeitas`]: [...feitas, mensagem].slice(-20) });
+  }
+  let r;
+  try {
+    r = await rolarJP(quem, "jpd", bonus);
+  } catch (e) {
+    if (mensagem) await quem.update({ [`flags.${ID}.jprFeitas`]: feitas });
+    throw e;
+  }
+  if (!r) return r;
+  if (!r.passou) {
+    await cartao(quem, txt("spacedragon.conves.morreu", { nome: esc(quem.name) }));
+    return { ...r, morreu: true };
+  }
+  const d = await rolar("1d6");
+  const pv = d.total;
+  await quem.update({ "system.hp.value": pv });
+  await cartao(quem, txt("spacedragon.conves.sobreviveu", { nome: esc(quem.name), pv }), [], { rolls: [d] });
+  return { ...r, morreu: false, pv };
+}
+
 /**
  * As ações internas, para o teste com um Foundry de brinquedo
  * (tools/teste-nave-cine-mesa.mjs). A ficha não usa: ela entra por `ligarCine`.
  */
-export const PARA_TESTE = { duelo, acao, vantagem, prioridade, encerrar, aplicarEscalaDaNave, voltarAoLivro };
+export const PARA_TESTE = { duelo, acao, vantagem, prioridade, encerrar, aplicarEscalaDaNave, voltarAoLivro, salvamento };

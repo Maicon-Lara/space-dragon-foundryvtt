@@ -56,9 +56,10 @@ import { aplicarAcao, ehAutomatica, limparFimDaRodada } from "./nave-acoes.js";
 import { CAMARAS } from "./camaras.js";
 import {
   combateCompilado, naveModular, camadaLigada, danoPorMargem, escudoComoReserva, multiplicadorDeDano,
-  combateCinematico,
+  combateCinematico, combateConves,
 } from "./opcoes.js";
 import { painelCinematico, MARCA_CINE, seloDoTripulante } from "./nave-cine-ficha.js";
+import { painelConves } from "./nave-conves-ficha.js";
 import {
   tripulacaoDaNave, acharAtorNoMundo, digitarNoPosto, vincularAoPosto, tripulanteDoPosto, baDistanciaDe,
 } from "./nave-tripulante.js";
@@ -462,7 +463,7 @@ export function porPainelDaTripulacao(raiz, ator) {
   // das Compiladas: os dois na mesma aba dariam duas regras para a mesma ação
   if (combateCinematico()) {
     const nave = naveDe(ator, ID);
-    aba.insertAdjacentHTML("afterbegin", painelCinematico(ator, nave, {
+    aba.insertAdjacentHTML("afterbegin", (combateConves() ? painelConves : painelCinematico)(ator, nave, {
       rodada: globalThis.game?.combat?.round ?? null, classePosto: CLASSE_POSTO,
       tripulacao: tripulacaoDaNave(nave, acharAtorNoMundo),
     }));
