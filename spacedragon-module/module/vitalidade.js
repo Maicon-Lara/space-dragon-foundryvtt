@@ -166,6 +166,40 @@ export function multiplicadorCritico(ator, nivel = null) {
   return Number(String(cel ?? "").replace(/[^\d]/g, "")) || null;
 }
 
+const nomeDaClasse = (ator) => (ator?.system?.class ?? ator?.items?.find?.((i) => i.type === "class"))?.name ?? "";
+
+/** O Mercenário escolhe a arma de preferência a partir do 5º nível. */
+export const escolheArmaPreferida = (ator) =>
+  /^Mercenário/.test(nomeDaClasse(ator)) && (Number(ator?.system?.level) || 1) >= 5;
+
+/**
+ * O multiplicador num acerto crítico com esta arma, ou null.
+ *
+ * O +1 do Mercenário é só da arma de preferência. A coluna da especialização o
+ * traz em toda arma, e por isso a conta dele sai da tabela do livro.
+ */
+export function multiplicadorDaArma(ator, item) {
+  const m = multiplicadorCritico(ator);
+  if (!m || !/^Mercenário/.test(nomeDaClasse(ator))) return m;
+  const n = Math.min(20, Math.max(1, Number(ator.system?.level) || 1));
+  const livro = Number(String(PROGRESSAO.COSMONAUTA.danoCritico[n - 1]).replace(/[^\d]/g, ""));
+  const preferida = escolheArmaPreferida(ator) && item?.id && item.id === ator.getFlag?.("spacedragon", "armaPreferida");
+  return preferida ? livro + 1 : livro;
+}
+
+/** T3-5, coluna do Ataque Furtivo, do 1º ao 20º nível. */
+const ATAQUE_FURTIVO = [2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5];
+
+/** O multiplicador do Ataque Furtivo, ou null para quem não é Gatuno. */
+export function multiplicadorFurtivo(ator) {
+  if (classeBase(ator) !== "Gatuno") return null;
+  const nome = nomeDaClasse(ator);
+  let n = Math.min(20, Math.max(1, Number(ator.system?.level) || 1));
+  // Estas especializações param de progredir no Ataque Furtivo no 5º nível.
+  if (/^(Sabotador|Mandaloriano)/.test(nome)) n = Math.min(n, 5);
+  return ATAQUE_FURTIVO[n - 1] + (/^Assassino/.test(nome) && n >= 5 ? 1 : 0);
+}
+
 /**
  * Aplica o multiplicador a um dano já rolado.
  *

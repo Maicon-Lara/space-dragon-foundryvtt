@@ -13,6 +13,7 @@ import {
 import { aplicarEmAtor } from "./dano-no-alvo.js";
 import { automacaoDeItensLigada, automacaoDeArmasLigada } from "./opcoes.js";
 import { chassiDe } from "./chassi.js";
+import { multiplicadorDaArma, multiplicadorFurtivo, escolheArmaPreferida } from "./vitalidade.js";
 import { ligarNaFicha } from "./ficha.js";
 import { ehNave } from "./nave-marca.js";
 import { rolarJP, modificadorDaJP } from "./jp.js";
@@ -26,6 +27,7 @@ const FEITOS = "automacoesFeitas";
 // botão deixava de ser desenhado nas linhas de poder do Mentálico.
 export const CLASSE_USAR = "sd-usar-item";
 export const CLASSE_ALVO = "sd-auto-alvo";
+export const CLASSE_PREFERIDA = "sd-arma-preferida";
 
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 const QUAL_JP = { jpr: "jpd", jpf: "jpc", jpm: "jps" };
@@ -131,14 +133,16 @@ async function rolar(formula) {
 }
 
 /** Os modos e o valor {n}, numa janela. Devolve a definição final ou null. */
-async function escolher(def) {
+async function escolher(def, furtivo = null) {
   const V2 = globalThis.foundry?.applications?.api?.DialogV2;
-  if (!def.modos && !def.pedir) return { def, n: 0 };
+  const pedeFurtivo = furtivo && (def.ataque || def.modos?.some((m) => m.ataque));
+  if (!def.modos && !def.pedir && !pedeFurtivo) return { def, n: 0, furtivo: false };
   const campos =
     (def.modos ? `<div class="form-group"><label>${txt("spacedragon.auto.modo")}</label><select name="modo">` +
       def.modos.map((m, i) => `<option value="${i}">${esc(m.rotulo)}</option>`).join("") + `</select></div>` : "") +
     (def.pedir ? `<div class="form-group"><label>${esc(def.pedir.rotulo)}</label>` +
-      `<input type="number" name="n" value="${def.pedir.padrao}" min="${def.pedir.min}" max="${def.pedir.max}"></div>` : "");
+      `<input type="number" name="n" value="${def.pedir.padrao}" min="${def.pedir.min}" max="${def.pedir.max}"></div>` : "") +
+    (pedeFurtivo ? `<div class="form-group"><label>${txt("spacedragon.auto.ataqueFurtivo", { mult: furtivo })}</label><input type="checkbox" name="furtivo"></div>` : "");
   const r = await V2.wait({
     window: { title: txt("spacedragon.auto.usar") },
     content: campos,
@@ -151,7 +155,7 @@ async function escolher(def) {
   if (!r || typeof r !== "object") return null;
   const modo = def.modos?.[Number(r.modo)] ?? {};
   const limita = (v) => Math.min(def.pedir?.max ?? v, Math.max(def.pedir?.min ?? v, Math.trunc(Number(v) || 0)));
-  return { def: { ...def, ...modo, modos: undefined }, n: def.pedir ? limita(r.n) : 0 };
+  return { def: { ...def, ...modo, modos: undefined }, n: def.pedir ? limita(r.n) : 0, furtivo: Boolean(pedeFurtivo && r.furtivo) };
 }
 
 /** O primeiro número de um campo: o bestiário traz "15 (+2 contra veneno)". */
@@ -174,9 +178,11 @@ export async function usarItem(ator, item, definicao) {
     globalThis.ui?.notifications?.warn?.(txt("spacedragon.cine.aviso.semAlvo"));
     return null;
   }
-  const escolha = await escolher(definicao);
+  const multFurtivo = multiplicadorFurtivo(ator);
+  const escolha = await escolher(definicao, multFurtivo);
   if (!escolha) return null;
   const { def, n } = escolha;
+  const furtivo = escolha.furtivo && def.ataque ? multFurtivo : null;
   // O Mentálico paga o alcance e rola o desconhecido pela regra do Cap. 9 antes
   // do efeito; sem isto o botão seria um jeito de usar o poder de graça.
   if (item.type === "spell" && chassiDe(ator) === "Mentálico") {
@@ -198,7 +204,7 @@ export async function usarItem(ator, item, definicao) {
     // um uso, um número de disparos: com vários alvos, eles se revezam
     for (let i = 0; i < (def.ataques ?? 1); i += 1) {
       const alvo = marcados[i % marcados.length];
-      const a = await r(`1d20 + ${ba + (Number(def.bonusAtaque) || 0)}`);
+      const a = await r(`1d20 + ${ba + (Number(def.bonusAtaque) || 0) + (furtivo ? 2 : 0)}`);
       const natural = a.dice?.[0]?.total;
       const acertou = natural === 20 || (natural !== 1 && (alvo.cp === null || a.total >= Number(alvo.cp)));
       linhas.push(acertou
@@ -206,9 +212,20 @@ export async function usarItem(ator, item, definicao) {
         : txt("spacedragon.auto.errou", { nome: esc(alvo.nome), total: a.total, cp: alvo.cp ?? "?" }));
       if (!acertou) continue;
       // cada disparo que acerta rola o próprio dano
+      const critico = natural === 20;
+      if (critico) linhas.push(txt("spacedragon.auto.critico"));
       if (def.dano) {
-        const d = (await r(def.dano)).total;
+        const rolado = (await r(def.dano)).total;
+        // Multiplicam o dano final. Crítico e furtivo não se somam: vale o maior.
+        const multCritico = critico ? multiplicadorDaArma(ator, item) : null;
+        const mult = Math.max(1, multCritico ?? 1, furtivo ?? 1);
+        const d = rolado * mult;
         linhas.push(txt("spacedragon.auto.dano", { n: d }));
+        if (mult > 1) {
+          linhas.push(mult === multCritico
+            ? txt("spacedragon.auto.danoCritico", { rolado, mult })
+            : txt("spacedragon.auto.danoFurtivo", { rolado, mult }));
+        }
         atingidos.push({ ...alvo, dano: d });
       } else {
         atingidos.push(alvo);
@@ -343,6 +360,19 @@ export function ligarAutomacao() {
         usarItem(app.actor, item, def).catch((e) => console.error(`${ID} | usar ${item.name}`, e));
       });
       linha.appendChild(botao);
+      if (item.type === "weapon" && escolheArmaPreferida(app.actor)) {
+        const marcada = app.actor.getFlag?.(ID, "armaPreferida") === item.id;
+        const estrela = linha.ownerDocument.createElement("a");
+        estrela.className = CLASSE_PREFERIDA;
+        estrela.textContent = marcada ? "★" : "☆";
+        estrela.title = txt("spacedragon.auto.armaPreferida");
+        estrela.addEventListener("click", (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+          app.actor.setFlag(ID, "armaPreferida", marcada ? "" : item.id);
+        });
+        linha.appendChild(estrela);
+      }
     }
   };
   ligarNaFicha(desenha);

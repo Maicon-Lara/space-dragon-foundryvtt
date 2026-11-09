@@ -31,6 +31,7 @@
  * atributo sozinho: o cartão diz quanto, e a ficha se ajusta à mão.
  */
 
+import { rmDaRaca } from "./racas.js";
 import { orcamento } from "./mental.js";
 import { chassiDe } from "./chassi.js";
 
@@ -68,7 +69,7 @@ export function resolverAnulacao({ dadoDefensor, nivelDefensor, bonus = 0, dadoA
 /** "15%" → 15. Sem número, sem RM. */
 export function rmDe(ator) {
   const n = parseInt(String(ator?.getFlag?.(ID, "ameaca")?.rm ?? "").replace(/[^\d]/g, ""), 10);
-  return Number.isFinite(n) && n > 0 ? n : null;
+  return Number.isFinite(n) && n > 0 ? n : rmDaRaca(ator);
 }
 
 const imunesDe = (ator) => ator?.getFlag?.(ID, FLAG_IMUNE) ?? [];

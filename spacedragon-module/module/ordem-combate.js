@@ -24,6 +24,7 @@
  * jogador vê uma linha, o Mestre vê as dele.
  */
 
+import { comAjusteDaOrdem } from "./racas.js";
 import { MODOS } from "./ordem.js";
 import { opcoesDeOrdem } from "./ordem-ficha.js";
 import { envolver } from "./envelope.js";
@@ -144,7 +145,7 @@ async function perguntar(combat, ids = null) {
     const c = meus.find((x) => x.id === id);
     if (!c) continue;
     const m = MODOS[modo] ?? MODOS.ataque;
-    const { n, como, roll } = await m.valor(entrada);
+    const { n, como, roll } = comAjusteDaOrdem(c.actor, await m.valor(entrada));
     const foi = await gravar(combat, id, n);
     ditos.push({ nome: c.name ?? c.actor?.name, n, como, roll, foi });
   }
