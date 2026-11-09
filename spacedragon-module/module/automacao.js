@@ -129,6 +129,9 @@ export const efeitoDoDreno = (chave, pontos, nome) => ({
 
 /* ── O uso ────────────────────────────────────────────────────────────────── */
 
+/** A conta de uma rolagem, como o Foundry a resolveu: "1d6 + 3 → 3 + 3 = 6". */
+const contaDe = (x) => (x?.result ? txt("spacedragon.auto.contaDados", { formula: x.formula, result: x.result, total: x.total }) : null);
+
 async function rolar(formula) {
   return new globalThis.Roll(formula).evaluate();
 }
@@ -192,7 +195,7 @@ const alvoDoToken = (t) => {
   const s = t.actor?.system ?? {};
   // A mesma chave de quem feriu: o ator se o token é ligado, senão o token.
   const chave = t.document?.actorLink ? t.actor?.id : t.document?.id ?? null;
-  return { uuid: t.document?.uuid ?? t.actor?.uuid, nome: t.name ?? t.actor?.name ?? "?", cp: s.ac_total ?? s.ac ?? numeroDe(s.ca), chave };
+  return { uuid: t.document?.uuid ?? t.actor?.uuid, nome: t.name ?? t.actor?.name ?? "?", cp: s.ac_total ?? s.ac ?? numeroDe(s.ca), chave, atorId: t.actor?.id ?? null };
 };
 
 /** Usa o item: rola, e manda o cartão com um botão por alvo. */
@@ -255,8 +258,12 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
       const alvo = marcados[i % marcados.length];
       const raca = ajusteContraQuemFeriu(ator, alvo);
       if (raca) linhas.push(txt("spacedragon.racas.ajusteAtaque", { habilidade: esc(raca.nome), n: raca.valor, nome: esc(alvo.nome) }));
-      const a = await r(`1d20 + ${ba + (Number(def.bonusAtaque) || 0) + (furtivo ? 2 : 0) + (Number(escolha.ajuste) || 0) + ajusteMerc + (raca?.valor ?? 0)}`);
+      const partes = [[ba, "BA"], [Number(def.bonusAtaque) || 0, "arma"], [furtivo ? 2 : 0, "furtivo"], [Number(escolha.ajuste) || 0, "situação"], [ajusteMerc, "Mercenário"], [raca?.valor ?? 0, esc(raca?.nome)]];
+      const a = await r(`1d20 + ${partes.reduce((soma, [v]) => soma + v, 0)}`);
       const natural = a.dice?.[0]?.total;
+      const somas = partes.filter(([v]) => v).map(([v, rotulo]) => `${v < 0 ? v : `+${v}`} (${rotulo})`).join(" ");
+      const total = a.total;
+      linhas.push(txt("spacedragon.auto.contaAtaque", { natural, somas, total }));
       const acertou = natural === 20 || (natural !== 1 && (alvo.cp === null || a.total >= Number(alvo.cp)));
       linhas.push(acertou
         ? txt("spacedragon.auto.acertou", { nome: esc(alvo.nome), total: a.total, cp: alvo.cp ?? "?" })
@@ -267,13 +274,15 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
       if (critico) linhas.push(txt("spacedragon.auto.critico"));
       if (critGarantido && natural === 20) linhas.push(txt("spacedragon.auto.danoMassivo"));
       if (def.dano) {
-        const rolado = (await r(def.dano)).total;
+        const rolagemDano = await r(def.dano);
+        const rolado = rolagemDano.total;
         // Multiplicam o dano final. Crítico e furtivo não se somam: vale o maior.
         // Todo crítico dobra o dano; o Veterano/Cosmonauta tem a coluna própria.
         const multCritico = critico ? multiplicadorDaArma(ator, item) ?? 2 : null;
         const mult = Math.max(1, multCritico ?? 1, furtivo ?? 1);
         const d = rolado * mult;
         linhas.push(txt("spacedragon.auto.dano", { n: d }));
+        if (contaDe(rolagemDano)) linhas.push(contaDe(rolagemDano));
         if (mult > 1) {
           linhas.push(mult === multCritico
             ? txt("spacedragon.auto.danoCritico", { rolado, mult })
@@ -288,12 +297,15 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
     atingidos.push(...marcados);
   }
 
-  const dano = def.dano && !def.ataque ? (await r(def.dano)).total : 0;
-  const cura = def.cura ? (await r(def.cura)).total : 0;
-  const dreno = def.dreno ? (await r(def.dreno.formula)).total : 0;
+  const contas = [];
+  const comConta = async (f) => { const x = await r(f); if (contaDe(x)) contas.push(contaDe(x)); return x.total; };
+  const dano = def.dano && !def.ataque ? await comConta(def.dano) : 0;
+  const cura = def.cura ? await comConta(def.cura) : 0;
+  const dreno = def.dreno ? await comConta(def.dreno.formula) : 0;
   if (def.dano && !def.ataque) linhas.push(txt("spacedragon.auto.dano", { n: dano }));
   if (def.cura) linhas.push(txt("spacedragon.auto.cura", { n: cura }));
   if (def.dreno) linhas.push(txt("spacedragon.auto.dreno", { n: dreno }));
+  linhas.push(...contas);
   if (def.jp) {
     linhas.push(def.aoPassar === "metade"
       ? txt("spacedragon.auto.jpMetade", { jp: ROTULO_JP[def.jp] })
