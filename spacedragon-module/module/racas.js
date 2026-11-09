@@ -137,11 +137,20 @@ export async function regenerarNaRodada(combate) {
   }
 }
 
+/*
+ * Quem acaba de cair, neste cliente. Num registro próprio: o Foundry não garante
+ * que o que se escreve nas opções do preUpdate chegue ao updateActor.
+ */
+const caindo = new Set();
+
+/** Consome a marca: devolve se este ator acaba de cair. */
+export const acabouDeCair = (ator) => caindo.delete(ator.uuid);
+
 /** Marca, em quem faz a alteração, se o PV acaba de chegar a 0 ou menos. */
-export function notarQueda(ator, mudou, opcoes) {
+export function notarQueda(ator, mudou) {
   const novo = globalThis.foundry?.utils?.getProperty?.(mudou, "system.hp.value");
   if (novo === undefined || Number(novo) > 0 || !(Number(ator.system?.hp?.value) > 0)) return;
-  if (regrasDe(ator).some((r) => r.aoCair)) opcoes.sdCaiu = true;
+  if (regrasDe(ator).some((r) => r.aoCair)) caindo.add(ator.uuid);
 }
 
 /** A JP de quem cai a 0 PV sem morrer, uma vez por combate. */
@@ -169,9 +178,9 @@ export function ligarRacasNaMesa() {
     if (!("round" in (mudou ?? {})) || !eMestreAtivo()) return;
     regenerarNaRodada(combate).catch((e) => console.error(`${ID} | regeneração`, e));
   });
-  H?.on?.("preUpdateActor", (ator, mudou, opcoes) => notarQueda(ator, mudou, opcoes));
-  H?.on?.("updateActor", (ator, _mudou, opcoes, usuario) => {
-    if (!opcoes?.sdCaiu || usuario !== globalThis.game?.user?.id) return;
+  H?.on?.("preUpdateActor", (ator, mudou) => notarQueda(ator, mudou));
+  H?.on?.("updateActor", (ator, _mudou, _opcoes, usuario) => {
+    if (usuario !== globalThis.game?.user?.id || !acabouDeCair(ator)) return;
     reagirAQueda(ator).catch((e) => console.error(`${ID} | queda`, e));
   });
   return true;

@@ -98,15 +98,14 @@ confere(t.system.hp.value === 12, "[REGEN] não passa do máximo");
 
 // [QUEDA]
 const z = ator(["Resistência à Dor"]);
-const op = {};
-R.notarQueda(z, { "system.hp.value": 0 }, op);
-confere(op.sdCaiu === true, "[QUEDA] chegar a 0 é notado");
-const op2 = {};
-R.notarQueda(ator([], 5), { "system.hp.value": 0 }, op2);
-confere(!op2.sdCaiu, "[QUEDA] sem a habilidade não é notado");
-const op3 = {};
-R.notarQueda(z, { name: "x" }, op3);
-confere(!op3.sdCaiu, "[QUEDA] alteração sem PV é ignorada");
+R.notarQueda(z, { "system.hp.value": 0 });
+confere(R.acabouDeCair(z) === true, "[QUEDA] chegar a 0 é notado");
+confere(R.acabouDeCair(z) === false, "[QUEDA] a marca vale uma vez");
+const semHabilidade = ator([], 5);
+R.notarQueda(semHabilidade, { "system.hp.value": 0 });
+confere(R.acabouDeCair(semHabilidade) === false, "[QUEDA] sem a habilidade não é notado");
+R.notarQueda(z, { name: "x" });
+confere(R.acabouDeCair(z) === false, "[QUEDA] alteração sem PV é ignorada");
 confere(await R.reagirAQueda(z) === null, "[QUEDA] fora de combate não rola");
 game.combat = { id: "c1", started: true };
 z.system.hp.value = 0;
