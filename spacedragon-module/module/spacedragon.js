@@ -37,6 +37,9 @@ import { ligarOrdemNaFicha, registrarOpcoes as registrarOpcoesDaOrdem } from "./
 import { ligarIniciativaNaFicha } from "./iniciativa-od2.js";
 import { ligarOrdemNoCombate, registrarOpcaoDeCombate } from "./ordem-combate.js";
 import { registrarFicha } from "./ficha.js";
+import { ligarDanoNoAlvo } from "./dano-no-alvo.js";
+import { ligarGolpesComoEfeitos } from "./nave-golpes-qdv.js";
+import { ligarMeuPosto } from "./nave-meu-posto.js";
 import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
 import { aplicarJP, rolarJP } from "./jp.js";
@@ -193,6 +196,8 @@ Hooks.once("ready", () => {
   // o botão "Aplicar" dos cartões de disparo, para o Mestre (nave-pc-ficha.js)
   passo("aplicar disparo no alvo", () => ligarAplicarImpacto());
   passo("JPR da tripulação na câmara atingida", () => ligarJprDaTripulacao());
+  passo("aplicar dano pessoal no alvo", () => ligarDanoNoAlvo());
+  passo("golpes como efeitos do Qualidade de Vida", () => ligarGolpesComoEfeitos());
   // O Combate Cinematográfico na virada da rodada: o Mestre ativo fecha a
   // rodada que acabou para cada nave (fogo, brecha, recarga, limpeza), e as
   // Fichas de Nave abertas redesenham a Tensão e o duelo da rodada nova.
@@ -252,6 +257,7 @@ Hooks.once("ready", () => {
   // Por último: a aba de Poderes precisa estar desenhada para os rótulos de
   // Grandeza serem trocados.
   passo("rótulos", () => ligarRotulos());
+  passo("Meu posto na ficha de personagem", () => ligarMeuPosto());
 
   // O Mestre fica sabendo se o Old Dragon 2 passou da versão conferida (versao.js).
   passo("aviso de versão", () => avisarVersaoDoSistema());

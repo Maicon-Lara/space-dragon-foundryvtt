@@ -409,5 +409,18 @@
   "spacedragon.conves.ajustes": "Ajustes da nave (escala e pilotagem)",
   "spacedragon.conves.fimAutomatico": "O fim da rodada é automático: quando o Mestre avança o rastreador, o incêndio cobra e o Colapso anda.",
   "spacedragon.conves.travou": "Travar: +2 nos ataques contra {alvo}.",
-  "spacedragon.conves.interferiu": "Interferir: {alvo} sofre −2 no ataque até o fim da próxima rodada."
+  "spacedragon.conves.interferiu": "Interferir: {alvo} sofre −2 no ataque até o fim da próxima rodada.",
+  "spacedragon.opcao.aplicarDanoNoAlvo.nome": "Botão de aplicar dano no alvo",
+  "spacedragon.opcao.aplicarDanoNoAlvo.dica": "Com o dano automático desligado no Qualidade de Vida ou no OD2 Combat Automation, o cartão de dano pessoal ganha um botão para o Mestre ou o dono da ficha do alvo aplicar o dano.",
+  "spacedragon.opcao.naveMeuPosto.nome": "Painel Meu posto na ficha de personagem",
+  "spacedragon.opcao.naveMeuPosto.dica": "Com o Combate de Convés ligado, quem ocupa um posto vê as ações dele na aba de ataques da própria ficha. É preciso ser dono da nave para usá-las.",
+  "spacedragon.opcao.naveGolpesComoEfeitos.nome": "Golpes fortes na aba Efeitos",
+  "spacedragon.opcao.naveGolpesComoEfeitos.dica": "Com o Combate de Convés e o Qualidade de Vida, os sistemas atingidos aparecem como efeitos da nave, só como aviso, e somem ao reparar.",
+  "spacedragon.danoNoAlvo.botao": "Aplicar em {alvo}",
+  "spacedragon.danoNoAlvo.semAlvo": "O alvo deste dano não existe mais.",
+  "spacedragon.danoNoAlvo.aplicado": "{alvo}: {dano} de dano aplicado. PV agora em {pv}.",
+  "spacedragon.meuPosto.titulo": "{posto} — {nave}:",
+  "spacedragon.meuPosto.disparar": "Disparar {arma}",
+  "spacedragon.meuPosto.reparar": "Reparar {golpe}",
+  "spacedragon.meuPosto.semPermissao": "Peça ao Mestre para torná-lo dono da nave e usar as ações daqui."
 }

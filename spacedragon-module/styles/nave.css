@@ -555,3 +555,9 @@
 .spacedragon-nave-pc .sd-painel-conves .sw-posto-nome { width: 100%; }
 .spacedragon-nave-pc .sd-painel-conves .posto-acoes { margin: 6px 0 0; }
 .spacedragon-nave-pc .sd-painel-conves .acao-texto { flex-basis: 100%; }
+
+/* "Meu posto" na ficha de personagem e o botão de aplicar dano no chat */
+.sd-meu-posto { margin: 0 0 8px; padding: 6px 8px; border: 1px solid; border-radius: 4px; font-size: 12px; }
+.sd-meu-posto .meu-posto { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+.sd-meu-posto button { width: auto; flex: 0 0 auto; padding: 0 8px; font-size: 11px; line-height: 20px; }
+.sd-aplicar-dano { margin-top: 4px; }

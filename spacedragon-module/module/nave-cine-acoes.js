@@ -1442,4 +1442,7 @@ export async function rolarJprFinal(uuid, bonus = 0, mensagem = null) {
  * As ações internas, para o teste com um Foundry de brinquedo
  * (tools/teste-nave-cine-mesa.mjs). A ficha não usa: ela entra por `ligarCine`.
  */
+/** As ações de posto para quem não está na Ficha de Nave (nave-meu-posto.js). */
+export const acaoDoPosto = acao;
+
 export const PARA_TESTE = { duelo, acao, vantagem, prioridade, encerrar, aplicarEscalaDaNave, voltarAoLivro, salvamento };
