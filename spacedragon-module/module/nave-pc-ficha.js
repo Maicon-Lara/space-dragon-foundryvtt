@@ -736,6 +736,42 @@ export function ligarAplicarImpacto() {
 
 let Registrada = null;
 
+/** A janela de ficha que contém o botão, entre as janelas abertas. */
+export function janelaDoBotao(botao, janelas = globalThis.ui?.windows ?? {}) {
+  const id = botao?.closest?.("[data-appid]")?.dataset?.appid;
+  return (id && janelas[id]) ??
+    Object.values(janelas).find((a) => a?.element?.[0]?.contains?.(botao)) ?? null;
+}
+
+/**
+ * O ataque de arma de nave é decidido no DOCUMENTO, em captura.
+ *
+ * O "Old Dragon 2: Qualidade de Vida" escuta o mesmo clique, em captura, num
+ * elemento da janela, e rola e aplica o dano direto no PV, sem Escudo. Ouvir
+ * na raiz da ficha dependia de quem se ligou primeiro, e na mesa ele chegava
+ * antes. O documento vem antes de qualquer elemento, seja qual for a ordem.
+ */
+let disparoNoDocumento = false;
+export function ligarDisparoNoDocumento(doc = globalThis.document, {
+  ehFicha = ehFichaDeNavePC, janelas = () => globalThis.ui?.windows ?? {},
+} = {}) {
+  if (disparoNoDocumento || !doc?.addEventListener) return false;
+  disparoNoDocumento = true;
+  doc.addEventListener("click", (ev) => {
+    const botao = ev.target?.closest?.(SELETOR_ATAQUE);
+    if (!botao) return;
+    const app = janelaDoBotao(botao, janelas());
+    if (!ehFicha(app)) return;
+    const achada = armaDoBotao(botao, app.actor);
+    if (!achada) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+    ev.stopImmediatePropagation();
+    app.dispararArma(achada).catch((e) => console.error(`${ID} | o disparo falhou`, e));
+  }, true);
+  return true;
+}
+
 /** Esta ficha é a de Nave sobre personagem? */
 export function ehFichaDeNavePC(app) {
   return !!Registrada && app instanceof Registrada;
@@ -1210,6 +1246,10 @@ export function registrarFichaDeNavePC() {
      * O disparo: «1d20 + BA da nave + BA à distância de quem opera a arma», mais
      * o Computador Balístico e a faixa de alcance (regra da casa).
      */
+    dispararArma(achada) {
+      return this.#disparar(achada);
+    }
+
     async #disparar({ item, chave, arma }) {
       if (combateCinematico()) return dispararCine(this.#contextoCine(), { item, chave, arma });
       const ator = this.actor;
@@ -1753,6 +1793,7 @@ export function registrarFichaDeNavePC() {
   });
 
   Registrada = NaveSheet;
+  ligarDisparoNoDocumento();
   console.log(`${ID} | Ficha de Nave sobre personagem registrada`);
   return NaveSheet;
 }

@@ -407,5 +407,7 @@
   "spacedragon.conves.morreu": "{nome} morreu no Colapso.",
   "spacedragon.conves.sobreviveu": "{nome} sobreviveu à deriva, com {pv} PV.",
   "spacedragon.conves.ajustes": "Ajustes da nave (escala e pilotagem)",
-  "spacedragon.conves.fimAutomatico": "O fim da rodada é automático: quando o Mestre avança o rastreador, o incêndio cobra e o Colapso anda."
+  "spacedragon.conves.fimAutomatico": "O fim da rodada é automático: quando o Mestre avança o rastreador, o incêndio cobra e o Colapso anda.",
+  "spacedragon.conves.travou": "Travar: +2 nos ataques contra {alvo}.",
+  "spacedragon.conves.interferiu": "Interferir: {alvo} sofre −2 no ataque até o fim da próxima rodada."
 }

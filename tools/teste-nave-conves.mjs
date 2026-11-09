@@ -32,6 +32,7 @@ import {
 } from "../spacedragon-module/module/nave-cine-acoes.js";
 import { TIPOS } from "../spacedragon-module/module/tipos-de-nave.js";
 import { updateDaNave } from "../spacedragon-module/module/nave-pc-dados.js";
+import { ligarDisparoNoDocumento, janelaDoBotao } from "../spacedragon-module/module/nave-pc-ficha.js";
 
 const problemas = [];
 const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
@@ -293,6 +294,37 @@ game.combat = null;
 await PARA_TESTE.encerrar(ctxDe(queimando));
 const fim = cineAtor(queimando);
 confere(!fim.colapso && !fim.golpes.incendio && fim.fuga === 0 && !fim.recomposto, "[CONV-MESA] encerrar limpa golpes, Colapso e fuga");
+
+// [CONV-CLIQUE] o ataque de arma de nave não pode chegar ao Qualidade de Vida
+{
+  const ouvintes = [];
+  const documento = { addEventListener: (tipo, fn, captura) => ouvintes.push({ tipo, fn, captura }) };
+  const laser = { flags: { spacedragon: { equipamentoDeNave: { chave: "disparadores" } } } };
+  const pistola = { flags: {} };
+  const disparos = [];
+  const ficha = {
+    actor: { items: { get: (id) => ({ laser, pistola })[id] } },
+    dispararArma: async (a) => { disparos.push(a.chave); },
+  };
+  const botaoDe = (id) => ({
+    closest: (sel) => {
+      if (sel === ".attack-roll") return botaoDe(id);
+      if (sel === "[data-appid]") return { dataset: { appid: "7" } };
+      if (sel === "[data-item-id]") return { dataset: { itemId: id } };
+      return null;
+    },
+  });
+  ligarDisparoNoDocumento(documento, { ehFicha: (a) => a === ficha, janelas: () => ({ 7: ficha }) });
+  confere(ouvintes.length === 1 && ouvintes[0].tipo === "click" && ouvintes[0].captura === true, "[CONV-CLIQUE] ouve no documento, em captura");
+  const clique = (id) => {
+    const e = { target: botaoDe(id), parado: false, preventDefault() {}, stopPropagation() {}, stopImmediatePropagation() { this.parado = true; } };
+    ouvintes[0].fn(e);
+    return e;
+  };
+  confere(clique("laser").parado === true && disparos.join() === "disparadores", "[CONV-CLIQUE] arma de nave é parada e disparada pela ficha");
+  confere(clique("pistola").parado === false && disparos.length === 1, "[CONV-CLIQUE] arma pessoal segue para o sistema");
+  confere(janelaDoBotao(botaoDe("laser"), { 7: ficha }) === ficha, "[CONV-CLIQUE] acha a janela pelo appid");
+}
 
 if (problemas.length) {
   console.error(`✘ ${problemas.length} problema(s):\n  ${problemas.join("\n  ")}`);
