@@ -175,11 +175,11 @@ export const ACOES_CONVES = {
     { chave: "fuga", rotulo: "Marcar a fuga", efeito: "Teste de Pilotar: +1 no relógio. Três marcas, a nave escapa." },
   ],
   artilharia: [
-    { chave: "disparar", rotulo: "Disparar", efeito: "Pelo botão da arma, na ficha." },
-    { chave: "mirar", rotulo: "Mirar", efeito: "Marque na janela do disparo: −2; num golpe forte, você escolhe o sistema." },
+    { chave: "disparar", rotulo: "Disparar (botão da arma, em Armamento)", efeito: "Pelo botão da arma, na ficha." },
+    { chave: "mirar", rotulo: "Mirar (na janela do disparo)", efeito: "Marque na janela do disparo: −2; num golpe forte, você escolhe o sistema." },
   ],
   engenharia: [
-    { chave: "reparar", rotulo: "Reparar", efeito: "Clique em Reparar no golpe da lista abaixo." },
+    { chave: "reparar", rotulo: "Reparar (nos sistemas atingidos, abaixo)", efeito: "Clique em Reparar no golpe da lista abaixo." },
     { chave: "sobrecargaDano", rotulo: "Sobrecarga: dano", efeito: "+1 dado no próximo acerto da rodada. Na falha, Motores atingidos." },
     { chave: "sobrecargaFuga", rotulo: "Sobrecarga: fuga", efeito: "+1 no relógio de fuga. Na falha, Motores atingidos." },
   ],
@@ -188,7 +188,7 @@ export const ACOES_CONVES = {
     { chave: "interferir", rotulo: "Interferir", efeito: "−2 no ataque do alvo marcado, até o fim da próxima rodada." },
   ],
   comando: [
-    { chave: "ordem", rotulo: "Ordem", efeito: "Um aliado repete uma rolagem." },
+    { chave: "ordem", rotulo: "Ordem (um aliado repete uma rolagem)", efeito: "Um aliado repete uma rolagem." },
     { chave: "recompor", rotulo: "Recompor", efeito: "O Escudo recupera a Recarga. Uma vez por combate." },
   ],
 };

@@ -528,3 +528,30 @@
 
 /* o Colapso é a hora mais perigosa da nave: não pode passar despercebido */
 .spacedragon-nave-pc .sd-painel-cine .conves-colapso { padding: 5px 8px; color: #7a0c1e; background: #f8dfe3; border: 2px solid #d9213f; border-radius: 3px; }
+
+/* O Convés mostra só o combate: nave não usa a lista de Poderes da aba, e a
+   configuração fica recolhida. */
+.spacedragon-nave-pc .character-tab-spells:has(> .sd-painel-conves) > :not(.sd-painel-conves) { display: none; }
+.spacedragon-nave-pc .sd-painel-conves .conves-resumo { font-size: 14px; }
+.spacedragon-nave-pc .sd-painel-conves .conves-ajustes { margin: 0 0 8px; font-size: 12px; }
+.spacedragon-nave-pc .sd-painel-conves .conves-ajustes summary { margin-bottom: 4px; cursor: pointer; }
+
+/* ── O PAINEL DO CONVÉS ─────────────────────────────────────────────────────
+ *
+ * Só a organização em cartões: as cores são as da ficha do Old Dragon 2, para
+ * o painel não destoar do resto. */
+.spacedragon-nave-pc .sd-painel-conves .conves-resumo { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin: 0 0 10px; }
+.spacedragon-nave-pc .sd-painel-conves .conves-status { padding: 8px 10px; border: 1px solid; border-radius: 4px; }
+.spacedragon-nave-pc .sd-painel-conves .conves-rotulo { font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.spacedragon-nave-pc .sd-painel-conves .conves-valor { font-size: 12px; }
+.spacedragon-nave-pc .sd-painel-conves .conves-valor strong { font-size: 20px; }
+.spacedragon-nave-pc .sd-painel-conves .conves-barra { height: 5px; margin-top: 5px; overflow: hidden; background: rgba(0, 0, 0, .15); border-radius: 99px; }
+.spacedragon-nave-pc .sd-painel-conves .conves-barra span { display: block; height: 100%; background: #d9213f; }
+.spacedragon-nave-pc .sd-painel-conves .conves-postos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin: 0 0 10px; }
+.spacedragon-nave-pc .sd-painel-conves .conves-cartao { margin: 0; padding: 8px 10px; border: 1px solid; border-radius: 4px; }
+.spacedragon-nave-pc .sd-painel-conves .posto-cabeca { align-items: center; margin-bottom: 6px; }
+.spacedragon-nave-pc .sd-painel-conves .posto-cabeca .posto-ficha { margin-left: auto; }
+.spacedragon-nave-pc .sd-painel-conves .conves-icone { display: inline-grid; width: 24px; height: 24px; place-items: center; border: 1px solid; border-radius: 4px; }
+.spacedragon-nave-pc .sd-painel-conves .sw-posto-nome { width: 100%; }
+.spacedragon-nave-pc .sd-painel-conves .posto-acoes { margin: 6px 0 0; }
+.spacedragon-nave-pc .sd-painel-conves .acao-texto { flex-basis: 100%; }

@@ -188,6 +188,11 @@ confere(html.includes("Combate de Convés") && html.includes("Sobrecarga") && !h
 confere(html.includes("restam 2") && html.includes("sd-conves-salvar") && html.includes("1 de 3"), "[CONV-PAINEL] Colapso e fuga visíveis");
 confere(!html.includes('data-vantagem="bloqueio"') && html.includes('data-vantagem="mira"'), "[CONV-PAINEL] só Mira e Na cauda");
 
+confere(html.includes("sd-painel-conves") && !html.includes("Prioridade Escudos"), "[CONV-PAINEL] texto final sem o que não existe no Convés");
+confere(html.includes("<details") && html.includes(" open>") && html.includes("Aplicar escala"), "[CONV-PAINEL] ajustes abertos enquanto não há escala");
+const escalado = painelConves({ system: { hp: { value: 30, max: 50 } } }, { cine: { pvLivro: { value: 1, max: 9 }, escudo: { atual: 7, max: 20 } } }, { rodada: 1 });
+confere(!escalado.includes(" open>") && escalado.includes("<strong>7</strong> / 20") && escalado.includes("<strong>30</strong> / 50"), "[CONV-PAINEL] com escala, recolhido e com o resumo");
+
 const atirador = novaNave({ id: "a", cine: { trava: "tok-b" } });
 const alvo = novaNave({ id: "b", cine: { escudo: { atual: 5, max: 20 }, recarga: "2d10" } });
 const tokB = { id: "tok-b", name: "b", actor: alvo, document: { uuid: "Actor.b" } };

@@ -381,7 +381,8 @@ export const LANG_PADRAO = {
   "spacedragon.conves.golpes": "Sistemas atingidos",
   "spacedragon.conves.reparar": "Reparar",
   "spacedragon.conves.reparou": "{golpe}: reparado.",
-  "spacedragon.conves.fuga": "Relógio de fuga: {marcas} de {max}.",
+  "spacedragon.conves.tensao": "Tensão",
+  "spacedragon.conves.fugaRotulo": "Relógio de fuga",
   "spacedragon.conves.colapso": "COLAPSO: restam {restam} rodada(s).",
   "spacedragon.conves.colapsoFim": "O Colapso terminou.",
   "spacedragon.conves.colapsoBonus": "Bônus na JPR final: +{bonus} (máximo +{max}).",
@@ -406,5 +407,7 @@ export const LANG_PADRAO = {
   "spacedragon.conves.colapsoFimTitulo": "Fim do Colapso de {nave}",
   "spacedragon.conves.colapsoRegra": "Quem ainda estiver a bordo faz JPR, com +{bonus}. Falhou, morre. Passou, sobrevive à deriva, com 1d6 PV.",
   "spacedragon.conves.morreu": "{nome} morreu no Colapso.",
-  "spacedragon.conves.sobreviveu": "{nome} sobreviveu à deriva, com {pv} PV."
+  "spacedragon.conves.sobreviveu": "{nome} sobreviveu à deriva, com {pv} PV.",
+  "spacedragon.conves.ajustes": "Ajustes da nave (escala e pilotagem)",
+  "spacedragon.conves.fimAutomatico": "O fim da rodada é automático: quando o Mestre avança o rastreador, o incêndio cobra e o Colapso anda."
 };
