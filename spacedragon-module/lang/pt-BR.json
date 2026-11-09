@@ -435,6 +435,7 @@
   "spacedragon.auto.dreno": "Dreno de atributo: <strong>{n}</strong>.",
   "spacedragon.auto.jpMetade": "{jp} reduz à metade.",
   "spacedragon.auto.jpAnula": "{jp} anula.",
+  "spacedragon.auto.jpSoDano": "{jp} evita o efeito, mas não o dano.",
   "spacedragon.auto.custo": "{nome} sofre {n} de dano mental pelo uso; anote o dreno de Intelecto.",
   "spacedragon.auto.rolarJp": "{jp} de {nome}",
   "spacedragon.auto.aplicar": "Aplicar em {nome}",

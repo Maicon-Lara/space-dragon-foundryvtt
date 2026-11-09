@@ -30,27 +30,42 @@ const ROTULO_JP = { jpr: "JPR", jpf: "JPF", jpm: "JPM" };
 
 /* ── A regra pura ─────────────────────────────────────────────────────────── */
 
+/** As tabelas de outros módulos: nome → entrada, ou nome de um item daqui. */
+const REGISTRADAS = {};
+
+/** Outro módulo acrescenta os itens dele. As chaves já vêm em `chaveDoNome`. */
+export function registrarAutomacao(tabela = {}) {
+  Object.assign(REGISTRADAS, tabela);
+}
+
+const resolver = (chave) => {
+  const achada = REGISTRADAS[chave] ?? AUTOMACAO_DE_ITENS[chave] ?? null;
+  return typeof achada === "string" ? AUTOMACAO_DE_ITENS[achada] ?? null : achada;
+};
+
 /** O que este item faz, ou null. */
 export function automacaoDe(item, ator) {
   if (item?.type === "monster_attack") {
     const ataque = String(item.system?.description ?? "").replace(/<[^>]+>/g, " ");
     return ESPECIAIS_DE_CRIATURAS[`${chaveDoNome(ator?.name)}|${chaveDoNome(ataque)}`] ?? null;
   }
-  return AUTOMACAO_DE_ITENS[chaveDoNome(item?.name)] ?? null;
+  return resolver(chaveDoNome(item?.name));
 }
 
-/** Troca {n}, {des} e {nivel4} numa fórmula. */
+/** Troca {n}, {des}, {nivel3} e {nivel4} numa fórmula. */
 export function montarFormula(formula, { n = 0, des = 0, nivel = 1 } = {}) {
   const sinalDes = Number(des) < 0 ? `${des}` : `${Number(des) || 0}`;
   return String(formula)
     .replace(/\{n\}/g, String(n))
     .replace(/\+\{des\}/g, Number(des) < 0 ? sinalDes : `+${sinalDes}`)
+    .replace(/\{nivel3\}/g, String(Math.max(1, Math.floor((Number(nivel) || 1) / 3))))
     .replace(/\{nivel4\}/g, String(Math.max(1, Math.floor((Number(nivel) || 1) / 4))));
 }
 
-/** O que acontece com o alvo, conforme a JP: "cheio", "metade" ou "nada". */
+/** O que acontece com o alvo, conforme a JP: "cheio", "metade", "soDano" ou "nada". */
 export function resultadoDaJp(def, passou) {
   if (!def.jp || !passou) return "cheio";
+  if (def.aoPassar === "soDano") return "soDano";
   return def.aoPassar === "metade" ? "metade" : "nada";
 }
 
@@ -174,7 +189,9 @@ export async function usarItem(ator, item, definicao) {
   if (def.jp) {
     linhas.push(def.aoPassar === "metade"
       ? txt("spacedragon.auto.jpMetade", { jp: ROTULO_JP[def.jp] })
-      : txt("spacedragon.auto.jpAnula", { jp: ROTULO_JP[def.jp] }));
+      : def.aoPassar === "soDano"
+        ? txt("spacedragon.auto.jpSoDano", { jp: ROTULO_JP[def.jp] })
+        : txt("spacedragon.auto.jpAnula", { jp: ROTULO_JP[def.jp] }));
   }
 
   let segundos = def.efeito?.segundos ?? null;
@@ -190,7 +207,8 @@ export async function usarItem(ator, item, definicao) {
   const dados = {
     nomeItem: item.name, alvos: atingidos.map((a) => ({ uuid: a.uuid, nome: a.nome, dano: a.dano ?? null })),
     dano, cura, dreno, chaveDreno: def.dreno?.chave ?? null, jp: def.jp ?? null, aoPassar: def.aoPassar ?? null,
-    efeito: def.efeito ?? null, segundos,
+    efeito: def.efeito ? { ...def.efeito, mods: def.efeito.mods?.map((m) => ({ ...m, value: Number(montarFormula(m.value, contexto)) })) } : null,
+    segundos,
   };
   const botoes = atingidos.map((a, i) =>
     `<button type="button" class="${CLASSE_ALVO}" data-i="${i}">${def.jp

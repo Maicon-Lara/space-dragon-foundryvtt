@@ -40,7 +40,7 @@ import { registrarFicha } from "./ficha.js";
 import { ligarDanoNoAlvo } from "./dano-no-alvo.js";
 import { ligarGolpesComoEfeitos } from "./nave-golpes-qdv.js";
 import { ligarMeuPosto } from "./nave-meu-posto.js";
-import { ligarAutomacao } from "./automacao.js";
+import { ligarAutomacao, registrarAutomacao } from "./automacao.js";
 import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
 import { aplicarJP, rolarJP } from "./jp.js";
@@ -99,6 +99,9 @@ function estendeNiveis() {
 }
 
 Hooks.once("init", () => {
+  // O que outros módulos, como o de Star Wars, usam daqui.
+  const esteModulo = game.modules?.get?.("spacedragon");
+  if (esteModulo) esteModulo.api = { automacao: { registrar: registrarAutomacao } };
   registrarOpcoesDaOrdem();
   registrarOpcaoDeVersao();
   registrarOpcaoDeCombate();
