@@ -341,7 +341,8 @@ export async function aplicarNoAlvo(idMensagem, i, dados) {
 
 export function ligarAutomacao() {
   const desenha = (app, el) => {
-    if (ehNave(app?.actor) || !app?.actor?.isOwner) return;
+    // A classe da ficha também: a nave aberta nela pode não ter a marca de tipo.
+    if (ehNave(app?.actor) || app?.constructor?.name === "NaveSheet" || !app?.actor?.isOwner) return;
     const raiz = el?.querySelector ? el : el?.[0];
     // A linha, e não todo [data-item-id]: na aba de Poderes, o input e o select
     // de dentro da linha também levam esse atributo.
@@ -359,7 +360,10 @@ export function ligarAutomacao() {
         ev.stopPropagation();
         usarItem(app.actor, item, def).catch((e) => console.error(`${ID} | usar ${item.name}`, e));
       });
-      linha.appendChild(botao);
+      // Dentro de uma célula que já existe: um filho novo na linha, que é flex
+      // com colunas em porcentagem, espreme o nome e o dano.
+      const casa = linha.querySelector(".item-controls, .weapon-description") ?? linha;
+      casa.appendChild(botao);
       if (item.type === "weapon" && escolheArmaPreferida(app.actor)) {
         const marcada = app.actor.getFlag?.(ID, "armaPreferida") === item.id;
         const estrela = linha.ownerDocument.createElement("a");
@@ -371,7 +375,7 @@ export function ligarAutomacao() {
           ev.stopPropagation();
           app.actor.setFlag(ID, "armaPreferida", marcada ? "" : item.id);
         });
-        linha.appendChild(estrela);
+        casa.appendChild(estrela);
       }
     }
   };

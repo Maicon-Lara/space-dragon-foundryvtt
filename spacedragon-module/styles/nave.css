@@ -563,6 +563,18 @@
 .sd-aplicar-dano { margin-top: 4px; }
 
 /* O botão Usar na linha do item e os botões por alvo no chat */
-.sd-usar-item { width: auto; flex: 0 0 auto; padding: 0 8px; font-size: 11px; line-height: 20px; }
+/* !important: a ficha e o Foundry dão largura e altura fixas a todo button */
+.sd-usar-item {
+  display: inline-flex !important;
+  width: auto !important;
+  min-width: 0 !important;
+  height: 18px !important;
+  flex: 0 0 auto !important;
+  margin: 0 0 0 4px !important;
+  padding: 0 5px !important;
+  font-size: 10px !important;
+  line-height: 16px !important;
+  vertical-align: middle;
+}
 .sd-arma-preferida { flex: 0 0 auto; margin-left: 4px; cursor: pointer; }
 .sd-auto-alvo { margin-top: 3px; }
