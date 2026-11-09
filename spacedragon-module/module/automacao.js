@@ -249,7 +249,8 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
       if (def.dano) {
         const rolado = (await r(def.dano)).total;
         // Multiplicam o dano final. Crítico e furtivo não se somam: vale o maior.
-        const multCritico = critico ? multiplicadorDaArma(ator, item) : null;
+        // Todo crítico dobra o dano; o Veterano/Cosmonauta tem a coluna própria.
+        const multCritico = critico ? multiplicadorDaArma(ator, item) ?? 2 : null;
         const mult = Math.max(1, multCritico ?? 1, furtivo ?? 1);
         const d = rolado * mult;
         linhas.push(txt("spacedragon.auto.dano", { n: d }));

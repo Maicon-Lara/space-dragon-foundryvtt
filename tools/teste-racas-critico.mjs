@@ -64,7 +64,7 @@ natural = 20;
 dialogo = {};
 const gatuno = personagem("Gatuno", 6);
 await usarItem(gatuno, arma, automacaoDe(arma, gatuno));
-confere(danoDe() === 3 && /T7-4/.test(mensagens.at(-1).content), "[CRIT] classe sem multiplicador só avisa");
+confere(danoDe() === 6 && /T7-4/.test(mensagens.at(-1).content), `[CRIT] as outras classes dobram no 20 natural: ${danoDe()}`);
 
 // O Mercenário
 const merc = personagem("Mercenário — Cosmonauta", 6, { armaPreferida: "w" });
