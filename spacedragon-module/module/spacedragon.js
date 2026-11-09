@@ -41,6 +41,7 @@ import { ligarDanoNoAlvo } from "./dano-no-alvo.js";
 import { ligarGolpesComoEfeitos } from "./nave-golpes-qdv.js";
 import { ligarMeuPosto } from "./nave-meu-posto.js";
 import { ligarAutomacao, registrarAutomacao } from "./automacao.js";
+import { migrarArmasNoReady } from "./migrar-armas.js";
 import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
 import { aplicarJP, rolarJP } from "./jp.js";
@@ -218,6 +219,7 @@ Hooks.once("ready", () => {
   // a migração das naves criadas quando as regras moravam no Star Wars: sem
   // ela a nave abre VAZIA, que parece apagada
   passo("migração das naves", () => migrarNavesNoReady());
+  passo("migração das armas", () => { migrarArmasNoReady().catch((e) => console.error(`${ID} | migração das armas`, e)); });
   // o token no tamanho do tipo, uma vez por nave (nave-token.js); a promessa
   // não é esperada, e cada nave que falha avisa sozinha no console
   passo("tamanho do token das naves", () => { ajustarTokensNoReady(); });

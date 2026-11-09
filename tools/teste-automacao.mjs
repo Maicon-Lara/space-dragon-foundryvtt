@@ -66,7 +66,7 @@ const novo = (id, extra = {}) => ({
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "packs-src");
 const nomes = new Set();
 const atributosCriaturas = new Set();
-for (const pack of ["spacedragon-aparatos", "spacedragon-poderes", "spacedragon-bestiario"]) {
+for (const pack of ["spacedragon-aparatos", "spacedragon-poderes", "spacedragon-bestiario", "spacedragon-equipamento"]) {
   for (const n of fs.readdirSync(path.join(RAIZ, pack))) {
     const d = JSON.parse(fs.readFileSync(path.join(RAIZ, pack, n), "utf8"));
     nomes.add(chaveDoNome(d.name));
