@@ -15,7 +15,7 @@
     "is_equipped": false,
     "type": "ranged",
     "damage_type": "none",
-    "damage": "1d6 · 1d8 em 2m²",
+    "damage": "1d6",
     "bonus_damage": 0,
     "bonus_ba": 0,
     "bonus_ca": 0,

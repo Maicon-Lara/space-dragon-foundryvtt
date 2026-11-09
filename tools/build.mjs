@@ -341,6 +341,18 @@ function primeiraFaixa(alcance) {
   return m ? Number(m[1]) : 0;
 }
 
+/**
+ * O dano que a ficha consegue rolar.
+ *
+ * O campo vai direto para a fórmula do sistema e do Qualidade de Vida:
+ * "1d8 em 5m²" e "+1d4" quebram a rolagem. A área e o bônus continuam na
+ * descrição. "1d6 · 1d8 em 2m²" é a pistola autodestrutiva: vale o tiro.
+ */
+const danoRolavel = (dano) => String(dano ?? "").match(/^\s*(\d*d\d+)/i)?.[1] ?? "";
+
+/** Munição é o que o Qualidade de Vida oferece ao disparar a arma. */
+const MUNICOES = new Set(["Flecha (20)", "Dardo para zarabatana (1)", "Míssil (1)", "Projéteis (30)", "Projéteis explosivos (10)"]);
+
 const ehCorpoACorpo = (a) => /M/.test(a.tipo ?? "") || /Corporal/i.test(a.alcance ?? "");
 
 /**
@@ -407,7 +419,8 @@ function montaEquipamento() {
       nome: tituloDeItem(a.nome),
       seedNome: a.nome,
       desc: descricaoArma(a),
-      damage: a.dano ?? "",
+      damage: danoRolavel(a.dano),
+      ammunition: MUNICOES.has(a.nome),
       cost: a.preco === null ? "" : `${a.preco.toLocaleString("pt-BR")} créditos`,
       weight_in_grams: Math.round((a.peso ?? 0) * 1000),
       melee: corpo,
