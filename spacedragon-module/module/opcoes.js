@@ -92,6 +92,12 @@ export const combateConves = () => camadaLigada("naveConves");
 // ficha nesse modo, e `combateConves` escolhe a regra.
 export const combateCinematico = () => camadaLigada("naveCinematico") || combateConves();
 
+/* As integrações da 1.37: só acrescentam botões e avisos, e por isso nascem
+ * ligadas, com opção para desligar. */
+export const aplicarDanoNoAlvoLigado = () => regraDeNave("aplicarDanoNoAlvo");
+export const meuPostoLigado = () => regraDeNave("naveMeuPosto");
+export const golpesComoEfeitosLigado = () => regraDeNave("naveGolpesComoEfeitos");
+
 export function multiplicadorDeDano() {
   try {
     const v = Number(globalThis.game?.settings?.get?.(ID, "naveMultiplicadorDano"));
@@ -153,6 +159,18 @@ export function registrarOpcoesDeNave(aoMudar = () => {}) {
   reg("naveConves", false, {
     name: "spacedragon.opcao.naveConves.nome",
     hint: "spacedragon.opcao.naveConves.dica",
+  });
+  reg("aplicarDanoNoAlvo", true, {
+    name: "spacedragon.opcao.aplicarDanoNoAlvo.nome",
+    hint: "spacedragon.opcao.aplicarDanoNoAlvo.dica",
+  });
+  reg("naveMeuPosto", true, {
+    name: "spacedragon.opcao.naveMeuPosto.nome",
+    hint: "spacedragon.opcao.naveMeuPosto.dica",
+  });
+  reg("naveGolpesComoEfeitos", true, {
+    name: "spacedragon.opcao.naveGolpesComoEfeitos.nome",
+    hint: "spacedragon.opcao.naveGolpesComoEfeitos.dica",
   });
   reg("camadaEnergia", false, {
     name: "spacedragon.opcao.camadaEnergia.nome",
