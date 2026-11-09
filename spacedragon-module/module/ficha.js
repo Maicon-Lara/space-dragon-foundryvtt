@@ -112,6 +112,23 @@ export function registrarFicha(padrao = true) {
     }
 
     /**
+     * O ataque da arma já sai completo: alvo, dano, crítico e cartão. Sem alvo
+     * marcado, ou com munição rastreada, segue a rolagem do sistema. Shift
+     * pergunta a dificuldade e o bônus.
+     */
+    _onAttackRoll(event) {
+      event.preventDefault?.();
+      const botao = event.currentTarget;
+      const id = botao?.closest?.(".attack")?.dataset?.itemId;
+      const item = this.actor.items.get(id);
+      const opcoes = { shift: !!event.shiftKey };
+      return import("./automacao.js").then(async ({ ataqueDaFicha }) => {
+        if (await ataqueDaFicha(this, item, botao?.dataset?.ba, opcoes)) return null;
+        return super._onAttackRoll(event);
+      });
+    }
+
+    /**
      * A JP pela regra do livro: 1d20 + modificador ≥ JP da classe. O sistema
      * compara ao contrário (d20 ≤ JP + mod). Ver jp.js. Shift abre o
      * modificador de situação.

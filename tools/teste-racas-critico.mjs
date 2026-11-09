@@ -12,12 +12,13 @@ const problemas = [];
 const confere = (ok, msg) => { if (!ok) problemas.push(msg); };
 
 let natural = 10;
+let centena = 15;
 const formulas = [];
 globalThis.Roll = class {
   constructor(f) { this.formula = f; formulas.push(f); }
   async evaluate() {
     this.dice = [{ total: natural }];
-    this.total = /^1d20/.test(this.formula) ? natural : 3;
+    this.total = /^1d20/.test(this.formula) ? natural + (this.formula.match(/[+-] ?\d+$/)?.[0].replace(" ", "") * 1 || 0) : this.formula === "1d100" ? centena : 3;
     return this;
   }
 };
@@ -31,7 +32,7 @@ globalThis.foundry = { applications: { api: { DialogV2: { wait: async () => dial
 globalThis.game = { user: { targets: new Set() }, settings: { get: () => undefined } };
 instalarLang();
 
-const { automacaoDe, usarItem } = await import("../spacedragon-module/module/automacao.js");
+const { automacaoDe, usarItem, ataqueDaFicha } = await import("../spacedragon-module/module/automacao.js");
 const { multiplicadorDaArma, multiplicadorFurtivo, escolheArmaPreferida } = await import("../spacedragon-module/module/vitalidade.js");
 const { registrarRacas, bonusDeDanoDaRaca, comAjusteDaOrdem, rmDaRaca, venceJPPelaRaca } = await import("../spacedragon-module/module/racas.js");
 const { rmDe } = await import("../spacedragon-module/module/anulacao.js");
@@ -86,6 +87,47 @@ confere(danoDe() === 9, `[FURTIVO] dano × 3: ${danoDe()}`);
 natural = 20;
 await usarItem(op, arma, automacaoDe(arma, op));
 confere(danoDe() === 9, "[FURTIVO] crítico sem multiplicador não soma ao furtivo");
+
+// O Mercenário do 10º em diante
+const merc10 = personagem("Mercenário — Cosmonauta", 10, { armaPreferida: "w" });
+natural = 15;
+dialogo = { primeiro: "on" };
+await usarItem(merc10, arma, automacaoDe(arma, merc10));
+confere(formulas.at(-2) === "1d20 + 8", `[MERC10] +2 no 1º ataque: ${formulas.slice(-2)}`);
+dialogo = {};
+await usarItem(merc10, arma, automacaoDe(arma, merc10));
+confere(formulas.at(-2) === "1d20 + 6", `[MERC10] sem o +2 depois do 1º: ${formulas.slice(-2)}`);
+await usarItem(merc10, outra, automacaoDe(outra, merc10));
+confere(formulas.at(-2) === "1d20 + 2", `[MERC10] −4 em outra arma: ${formulas.slice(-2)}`);
+dialogo = { sacrificar: "on" };
+centena = 15;
+await usarItem(merc10, arma, automacaoDe(arma, merc10));
+confere(danoDe() === 12, `[MERC10] sacrifício: o acerto é crítico ×4: ${danoDe()}`);
+centena = 50;
+const cartoesAntes = mensagens.length;
+const falhou = await usarItem(merc10, arma, automacaoDe(arma, merc10));
+confere(falhou === null && mensagens.length === cartoesAntes + 1 && /Falhou/.test(mensagens.at(-1).content), "[MERC10] falhou no d%: o turno acaba");
+centena = 15;
+dialogo = {};
+
+// O clique no ataque da ficha
+natural = 15;
+const fichaDe = (actor) => ({ actor });
+confere(await ataqueDaFicha(fichaDe(cosmo), arma, "bad") === true, "[FICHA] com alvo, o fluxo é o do módulo");
+const alvos = game.user.targets;
+game.user.targets = new Set();
+confere(await ataqueDaFicha(fichaDe(cosmo), arma, "bad") === false, "[FICHA] sem alvo, a rolagem do sistema");
+game.user.targets = alvos;
+const comFlecha = { ...arma, system: { ...arma.system, ammo_type: "arrow" } };
+confere(await ataqueDaFicha(fichaDe(cosmo), comFlecha, "bad") === false, "[FICHA] munição rastreada fica com o sistema");
+class NaveSheet { actor = cosmo; }
+confere(await ataqueDaFicha(new NaveSheet(), arma, "bad") === false, "[FICHA] a nave tem o disparo próprio");
+const arremesso = { id: "t", name: "Machado", type: "weapon", system: { type: "throwing", damage: "1d6" } };
+await ataqueDaFicha(fichaDe(cosmo), arremesso, "bac");
+confere(formulas.at(-2) === "1d20 + 5", `[FICHA] o botão clicado escolhe BAC: ${formulas.slice(-2)}`);
+const faca = { id: "f", name: "Faca", type: "weapon", system: { type: "melee", damage: "1d4", throw_range: 3 } };
+await ataqueDaFicha(fichaDe(cosmo), faca, "bad");
+confere(formulas.at(-2) === "1d20 + 6", `[FICHA] arma arremessável sem janela: ${formulas.slice(-2)}`);
 
 // As raças
 registrarRacas({

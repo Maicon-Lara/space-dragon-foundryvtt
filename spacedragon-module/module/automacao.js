@@ -13,7 +13,7 @@ import {
 import { aplicarEmAtor } from "./dano-no-alvo.js";
 import { automacaoDeItensLigada, automacaoDeArmasLigada } from "./opcoes.js";
 import { chassiDe } from "./chassi.js";
-import { multiplicadorDaArma, multiplicadorFurtivo, escolheArmaPreferida } from "./vitalidade.js";
+import { multiplicadorDaArma, multiplicadorFurtivo, escolheArmaPreferida, regraDoMercenario } from "./vitalidade.js";
 import { ligarNaFicha } from "./ficha.js";
 import { ehNave } from "./nave-marca.js";
 import { rolarJP, modificadorDaJP } from "./jp.js";
@@ -133,16 +133,24 @@ async function rolar(formula) {
 }
 
 /** Os modos e o valor {n}, numa janela. Devolve a definição final ou null. */
-async function escolher(def, furtivo = null) {
+async function escolher(def, extras = {}) {
   const V2 = globalThis.foundry?.applications?.api?.DialogV2;
-  const pedeFurtivo = furtivo && (def.ataque || def.modos?.some((m) => m.ataque));
-  if (!def.modos && !def.pedir && !pedeFurtivo) return { def, n: 0, furtivo: false };
+  const pede = def.ataque || def.modos?.some((m) => m.ataque) ? extras : {};
+  if (!def.modos && !def.pedir && !pede.furtivo && !pede.ajuste && !pede.primeiro && !pede.sacrificio) return { def, n: 0 };
+  const marca = (nome, rotulo, marcada = false) =>
+    `<div class="form-group"><label>${rotulo}</label><input type="checkbox" name="${nome}"${marcada ? " checked" : ""}></div>`;
+  const dificuldades = [["0", "Normal"], ["5", "Muito fácil (+5)"], ["2", "Fácil (+2)"], ["-2", "Difícil (−2)"], ["-5", "Muito difícil (−5)"]];
   const campos =
     (def.modos ? `<div class="form-group"><label>${txt("spacedragon.auto.modo")}</label><select name="modo">` +
       def.modos.map((m, i) => `<option value="${i}">${esc(m.rotulo)}</option>`).join("") + `</select></div>` : "") +
     (def.pedir ? `<div class="form-group"><label>${esc(def.pedir.rotulo)}</label>` +
       `<input type="number" name="n" value="${def.pedir.padrao}" min="${def.pedir.min}" max="${def.pedir.max}"></div>` : "") +
-    (pedeFurtivo ? `<div class="form-group"><label>${txt("spacedragon.auto.ataqueFurtivo", { mult: furtivo })}</label><input type="checkbox" name="furtivo"></div>` : "");
+    (pede.ajuste ? `<div class="form-group"><label>${txt("spacedragon.auto.dificuldade")}</label><select name="dificuldade">` +
+      dificuldades.map(([v, r]) => `<option value="${v}">${r}</option>`).join("") + `</select></div>` +
+      `<div class="form-group"><label>${txt("spacedragon.auto.bonus")}</label><input type="number" name="bonus" value="0"></div>` : "") +
+    (pede.furtivo ? marca("furtivo", txt("spacedragon.auto.ataqueFurtivo", { mult: pede.furtivo })) : "") +
+    (pede.primeiro ? marca("primeiro", txt("spacedragon.auto.primeiroAtaque"), true) : "") +
+    (pede.sacrificio ? marca("sacrificar", txt("spacedragon.auto.sacrificar", { chance: pede.sacrificio })) : "");
   const r = await V2.wait({
     window: { title: txt("spacedragon.auto.usar") },
     content: campos,
@@ -155,7 +163,11 @@ async function escolher(def, furtivo = null) {
   if (!r || typeof r !== "object") return null;
   const modo = def.modos?.[Number(r.modo)] ?? {};
   const limita = (v) => Math.min(def.pedir?.max ?? v, Math.max(def.pedir?.min ?? v, Math.trunc(Number(v) || 0)));
-  return { def: { ...def, ...modo, modos: undefined }, n: def.pedir ? limita(r.n) : 0, furtivo: Boolean(pedeFurtivo && r.furtivo) };
+  return { def: { ...def, ...modo, modos: undefined }, n: def.pedir ? limita(r.n) : 0,
+    furtivo: Boolean(pede.furtivo && r.furtivo),
+    ajuste: (Number(r.dificuldade) || 0) + (Number(r.bonus) || 0),
+    primeiro: Boolean(r.primeiro),
+    sacrificar: Boolean(pede.sacrificio && r.sacrificar) };
 }
 
 /** O primeiro número de um campo: o bestiário traz "15 (+2 contra veneno)". */
@@ -170,7 +182,7 @@ const alvoDoToken = (t) => {
 };
 
 /** Usa o item: rola, e manda o cartão com um botão por alvo. */
-export async function usarItem(ator, item, definicao) {
+export async function usarItem(ator, item, definicao, opcoes = {}) {
   const marcados = definicao.proprio
     ? [{ uuid: ator.uuid, nome: ator.name, cp: null }]
     : [...(globalThis.game?.user?.targets ?? [])].map(alvoDoToken);
@@ -179,7 +191,8 @@ export async function usarItem(ator, item, definicao) {
     return null;
   }
   const multFurtivo = multiplicadorFurtivo(ator);
-  const escolha = await escolher(definicao, multFurtivo);
+  const merc = regraDoMercenario(ator, item);
+  const escolha = await escolher(definicao, { furtivo: multFurtivo, ajuste: opcoes.ajuste, primeiro: merc?.preferida, sacrificio: merc?.chance });
   if (!escolha) return null;
   const { def, n } = escolha;
   const furtivo = escolha.furtivo && def.ataque ? multFurtivo : null;
@@ -196,6 +209,24 @@ export async function usarItem(ator, item, definicao) {
   const linhas = [];
   const r = async (f) => { const x = await rolar(montarFormula(f, contexto)); rolls.push(x); return x; };
 
+  // Sacrificar o 2º ataque: passou, o acerto é crítico; falhou, o turno acabou.
+  let critGarantido = false;
+  if (escolha.sacrificar && def.ataque) {
+    const teste = await r("1d100");
+    if (teste.total > merc.chance) {
+      await globalThis.ChatMessage?.create?.({
+        speaker: globalThis.ChatMessage?.getSpeaker?.({ actor: ator }),
+        content: `<div class="spacedragon-cartao sd-automacao"><h4>${esc(item.name)}</h4><p>${txt("spacedragon.auto.sacrificouFalha", { total: teste.total, chance: merc.chance })}</p></div>`,
+        rolls,
+      });
+      return null;
+    }
+    critGarantido = true;
+    linhas.push(txt("spacedragon.auto.sacrificouOk", { total: teste.total, chance: merc.chance }));
+  }
+  // O +2 é só do 1º ataque do turno; o −4 vale em toda outra arma.
+  const ajusteMerc = !merc ? 0 : merc.preferida ? (escolha.primeiro ? 2 : 0) : merc.marcada ? -4 : 0;
+
   if (def.area) linhas.push(txt("spacedragon.auto.area", { area: esc(def.area) }));
 
   const atingidos = [];
@@ -204,7 +235,7 @@ export async function usarItem(ator, item, definicao) {
     // um uso, um número de disparos: com vários alvos, eles se revezam
     for (let i = 0; i < (def.ataques ?? 1); i += 1) {
       const alvo = marcados[i % marcados.length];
-      const a = await r(`1d20 + ${ba + (Number(def.bonusAtaque) || 0) + (furtivo ? 2 : 0)}`);
+      const a = await r(`1d20 + ${ba + (Number(def.bonusAtaque) || 0) + (furtivo ? 2 : 0) + (Number(escolha.ajuste) || 0) + ajusteMerc}`);
       const natural = a.dice?.[0]?.total;
       const acertou = natural === 20 || (natural !== 1 && (alvo.cp === null || a.total >= Number(alvo.cp)));
       linhas.push(acertou
@@ -212,8 +243,9 @@ export async function usarItem(ator, item, definicao) {
         : txt("spacedragon.auto.errou", { nome: esc(alvo.nome), total: a.total, cp: alvo.cp ?? "?" }));
       if (!acertou) continue;
       // cada disparo que acerta rola o próprio dano
-      const critico = natural === 20;
+      const critico = natural === 20 || critGarantido;
       if (critico) linhas.push(txt("spacedragon.auto.critico"));
+      if (critGarantido && natural === 20) linhas.push(txt("spacedragon.auto.danoMassivo"));
       if (def.dano) {
         const rolado = (await r(def.dano)).total;
         // Multiplicam o dano final. Crítico e furtivo não se somam: vale o maior.
@@ -339,6 +371,40 @@ export async function aplicarNoAlvo(idMensagem, i, dados) {
 
 /* ── Na ficha e no chat ───────────────────────────────────────────────────── */
 
+/** O clique no BAC ou BAD da arma. Devolve false para seguir o fluxo do sistema. */
+export async function ataqueDaFicha(ficha, item, ba, { shift = false } = {}) {
+  const ator = ficha?.actor;
+  if (item?.type !== "weapon" || ehNave(ator) || ficha?.constructor?.name === "NaveSheet") return false;
+  if (!automacaoDeArmasLigada() || ![...(globalThis.game?.user?.targets ?? [])].length) return false;
+  // A conta da munição rastreada é do sistema, e não fica exposta aos módulos.
+  if ((item.system?.ammo_type ?? "none") !== "none") return false;
+  let def = automacaoDe(item, ator);
+  if (!def) return false;
+  if (def.modos?.every((m) => m.ataque)) {
+    const modo = def.modos.find((m) => m.ataque === ba);
+    if (modo) def = { ...def, ...modo, modos: undefined };
+  } else if (def.ataque && ba) {
+    def = { ...def, ataque: ba };
+  }
+  await usarItem(ator, item, def, { ajuste: shift });
+  return true;
+}
+
+function desenharEstrela(linha, item, ator) {
+  if (!escolheArmaPreferida(ator) || linha.querySelector(`.${CLASSE_PREFERIDA}`)) return;
+  const marcada = ator.getFlag?.(ID, "armaPreferida") === item.id;
+  const estrela = linha.ownerDocument.createElement("a");
+  estrela.className = CLASSE_PREFERIDA;
+  estrela.textContent = marcada ? "★" : "☆";
+  estrela.title = txt("spacedragon.auto.armaPreferida");
+  estrela.addEventListener("click", (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    ator.setFlag(ID, "armaPreferida", marcada ? "" : item.id);
+  });
+  (linha.querySelector(".item-controls, .weapon-description") ?? linha).appendChild(estrela);
+}
+
 export function ligarAutomacao() {
   const desenha = (app, el) => {
     // A classe da ficha também: a nave aberta nela pode não ter a marca de tipo.
@@ -349,6 +415,11 @@ export function ligarAutomacao() {
     for (const linha of raiz?.querySelectorAll?.("li.item[data-item-id]") ?? []) {
       if (linha.querySelector(`.${CLASSE_USAR}`)) continue;
       const item = app.actor.items?.get?.(linha.dataset.itemId);
+      // A arma ataca pelos botões BAC e BAD da própria ficha (ataqueDaFicha).
+      if (item?.type === "weapon") {
+        desenharEstrela(linha, item, app.actor);
+        continue;
+      }
       const def = definicaoDoBotao(item, app.actor);
       if (!def) continue;
       const botao = linha.ownerDocument.createElement("button");
@@ -364,19 +435,6 @@ export function ligarAutomacao() {
       // com colunas em porcentagem, espreme o nome e o dano.
       const casa = linha.querySelector(".item-controls, .weapon-description") ?? linha;
       casa.appendChild(botao);
-      if (item.type === "weapon" && escolheArmaPreferida(app.actor)) {
-        const marcada = app.actor.getFlag?.(ID, "armaPreferida") === item.id;
-        const estrela = linha.ownerDocument.createElement("a");
-        estrela.className = CLASSE_PREFERIDA;
-        estrela.textContent = marcada ? "★" : "☆";
-        estrela.title = txt("spacedragon.auto.armaPreferida");
-        estrela.addEventListener("click", (ev) => {
-          ev.preventDefault();
-          ev.stopPropagation();
-          app.actor.setFlag(ID, "armaPreferida", marcada ? "" : item.id);
-        });
-        casa.appendChild(estrela);
-      }
     }
   };
   ligarNaFicha(desenha);
