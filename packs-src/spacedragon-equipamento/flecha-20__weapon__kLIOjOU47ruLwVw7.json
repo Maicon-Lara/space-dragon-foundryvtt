@@ -13,7 +13,7 @@
     "weight_in_grams": 1000,
     "magic_item": false,
     "is_equipped": false,
-    "type": "ranged",
+    "type": "ammunition",
     "damage_type": "none",
     "damage": "1d6",
     "bonus_damage": 0,

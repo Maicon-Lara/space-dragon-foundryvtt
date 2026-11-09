@@ -422,5 +422,22 @@
   "spacedragon.meuPosto.titulo": "{posto} — {nave}:",
   "spacedragon.meuPosto.disparar": "Disparar {arma}",
   "spacedragon.meuPosto.reparar": "Reparar {golpe}",
-  "spacedragon.meuPosto.semPermissao": "Peça ao Mestre para torná-lo dono da nave e usar as ações daqui."
+  "spacedragon.meuPosto.semPermissao": "Peça ao Mestre para torná-lo dono da nave e usar as ações daqui.",
+  "spacedragon.opcao.automacaoDeItens.nome": "Botão Usar nos aparatos, poderes e ataques especiais",
+  "spacedragon.opcao.automacaoDeItens.dica": "Rola ataque, dano e cura pelo livro, e cada alvo resolve a JP e aplica o resultado pelo cartão no chat.",
+  "spacedragon.auto.usar": "Usar",
+  "spacedragon.auto.modo": "Como usar",
+  "spacedragon.auto.area": "Área: {area}.",
+  "spacedragon.auto.acertou": "{nome}: acertou ({total} contra CP {cp}).",
+  "spacedragon.auto.errou": "{nome}: errou ({total} contra CP {cp}).",
+  "spacedragon.auto.dano": "Dano: <strong>{n}</strong>.",
+  "spacedragon.auto.cura": "Cura: <strong>{n}</strong> PV.",
+  "spacedragon.auto.dreno": "Dreno de atributo: <strong>{n}</strong>.",
+  "spacedragon.auto.jpMetade": "{jp} reduz à metade.",
+  "spacedragon.auto.jpAnula": "{jp} anula.",
+  "spacedragon.auto.custo": "{nome} sofre {n} de dano mental pelo uso; anote o dreno de Intelecto.",
+  "spacedragon.auto.rolarJp": "{jp} de {nome}",
+  "spacedragon.auto.aplicar": "Aplicar em {nome}",
+  "spacedragon.auto.resistiu": "{nome} resistiu.",
+  "spacedragon.auto.semQdv": "{efeito}: sem o Qualidade de Vida, anote o efeito à mão."
 }

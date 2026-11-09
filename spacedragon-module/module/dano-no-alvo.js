@@ -73,6 +73,25 @@ export function marcarCartao(mensagem) {
   return true;
 }
 
+/** Desconta o dano; numa nave do motor de combate, passa antes pelo Escudo. */
+export async function aplicarEmAtor(ator, dano, mudExtra = {}) {
+  const hp = Number(ator.system?.hp?.value) || 0;
+  const mud = { ...mudExtra };
+  let noEscudo = 0;
+  let pv = hp - dano;
+  if (combateCinematico() && ehNave(ator)) {
+    const nave = naveDe(ator, ID);
+    const cine = cineDe(nave);
+    const r = aplicarDanoCine({ escudo: cine.escudo.atual, casco: hp, dano });
+    noEscudo = r.noEscudo;
+    pv = r.casco;
+    Object.assign(mud, updateDaNave(nave, { ...nave, cine: { ...cine, escudo: { ...cine.escudo, atual: r.escudo } } }, ID) ?? {});
+  }
+  mud["system.hp.value"] = pv;
+  await ator.update(mud);
+  return { pv, noEscudo };
+}
+
 const feitosDe = (ator) => [].concat(ator?.getFlag?.(ID, FEITOS) ?? ator?.flags?.[ID]?.[FEITOS] ?? []);
 
 /** Aplica o dano do cartão `idDaMensagem`, uma vez. Devolve o resultado ou null. */
@@ -86,21 +105,7 @@ export async function aplicarDanoNoAlvo(idDaMensagem, dados) {
   if (feitos.includes(idDaMensagem)) return avisa(txt("spacedragon.nave.disparo.jaAplicado"));
 
   const dano = Number(dados.dano) || 0;
-  const hp = Number(ator.system?.hp?.value) || 0;
-  const mud = { [`flags.${ID}.${FEITOS}`]: [...feitos, idDaMensagem].slice(-30) };
-  let noEscudo = 0;
-  let pv = hp - dano;
-  // nave com Escudo: o dano passa por ele, venha da arma que vier
-  if (combateCinematico() && ehNave(ator)) {
-    const nave = naveDe(ator, ID);
-    const cine = cineDe(nave);
-    const r = aplicarDanoCine({ escudo: cine.escudo.atual, casco: hp, dano });
-    noEscudo = r.noEscudo;
-    pv = r.casco;
-    Object.assign(mud, updateDaNave(nave, { ...nave, cine: { ...cine, escudo: { ...cine.escudo, atual: r.escudo } } }, ID) ?? {});
-  }
-  mud["system.hp.value"] = pv;
-  await ator.update(mud);
+  const { pv, noEscudo } = await aplicarEmAtor(ator, dano, { [`flags.${ID}.${FEITOS}`]: [...feitos, idDaMensagem].slice(-30) });
   globalThis.ui?.notifications?.info?.(txt("spacedragon.danoNoAlvo.aplicado", { alvo: esc(ator.name), dano: dano - noEscudo, pv }));
   return { pv, noEscudo };
 }

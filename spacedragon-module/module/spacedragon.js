@@ -40,6 +40,7 @@ import { registrarFicha } from "./ficha.js";
 import { ligarDanoNoAlvo } from "./dano-no-alvo.js";
 import { ligarGolpesComoEfeitos } from "./nave-golpes-qdv.js";
 import { ligarMeuPosto } from "./nave-meu-posto.js";
+import { ligarAutomacao } from "./automacao.js";
 import { ligarRotulos } from "./rotulos.js";
 import { ligarDegraus } from "./degraus.js";
 import { aplicarJP, rolarJP } from "./jp.js";
@@ -258,6 +259,7 @@ Hooks.once("ready", () => {
   // Grandeza serem trocados.
   passo("rótulos", () => ligarRotulos());
   passo("Meu posto na ficha de personagem", () => ligarMeuPosto());
+  passo("botão Usar dos aparatos e poderes", () => ligarAutomacao());
 
   // O Mestre fica sabendo se o Old Dragon 2 passou da versão conferida (versao.js).
   passo("aviso de versão", () => avisarVersaoDoSistema());

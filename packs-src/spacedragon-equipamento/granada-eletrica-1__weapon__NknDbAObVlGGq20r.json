@@ -15,7 +15,7 @@
     "is_equipped": false,
     "type": "throwing",
     "damage_type": "none",
-    "damage": "1d8 em 5m²",
+    "damage": "1d8",
     "bonus_damage": 0,
     "bonus_ba": 0,
     "bonus_ca": 0,
