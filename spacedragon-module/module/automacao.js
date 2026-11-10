@@ -60,8 +60,11 @@ export function automacaoDeArma(item, ator) {
   if (item?.type !== "weapon" || !dado || s.type === "ammunition") return null;
   const corpo = s.type === "melee";
   const forca = corpo || s.type === "throwing" ? Number(ator?.system?.mod_forca) || 0 : 0;
-  const extra = forca + (Number(s.bonus_damage) || 0) + (Number(ator?.system?.raceBonusDamage?.(item)) || 0);
-  const base = { dano: extra ? `${dado}${extra < 0 ? extra : `+${extra}`}` : dado, bonusAtaque: Number(s.bonus_ba) || 0 };
+  const raca = Number(ator?.system?.raceBonusDamage?.(item)) || 0;
+  const extra = forca + (Number(s.bonus_damage) || 0) + raca;
+  // As parcelas vão separadas para o cartão mostrar a conta: 1d6 (3) +2 (Força).
+  const partesDano = [[forca, "Força"], [Number(s.bonus_damage) || 0, "arma"], [raca, "raça"]];
+  const base = { dano: extra ? `${dado}${extra < 0 ? extra : `+${extra}`}` : dado, dado, partesDano, bonusAtaque: Number(s.bonus_ba) || 0 };
   if (corpo && Number(s.throw_range) > 0) {
     return { ...base, modos: [
       { rotulo: txt("spacedragon.auto.modoCorpo"), ataque: "bac" },
@@ -128,6 +131,9 @@ export const efeitoDoDreno = (chave, pontos, nome) => ({
 });
 
 /* ── O uso ────────────────────────────────────────────────────────────────── */
+
+/** "+2 (Força) −1 (raça)": as parcelas que não são zero. */
+const parcelasDe = (partes) => partes.filter(([v]) => v).map(([v, rotulo]) => `${v < 0 ? v : `+${v}`} (${rotulo})`).join(" ");
 
 /** A conta de uma rolagem, como o Foundry a resolveu: "1d6 + 3 → 3 + 3 = 6". */
 const contaDe = (x) => (x?.result ? txt("spacedragon.auto.contaDados", { formula: x.formula, result: x.result, total: x.total }) : null);
@@ -261,7 +267,7 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
       const partes = [[ba, "BA"], [Number(def.bonusAtaque) || 0, "arma"], [furtivo ? 2 : 0, "furtivo"], [Number(escolha.ajuste) || 0, "situação"], [ajusteMerc, "Mercenário"], [raca?.valor ?? 0, esc(raca?.nome)]];
       const a = await r(`1d20 + ${partes.reduce((soma, [v]) => soma + v, 0)}`);
       const natural = a.dice?.[0]?.total;
-      const somas = partes.filter(([v]) => v).map(([v, rotulo]) => `${v < 0 ? v : `+${v}`} (${rotulo})`).join(" ");
+      const somas = parcelasDe(partes);
       const total = a.total;
       linhas.push(txt("spacedragon.auto.contaAtaque", { natural, somas, total }));
       const acertou = natural === 20 || (natural !== 1 && (alvo.cp === null || a.total >= Number(alvo.cp)));
@@ -281,8 +287,13 @@ export async function usarItem(ator, item, definicao, opcoes = {}) {
         const multCritico = critico ? multiplicadorDaArma(ator, item) ?? 2 : null;
         const mult = Math.max(1, multCritico ?? 1, furtivo ?? 1);
         const d = rolado * mult;
-        linhas.push(txt("spacedragon.auto.dano", { n: d }));
-        if (contaDe(rolagemDano)) linhas.push(contaDe(rolagemDano));
+        // Dano: 1d6 (3) +2 (Força) = 5 ×2 = 10
+        const somaDano = (def.partesDano ?? []).reduce((soma, [v]) => soma + v, 0);
+        const parcelas = parcelasDe(def.partesDano ?? []);
+        const rolagemDosDados = def.partesDano ? `${def.dado} (${rolado - somaDano})`
+          : rolagemDano.result ? `${def.dano} (${rolagemDano.result})` : def.dano;
+        const vezes = mult > 1 ? ` ×${mult} = <strong>${d}</strong>` : "";
+        linhas.push(txt("spacedragon.auto.contaDano", { rolagemDosDados, parcelas, rolado, vezes }));
         if (mult > 1) {
           linhas.push(mult === multCritico
             ? txt("spacedragon.auto.danoCritico", { rolado, mult })

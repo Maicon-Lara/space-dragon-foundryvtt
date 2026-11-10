@@ -156,6 +156,19 @@ confere((await rolarJP(droide, "jpc"))?.passou === true && formulas.length === a
 droide.system.hp.value = -1;
 confere(!venceJPPelaRaca(droide, "jpc"), "[RACA] com PV negativo rola a estabilização");
 
+// A conta do dano no cartão: dados, parcelas e o multiplicador do crítico.
+{
+  const forte = { ...personagem("Mercenário", 1), system: { level: 1, bac: 5, bad: 6, mod_forca: 2, hp: { value: 20, max: 30 }, raceBonusDamage: () => 1 } };
+  const lanca = { id: "l", name: "Lança", type: "weapon", system: { type: "melee", damage: "1d6", bonus_damage: 0 } };
+  globalThis.game.user.targets = new Set([{ name: "Alvo", actor: { system: { ac_total: 1 } }, document: { uuid: "Token.z" } }]);
+  natural = 20;
+  await usarItem(forte, lanca, automacaoDe(lanca, forte));
+  const c = mensagens.at(-1)?.content ?? "";
+  confere(/Dano: 1d6 \(0\) \+2 \(Força\) \+1 \(raça\) = <strong>3<\/strong> ×2 = <strong>6<\/strong>/.test(c), `[CONTA] o cartão mostra o dano: ${c}`);
+  natural = 10;
+  globalThis.game.user.targets = new Set();
+}
+
 if (problemas.length) {
   console.error(`✘ ${problemas.length} problema(s):\n  ${problemas.join("\n  ")}`);
   process.exit(1);

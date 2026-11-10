@@ -148,7 +148,7 @@ const arma = { id: "w", name: "Pistola", type: "weapon", system: { type: "ranged
 formulas.length = 0;
 await usarItem(rodiano, arma, { ataque: "bad", dano: "1d6" });
 confere(formulas.includes("1d20 + 3"), `[FERIU] o ataque soma: ${formulas}`);
-confere(/1d20 <strong>10<\/strong> \+1 \(BA\) \+2 \(Sangue Frio\) = <strong>13<\/strong>/.test(mensagens.at(-1).content), `[CONTA] o cartão mostra a conta: ${mensagens.at(-1).content}`);
+confere(/Ataque: 1d20 \(10\) \+1 \(BA\) \+2 \(Sangue Frio\) = <strong>13<\/strong>/.test(mensagens.at(-1).content), `[CONTA] o cartão mostra a conta: ${mensagens.at(-1).content}`);
 let flagsDoCartao = null;
 game.settings.get = () => true;
 game.user.targets = new Set([{ name: "D", document: { uuid: "Token.y" } }]);
