@@ -188,15 +188,41 @@ dele; o resto é opção do Qualidade de Vida que a mesa liga ou desliga.
   campo guarda as relíquias O, D, U.
 - O XP do bestiário vai sem ponto de milhar, para o fim de combate do
   Qualidade de Vida ler 7250, e não 7.
+- O **Realizar descanso** dele (no diretório de Journals) também faz o
+  descanso do Space Dragon: o alcance mental volta inteiro e, se o Mestre
+  responder que foi um dia de repouso total, os personagens recuperam PV pelo
+  Cap. 7 — 1 por nível, 2 com Recuperação Acelerada, 1 a cada 2 dias com
+  Recuperação Lenta, nenhum para androide. Sai um cartão só no chat.
 
 **As opções do Qualidade de Vida numa mesa de Space Dragon**
 
 | Opção | Recomendação |
 |---|---|
-| Automação de combate | Pode usar, com **Aplicar dano automático desligado**: ele trava o PV em 0, e o Space Dragon tem PV negativos, Danos Mortais e Redução de Dano. Os críticos dele são os do Old Dragon 2; use "Perguntar" e role a T7-4 e a T7-5 pelas macros do Space Dragon. |
+| Automação de combate | Pode usar, com **Aplicar dano automático desligado**: ele trava o PV em 0, e o Space Dragon tem PV negativos, Danos Mortais e Redução de Dano. O dano entra pelo botão do Space Dragon (abaixo). Os críticos dele são os do Old Dragon 2; use "Perguntar" e role a T7-4 e a T7-5 pelas macros do Space Dragon. |
 | Gerenciador de efeitos | Recomendado: é como um monstro causa efeito. |
 | Monstros carregam itens | Pode usar; a Ficha de Ameaça cede a aba de equipamento a ele. |
 | Tomo de Magia, Gerador de pergaminhos, Gerador de tesouros, Gerador de personagens, Habilidades de classe e raça | Desligar: são magias, classes e tesouros do Old Dragon 2. |
+
+**Aplicar dano pela regra do Space Dragon**
+
+Toda rolagem de dano no chat (a do sistema e o cartão de dano do Qualidade de
+Vida) ganha, só para o Mestre, o botão **Aplicar N de dano**; qualquer outra
+rolagem tem *Aplicar dano (Space Dragon)* e *Aplicar como cura (Space Dragon)*
+no menu do botão direito. Vale para os tokens selecionados, ou, sem seleção,
+para os marcados como alvo. Funciona com ou sem o Qualidade de Vida.
+
+- desconta a Redução de Dano: a da Ficha de Ameaça e a da mutação Tato (2). RD
+  com condição ("6/FÍSICO", "IMUNE A ATAQUES FÍSICOS") pergunta se vale contra
+  aquele dano;
+- personagem pode ficar com PV negativo: em 0 fica inconsciente e estável,
+  abaixo de 0 está morrendo, e nos Danos Mortais morre (status Morto e
+  combatente derrotado). Ameaça para em 0, derrotada;
+- a cada rodada nova, quem está abaixo de 0 e não estabilizou recebe um cartão
+  com o botão **Rolar JPF**: passar estabiliza, falhar custa 1d4 PV;
+- os status são os do core (Inconsciente e Morto), os mesmos do Qualidade de
+  Vida, então as travas dele de atacar e mover continuam valendo.
+
+Para macro: `game.spacedragon.aplicarDano(8)` e `game.spacedragon.curar(5)`.
 
 **Monstros que causam efeitos**
 

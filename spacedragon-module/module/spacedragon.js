@@ -51,6 +51,8 @@ import { registrarOpcaoDeVersao, avisarVersaoDoSistema } from "./versao.js";
 import { ligarCusto } from "./custo.js";
 import { ligarMental, orcamento, gastar, descansar } from "./mental.js";
 import { ligarAnulacao } from "./anulacao.js";
+import { ligarDano, aplicarDano, rolarJPF } from "./dano.js";
+import { ligarDescansoQdV } from "./descanso.js";
 import { CRITICOS, FALHAS, CRITICOS_NAVE, FALHAS_NAVE } from "./dados.js";
 
 /* ── AS NAVES (CAPÍTULO 10) ────────────────────────────────────────────────
@@ -227,6 +229,10 @@ Hooks.once("ready", () => {
   passo("mutações", () => ligarMutacoes());
   passo("regras de ameaça (PV, Moral, prêmio de vilão)", () => ligarRegrasDeAmeaca());
   passo("convivência com o Qualidade de Vida", () => ligarIntegracaoQdV());
+  // dano com PV negativo, RD e Danos Mortais; JPF de quem está morrendo (dano.js)
+  passo("aplicar dano", () => ligarDano());
+  // o "Realizar descanso" do Qualidade de Vida também recupera PV e alcance (descanso.js)
+  passo("descanso do Qualidade de Vida", () => ligarDescansoQdV());
   // o caminho dos PV no Heartbeat e no Health Estimate (integracao-pv.js)
   passo("PV no Heartbeat e no Health Estimate", () => ligarIntegracaoPV());
   passo("degraus", () => ligarDegraus());
@@ -254,6 +260,7 @@ Hooks.once("ready", () => {
     reliquia: abrirReliquia, gerarReliquia, reliquiasDaCriatura: gerarDaCriatura, defeitoDeReliquia: rolarDefeito,
     ordem: abrirOrdem,
     alcance: orcamento, gastarAlcance: gastar, descansar,
+    aplicarDano, curar: (valor) => aplicarDano(valor, { cura: true }), jpf: rolarJPF,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),
     falhaCritica: () => rolarCriticoTabela("T7-5: Falha Crítica", FALHAS),
     acertoCriticoNave: () => rolarCriticoTabela("T10-6: Acerto Crítico de Espaçonave", CRITICOS_NAVE),
