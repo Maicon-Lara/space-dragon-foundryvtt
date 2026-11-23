@@ -38,6 +38,8 @@ import { ligarIniciativaNaFicha } from "./iniciativa-od2.js";
 import { ligarOrdemNoCombate, registrarOpcaoDeCombate } from "./ordem-combate.js";
 import { registrarFicha } from "./ficha.js";
 import { ligarDanoNoAlvo } from "./dano-no-alvo.js";
+import { ligarEstadosDeDano, rolarJPF } from "./estados-de-dano.js";
+import { ligarDescansoQdV } from "./descanso.js";
 import { ligarGolpesComoEfeitos } from "./nave-golpes-qdv.js";
 import { ligarMeuPosto } from "./nave-meu-posto.js";
 import { ligarAutomacao, registrarAutomacao } from "./automacao.js";
@@ -203,6 +205,8 @@ Hooks.once("ready", () => {
   passo("aplicar disparo no alvo", () => ligarAplicarImpacto());
   passo("JPR da tripulação na câmara atingida", () => ligarJprDaTripulacao());
   passo("aplicar dano pessoal no alvo", () => ligarDanoNoAlvo());
+  // inconsciente, morrendo, morto pelo PV; a JPF de quem está abaixo de 0 (estados-de-dano.js)
+  passo("estados de dano", () => ligarEstadosDeDano());
   passo("golpes como efeitos do Qualidade de Vida", () => ligarGolpesComoEfeitos());
   // O Combate Cinematográfico na virada da rodada: o Mestre ativo fecha a
   // rodada que acabou para cada nave (fogo, brecha, recarga, limpeza), e as
@@ -255,6 +259,8 @@ Hooks.once("ready", () => {
   passo("mutações", () => ligarMutacoes());
   passo("regras de ameaça (PV, Moral, prêmio de vilão)", () => ligarRegrasDeAmeaca());
   passo("convivência com o Qualidade de Vida", () => ligarIntegracaoQdV());
+  // o "Realizar descanso" do Qualidade de Vida também recupera PV e alcance (descanso.js)
+  passo("descanso do Qualidade de Vida", () => ligarDescansoQdV());
   // o caminho dos PV no Heartbeat e no Health Estimate (integracao-pv.js)
   passo("PV no Heartbeat e no Health Estimate", () => ligarIntegracaoPV());
   passo("degraus", () => ligarDegraus());
@@ -283,7 +289,7 @@ Hooks.once("ready", () => {
     desativarRobos: abrirDesativar, rolarDesativar,
     reliquia: abrirReliquia, gerarReliquia, reliquiasDaCriatura: gerarDaCriatura, defeitoDeReliquia: rolarDefeito,
     ordem: abrirOrdem,
-    alcance: orcamento, gastarAlcance: gastar, descansar,
+    alcance: orcamento, gastarAlcance: gastar, descansar, jpf: rolarJPF,
     acertoCritico: () => rolarCriticoTabela("T7-4: Acerto Crítico", CRITICOS),
     falhaCritica: () => rolarCriticoTabela("T7-5: Falha Crítica", FALHAS),
     acertoCriticoNave: () => rolarCriticoTabela("T10-6: Acerto Crítico de Espaçonave", CRITICOS_NAVE),

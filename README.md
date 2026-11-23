@@ -213,6 +213,28 @@ dele; o resto é opção do Qualidade de Vida que a mesa liga ou desliga.
   campo guarda as relíquias O, D, U.
 - O XP do bestiário vai sem ponto de milhar, para o fim de combate do
   Qualidade de Vida ler 7250, e não 7.
+- O **Realizar descanso** dele (no diretório de Journals) também faz o
+  descanso do Space Dragon: o alcance mental volta inteiro e, se o Mestre
+  responder que foi um dia de repouso total, os personagens recuperam PV pelo
+  Cap. 7 — 1 por nível, 2 com Recuperação Acelerada, 1 a cada 2 dias com
+  Recuperação Lenta, nenhum para androide. Sai um cartão só no chat.
+
+**Os estados de dano (Cap. 7)**
+
+Valem com ou sem o Qualidade de Vida, e para qualquer caminho que mude o PV — o
+botão *Aplicar em (alvo)*, a automação de ataque, a cura e o número digitado na
+ficha:
+
+- o dano aplicado pelo módulo desconta a **Redução de Dano**: a da Ficha de
+  Ameaça e a da mutação Tato (2). RD com condição ("6/FÍSICO", "IMUNE A
+  ATAQUES FÍSICOS") pergunta se vale contra aquele dano;
+- personagem em 0 PV fica **Inconsciente** (estável); abaixo de 0 continua
+  inconsciente e está morrendo; nos Danos Mortais fica **Morto**, e o
+  combatente, derrotado. Ameaça em 0 ou menos fica Morta e derrotada;
+- a cada rodada nova, quem está abaixo de 0 e não estabilizou recebe (ele e o
+  Mestre) um cartão com **Rolar JPF**: passar estabiliza, falhar custa 1d4 PV;
+- os status são os do core, os mesmos do Qualidade de Vida, então as travas
+  dele de atacar e mover continuam valendo.
 
 **As opções do Qualidade de Vida numa mesa de Space Dragon**
 

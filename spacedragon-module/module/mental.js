@@ -112,6 +112,12 @@ export async function gastar(ator, grandeza) {
   return depois;
 }
 
+/** Zera o gasto sem mandar nada para o chat (o descanso do grupo junta tudo num cartão). */
+export async function zerarAlcance(ator) {
+  if (Number(ator?.getFlag?.(ID, FLAG_GASTO)) || 0) await ator.setFlag(ID, FLAG_GASTO, 0);
+  return orcamento(ator);
+}
+
 /** Zera o gasto: um dia novo. */
 export async function descansar(ator) {
   ator = ator ?? canvas?.tokens?.controlled?.[0]?.actor ?? game.user?.character ?? null;
@@ -119,8 +125,7 @@ export async function descansar(ator) {
     ui.notifications.warn(txt("spacedragon.aviso.selecioneMentalico"));
     return null;
   }
-  await ator.setFlag(ID, FLAG_GASTO, 0);
-  const o = orcamento(ator);
+  const o = await zerarAlcance(ator);
   await ChatMessage.create({
     content:
       `<div class="title">Alcance Mental</div>` +
