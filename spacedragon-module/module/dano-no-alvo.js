@@ -11,7 +11,9 @@
  * A marca de "já aplicado" fica no ATOR ALVO, e não na mensagem: o dono do
  * alvo não pode gravar na mensagem de outra pessoa.
  *
- * O PV pode ficar negativo: no Space Dragon a morte vem depois do 0.
+ * O PV pode ficar negativo: no Space Dragon a morte vem depois do 0. A Redução
+ * de Dano do alvo entra aqui, e o estado que o PV novo pede (inconsciente,
+ * morrendo, morto) é posto pelo gancho de estados-de-dano.js.
  */
 
 import { ehNave } from "./nave-marca.js";
@@ -20,6 +22,7 @@ import { cineDe } from "./nave-cine-ficha.js";
 import { aplicarDanoCine } from "./nave-cinematico.js";
 import { aplicarDanoNoAlvoLigado, combateCinematico } from "./opcoes.js";
 import { chaveDoAtacante, marcaDeFerida } from "./racas.js";
+import { rdContra, descontarRD } from "./estados-de-dano.js";
 import { t as txt } from "./i18n.js";
 
 const ID = "spacedragon";
@@ -75,11 +78,20 @@ export function marcarCartao(mensagem) {
   return true;
 }
 
-/** Desconta o dano; numa nave do motor de combate, passa antes pelo Escudo. */
+/**
+ * Desconta o dano; numa nave do motor de combate, passa antes pelo Escudo, e
+ * em quem não é nave, pela Redução de Dano (Cap. 7).
+ */
 export async function aplicarEmAtor(ator, dano, mudExtra = {}) {
   const hp = Number(ator.system?.hp?.value) || 0;
   const mud = { ...mudExtra };
   let noEscudo = 0;
+  let rd = 0;
+  if (!ehNave(ator) && dano > 0) {
+    const r = descontarRD(dano, await rdContra(ator, dano));
+    rd = r.descontado;
+    dano = r.final;
+  }
   let pv = hp - dano;
   if (combateCinematico() && ehNave(ator)) {
     const nave = naveDe(ator, ID);
@@ -91,7 +103,7 @@ export async function aplicarEmAtor(ator, dano, mudExtra = {}) {
   }
   mud["system.hp.value"] = pv;
   await ator.update(mud);
-  return { pv, noEscudo };
+  return { pv, noEscudo, rd };
 }
 
 const feitosDe = (ator) => [].concat(ator?.getFlag?.(ID, FEITOS) ?? ator?.flags?.[ID]?.[FEITOS] ?? []);
@@ -107,9 +119,10 @@ export async function aplicarDanoNoAlvo(idDaMensagem, dados) {
   if (feitos.includes(idDaMensagem)) return avisa(txt("spacedragon.nave.disparo.jaAplicado"));
 
   const dano = Number(dados.dano) || 0;
-  const { pv, noEscudo } = await aplicarEmAtor(ator, dano, { [`flags.${ID}.${FEITOS}`]: [...feitos, idDaMensagem].slice(-30), ...marcaDeFerida(ator, dados.atacante) });
-  globalThis.ui?.notifications?.info?.(txt("spacedragon.danoNoAlvo.aplicado", { alvo: esc(ator.name), dano: dano - noEscudo, pv }));
-  return { pv, noEscudo };
+  const { pv, noEscudo, rd } = await aplicarEmAtor(ator, dano, { [`flags.${ID}.${FEITOS}`]: [...feitos, idDaMensagem].slice(-30), ...marcaDeFerida(ator, dados.atacante) });
+  globalThis.ui?.notifications?.info?.(txt("spacedragon.danoNoAlvo.aplicado", { alvo: esc(ator.name), dano: dano - noEscudo - rd, pv }));
+  if (rd) globalThis.ui?.notifications?.info?.(txt("spacedragon.estados.rdDescontada", { alvo: esc(ator.name), rd }));
+  return { pv, noEscudo, rd };
 }
 
 /** Liga a marcação do cartão e o botão no chat. Uma vez, no `ready`. */
